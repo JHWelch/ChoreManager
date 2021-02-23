@@ -9,6 +9,8 @@ class Chore extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+
     const FREQUENCIES = [
         0 => 'Does not Repeat',
         1 => 'Daily',
