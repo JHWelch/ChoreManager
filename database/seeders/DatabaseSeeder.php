@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory()
+            ->has(Team::factory())
+            ->create([
+                'name'     => 'John Smith',
+                'email'    => 'jsmith@example.com',
+                'password' => Hash::make('pw1234'),
+            ]);
+        $this->call(ChoreSeeder::class);
     }
 }
