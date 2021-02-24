@@ -1,4 +1,11 @@
-<div class="p-20">
+<div>
+  <div class="flex justify-between pb-4 align-middle">
+    <div>
+      <h1 class="text-xl">Chores</h1>
+    </div>
+    <x-link href="{{ route('chores.create') }}" class="">New Chore</x-link>
+  </div>
+
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
