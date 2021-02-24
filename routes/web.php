@@ -28,3 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/chores/{chore}', \App\Http\Livewire\Chores\Save::class)
     ->name('chores.edit');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/chores', \App\Http\Livewire\Chores\Index::class)
+    ->name('chores.index');
