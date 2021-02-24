@@ -9,28 +9,27 @@ use Livewire\Component;
 
 class Save extends Component
 {
-    public $title;
-    public $description;
-    public $frequency;
+    public $chore;
 
-    public function rules()
+    protected function rules()
     {
         return  [
-            'title'        => 'string|required',
-            'description'  => 'string',
-            'frequency'    => Rule::in(array_keys(Chore::FREQUENCIES)),
+            'chore.title'        => 'string|required',
+            'chore.description'  => 'string',
+            'chore.frequency'    => Rule::in(array_keys(Chore::FREQUENCIES)),
         ];
+    }
+
+    public function mount(Chore $chore)
+    {
+        $this->chore = $chore ?? Chore::make();
     }
 
     public function save()
     {
         $this->validate();
 
-        Chore::create([
-            'title'       => $this->title,
-            'description' => $this->description,
-            'frequency'   => $this->frequency,
-            'user_id'     => Auth::id(),
-        ]);
+        $this->chore->user_id = Auth::id();
+        $this->chore->save();
     }
 }

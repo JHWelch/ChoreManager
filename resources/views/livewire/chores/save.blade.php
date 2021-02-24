@@ -4,15 +4,15 @@
             <h1 class="pb-4 text-2xl">New Chore</h1>
             <div>
                 <label for="title">Title</label>
-                <input wire:model="title" id="title" type="text">
+                <input wire:model="chore.title" id="title" type="text">
             </div>
             <div>
                 <label for="description">Description</label>
-                <input wire:model="description" id="description" type="text">
+                <input wire:model="chore.description" id="description" type="text">
             </div>
-            <select wire:model="frequency">
+            <select wire:model="chore.frequency">
                 @foreach (\App\Models\Chore::FREQUENCIES as $key => $frequencyOption)
-                    <option wire:key="$key" value={{$key}}>{{ $frequencyOption }}</option>
+                    <option wire:key="$key" value={{ $key }}>{{ $frequencyOption }}</option>
                 @endforeach
             </select>
             <input type="submit"/>

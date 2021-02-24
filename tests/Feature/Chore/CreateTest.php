@@ -14,17 +14,32 @@ class CreateTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function chore_edit_page_can_be_reached()
+    {
+        // Arrange
+        // Create a test user
+        $this->testUser();
+
+        // Act
+        // Navigate to Chore Create page
+        $response = $this->get(route('chores.create'));
+
+        // Assert
+        // A page is successfully returned
+        $response->assertStatus(200);
+    }
+
+    /** @test */
     public function can_create_chore()
     {
         // Arrange
-        $user = User::factory()->create();
-        $this->actingAs($user);
+        $user = $this->testUser();
 
         // Act
         Livewire::test(Save::class)
-            ->set('title', 'Do dishes')
-            ->set('description', 'Do the dishes every night.')
-            ->set('frequency', 1)
+            ->set('chore.title', 'Do dishes')
+            ->set('chore.description', 'Do the dishes every night.')
+            ->set('chore.frequency', 1)
             ->call('save');
 
         // Assert
