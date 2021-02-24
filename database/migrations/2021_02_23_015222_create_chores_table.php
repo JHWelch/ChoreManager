@@ -18,7 +18,7 @@ class CreateChoresTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('description');
-            $table->integer('frequency');
+            $table->integer('frequency_id');
             $table->timestamps();
 
             $table->foreign('user_id')

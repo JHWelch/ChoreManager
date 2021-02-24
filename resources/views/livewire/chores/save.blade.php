@@ -10,7 +10,7 @@
         <label for="description">Description</label>
         <input wire:model="chore.description" id="description" type="text">
       </div>
-      <select wire:model="chore.frequency">
+      <select wire:model="chore.frequency_id">
         @foreach (\App\Models\Chore::FREQUENCIES as $key => $frequencyOption)
           <option wire:key="$key" value={{ $key }}>{{ $frequencyOption }}</option>
         @endforeach

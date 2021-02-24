@@ -16,7 +16,7 @@ class Save extends Component
         return  [
             'chore.title'        => 'string|required',
             'chore.description'  => 'string',
-            'chore.frequency'    => Rule::in(array_keys(Chore::FREQUENCIES)),
+            'chore.frequency_id' => Rule::in(array_keys(Chore::FREQUENCIES)),
         ];
     }
 

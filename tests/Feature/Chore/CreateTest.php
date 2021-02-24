@@ -39,15 +39,15 @@ class CreateTest extends TestCase
         Livewire::test(Save::class)
             ->set('chore.title', 'Do dishes')
             ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency', 1)
+            ->set('chore.frequency_id', 1)
             ->call('save');
 
         // Assert
         $this->assertDatabaseHas((new Chore)->getTable(), [
-            'title'       => 'Do dishes',
-            'description' => 'Do the dishes every night.',
-            'frequency'   => 1,
-            'user_id'     => $user->id,
+            'title'        => 'Do dishes',
+            'description'  => 'Do the dishes every night.',
+            'frequency_id' => 1,
+            'user_id'      => $user->id,
         ]);
     }
 }

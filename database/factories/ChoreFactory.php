@@ -24,10 +24,10 @@ class ChoreFactory extends Factory
     public function definition()
     {
         return [
-            'title'       => implode(' ', $this->faker->words(3)),
-            'description' => $this->faker->sentence(),
-            'frequency'   => Arr::random(array_keys(Chore::FREQUENCIES)),
-            'user_id'     => User::factory()->create()->id,
+            'title'        => implode(' ', $this->faker->words(3)),
+            'description'  => $this->faker->sentence(),
+            'frequency_id' => Arr::random(array_keys(Chore::FREQUENCIES)),
+            'user_id'      => User::factory()->create()->id,
         ];
     }
 }
