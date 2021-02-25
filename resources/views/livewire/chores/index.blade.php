@@ -13,7 +13,7 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                <th wire:click="sortBy('title')"  scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                   Title
                 </th>
 
@@ -51,11 +51,11 @@
                   </td>
 
                   <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {{ optional($chore->nextChoreInstance)->due_date ?? '-' }}
+                    {{ $chore->due_date ?? '-' }}
                   </td>
 
                   <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                    <a href="{{ route('chores.edit', ['chore' => $chore->id]) }}}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                    <a href="{{ route('chores.edit', ['chore' => $chore]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                   </td>
                 </tr>
               @endforeach
