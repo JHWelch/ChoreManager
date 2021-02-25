@@ -29,4 +29,16 @@ class Chore extends Model
     {
         return self::FREQUENCIES[$this->frequency_id];
     }
+
+    public function choreInstances()
+    {
+        return $this->hasMany(ChoreInstance::class);
+    }
+
+    public function getNextChoreInstanceAttribute()
+    {
+        return $this->choreInstances()
+            ->where('completed_date', null)
+            ->first();
+    }
 }

@@ -14,6 +14,7 @@
         <option wire:key="$key" value={{ $key }}>{{ $frequencyOption }}</option>
       @endforeach
     </select>
+    <input wire:model="chore_instance.due_date" type="date" title="Next Due Date"/>
     <input type="submit"/>
   </form>
 
