@@ -54,5 +54,7 @@ class Save extends Component
                 }
             }
         }
+
+        return $this->redirect(route('chores.index'));
     }
 }
