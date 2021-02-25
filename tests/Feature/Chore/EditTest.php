@@ -44,7 +44,7 @@ class EditTest extends TestCase
 
         // Act
         // Go to Edit chore screen
-        $component = Livewire::test(Save::class, ['chore' => $chore->id]);
+        $component = Livewire::test(Save::class, ['chore' => $chore]);
 
         // Assert
         // The details are present from the created chore
@@ -63,7 +63,7 @@ class EditTest extends TestCase
 
         // Act
         // Navigate to edit screen and change some details and save it
-        Livewire::test(Save::class, ['chore' => $chore->id])
+        Livewire::test(Save::class, ['chore' => $chore])
             ->set('chore.title', 'Do dishes')
             ->set('chore.description', 'Do the dishes every night.')
             ->set('chore.frequency_id', 1)
