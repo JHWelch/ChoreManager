@@ -20,6 +20,17 @@ class Chore extends Model
         5 => 'Yearly',
     ];
 
+    public static function frequenciesAsSelectOptions()
+    {
+        $frequencies = [];
+
+        foreach (self::FREQUENCIES as $key => $frequency) {
+            $frequencies[] = ['value' => $key, 'label' => $frequency];
+        }
+
+        return $frequencies;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

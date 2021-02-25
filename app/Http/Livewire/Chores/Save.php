@@ -13,6 +13,7 @@ class Save extends Component
     public Chore $chore;
     public ChoreInstance $chore_instance;
 
+    public $frequencies = [];
     public $due_date;
 
     protected function rules()
@@ -29,6 +30,7 @@ class Save extends Component
     {
         $this->chore          = $chore                      ?? Chore::make();
         $this->chore_instance = $chore->next_chore_instance ?? ChoreInstance::make();
+        $this->frequencies    = Chore::frequenciesAsSelectOptions();
     }
 
     public function save()
