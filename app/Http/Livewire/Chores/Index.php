@@ -12,6 +12,6 @@ class Index extends Component
 
     public function mount()
     {
-        $this->chores = Auth::user()->chores;
+        $this->chores = Auth::user()->chores()->with('nextChoreInstance')->get();
     }
 }

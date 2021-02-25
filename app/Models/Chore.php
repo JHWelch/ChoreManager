@@ -46,10 +46,8 @@ class Chore extends Model
         return $this->hasMany(ChoreInstance::class);
     }
 
-    public function getNextChoreInstanceAttribute()
+    public function nextChoreInstance()
     {
-        return $this->choreInstances()
-            ->where('completed_date', null)
-            ->first();
+        return $this->hasOne(ChoreInstance::class)->where('completed_date', null);
     }
 }

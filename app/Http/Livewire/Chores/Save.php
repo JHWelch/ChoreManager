@@ -29,7 +29,7 @@ class Save extends Component
     public function mount(Chore $chore)
     {
         $this->chore          = $chore                      ?? Chore::make();
-        $this->chore_instance = $chore->next_chore_instance ?? ChoreInstance::make();
+        $this->chore_instance = $chore->nextChoreInstance   ?? ChoreInstance::make();
         $this->frequencies    = Chore::frequenciesAsSelectOptions();
     }
 
