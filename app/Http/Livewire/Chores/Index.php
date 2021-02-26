@@ -22,12 +22,8 @@ class Index extends Component
     {
         $this->chores = Auth::user()
             ->chores()
-            ->select('chores.*', 'chore_instances.due_date')
-            ->leftJoin('chore_instances', function ($join) {
-                $join->on('chores.id', '=', 'chore_instances.chore_id')
-                    ->where('chore_instances.completed_date', null);
-            })
-            ->orderBy(DB::raw('ISNULL(chore_instances.due_date), chore_instances.due_date'), 'ASC')
+            ->withNextInstance()
+            ->nullDueDatesAtEnd()
             ->orderBy($this->sort, $this->desc ? 'desc' : 'asc')
             ->get();
 

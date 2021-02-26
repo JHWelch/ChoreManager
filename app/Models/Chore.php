@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Chore extends Model
 {
@@ -49,5 +50,28 @@ class Chore extends Model
     public function nextChoreInstance()
     {
         return $this->hasOne(ChoreInstance::class)->where('completed_date', null);
+    }
+
+    public function scopeWithNextInstance($query)
+    {
+        return $query->select('chores.*', 'chore_instances.due_date')
+            ->leftJoin('chore_instances', function ($join) {
+                $join->on('chores.id', '=', 'chore_instances.chore_id')
+                    ->where('chore_instances.completed_date', null);
+            });
+    }
+
+    public function scopeOnlyWithNextInstance($query)
+    {
+        return $query->select('chores.*', 'chore_instances.due_date')
+            ->join('chore_instances', function ($join) {
+                $join->on('chores.id', '=', 'chore_instances.chore_id')
+                    ->where('chore_instances.completed_date', null);
+            });
+    }
+
+    public function scopeNullDueDatesAtEnd($query)
+    {
+        return $query->orderBy(DB::raw('ISNULL(chore_instances.due_date), chore_instances.due_date'), 'ASC');
     }
 }
