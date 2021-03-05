@@ -61,4 +61,20 @@ class IndexTest extends TestCase
         // I do not see that chore's title
         $component->assertDontSee($chore->title);
     }
+
+    /** @test */
+    public function when_there_are_no_chore_instances_see_empty_state()
+    {
+        // Arrange
+        // create user
+        $this->testUser();
+
+        // Act
+        // Go to Index page
+        $component = Livewire::test(ChoreInstancesIndex::class);
+
+        // Assert
+        // See empty state
+        $component->assertSee('No chores here! Good job.');
+    }
 }
