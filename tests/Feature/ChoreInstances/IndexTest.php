@@ -39,6 +39,7 @@ class IndexTest extends TestCase
         // Act
         // Open chore instance index
         $component = Livewire::test(ChoreInstancesIndex::class);
+
         // Assert
         // Chore and instance date is show on page
         $component->assertSee($chore->title);
