@@ -36,7 +36,7 @@ class CreateTest extends TestCase
         // Chore instance is created.
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id'       => Chore::first()->id,
-            'due_date'       => $date,
+            'due_date'       => $date->format('Y-m-d 00:00:00'),
             'completed_date' => null,
         ]);
     }

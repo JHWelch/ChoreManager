@@ -37,7 +37,7 @@ class EditTest extends TestCase
         ray(ChoreInstance::all());
         $this->assertDatabaseHas((new ChoreInstance())->getTable(), [
             'chore_id' => $chore->id,
-            'due_date' => $date,
+            'due_date' => $date->format('Y-m-d 00:00:00'),
         ]);
     }
 

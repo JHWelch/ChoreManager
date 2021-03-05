@@ -52,6 +52,12 @@ class Chore extends Model
         return $this->hasOne(ChoreInstance::class)->where('completed_date', null);
     }
 
+    /**
+     * Join Chore to the Next Chore instance if available.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeWithNextInstance($query)
     {
         return $query->select('chores.*', 'chore_instances.due_date')
@@ -61,13 +67,20 @@ class Chore extends Model
             });
     }
 
+    /**
+     * Only return Chores that have their next chore instance.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeOnlyWithNextInstance($query)
     {
         return $query->select('chores.*', 'chore_instances.due_date')
             ->join('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
-            });
+            })
+            ->withCasts(['due_date' => 'date']);
     }
 
     public function scopeNullDueDatesAtEnd($query)
