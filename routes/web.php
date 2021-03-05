@@ -17,22 +17,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/chores/create', \App\Http\Livewire\Chores\Save::class)
-    ->name('chores.create');
+    Route::get('/chores/create', \App\Http\Livewire\Chores\Save::class)
+        ->name('chores.create');
 
-Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/chores/{chore}', \App\Http\Livewire\Chores\Save::class)
-    ->name('chores.edit');
+    Route::get('/chores/{chore}', \App\Http\Livewire\Chores\Save::class)
+        ->name('chores.edit');
 
-Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/chores', \App\Http\Livewire\Chores\Index::class)
-    ->name('chores.index');
+    Route::get('/chores', \App\Http\Livewire\Chores\Index::class)
+        ->name('chores.index');
 
-Route::middleware(['auth:sanctum', 'verified'])
-    ->get('/chore_instances', \App\Http\Livewire\ChoreInstances\Index::class)
-    ->name('chore_instances.index');
+    Route::get('/chore_instances', \App\Http\Livewire\ChoreInstances\Index::class)
+        ->name('chore_instances.index');
+});
