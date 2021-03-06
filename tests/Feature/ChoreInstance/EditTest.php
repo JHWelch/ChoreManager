@@ -5,6 +5,7 @@ namespace Tests\Feature\ChoreInstance;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
@@ -58,5 +59,48 @@ class EditTest extends TestCase
         // Assert
         // There are no chore instances in the database
         $this->assertDatabaseCount((new ChoreInstance)->getTable(), 0);
+    }
+
+    /** @test */
+    public function when_opening_chore_edit_due_date_is_populated()
+    {
+        // Arrange
+        // Create a chore with a chore instance
+        $date  = Carbon::now()->addDays(5);
+        $chore = Chore::factory()->has($chore_instance = ChoreInstance::factory([
+            'due_date' => $date,
+        ]))->create();
+
+        // Act
+        // navigate to edit page
+        $component = Livewire::test(Save::class, ['chore' => $chore]);
+
+        // Assert
+        // The due date is set.
+        $component->assertSet('chore_instance.due_date', Carbon::parse($date->toDateString()));
+    }
+
+    /** @test */
+    public function after_completing_a_chore_you_can_see_next_chore_instance_date()
+    {
+        // Arrange
+        // Create a chore with a chore instance
+        $date  = Carbon::now();
+        $chore = Chore::factory()->has(ChoreInstance::factory([
+            'due_date' => $date,
+        ]))->create([
+            'frequency_id' => 1,
+        ]);
+
+        $chore->nextChoreInstance->complete();
+        $chore->refresh();
+
+        // Act
+        // navigate to edit page
+        $component = Livewire::test(Save::class, ['chore' => $chore]);
+
+        // Assert
+        // The due date is set.
+        $component->assertSet('chore_instance.due_date', Carbon::parse($date->addDay()->toDateString()));
     }
 }
