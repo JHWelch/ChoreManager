@@ -35,7 +35,6 @@ class EditTest extends TestCase
 
         // Assert
         // Assert that a chore instance has been created.
-        ray(ChoreInstance::all());
         $this->assertDatabaseHas((new ChoreInstance())->getTable(), [
             'chore_id' => $chore->id,
             'due_date' => $date->format('Y-m-d 00:00:00'),
