@@ -10,6 +10,8 @@ class ChoreInstance extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+
     protected $casts = [
         'due_date'   => 'date',
         'created_at' => 'datetime',
@@ -23,6 +25,8 @@ class ChoreInstance extends Model
 
     public function complete()
     {
+        $this->chore->createNewInstance();
+
         $this->completed_date = Carbon::now();
         $this->save();
     }

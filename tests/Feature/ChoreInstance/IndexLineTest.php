@@ -25,7 +25,7 @@ class IndexLineTest extends TestCase
         // Act
         // Open chore instance on line and complete it
         Livewire::test(IndexLine::class, [
-            'chore'          => $chore,
+            'chore' => $chore,
         ])->call('complete');
 
         // Assert
@@ -33,5 +33,35 @@ class IndexLineTest extends TestCase
         $chore_instance->refresh();
 
         $this->assertTrue($chore_instance->is_completed);
+    }
+
+    /** @test */
+    public function when_a_chore_instance_is_completed_a_new_one_is_created_daily()
+    {
+        // Arrange
+        // Create a chore with an instance
+        $now   = \Carbon\Carbon::now();
+        $user  = $this->testUser();
+        $chore = Chore::factory(
+            ['frequency_id' => 1]
+        )
+            ->for($user)
+            ->has(ChoreInstance::factory(['due_date' => $now]))
+            ->create();
+
+        // Act
+        // Navigate to line and click complete
+        Livewire::test(IndexLine::class, [
+            'chore' => $chore,
+        ])->call('complete');
+
+        // Assert
+        // Check to see if a chore was created the next day.
+        $chore->refresh();
+
+        $this->assertEquals(
+            $now->addDay()->toDateString(),
+            $chore->nextChoreInstance->due_date->toDateString()
+        );
     }
 }

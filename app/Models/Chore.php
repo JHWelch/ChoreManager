@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -86,5 +87,37 @@ class Chore extends Model
     public function scopeNullDueDatesAtEnd($query)
     {
         return $query->orderBy(DB::raw('ISNULL(chore_instances.due_date), chore_instances.due_date'), 'ASC');
+    }
+
+    public function createNewInstance()
+    {
+        $now       = Carbon::now();
+        $next_date = null;
+
+        switch ($this->frequency_id) {
+            case 0:
+                return;
+                break;
+            case 1:
+                $next_date = $now->addDay();
+                break;
+            case 2:
+                $next_date = $now->addWeek();
+                break;
+            case 3:
+                $next_date = $now->addMonthNoOverflow();
+                break;
+            case 4:
+                $next_date = $now->addQuarterNoOverflow();
+                break;
+            case 5:
+                $next_date = $now->addYearNoOverflow();
+                break;
+        }
+
+        ChoreInstance::create([
+            'chore_id' => $this->id,
+            'due_date' => $next_date,
+        ]);
     }
 }
