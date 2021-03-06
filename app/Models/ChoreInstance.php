@@ -12,12 +12,6 @@ class ChoreInstance extends Model
 
     protected $guarded;
 
-    protected $casts = [
-        'due_date'   => 'date',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
-
     public function chore()
     {
         return $this->belongsTo(Chore::class);
