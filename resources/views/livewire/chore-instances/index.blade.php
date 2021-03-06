@@ -19,7 +19,7 @@
 
       <ul class="relative z-0 divide-y divide-gray-200">
         @foreach ($chore_instances as $chore_instance)
-          <livewire:chore-instances.index-line :key="$loop->index" :chore="$chore_instance" />
+          <livewire:chore-instances.index-line :key="$chore_instance->chore_instance_id" :chore="$chore_instance" />
         @endforeach
       </ul>
     @endforeach
