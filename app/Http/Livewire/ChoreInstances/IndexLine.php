@@ -21,5 +21,6 @@ class IndexLine extends Component
     {
         $this->chore_instance->complete();
         $this->chore_instance->refresh();
+        $this->emit('chore_instance.completed', $this->chore_instance->id);
     }
 }

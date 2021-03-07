@@ -19,6 +19,9 @@
         <div class="flex justify-end w-2/12">
           <button
             wire:click="complete"
+            @if ($chore_instance->is_completed)
+              disabled
+            @endif
             class="flex items-center justify-center w-10 h-10 border-2 border-purple-300 rounded-md hover:bg-purple-200"
             >
             @if ($chore_instance->is_completed)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Chores;
 
+use App\Http\Livewire\Concerns\GoesBack;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,8 @@ use Livewire\Component;
 
 class Save extends Component
 {
+    use GoesBack;
+
     public Chore $chore;
     public ChoreInstance $chore_instance;
 
@@ -28,6 +31,8 @@ class Save extends Component
 
     public function mount(Chore $chore)
     {
+        $this->setPrevious();
+
         $this->chore          = $chore                      ?? Chore::make();
         $this->chore_instance = $chore->nextChoreInstance   ?? ChoreInstance::make();
         $this->frequencies    = Chore::frequenciesAsSelectOptions();
@@ -36,8 +41,10 @@ class Save extends Component
     public function save()
     {
         $this->validate();
+        $user = Auth::user();
 
-        $this->chore->user_id = Auth::id();
+        $this->chore->user_id = $user->id;
+        $this->chore->team_id = $user->currentTeam->id;
         $this->chore->save();
 
         if (! $this->chore_instance->exists) {
@@ -55,6 +62,6 @@ class Save extends Component
             }
         }
 
-        return $this->redirect(route('chores.index'));
+        return $this->back();
     }
 }

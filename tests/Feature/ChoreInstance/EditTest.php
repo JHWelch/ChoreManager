@@ -76,7 +76,7 @@ class EditTest extends TestCase
 
         // Assert
         // The due date is set.
-        $component->assertSet('chore_instance.due_date', Carbon::parse($date->toDateString()));
+        $component->assertSet('chore_instance.due_date', $date->toDateString());
     }
 
     /** @test */
@@ -100,6 +100,6 @@ class EditTest extends TestCase
 
         // Assert
         // The due date is set.
-        $component->assertSet('chore_instance.due_date', Carbon::parse($date->addDay()->toDateString()));
+        $component->assertSet('chore_instance.due_date', $date->addDay()->toDateString());
     }
 }

@@ -18,9 +18,8 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', \App\Http\Livewire\ChoreInstances\Index::class)
+        ->name('dashboard');
 
     Route::get('/chores/create', \App\Http\Livewire\Chores\Save::class)
         ->name('chores.create');

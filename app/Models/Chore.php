@@ -38,6 +38,11 @@ class Chore extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function getFrequencyAttribute()
     {
         return self::FREQUENCIES[$this->frequency_id];
@@ -61,7 +66,7 @@ class Chore extends Model
      */
     public function scopeWithNextInstance($query)
     {
-        return $query->select('chores.*', 'chore_instances.due_date')
+        return $query->select('chores.*', 'chore_instances.due_date', 'chore_instances.id AS chore_instance_id')
             ->leftJoin('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
@@ -76,12 +81,11 @@ class Chore extends Model
      */
     public function scopeOnlyWithNextInstance($query)
     {
-        return $query->select('chores.*', 'chore_instances.due_date')
+        return $query->select('chores.*', 'chore_instances.due_date', 'chore_instances.id AS chore_instance_id')
             ->join('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
-            })
-            ->withCasts(['due_date' => 'date']);
+            });
     }
 
     public function scopeNullDueDatesAtEnd($query)
