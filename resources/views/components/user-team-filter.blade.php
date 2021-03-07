@@ -1,10 +1,20 @@
-<span class="relative z-0 inline-flex rounded-md shadow-sm">
-  <button wire:click="setTeamFilter('user')" type="button" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+<span class="relative z-0 inline-flex rounded-md shadow-sm" aria-label="Team User Filter">
+  <x-button-group-button
+    click="setTeamFilter('user')"
+    :selected="$currentfilter === 'user'"
+    position="left"
+  >
     <x-icons.user class="h-4" />
+
     <span class="hidden ml-1 sm:block">My&nbsp;Chores</span>
-  </button>
-  <button wire:click="setTeamFilter('team')" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+  </x-button-group-button>
+  <x-button-group-button
+    click="setTeamFilter('team')"
+    :selected="$currentfilter === 'team'"
+    position="right"
+  >
     <x-icons.group class="h-4" />
+
     <span class="hidden ml-1 sm:block">All&nbsp;Chores</span>
-  </button>
+  </x-button-group-button>
 </span>

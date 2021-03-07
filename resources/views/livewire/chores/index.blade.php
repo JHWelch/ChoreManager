@@ -5,7 +5,7 @@
     </div>
 
     <div class="h-5">
-      <x-user-team-filter />
+      <x-user-team-filter :currentfilter="$team_or_user" />
     </div>
 
     <x-link href="{{ route('chores.create') }}" class="">
