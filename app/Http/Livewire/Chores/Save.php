@@ -31,7 +31,7 @@ class Save extends Component
 
     public function mount(Chore $chore)
     {
-        $this->setPrevious();
+        $this->setGoBackState(route('chores.index'));
 
         $this->chore          = $chore                      ?? Chore::make();
         $this->chore_instance = $chore->nextChoreInstance   ?? ChoreInstance::make();

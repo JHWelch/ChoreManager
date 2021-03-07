@@ -15,16 +15,27 @@ trait GoesBack
      *
      * @var string
      */
-    public $previous;
+    public $previous_url;
+
+    /**
+     * Current page URL.
+     *
+     * @var string
+     */
+    public $current_url;
+    public $default_back_url;
 
     /**
      * Should be called in the mount() of the component.
      *
+     * @param string $default_back_url If the page is accessed directly from the url, where to go.
      * @return void
      */
-    private function setPrevious()
+    private function setGoBackState($default_back_url = '/')
     {
-        $this->previous = URL::previous();
+        $this->previous_url     = URL::previous();
+        $this->current_url      = URL::current();
+        $this->default_back_url = $default_back_url;
     }
 
     /**
@@ -34,6 +45,10 @@ trait GoesBack
      */
     public function back()
     {
-        return redirect($this->previous);
+        if ($this->current_url === $this->previous_url) {
+            return redirect($this->default_back_url);
+        }
+
+        return redirect($this->previous_url);
     }
 }
