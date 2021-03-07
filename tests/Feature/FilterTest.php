@@ -7,7 +7,6 @@ use App\Models\Chore;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -29,8 +28,6 @@ class FilterTest extends TestCase
         Chore::factory([
             'title' => 'Wash the dishes.',
         ])->for($users->pop())->create();
-
-        ray(Chore::all());
 
         $this->actingAs($users->first());
 

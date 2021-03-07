@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\ChoreInstances;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
 use Livewire\Component;
 
 class Index extends Component
 {
+    use FiltersByTeamOrUser {
+        setTeamFilter as _setTeamFilter;
+    }
+
     public $chore_instance_groups;
 
     public $listeners = [
@@ -26,11 +29,16 @@ class Index extends Component
 
     public function updateChoreInstanceList()
     {
-        $this->chore_instance_groups = Auth::user()
-            ->chores()
+        $this->chore_instance_groups = $this->choreQueryByTeamOrUser()
             ->onlyWithNextInstance()
             ->orderBy('chore_instances.due_date')
             ->get()
-            ->mapToGroups(fn ($item) => [$item->due_date->toDateString() => $item]);
+            ->mapToGroups(fn ($item) => [$item->due_date => $item]);
+    }
+
+    public function setTeamFilter($filter)
+    {
+        $this->_setTeamFilter($filter);
+        $this->updateChoreInstanceList();
     }
 }

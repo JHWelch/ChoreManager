@@ -66,7 +66,7 @@ class Chore extends Model
      */
     public function scopeWithNextInstance($query)
     {
-        return $query->select('chores.*', 'chore_instances.due_date')
+        return $query->select('chores.*', 'chore_instances.due_date', 'chore_instances.id AS chore_instance_id')
             ->leftJoin('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
@@ -85,8 +85,7 @@ class Chore extends Model
             ->join('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
-            })
-            ->withCasts(['due_date' => 'date']);
+            });
     }
 
     public function scopeNullDueDatesAtEnd($query)
