@@ -38,6 +38,11 @@ class Chore extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function getFrequencyAttribute()
     {
         return self::FREQUENCIES[$this->frequency_id];

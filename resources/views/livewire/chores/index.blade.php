@@ -3,6 +3,11 @@
     <div>
       <h1 class="text-xl">Chores</h1>
     </div>
+
+    <div class="h-5">
+      <x-user-team-filter />
+    </div>
+
     <x-link href="{{ route('chores.create') }}" class="">New Chore</x-link>
   </div>
 

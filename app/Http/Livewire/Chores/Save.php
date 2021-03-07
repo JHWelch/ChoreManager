@@ -41,8 +41,10 @@ class Save extends Component
     public function save()
     {
         $this->validate();
+        $user = Auth::user();
 
-        $this->chore->user_id = Auth::id();
+        $this->chore->user_id = $user->id;
+        $this->chore->team_id = $user->currentTeam->id;
         $this->chore->save();
 
         if (! $this->chore_instance->exists) {
