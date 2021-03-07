@@ -1,5 +1,5 @@
 <div>
-  <div class="flex justify-between pb-4 align-middle">
+  <div class="flex justify-between px-2 pb-4 align-middle sm:px-0">
     <div>
       <h1 class="text-xl">Chores</h1>
     </div>
@@ -8,7 +8,9 @@
       <x-user-team-filter />
     </div>
 
-    <x-link href="{{ route('chores.create') }}" class="">New Chore</x-link>
+    <x-link href="{{ route('chores.create') }}" class="">
+      New <span class="hidden sm:block">&nbsp;Chore</span>
+    </x-link>
   </div>
 
   <div class="flex flex-col">
@@ -22,7 +24,7 @@
                   Title
                 </th>
 
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                <th scope="col" class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:block">
                   Description
                 </th>
 
@@ -30,24 +32,22 @@
                   Frequency
                 </th>
 
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  Next Due Date
-                </th>
-
-                <th scope="col" class="relative px-6 py-3">
-                  <span class="sr-only">Edit</span>
+                <th scope="col" class="flex px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <span class="hidden sm:block">Next&nbsp;</span>
+                  Due
+                  <span class="hidden sm:block">&nbsp;Date</span>
                 </th>
               </tr>
             </thead>
             <tbody>
               <!-- Odd row -->
               @foreach ($chores as $chore)
-                <tr class="{{ ! ($loop->index % 2) ? 'bg-white' : 'bg-gray-50'}}">
+                <tr onclick="window.location='{{ route('chores.edit', ['chore' => $chore]) }}';" class="cursor-pointer {{ ! ($loop->index % 2) ? 'bg-white' : 'bg-gray-50'}}">
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                     {{ $chore->title }}
                   </td>
 
-                  <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                  <td class="hidden px-6 py-4 text-sm text-gray-500 whitespace-nowrap sm:block">
                     {{ $chore->description }}
                   </td>
 
@@ -57,10 +57,6 @@
 
                   <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                     {{ $chore->due_date ?? '-' }}
-                  </td>
-
-                  <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                    <a href="{{ route('chores.edit', ['chore' => $chore]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                   </td>
                 </tr>
               @endforeach

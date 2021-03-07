@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Chores;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class Index extends Component
