@@ -99,11 +99,11 @@ class Chore extends Model
 
         $next_date = match ($this->frequency_id) {
             0 => null,
-            1 => $next_date = $now->addDay(),
-            2 => $next_date = $now->addWeek(),
-            3 => $next_date = $now->addMonthNoOverflow(),
-            4 => $next_date = $now->addQuarterNoOverflow(),
-            5 => $next_date = $now->addYearNoOverflow(),
+            1 => $now->addDay(),
+            2 => $now->addWeek(),
+            3 => $now->addMonthNoOverflow(),
+            4 => $now->addQuarterNoOverflow(),
+            5 => $now->addYearNoOverflow(),
         };
 
         if ($next_date === null) {
