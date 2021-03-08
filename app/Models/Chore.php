@@ -96,27 +96,18 @@ class Chore extends Model
     public function createNewInstance()
     {
         $now       = Carbon::now();
-        $next_date = null;
 
-        switch ($this->frequency_id) {
-            case 0:
-                return;
-                break;
-            case 1:
-                $next_date = $now->addDay();
-                break;
-            case 2:
-                $next_date = $now->addWeek();
-                break;
-            case 3:
-                $next_date = $now->addMonthNoOverflow();
-                break;
-            case 4:
-                $next_date = $now->addQuarterNoOverflow();
-                break;
-            case 5:
-                $next_date = $now->addYearNoOverflow();
-                break;
+        $next_date = match ($this->frequency_id) {
+            0 => null,
+            1 => $next_date = $now->addDay(),
+            2 => $next_date = $now->addWeek(),
+            3 => $next_date = $now->addMonthNoOverflow(),
+            4 => $next_date = $now->addQuarterNoOverflow(),
+            5 => $next_date = $now->addYearNoOverflow(),
+        };
+
+        if ($next_date === null) {
+            return;
         }
 
         ChoreInstance::create([

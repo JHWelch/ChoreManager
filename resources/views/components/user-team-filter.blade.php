@@ -3,6 +3,7 @@
     click="setTeamFilter('user')"
     :selected="$currentfilter === 'user'"
     position="left"
+    key="user"
   >
     <x-icons.user class="h-4" />
 
@@ -12,6 +13,7 @@
     click="setTeamFilter('team')"
     :selected="$currentfilter === 'team'"
     position="right"
+    key="team"
   >
     <x-icons.group class="h-4" />
 
