@@ -61,7 +61,7 @@ class IndexLineTest extends TestCase
 
         $this->assertEquals(
             $now->addDay()->toDateString(),
-            $chore->nextChoreInstance->due_date
+            $chore->nextChoreInstance->due_date->toDateString(),
         );
     }
 }

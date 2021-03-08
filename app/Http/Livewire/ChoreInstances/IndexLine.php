@@ -23,4 +23,10 @@ class IndexLine extends Component
         $this->chore_instance->refresh();
         $this->emit('chore_instance.completed', $this->chore_instance->id);
     }
+
+    public function snoozeDay()
+    {
+        $this->chore_instance->due_date = $this->chore_instance->due_date->addDay();
+        $this->chore_instance->save();
+    }
 }
