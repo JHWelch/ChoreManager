@@ -65,6 +65,7 @@ class EditTest extends TestCase
     {
         // Arrange
         // Create a chore with a chore instance
+        $this->testUser();
         $date  = Carbon::now()->addDays(5);
         $chore = Chore::factory()->has($chore_instance = ChoreInstance::factory([
             'due_date' => $date,
@@ -84,6 +85,7 @@ class EditTest extends TestCase
     {
         // Arrange
         // Create a chore with a chore instance
+        $this->testUser();
         $date  = Carbon::now();
         $chore = Chore::factory()->has(ChoreInstance::factory([
             'due_date' => $date,

@@ -19,12 +19,15 @@ class Save extends Component
     public $frequencies = [];
     public $due_date;
 
+    public $user_options;
+
     protected function rules()
     {
         return  [
             'chore.title'             => 'string|required',
             'chore.description'       => 'string|nullable',
             'chore.frequency_id'      => Rule::in(array_keys(Chore::FREQUENCIES)),
+            'chore.user_id'           => 'required',
             'chore_instance.due_date' => 'date|nullable|date|after_or_equal:today',
         ];
     }
@@ -32,19 +35,26 @@ class Save extends Component
     public function mount(Chore $chore)
     {
         $this->setGoBackState(route('chores.index'));
+        $this->chore = $chore;
 
-        $this->chore          = $chore                      ?? Chore::make();
-        $this->chore_instance = $chore->nextChoreInstance   ?? ChoreInstance::make();
+        if ($this->chore->id === null) {
+            $this->chore->user_id = Auth::id();
+        }
+        $this->chore_instance = $chore->nextChoreInstance ?? ChoreInstance::make();
         $this->frequencies    = Chore::frequenciesAsSelectOptions();
+        $this->user_options   = array_values(
+            Auth::user()
+                ->currentTeam
+                ->allUsers()
+                ->sortBy(fn ($user) => $user->name)
+                ->toOptionsArray()
+        );
     }
 
     public function save()
     {
         $this->validate();
-        $user = Auth::user();
-
-        $this->chore->user_id = $user->id;
-        $this->chore->team_id = $user->currentTeam->id;
+        $this->chore->team_id = Auth::user()->currentTeam->id;
         $this->chore->save();
 
         if (! $this->chore_instance->exists) {

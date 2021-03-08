@@ -1,8 +1,6 @@
 <div class="flex justify-center">
   <div class="p-8 bg-white rounded-lg shadow-md w-96">
     <form wire:submit.prevent="save" class="space-y-4">
-      <h1 class="pb-4 text-2xl">New Chore</h1>
-
       <x-form.input prefix="chore" name="title" />
 
       <x-form.input prefix="chore" name="description" />
@@ -12,6 +10,13 @@
         label="Frequency"
         prefix="chore"
         :options="$frequencies"
+      />
+
+      <x-form.select
+        name="user_id"
+        label="Owner"
+        prefix="chore"
+        :options="$user_options"
       />
 
       <x-form.input type="date" prefix="chore_instance" name="due_date" label="Next Due Date" />
