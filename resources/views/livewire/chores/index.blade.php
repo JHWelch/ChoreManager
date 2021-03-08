@@ -21,21 +21,21 @@
             <thead class="bg-gray-50">
               <tr>
                 <th wire:click="sortBy('title')"  scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  Title
+                  {{ __('Title') }}
                 </th>
 
                 <th scope="col" class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:block">
-                  Description
+                  {{ __('Description') }}
                 </th>
 
                 <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  Frequency
+                  {{ __('Frequency') }}
                 </th>
 
                 <th scope="col" class="flex px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  <span class="hidden sm:block">Next&nbsp;</span>
-                  Due
-                  <span class="hidden sm:block">&nbsp;Date</span>
+                  <span class="hidden sm:block">{{ __('Next') }}&nbsp;</span>
+                  {{ __('Due') }}
+                  <span class="hidden sm:block">&nbsp;{{ __('Date') }}</span>
                 </th>
               </tr>
             </thead>
