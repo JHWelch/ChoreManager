@@ -24,9 +24,22 @@ class IndexLine extends Component
         $this->emit('chore_instance.completed', $this->chore_instance->id);
     }
 
-    public function snoozeDay()
+    public function snoozeUntilTomorrow()
     {
-        $this->chore_instance->due_date = $this->chore_instance->due_date->addDay();
+        $this->chore_instance->due_date = today()->addDay();
+        $this->chore_instance->save();
+    }
+
+    public function snoozeUntilWeekend()
+    {
+        $today = today();
+
+        if ($today->isWeekend()) {
+            $this->chore_instance->due_date = $today->startOfWeek()->addDays(12);
+        } else {
+            $this->chore_instance->due_date = $today->startOfWeek()->addDays(5);
+        }
+
         $this->chore_instance->save();
     }
 }
