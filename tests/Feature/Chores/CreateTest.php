@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Chores;
 
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
