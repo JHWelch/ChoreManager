@@ -14,7 +14,8 @@ class Index extends Component
     public $chore_instance_groups;
 
     public $listeners = [
-        'chore_instance.completed' => 'choreInstanceCompleted',
+        'chore_instance.completed' => 'choreInstanceUpdated',
+        'chore_instance.updated'   => 'choreInstanceUpdated',
     ];
 
     public function mount()
@@ -22,9 +23,10 @@ class Index extends Component
         $this->updateChoreInstanceList();
     }
 
-    public function choreInstanceCompleted()
+    public function choreInstanceUpdated()
     {
         $this->updateChoreInstanceList();
+        $this->dispatchBrowserEvent('choreinstanceupdated');
     }
 
     public function updateChoreInstanceList()

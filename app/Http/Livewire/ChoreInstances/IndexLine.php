@@ -28,6 +28,7 @@ class IndexLine extends Component
     {
         $this->chore_instance->due_date = today()->addDay();
         $this->chore_instance->save();
+        $this->emit('chore_instance.updated', $this->chore_instance->id);
     }
 
     public function snoozeUntilWeekend()
@@ -41,5 +42,6 @@ class IndexLine extends Component
         }
 
         $this->chore_instance->save();
+        $this->emit('chore_instance.updated', $this->chore_instance->id);
     }
 }
