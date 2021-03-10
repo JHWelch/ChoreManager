@@ -77,7 +77,7 @@ class EditTest extends TestCase
 
         // Assert
         // The due date is set.
-        $component->assertSet('chore_instance.due_date', $date->toDateString());
+        $component->assertSet('chore_instance.due_date', $date->startOfDay());
     }
 
     /** @test */
@@ -102,6 +102,6 @@ class EditTest extends TestCase
 
         // Assert
         // The due date is set.
-        $component->assertSet('chore_instance.due_date', $date->addDay()->toDateString());
+        $component->assertSet('chore_instance.due_date', $date->addDay()->startOfDay());
     }
 }
