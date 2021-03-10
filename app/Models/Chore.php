@@ -22,6 +22,10 @@ class Chore extends Model
         5 => 'Yearly',
     ];
 
+    protected $attributes = [
+        'frequency_id' => 0,
+    ];
+
     public static function frequenciesAsSelectOptions()
     {
         $frequencies = [];
