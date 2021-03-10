@@ -1,12 +1,11 @@
 {
-    "name": "laravel/laravel",
+    "name": "jhwelch/choremanager",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "An application for managing household chores.",
     "keywords": [
-        "framework",
-        "laravel"
+        "chores",
+        "home"
     ],
-    "license": "MIT",
     "require": {
         "php": "^8.0",
         "fideloper/proxy": "^4.4",
