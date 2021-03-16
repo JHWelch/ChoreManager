@@ -35,17 +35,19 @@ class Index extends Component
             ->onlyWithNextInstance()
             ->orderBy('chore_instances.due_date')
             ->get()
-            ->mapToGroups(fn ($chore) => [$chore->due_date->toDateString() => $chore])
-            ->mapToGroups(function ($date_group) {
-                $due_date = $date_group->first()->due_date->startOfDay();
+            ->mapToGroups(function ($chore_instance) {
+                $due_date = $chore_instance->due_date->startOfDay();
 
                 if ($due_date < today()) {
-                    return ['past_due' => $date_group];
+                    return ['past_due' => $chore_instance];
                 } elseif ($due_date == today()) {
-                    return ['today' => $date_group];
+                    return ['today' => $chore_instance];
                 }
 
-                return ['future' => $date_group];
+                return ['future' => $chore_instance];
+            })
+            ->map(function ($date_group) {
+                return $date_group->mapToGroups(fn ($chore) => [$chore->due_date->toDateString() => $chore]);
             });
     }
 

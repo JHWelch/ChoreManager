@@ -20,16 +20,17 @@
   @else
     <nav class="relative h-full overflow-y-auto" aria-label="Chores">
       @foreach($chore_instance_groups as $group => $chore_instance_date_groups)
-        <div wire:key="{{ $group }}">
-          <h1>{{ $group }}</h1>
+        <div wire:key="{{ $group }}" class="mb-4">
+          <h2>{{ Str::snakeToLabel($group) }}</h2>
+
           @foreach ($chore_instance_date_groups as $date => $chore_instances)
             <div wire:key="{{ $date }}">
               @php
                 $now = today();
                 $due_date = \Carbon\Carbon::parse($date);
-                $difference = $due_date->diff($now)->days < 1
-                  ? 'today'
-                  : $due_date->diffForHumans();
+               $difference = $due_date->diff(today())->days < 1
+                 ? 'today'
+                 : $due_date->diffForHumans();
               @endphp
               <div class="sticky top-0 z-10 px-6 py-1 text-sm font-medium text-gray-500 border-t border-b border-gray-200 bg-gray-50">
                 <h3>{{ $difference }}</h3>
