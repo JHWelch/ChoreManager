@@ -45,7 +45,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Assert
         // Chore instance due date is in 1 day.
         $this->assertEquals(
-            Carbon::now()->addDay()->toDateString(),
+            today()->addDay()->toDateString(),
             $chore->nextChoreInstance->due_date->toDateString(),
         );
     }
@@ -66,7 +66,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Assert
         // Chore instance due date is in 1 day.
         $this->assertEquals(
-            Carbon::now()->addWeek()->toDateString(),
+            today()->addWeek()->toDateString(),
             $chore->nextChoreInstance->due_date->toDateString(),
         );
     }
@@ -87,7 +87,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Assert
         // Chore instance due date is in 1 month.
         $this->assertEquals(
-            Carbon::now()->addMonthNoOverflow()->toDateString(),
+            today()->addMonthNoOverflow()->toDateString(),
             $chore->nextChoreInstance->due_date->toDateString(),
         );
     }
@@ -108,7 +108,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Assert
         // Chore instance due date is in 1 month.
         $this->assertEquals(
-            Carbon::now()->addQuarterNoOverflow()->toDateString(),
+            today()->addQuarterNoOverflow()->toDateString(),
             $chore->nextChoreInstance->due_date->toDateString(),
         );
     }
@@ -129,7 +129,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Assert
         // Chore instance due date is in 1 month.
         $this->assertEquals(
-            Carbon::now()->addYearNoOverflow()->toDateString(),
+            today()->addYearNoOverflow()->toDateString(),
             $chore->nextChoreInstance->due_date->toDateString(),
         );
     }

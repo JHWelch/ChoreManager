@@ -25,7 +25,7 @@ class ChoreInstance extends Model
     {
         $this->chore->createNewInstance();
 
-        $this->completed_date = Carbon::now();
+        $this->completed_date = today();
         $this->save();
     }
 
