@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ChoreInstance;
+namespace Tests\Feature\ChoreInstances;
 
 use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
