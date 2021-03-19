@@ -20,21 +20,35 @@
   @else
     <nav class="relative h-full overflow-y-auto" aria-label="Chores">
       @foreach($chore_instance_groups as $group => $chore_instance_date_groups)
-        <div wire:key="{{ $group }}" class="mb-4">
-          <h2>{{ Str::snakeToLabel($group) }}</h2>
+        @php
+          $outer_class = match($group) {
+            'past_due' => 'border border-red-300 bg-red-100',
+            'today' => 'border border-yellow-300 bg-yellow-100',
+            default => 'bg-white'
+          }
+        @endphp
+
+        <div wire:key="{{ $group }}" class="mb-4 overflow-hidden shadow sm:rounded-lg {{ $outer_class }}">
+          <div class="flex justify-center w-full px-3 py-2">
+            <h2 class="text-xl ">{{ Str::snakeToLabel($group) }}</h2>
+          </div>
 
           @foreach ($chore_instance_date_groups as $date => $chore_instances)
+            @php
+              $now = today();
+              $due_date = \Carbon\Carbon::parse($date);
+              $difference = $due_date->diff(today())->days < 1
+                ? 'today'
+                : $due_date->diffForHumans();
+            @endphp
+
             <div wire:key="{{ $date }}">
-              @php
-                $now = today();
-                $due_date = \Carbon\Carbon::parse($date);
-               $difference = $due_date->diff(today())->days < 1
-                 ? 'today'
-                 : $due_date->diffForHumans();
-              @endphp
-              <div class="sticky top-0 z-10 px-6 py-1 text-sm font-medium text-gray-500 border-t border-b border-gray-200 bg-gray-50">
-                <h3>{{ $difference }}</h3>
-              </div>
+              @if ($group !== 'today')
+                <div class="sticky top-0 z-10 px-6 py-1 text-sm font-medium text-gray-500 border-t border-b border-gray-200 bg-gray-50">
+                  <h3>{{ $difference }}</h3>
+                </div>
+              @endif
+
               <ul class="relative z-0 divide-y divide-gray-200">
                 @foreach ($chore_instances as $chore_instance)
                   <livewire:chore-instances.index-line :key="$chore_instance['chore_instance_id']" :chore="$chore_instance" />
