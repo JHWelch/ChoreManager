@@ -74,7 +74,8 @@ class Chore extends Model
             ->leftJoin('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
-            });
+            })
+            ->withCasts(['due_date' => 'datetime']);
     }
 
     /**
@@ -89,7 +90,8 @@ class Chore extends Model
             ->join('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
-            });
+            })
+            ->withCasts(['due_date' => 'datetime']);
     }
 
     public function scopeNullDueDatesAtEnd($query)
@@ -99,15 +101,13 @@ class Chore extends Model
 
     public function createNewInstance()
     {
-        $now       = Carbon::now();
-
         $next_date = match ($this->frequency_id) {
             0 => null,
-            1 => $now->addDay(),
-            2 => $now->addWeek(),
-            3 => $now->addMonthNoOverflow(),
-            4 => $now->addQuarterNoOverflow(),
-            5 => $now->addYearNoOverflow(),
+            1 => today()->addDay(),
+            2 => today()->addWeek(),
+            3 => today()->addMonthNoOverflow(),
+            4 => today()->addQuarterNoOverflow(),
+            5 => today()->addYearNoOverflow(),
         };
 
         if ($next_date === null) {

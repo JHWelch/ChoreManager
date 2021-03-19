@@ -66,7 +66,7 @@ class EditTest extends TestCase
         // Arrange
         // Create a chore with a chore instance
         $this->testUser();
-        $date  = Carbon::now()->addDays(5);
+        $date  = today()->addDays(5);
         $chore = Chore::factory()->has($chore_instance = ChoreInstance::factory([
             'due_date' => $date,
         ]))->create();

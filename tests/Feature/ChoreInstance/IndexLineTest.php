@@ -40,7 +40,7 @@ class IndexLineTest extends TestCase
     {
         // Arrange
         // Create a chore with an instance
-        $now   = \Carbon\Carbon::now();
+        $now   = today();
         $user  = $this->testUser();
         $chore = Chore::factory(
             ['frequency_id' => 1]
