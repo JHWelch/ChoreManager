@@ -35,11 +35,14 @@
 
           @foreach ($chore_instance_date_groups as $date => $chore_instances)
             @php
-              $now = today();
-              $due_date = \Carbon\Carbon::parse($date);
-              $difference = $due_date->diff(today())->days < 1
-                ? 'today'
-                : $due_date->diffForHumans();
+              $due_date = \Carbon\Carbon::parse($date)->startOfDay();
+              $difference = ucfirst($due_date->diffForHumans(
+                today(),
+                [
+                  'options' => \Carbon\CarbonInterface::ONE_DAY_WORDS,
+                  'syntax'  => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW
+                ]
+              ));
             @endphp
 
             <div wire:key="{{ $date }}">
