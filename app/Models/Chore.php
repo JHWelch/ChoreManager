@@ -23,7 +23,8 @@ class Chore extends Model
     ];
 
     protected $attributes = [
-        'frequency_id' => 0,
+        'frequency_id'       => 0,
+        'frequency_interval' => 1,
     ];
 
     public static function frequenciesAsSelectOptions()

@@ -24,11 +24,12 @@ class Save extends Component
     protected function rules()
     {
         return  [
-            'chore.title'             => 'string|required',
-            'chore.description'       => 'string|nullable',
-            'chore.frequency_id'      => Rule::in(array_keys(Chore::FREQUENCIES)),
-            'chore.user_id'           => 'required',
-            'chore_instance.due_date' => 'date|nullable|date|after_or_equal:today',
+            'chore.title'              => 'string|required',
+            'chore.description'        => 'string|nullable',
+            'chore.frequency_id'       => Rule::in(array_keys(Chore::FREQUENCIES)),
+            'chore.frequency_interval' => 'min:1',
+            'chore.user_id'            => 'required',
+            'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
         ];
     }
 
