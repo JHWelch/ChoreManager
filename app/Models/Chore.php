@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Enums\Frequency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -13,15 +13,6 @@ class Chore extends Model
 
     protected $guarded;
 
-    const FREQUENCIES = [
-        0 => 'Does not Repeat',
-        1 => 'Daily',
-        2 => 'Weekly',
-        3 => 'Monthly',
-        4 => 'Quarterly',
-        5 => 'Yearly',
-    ];
-
     protected $attributes = [
         'frequency_id'       => 0,
         'frequency_interval' => 1,
@@ -31,7 +22,7 @@ class Chore extends Model
     {
         $frequencies = [];
 
-        foreach (self::FREQUENCIES as $key => $frequency) {
+        foreach (Frequency::FREQUENCIES as $key => $frequency) {
             $frequencies[] = ['value' => $key, 'label' => $frequency];
         }
 
@@ -50,7 +41,7 @@ class Chore extends Model
 
     public function getFrequencyAttribute()
     {
-        return self::FREQUENCIES[$this->frequency_id];
+        return Frequency::FREQUENCIES[$this->frequency_id];
     }
 
     public function choreInstances()

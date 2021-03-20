@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Chores;
 
+use App\Enums\Frequency;
 use App\Http\Livewire\Concerns\GoesBack;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -26,7 +27,7 @@ class Save extends Component
         return  [
             'chore.title'              => 'string|required',
             'chore.description'        => 'string|nullable',
-            'chore.frequency_id'       => Rule::in(array_keys(Chore::FREQUENCIES)),
+            'chore.frequency_id'       => Rule::in(array_keys(Frequency::FREQUENCIES)),
             'chore.frequency_interval' => 'min:1',
             'chore.user_id'            => 'required',
             'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Frequency;
 use App\Models\Chore;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,7 +27,7 @@ class ChoreFactory extends Factory
         return [
             'title'        => implode(' ', $this->faker->words(3)),
             'description'  => $this->faker->sentence(),
-            'frequency_id' => Arr::random(array_keys(Chore::FREQUENCIES)),
+            'frequency_id' => Arr::random(array_keys(Frequency::FREQUENCIES)),
             'user_id'      => User::factory()->create()->id,
         ];
     }
