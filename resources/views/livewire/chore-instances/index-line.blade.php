@@ -1,4 +1,12 @@
-<li class="bg-white">
+<li
+  x-data="{ show: true }"
+  x-show="show"
+  x-description="Chore Line. When completed slides out with a transition."
+  x-transition:leave="transform transition ease-in-out duration-500"
+  x-transition:leave-start="translate-x-0"
+  x-transition:leave-end="translate-x-full"
+  class="bg-white"
+>
   <div class="relative flex items-center px-6 py-5 space-x-3 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500">
     <div class="flex-1 min-w-0">
       <div class="flex w-full">
@@ -11,7 +19,7 @@
             </p>
 
             <p class="text-sm text-gray-500 truncate">
-              {{ $chore->description }}
+              {{ $chore->frequency }}
             </p>
           </a>
         </div>
@@ -20,7 +28,10 @@
           <x-snooze-button />
 
           <button
-            wire:click="complete"
+            @click="
+              show=false;
+              setTimeout($wire.complete, 500);
+            "
             @if ($chore_instance->is_completed)
               disabled
             @endif
