@@ -101,13 +101,15 @@ class Chore extends Model
 
     public function createNewInstance()
     {
+        $i = $this->frequency_interval;
+
         $next_date = match ($this->frequency_id) {
             0 => null,
-            1 => today()->addDay(),
-            2 => today()->addWeek(),
-            3 => today()->addMonthNoOverflow(),
-            4 => today()->addQuarterNoOverflow(),
-            5 => today()->addYearNoOverflow(),
+            1 => today()->addDays($i),
+            2 => today()->addWeeks($i),
+            3 => today()->addMonthNoOverflows($i),
+            4 => today()->addQuarterNoOverflows($i),
+            5 => today()->addYearNoOverflows($i),
         };
 
         if ($next_date === null) {
