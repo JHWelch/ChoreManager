@@ -27,7 +27,7 @@ class ChoreFactory extends Factory
         return [
             'title'        => implode(' ', $this->faker->words(3)),
             'description'  => $this->faker->sentence(),
-            'frequency_id' => Arr::random(array_keys(Frequency::FREQUENCIES)),
+            'frequency_id' => Arr::random(Frequency::FREQUENCIES),
             'user_id'      => User::factory()->create()->id,
         ];
     }

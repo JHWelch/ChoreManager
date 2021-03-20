@@ -18,17 +18,6 @@ class Chore extends Model
         'frequency_interval' => 1,
     ];
 
-    public static function frequenciesAsSelectOptions()
-    {
-        $frequencies = [];
-
-        foreach (Frequency::FREQUENCIES as $key => $frequency) {
-            $frequencies[] = ['value' => $key, 'label' => $frequency];
-        }
-
-        return $frequencies;
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -41,7 +30,7 @@ class Chore extends Model
 
     public function getFrequencyAttribute()
     {
-        return Frequency::FREQUENCIES[$this->frequency_id];
+        return Frequency::ADJECTIVES[$this->frequency_id];
     }
 
     public function choreInstances()

@@ -9,12 +9,30 @@ namespace App\Enums;
 class Frequency
 {
     const FREQUENCIES = [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+    ];
+
+    const ADJECTIVES = [
         0 => 'Does not Repeat',
         1 => 'Daily',
         2 => 'Weekly',
         3 => 'Monthly',
         4 => 'Quarterly',
         5 => 'Yearly',
+    ];
+
+    const NOUNS = [
+        0 => 'Does not Repeat',
+        1 => 'Days',
+        2 => 'Weeks',
+        3 => 'Months',
+        4 => 'Quarters',
+        5 => 'Years',
     ];
 
     public $frequency_id;
@@ -26,25 +44,32 @@ class Frequency
 
     public function adjective()
     {
-        return match ($this->frequency_id) {
-            0 => 'Does not Repeat',
-            1 => 'Daily',
-            2 => 'Weekly',
-            3 => 'Monthly',
-            4 => 'Quarterly',
-            5 => 'Yearly',
-        };
+        return self::ADJECTIVES[$this->frequency_id];
     }
 
     public function noun()
     {
-        return match ($this->frequency_id) {
-            0 => 'Does not Repeat',
-            1 => 'Day',
-            2 => 'Week',
-            3 => 'Month',
-            4 => 'Quarter',
-            5 => 'Year',
-        };
+        return self::NOUNS[$this->frequency_id];
+    }
+
+    public static function nounsAsSelectOptions()
+    {
+        return self::frequenciesAsSelectOptions(self::NOUNS);
+    }
+
+    public static function adjectivesAsSelectOptions()
+    {
+        return self::frequenciesAsSelectOptions(self::ADJECTIVES);
+    }
+
+    public static function frequenciesAsSelectOptions($words)
+    {
+        $frequencies = [];
+
+        foreach ($words as $key => $frequency) {
+            $frequencies[] = ['value' => $key, 'label' => $frequency];
+        }
+
+        return $frequencies;
     }
 }

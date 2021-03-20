@@ -27,7 +27,7 @@ class Save extends Component
         return  [
             'chore.title'              => 'string|required',
             'chore.description'        => 'string|nullable',
-            'chore.frequency_id'       => Rule::in(array_keys(Frequency::FREQUENCIES)),
+            'chore.frequency_id'       => Rule::in(Frequency::FREQUENCIES),
             'chore.frequency_interval' => 'min:1',
             'chore.user_id'            => 'required',
             'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
@@ -43,7 +43,7 @@ class Save extends Component
             $this->chore->user_id = Auth::id();
         }
         $this->chore_instance = $chore->nextChoreInstance ?? ChoreInstance::make();
-        $this->frequencies    = Chore::frequenciesAsSelectOptions();
+        $this->setFrequencies();
         $this->user_options   = array_values(
             Auth::user()
                 ->currentTeam
@@ -75,5 +75,17 @@ class Save extends Component
         }
 
         return $this->back();
+    }
+
+    public function updatedChoreFrequencyId()
+    {
+        $this->setFrequencies();
+    }
+
+    public function setFrequencies()
+    {
+        $this->frequencies = $this->chore->frequency_id == 0
+            ? Frequency::adjectivesAsSelectOptions()
+            : Frequency::nounsAsSelectOptions();
     }
 }
