@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Chores;
 
+use App\Enums\Frequency;
 use App\Http\Livewire\Concerns\GoesBack;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -24,11 +25,12 @@ class Save extends Component
     protected function rules()
     {
         return  [
-            'chore.title'             => 'string|required',
-            'chore.description'       => 'string|nullable',
-            'chore.frequency_id'      => Rule::in(array_keys(Chore::FREQUENCIES)),
-            'chore.user_id'           => 'required',
-            'chore_instance.due_date' => 'date|nullable|date|after_or_equal:today',
+            'chore.title'              => 'string|required',
+            'chore.description'        => 'string|nullable',
+            'chore.frequency_id'       => Rule::in(Frequency::FREQUENCIES),
+            'chore.frequency_interval' => 'min:1',
+            'chore.user_id'            => 'required',
+            'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
         ];
     }
 
@@ -41,7 +43,7 @@ class Save extends Component
             $this->chore->user_id = Auth::id();
         }
         $this->chore_instance = $chore->nextChoreInstance ?? ChoreInstance::make();
-        $this->frequencies    = Chore::frequenciesAsSelectOptions();
+        $this->setFrequencies();
         $this->user_options   = array_values(
             Auth::user()
                 ->currentTeam
@@ -73,5 +75,17 @@ class Save extends Component
         }
 
         return $this->back();
+    }
+
+    public function updatedChoreFrequencyId()
+    {
+        $this->setFrequencies();
+    }
+
+    public function setFrequencies()
+    {
+        $this->frequencies = $this->chore->frequency_id == 0
+            ? Frequency::adjectivesAsSelectOptions()
+            : Frequency::nounsAsSelectOptions();
     }
 }

@@ -5,12 +5,31 @@
 
       <x-form.input prefix="chore" name="description" />
 
-      <x-form.select
-        name="frequency_id"
-        label="Frequency"
-        prefix="chore"
-        :options="$frequencies"
-      />
+      <div class="flex flex-col">
+        <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
+
+        <div class="flex items-center space-x-2 justify-beween">
+          @if ($chore->frequency_id != 0)
+            <div class="w-1/3 text-sm font-medium">
+              Every
+            </div>
+
+            <x-form.bare.input
+              type="number"
+              min="1"
+              prefix="chore"
+              name="frequency_interval"
+              wire:model="chore.frequency_interval"
+            />
+          @endif
+
+          <x-form.bare.select
+            name="frequency_id"
+            prefix="chore"
+            :options="$frequencies"
+          />
+        </div>
+      </div>
 
       <x-form.select
         name="user_id"

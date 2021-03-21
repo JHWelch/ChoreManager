@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Enums\Frequency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -13,29 +13,10 @@ class Chore extends Model
 
     protected $guarded;
 
-    const FREQUENCIES = [
-        0 => 'Does not Repeat',
-        1 => 'Daily',
-        2 => 'Weekly',
-        3 => 'Monthly',
-        4 => 'Quarterly',
-        5 => 'Yearly',
-    ];
-
     protected $attributes = [
-        'frequency_id' => 0,
+        'frequency_id'       => 0,
+        'frequency_interval' => 1,
     ];
-
-    public static function frequenciesAsSelectOptions()
-    {
-        $frequencies = [];
-
-        foreach (self::FREQUENCIES as $key => $frequency) {
-            $frequencies[] = ['value' => $key, 'label' => $frequency];
-        }
-
-        return $frequencies;
-    }
 
     public function user()
     {
@@ -47,9 +28,12 @@ class Chore extends Model
         return $this->belongsTo(Team::class);
     }
 
+    /**
+     * @return Frequency
+     */
     public function getFrequencyAttribute()
     {
-        return self::FREQUENCIES[$this->frequency_id];
+        return new Frequency($this->frequency_id, $this->frequency_interval);
     }
 
     public function choreInstances()
@@ -101,13 +85,15 @@ class Chore extends Model
 
     public function createNewInstance()
     {
+        $i = $this->frequency_interval;
+
         $next_date = match ($this->frequency_id) {
             0 => null,
-            1 => today()->addDay(),
-            2 => today()->addWeek(),
-            3 => today()->addMonthNoOverflow(),
-            4 => today()->addQuarterNoOverflow(),
-            5 => today()->addYearNoOverflow(),
+            1 => today()->addDays($i),
+            2 => today()->addWeeks($i),
+            3 => today()->addMonthNoOverflows($i),
+            4 => today()->addQuarterNoOverflows($i),
+            5 => today()->addYearNoOverflows($i),
         };
 
         if ($next_date === null) {
