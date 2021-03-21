@@ -10,7 +10,7 @@
 
         <div class="flex items-center space-x-2 justify-beween">
           @if ($chore->frequency_id != 0)
-            <div class="w-1/3">
+            <div class="w-1/3 text-sm font-medium">
               Every
             </div>
 

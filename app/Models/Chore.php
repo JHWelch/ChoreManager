@@ -28,9 +28,12 @@ class Chore extends Model
         return $this->belongsTo(Team::class);
     }
 
+    /**
+     * @return Frequency
+     */
     public function getFrequencyAttribute()
     {
-        return Frequency::ADJECTIVES[$this->frequency_id];
+        return new Frequency($this->frequency_id, $this->frequency_interval);
     }
 
     public function choreInstances()

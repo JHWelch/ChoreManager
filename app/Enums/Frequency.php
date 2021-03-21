@@ -18,7 +18,7 @@ class Frequency
     ];
 
     const ADJECTIVES = [
-        0 => 'Does not Repeat',
+        0 => 'Does not repeat',
         1 => 'Daily',
         2 => 'Weekly',
         3 => 'Monthly',
@@ -27,7 +27,7 @@ class Frequency
     ];
 
     const NOUNS = [
-        0 => 'Does not Repeat',
+        0 => 'Does not repeat',
         1 => 'Days',
         2 => 'Weeks',
         3 => 'Months',
@@ -36,10 +36,12 @@ class Frequency
     ];
 
     public $frequency_id;
+    public $frequency_interval;
 
-    public function __construct($frequency_id)
+    public function __construct($frequency_id, $frequency_interval = 1)
     {
-        $this->frequency_id = $frequency_id;
+        $this->frequency_id       = $frequency_id;
+        $this->frequency_interval = $frequency_interval;
     }
 
     public function adjective()
@@ -71,5 +73,14 @@ class Frequency
         }
 
         return $frequencies;
+    }
+
+    public function __toString()
+    {
+        if ($this->frequency_interval === 1) {
+            return self::ADJECTIVES[$this->frequency_id];
+        }
+
+        return 'Every ' . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id]);
     }
 }
