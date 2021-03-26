@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Chore;
-use Carbon\Carbon;
+use App\Models\User;
 use Tests\TestCase;
 
 class ChoreInstanceCompleteTest extends TestCase
@@ -286,6 +286,26 @@ class ChoreInstanceCompleteTest extends TestCase
         $this->assertEquals(
             today()->addYearsNoOverflow(3)->toDateString(),
             $chore2->nextChoreInstance->due_date->toDateString(),
+        );
+    }
+
+    /** @test */
+    public function completing_a_chore_instance_creates_a_new_instance_with_same_owner()
+    {
+        // Arrange
+        // create chore with user and instance
+        $user  = User::factory()->create();
+        $chore = Chore::factory()->for($user)->withFirstInstance()->create();
+
+        // Act
+        // Complete chore instance
+        $chore->nextChoreInstance->complete();
+
+        // Assert
+        // Next chore instance has the same user
+        $this->assertEquals(
+            $user->id,
+            $chore->nextChoreInstance->user_id,
         );
     }
 }
