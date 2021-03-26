@@ -5,6 +5,7 @@ namespace Tests\Feature\ChoreInstances;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -59,5 +60,32 @@ class CreateTest extends TestCase
         // Assert
         // Chore is created, but no chore instance is created
         $this->assertDatabaseCount((new ChoreInstance)->getTable(), 0);
+    }
+
+    /** @test */
+    public function when_creating_a_chore_with_an_owner_the_chore_instance_has_the_same_owner()
+    {
+        // Arrange
+        // Create a user
+        $this->testUser();
+        $date = Carbon::now()->addDays(6);
+        $user = User::factory()->create();
+
+        // Act
+        // Create chore with an owner and a due date
+        Livewire::test(Save::class)
+            ->set('chore.title', 'Do dishes')
+            ->set('chore.description', 'Do the dishes every night.')
+            ->set('chore.frequency_id', 1)
+            ->set('chore_instance.due_date', $date)
+            ->set('chore.user_id', $user->id)
+            ->call('save');
+
+        // Assert
+        // Chore instance created with that chore and owner
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'due_date' => $date->toDateString(),
+            'user_id'  => $user->id,
+        ]);
     }
 }
