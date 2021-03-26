@@ -34,7 +34,7 @@ class IndexTest extends TestCase
         // Arrange
         // Create a chore with a chore instance
         $user  = $this->testUser();
-        $chore = Chore::factory()->for($user)->hasChoreInstances(1)->create();
+        $chore = Chore::factory()->for($user)->withFirstInstance()->create();
 
         // Act
         // Open chore instance index

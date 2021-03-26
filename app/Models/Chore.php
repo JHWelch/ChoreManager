@@ -103,6 +103,7 @@ class Chore extends Model
         ChoreInstance::create([
             'chore_id' => $this->id,
             'due_date' => $next_date,
+            'user_id'  => $this->user_id,
         ]);
     }
 }

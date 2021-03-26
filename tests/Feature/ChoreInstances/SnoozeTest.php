@@ -22,9 +22,7 @@ class SnoozeTest extends TestCase
             'user'  => $user = $this->testUser(),
             'chore' => Chore::factory()
                 ->for($user)
-                ->has(ChoreInstance::factory([
-                    'due_date' => $today,
-                ]))
+                ->withFirstInstance($today)
                 ->create(),
         ];
     }
