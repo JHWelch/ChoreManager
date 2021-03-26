@@ -1,6 +1,8 @@
 <div class="flex justify-center">
   <div class="p-8 bg-white rounded-lg shadow-md w-96">
     <form wire:submit.prevent="save" class="space-y-4">
+      <h2 class="text-lg font-medium">Chore</h2>
+
       <x-form.input prefix="chore" name="title" />
 
       <x-form.input prefix="chore" name="description" />
@@ -38,7 +40,20 @@
         :options="$user_options"
       />
 
-      <x-form.input type="date" prefix="chore_instance" name="due_date" label="Next Due Date" />
+      @if ($chore_instance->exists)
+        <h2 class="text-lg font-medium">Next Instance</h2>
+      @endif
+
+      <x-form.input type="date" prefix="chore_instance" name="due_date" label="Due Date" />
+
+      @if ($chore_instance->exists)
+        <x-form.select
+          name="user_id"
+          label="Owner"
+          prefix="chore_instance"
+          :options="$user_options"
+        />
+      @endif
 
       <x-jet-button>
         {{ __('Save') }}
