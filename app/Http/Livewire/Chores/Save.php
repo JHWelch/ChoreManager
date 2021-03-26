@@ -31,6 +31,7 @@ class Save extends Component
             'chore.frequency_interval' => 'min:1',
             'chore.user_id'            => 'required',
             'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
+            'chore_instance.user_id'   => 'nullable',
         ];
     }
 

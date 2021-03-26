@@ -5,6 +5,7 @@ namespace Tests\Feature\ChoreInstances;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -103,5 +104,31 @@ class EditTest extends TestCase
         // Assert
         // The due date is set.
         $component->assertSet('chore_instance.due_date', $date->addDay()->startOfDay());
+    }
+
+    /** @test */
+    public function a_chore_instance_can_be_assigned_to_a_new_user()
+    {
+        // Arrange
+        // Create a user with a chore assigned to a user
+        $this->testUser();
+        $user  = User::factory()->create();
+        $chore = Chore::factory()
+            ->for($user)
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Navigate to page and update chore instance owner
+        Livewire::test(Save::class, ['chore' => $chore])
+            ->set('chore_instance.user_id', $user->id)
+            ->call('save');
+
+        // Assert
+        // Chore instance exists with the chore and new user
+        $this->assertDatabaseHas((new ChoreInstance())->getTable(), [
+            'chore_id' => $chore->id,
+            'user_id'  => $user->id,
+        ]);
     }
 }
