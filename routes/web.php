@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/', fn () => redirect(route('dashboard')));
+
     Route::get('/dashboard', \App\Http\Livewire\ChoreInstances\Index::class)
         ->name('dashboard');
 
