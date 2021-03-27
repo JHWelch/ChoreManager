@@ -20,23 +20,36 @@
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
-                <th wire:click="sortBy('title')"  scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  {{ __('Title') }}
-                </th>
+                <x-sortable-table-header
+                  table="chores"
+                  column="title"
+                  :sort="$sort"
+                  :desc="$desc"
+                />
 
-                <th scope="col" class="hidden px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:block">
-                  {{ __('Description') }}
-                </th>
+                <x-sortable-table-header
+                  table="chores"
+                  column="description"
+                  class="hidden lg:block"
+                  :sort="$sort"
+                  :desc="$desc"
+                />
 
-                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  {{ __('Frequency') }}
-                </th>
+                <x-sortable-table-header
+                  table="chores"
+                  column="frequency_id"
+                  label="Frequency"
+                  :sort="$sort"
+                  :desc="$desc"
+                />
 
-                <th scope="col" class="flex px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                  <span class="hidden sm:block">{{ __('Next') }}&nbsp;</span>
-                  {{ __('Due') }}
-                  <span class="hidden sm:block">&nbsp;{{ __('Date') }}</span>
-                </th>
+                <x-sortable-table-header
+                  table="chore_instances"
+                  column="due_date"
+                  :sort="$sort"
+                  :desc="$desc"
+                />
+
               </tr>
             </thead>
             <tbody>
@@ -47,7 +60,7 @@
                     {{ $chore->title }}
                   </td>
 
-                  <td class="hidden px-6 py-4 text-sm text-gray-500 whitespace-nowrap sm:block">
+                  <td class="hidden px-6 py-4 text-sm text-gray-500 truncate whitespace-nowrap lg:block">
                     {{ $chore->description }}
                   </td>
 
