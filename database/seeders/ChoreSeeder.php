@@ -15,6 +15,12 @@ class ChoreSeeder extends Seeder
      */
     public function run()
     {
-        User::all()->each(fn ($user) => Chore::factory()->for($user)->count(5)->create());
+        User::all()->each(fn ($user) => Chore::factory([
+            'user_id' => $user->id,
+            'team_id' => $user->allTeams()->first(),
+        ])
+            ->count(5)
+            ->withFirstInstance()
+            ->create());
     }
 }

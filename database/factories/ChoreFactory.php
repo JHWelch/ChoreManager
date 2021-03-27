@@ -29,7 +29,7 @@ class ChoreFactory extends Factory
             'title'        => implode(' ', $this->faker->words(3)),
             'description'  => $this->faker->sentence(),
             'frequency_id' => Arr::random(Frequency::FREQUENCIES),
-            'user_id'      => User::factory()->create()->id,
+            'user_id'      => User::factory(),
         ];
     }
 

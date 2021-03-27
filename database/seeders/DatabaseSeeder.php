@@ -17,12 +17,20 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory()
-            ->has(Team::factory())
+            ->has(
+                Team::factory()
+                    ->state(function (array $attributes, User $user) {
+                        return ['user_id' => $user->id];
+                    })
+                    ->hasAttached(User::factory()->count(10), ['role' => 'editor']),
+                'ownedTeams'
+            )
             ->create([
                 'name'     => 'John Smith',
                 'email'    => 'jsmith@example.com',
                 'password' => Hash::make('pw1234'),
             ]);
+
         $this->call(ChoreSeeder::class);
     }
 }
