@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Frequency;
 use App\Models\Chore;
+use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -30,5 +31,22 @@ class ChoreFactory extends Factory
             'frequency_id' => Arr::random(Frequency::FREQUENCIES),
             'user_id'      => User::factory()->create()->id,
         ];
+    }
+
+    /**
+     * Indicate that the user should have a personal team.
+     *
+     * @return $this
+     */
+    public function withFirstInstance($due_date = null)
+    {
+        return $this->has(
+            ChoreInstance::factory()
+                ->state(function (array $attributes, Chore $chore) use ($due_date) {
+                    return array_merge(
+                        ['user_id' => $chore->user->id],
+                        $due_date ? ['due_date' => $due_date] : []
+                    );
+                }));
     }
 }

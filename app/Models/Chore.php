@@ -54,7 +54,12 @@ class Chore extends Model
      */
     public function scopeWithNextInstance($query)
     {
-        return $query->select('chores.*', 'chore_instances.due_date', 'chore_instances.id AS chore_instance_id')
+        return $query->select(
+            'chores.*',
+            'chore_instances.due_date',
+            'chore_instances.user_id',
+            'chore_instances.id AS chore_instance_id',
+        )
             ->leftJoin('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
@@ -70,7 +75,12 @@ class Chore extends Model
      */
     public function scopeOnlyWithNextInstance($query)
     {
-        return $query->select('chores.*', 'chore_instances.due_date', 'chore_instances.id AS chore_instance_id')
+        return $query->select(
+            'chores.*',
+            'chore_instances.due_date',
+            'chore_instances.user_id',
+            'chore_instances.id AS chore_instance_id',
+        )
             ->join('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
                     ->where('chore_instances.completed_date', null);
@@ -103,6 +113,7 @@ class Chore extends Model
         ChoreInstance::create([
             'chore_id' => $this->id,
             'due_date' => $next_date,
+            'user_id'  => $this->user_id,
         ]);
     }
 }

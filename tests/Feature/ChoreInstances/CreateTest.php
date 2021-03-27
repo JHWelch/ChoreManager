@@ -5,11 +5,9 @@ namespace Tests\Feature\ChoreInstances;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
-use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -65,35 +63,29 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_assign_a_chore_to_another_team_member()
+    public function when_creating_a_chore_with_an_owner_the_chore_instance_has_the_same_owner()
     {
         // Arrange
-        // Create team with two users, log in with first
-        $users         = User::factory()->count(2)->hasTeams()->create();
-        $team          = Team::first();
-        $assigned_user = $users->pop();
-        $chore         = Chore::factory()->raw();
-
-        $this->actingAs($users->first());
-        $users->first()->switchTeam($team);
+        // Create a user
+        $this->testUser();
+        $date = Carbon::now()->addDays(6);
+        $user = User::factory()->create();
 
         // Act
-        // Create chore, assign to user
+        // Create chore with an owner and a due date
         Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', $chore['frequency_id'])
-            ->set('chore.user_id', $assigned_user->id)
-            ->set('chore_instance.due_date', null)
+            ->set('chore.title', 'Do dishes')
+            ->set('chore.description', 'Do the dishes every night.')
+            ->set('chore.frequency_id', 1)
+            ->set('chore_instance.due_date', $date)
+            ->set('chore.user_id', $user->id)
             ->call('save');
 
         // Assert
-        // The chore is created and assigned to that user
-        $this->assertDatabaseHas((new Chore)->getTable(), [
-            'user_id'      => $assigned_user->id,
-            'title'        => $chore['title'],
-            'description'  => $chore['description'],
-            'frequency_id' => $chore['frequency_id'],
+        // Chore instance created with that chore and owner
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'due_date' => $date->toDateString(),
+            'user_id'  => $user->id,
         ]);
     }
 }

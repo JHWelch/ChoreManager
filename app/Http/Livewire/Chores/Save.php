@@ -31,6 +31,7 @@ class Save extends Component
             'chore.frequency_interval' => 'min:1',
             'chore.user_id'            => 'required',
             'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
+            'chore_instance.user_id'   => 'nullable',
         ];
     }
 
@@ -62,6 +63,7 @@ class Save extends Component
         if (! $this->chore_instance->exists) {
             if ($this->chore_instance->due_date !== null) {
                 $this->chore_instance->chore_id = $this->chore->id;
+                $this->chore_instance->user_id  = $this->chore->user_id;
                 $this->chore_instance->save();
             }
         } else {
