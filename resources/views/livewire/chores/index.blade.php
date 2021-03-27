@@ -56,7 +56,7 @@
                   </td>
 
                   <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {{ $chore->due_date->format('n/j/Y') ?? '-' }}
+                    {{ $chore->due_date?->format('n/j/Y') ?? '-' }}
                   </td>
                 </tr>
               @endforeach
