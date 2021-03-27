@@ -24,11 +24,12 @@ class Index extends Component
 
     public function loadChores()
     {
-        $this->chores = $this->choreQueryByTeamOrUser()
-            ->withNextInstance()
-            ->nullDueDatesAtEnd()
-            ->orderBy($this->sort, $this->desc ? 'desc' : 'asc')
-            ->get();
+        $query = $this->choreQueryByTeamOrUser()->withNextInstance();
+        $query = $this->sort === 'chore_instances.due_date' && ! $this->desc
+            ? $query->nullDueDatesAtEnd()
+            : $query->orderBy($this->sort, $this->desc ? 'desc' : 'asc');
+
+        $this->chores = $query->get();
     }
 
     public function sortBy($column)

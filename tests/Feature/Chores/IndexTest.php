@@ -140,6 +140,7 @@ class IndexTest extends TestCase
         // Act
         // Navigate to index and sort by title
         $component = Livewire::test(Index::class)
+            ->set('sort', 'chores.title') // Default is due date.
             ->call('sortBy', 'chore_instances.due_date');
 
         // Assert
