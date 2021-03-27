@@ -22,7 +22,6 @@ trait FiltersByTeamOrUser
      */
     public function choreQueryByTeamOrUser($filter_by_chore_owner = true)
     {
-        ray($filter_by_chore_owner);
         if ($this->team_or_user === 'team') {
             return Auth::user()->currentTeam->chores();
         } else {
