@@ -37,6 +37,16 @@ class CalendarToken extends Model
             );
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function getIsTeamCalendarAttribute()
     {
         return $this->team_id !== null;
@@ -45,5 +55,14 @@ class CalendarToken extends Model
     public function getIsUserCalendarAttribute()
     {
         return ! $this->is_team_calendar;
+    }
+
+    public function getDisplayNameAttribute()
+    {
+        return $this->name ?? (
+            $this->team_id
+                ? "{$this->team->name} Chores"
+                : "{$this->user->name}'s Chores"
+        );
     }
 }

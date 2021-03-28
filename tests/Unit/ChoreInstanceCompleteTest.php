@@ -4,10 +4,13 @@ namespace Tests\Unit;
 
 use App\Models\Chore;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ChoreInstanceCompleteTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function do_not_repeat_chore_creates_no_instance()
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\CalendarTokens;
 
 use App\Models\CalendarToken;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -10,6 +11,7 @@ use Livewire\Component;
 class Index extends Component
 {
     public CalendarToken $calendar_token;
+    public Collection $calendar_tokens;
 
     public $calendar_type = 'user';
 
@@ -37,6 +39,12 @@ class Index extends Component
     {
         $this->teams          = Auth::user()->allTeams()->toOptionsArray();
         $this->calendar_token = CalendarToken::make();
+        $this->loadCalendarTokens();
+    }
+
+    public function loadCalendarTokens()
+    {
+        $this->calendar_tokens = Auth::user()->calendarTokens;
     }
 
     public function addCalendarLink()
