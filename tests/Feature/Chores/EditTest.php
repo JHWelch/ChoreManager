@@ -17,7 +17,7 @@ class EditTest extends TestCase
     {
         // Arrange
         // Create a chore
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
 
         // Act
@@ -34,7 +34,7 @@ class EditTest extends TestCase
     {
         // Arrange
         // Create a user and make a chore
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::create([
             'user_id'      => $user->id,
             'title'        => 'Do dishes',
@@ -58,7 +58,7 @@ class EditTest extends TestCase
     {
         // Arrange
         // Create a user and their chore
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
 
         // Act

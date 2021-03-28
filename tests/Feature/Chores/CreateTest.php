@@ -34,7 +34,7 @@ class CreateTest extends TestCase
     public function can_create_chore()
     {
         // Arrange
-        $user = $this->testUser();
+        $user = $this->testUser()['user'];
 
         // Act
         Livewire::test(Save::class)

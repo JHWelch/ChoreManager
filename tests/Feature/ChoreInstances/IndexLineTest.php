@@ -18,7 +18,7 @@ class IndexLineTest extends TestCase
     {
         // Arrange
         // Create user and a chore Instance
-        $user           = $this->testUser();
+        $user           = $this->testUser()['user'];
         $chore          = Chore::factory()->for($user)->withFirstInstance()->create();
         $chore_instance = $chore->nextChoreInstance;
 
@@ -41,7 +41,7 @@ class IndexLineTest extends TestCase
         // Arrange
         // Create a chore with an instance
         $now   = today();
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::factory(
             ['frequency_id' => 1]
         )

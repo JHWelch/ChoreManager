@@ -18,8 +18,11 @@ abstract class TestCase extends BaseTestCase
     protected function testUser()
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
-        $user->switchTeam(Team::first());
+        $user->switchTeam($team = Team::first());
 
-        return $user;
+        return [
+            'user' => $user,
+            'team' => $team,
+        ];
     }
 }

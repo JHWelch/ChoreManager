@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Chore::class);
     }
+
+    public function calendarTokens()
+    {
+        return $this->hasMany(CalendarToken::class);
+    }
 }

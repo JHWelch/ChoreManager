@@ -22,7 +22,7 @@ class EditTest extends TestCase
     {
         // Arrange
         // Create a user and a chore for that user without a date
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::factory()
             ->for($user)
             ->create();
@@ -47,7 +47,7 @@ class EditTest extends TestCase
     {
         // Arrange
         // Create a user and a chore with a chore instance
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->withFirstInstance()->create();
 
         // Act
