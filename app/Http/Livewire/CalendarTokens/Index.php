@@ -9,8 +9,10 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public CalendarToken $calendar_token;
+
     public $calendar_type = 'user';
-    public $team_id;
+
     public $teams;
     public $calendar_types = [
         [
@@ -26,23 +28,29 @@ class Index extends Component
     ];
 
     protected $rules = [
-        'calendar_type' => 'in:user,team',
-        'team_id'       => 'required_if:calendar_type,team',
+        'calendar_type'          => 'in:user,team',
+        'calendar_token.team_id' => 'required_if:calendar_type,team',
     ];
 
     public function mount()
     {
-        $this->teams = Auth::user()->allTeams()->toOptionsArray();
+        $this->teams          = Auth::user()->allTeams()->toOptionsArray();
+        $this->calendar_token = CalendarToken::make();
     }
 
     public function addCalendarLink()
     {
         $this->validate();
 
-        CalendarToken::create([
-            'user_id' => Auth::id(),
-            'team_id' => $this->calendar_type === 'team' ? $this->team_id : null,
-            'token'   => Str::uuid(),
-        ]);
+        if ($this->calendar_type !== 'team') {
+            $this->calendar_token->team_id = null;
+        }
+
+        $this->calendar_token->user_id = Auth::id();
+        $this->calendar_token->token   = Str::uuid();
+
+        $this->calendar_token->save();
+
+        $this->calendar_token = CalendarToken::make();
     }
 }

@@ -22,9 +22,8 @@ class CreateTest extends TestCase
 
         // Act
         // Navigate to calendar page, set to user calendar and add.
-        Livewire::test(Index::class, [
-            'calendar_type' => 'user',
-        ])
+        Livewire::test(Index::class)
+            ->set('calendar_type', 'user')
             ->call('addCalendarLink');
 
         // Assert
@@ -38,16 +37,16 @@ class CreateTest extends TestCase
     /** @test */
     public function can_create_a_calendar_token_to_display_their_teams_chores()
     {
+        $this->withoutExceptionHandling();
         // Arrange
         // Create a user with a team.
         $userAndTeam = $this->testUser();
 
         // Act
         // Navigate to calendar page, set team to their team, and add.
-        Livewire::test(Index::class, [
-            'calendar_type'    => 'team',
-            'team_id'          => $userAndTeam['team']->id,
-        ])
+        Livewire::test(Index::class)
+            ->set('calendar_type', 'team')
+            ->set('calendar_token.team_id', $userAndTeam['team']->id)
             ->call('addCalendarLink');
 
         // Assert
@@ -67,14 +66,13 @@ class CreateTest extends TestCase
 
         // Act
         // Navigate to calendar page, set team calendar and then add
-        $component = Livewire::test(Index::class, [
-            'calendar_type' => 'team',
-        ])
+        $component = Livewire::test(Index::class)
+            ->set('calendar_type', 'team')
             ->call('addCalendarLink');
 
         // Assert
         // There is an error, nothing was created in database.
-        $component->assertHasErrors(['team_id' => 'required_if']);
+        $component->assertHasErrors(['calendar_token.team_id' => 'required_if']);
         $this->assertDatabaseCount((new CalendarToken)->getTable(), 0);
     }
 
@@ -87,10 +85,9 @@ class CreateTest extends TestCase
 
         // Act
         // Navigate to calendar page, set team to their team, but calendar type to user.
-        Livewire::test(Index::class, [
-            'calendar_type'    => 'user',
-            'team_id'          => $userAndTeam['team']->id,
-        ])
+        Livewire::test(Index::class)
+            ->set('calendar_type', 'user')
+            ->set('calendar_token.team_id', $userAndTeam['team']->id)
             ->call('addCalendarLink');
 
         // Assert

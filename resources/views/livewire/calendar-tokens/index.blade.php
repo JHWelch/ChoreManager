@@ -17,6 +17,7 @@
         />
 
         <x-form.select
+          prefix="calendar_token"
           name="team_id"
           label="Team"
           blankOption="Select Team"
