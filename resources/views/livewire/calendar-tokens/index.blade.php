@@ -51,7 +51,6 @@
   @if ($calendar_tokens->isNotEmpty())
     <x-jet-section-border />
 
-    <!-- Manage API Tokens -->
     <div class="mt-10 sm:mt-0">
       <x-jet-action-section>
         <x-slot name="title">
@@ -62,7 +61,6 @@
           {{ __('Get your link for existing calendars or delete ones you no longer need.') }}
         </x-slot>
 
-        <!-- API Token List -->
         <x-slot name="content">
           <div class="space-y-6">
             @foreach ($calendar_tokens as $token)

@@ -59,6 +59,7 @@ class Index extends Component
         $this->calendar_token->token   = Str::uuid();
 
         $this->calendar_token->save();
+        $this->loadCalendarTokens();
 
         $this->calendar_token = CalendarToken::make();
     }
