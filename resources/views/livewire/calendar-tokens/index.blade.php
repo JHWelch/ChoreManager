@@ -40,7 +40,7 @@
     </x-slot>
 
     <x-slot name="actions">
-      <x-jet-action-message class="mr-3" on="created">
+      <x-jet-action-message class="mr-3" on="calendar-token.created">
         {{ __('Created.') }}
       </x-jet-action-message>
 
