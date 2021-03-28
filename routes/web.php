@@ -30,4 +30,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/chore_instances', \App\Http\Livewire\ChoreInstances\Index::class)
         ->name('chore_instances.index');
+
+    Route::get('/calendar_links', \App\Http\Livewire\CalendarTokens\Index::class)
+        ->name('calendar_tokens.index');
 });

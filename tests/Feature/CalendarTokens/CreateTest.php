@@ -23,9 +23,9 @@ class CreateTest extends TestCase
         // Act
         // Navigate to calendar page, set to user calendar and add.
         Livewire::test(Index::class, [
-            'is_team_calendar' => false,
+            'calendar_type' => 'user',
         ])
-            ->call('add');
+            ->call('addCalendarLink');
 
         // Assert
         // Token exists.
@@ -45,10 +45,10 @@ class CreateTest extends TestCase
         // Act
         // Navigate to calendar page, set team to their team, and add.
         Livewire::test(Index::class, [
-            'is_team_calendar' => true,
+            'calendar_type'    => 'team',
             'team_id'          => $userAndTeam['team']->id,
         ])
-            ->call('add');
+            ->call('addCalendarLink');
 
         // Assert
         // Token has been created with the user and team.
@@ -68,13 +68,36 @@ class CreateTest extends TestCase
         // Act
         // Navigate to calendar page, set team calendar and then add
         $component = Livewire::test(Index::class, [
-            'is_team_calendar' => true,
+            'calendar_type' => 'team',
         ])
-            ->call('add');
+            ->call('addCalendarLink');
 
         // Assert
         // There is an error, nothing was created in database.
         $component->assertHasErrors(['team_id' => 'required_if']);
         $this->assertDatabaseCount((new CalendarToken)->getTable(), 0);
+    }
+
+    /** @test */
+    public function if_user_calendar_selected_will_not_have_team_even_if_specified()
+    {
+        // Arrange
+        // Create a user with a team.
+        $userAndTeam = $this->testUser();
+
+        // Act
+        // Navigate to calendar page, set team to their team, but calendar type to user.
+        Livewire::test(Index::class, [
+            'calendar_type'    => 'user',
+            'team_id'          => $userAndTeam['team']->id,
+        ])
+            ->call('addCalendarLink');
+
+        // Assert
+        // Token has been created with the user, but not the team
+        $this->assertDatabaseHas((new CalendarToken)->getTable(), [
+            'user_id' => $userAndTeam['user']->id,
+            'team_id' => null,
+        ]);
     }
 }
