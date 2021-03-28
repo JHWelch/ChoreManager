@@ -27,18 +27,20 @@
           value="calendar_type"
         />
 
-        <x-form.select
-          prefix="calendar_token"
-          name="team_id"
-          label="Team"
-          blankOption="Select Team"
-          :options="$teams"
-        />
+        @if ($calendar_type === 'team')
+          <x-form.select
+            prefix="calendar_token"
+            name="team_id"
+            label="Team"
+            blankOption="Select Team"
+            :options="$teams"
+          />
+        @endif
       </div>
     </x-slot>
 
     <x-slot name="actions">
-      <x-jet-action-message class="mr-3" on="created">
+      <x-jet-action-message class="mr-3" on="calendar-token.created">
         {{ __('Created.') }}
       </x-jet-action-message>
 
@@ -51,7 +53,6 @@
   @if ($calendar_tokens->isNotEmpty())
     <x-jet-section-border />
 
-    <!-- Manage API Tokens -->
     <div class="mt-10 sm:mt-0">
       <x-jet-action-section>
         <x-slot name="title">
@@ -62,7 +63,6 @@
           {{ __('Get your link for existing calendars or delete ones you no longer need.') }}
         </x-slot>
 
-        <!-- API Token List -->
         <x-slot name="content">
           <div class="space-y-6">
             @foreach ($calendar_tokens as $token)
