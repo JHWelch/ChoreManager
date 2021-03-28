@@ -62,4 +62,10 @@ class Index extends Component
 
         $this->calendar_token = CalendarToken::make();
     }
+
+    public function deleteToken(CalendarToken $token)
+    {
+        $token->delete();
+        $this->loadCalendarTokens();
+    }
 }

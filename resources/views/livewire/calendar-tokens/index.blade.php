@@ -83,10 +83,10 @@
                     {{ $token->url }}
                   </button>
 
-                  {{-- <button class="ml-6 text-sm text-red-500 cursor-pointer"
-                    wire:click="confirmApiTokenDeletion({{ $token->id }})">
+                  <button class="ml-6 text-sm text-red-500 cursor-pointer"
+                    wire:click="deleteToken({{ $token->id }})">
                     {{ __('Delete') }}
-                  </button> --}}
+                  </button>
                 </div>
               </div>
             @endforeach
