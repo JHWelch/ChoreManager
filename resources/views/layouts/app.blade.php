@@ -19,7 +19,7 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
 
         <!-- Page specific head -->
-        @stack('head');
+        @stack('head')
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
