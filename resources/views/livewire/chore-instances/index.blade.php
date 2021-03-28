@@ -23,7 +23,7 @@
         @php
           $outer_class = match($group) {
             'past_due' => 'border border-red-300 bg-red-100',
-            'today' => 'border border-yellow-300 bg-yellow-100',
+            'today' => 'border border-indigo-300 bg-indigo-100',
             default => 'bg-white'
           }
         @endphp
