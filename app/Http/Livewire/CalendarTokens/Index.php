@@ -30,6 +30,7 @@ class Index extends Component
     protected $rules = [
         'calendar_type'          => 'in:user,team',
         'calendar_token.team_id' => 'required_if:calendar_type,team',
+        'calendar_token.name'    => 'nullable',
     ];
 
     public function mount()

@@ -37,7 +37,6 @@ class CreateTest extends TestCase
     /** @test */
     public function can_create_a_calendar_token_to_display_their_teams_chores()
     {
-        $this->withoutExceptionHandling();
         // Arrange
         // Create a user with a team.
         $userAndTeam = $this->testUser();
@@ -94,6 +93,29 @@ class CreateTest extends TestCase
         // Token has been created with the user, but not the team
         $this->assertDatabaseHas((new CalendarToken)->getTable(), [
             'user_id' => $userAndTeam['user']->id,
+            'team_id' => null,
+        ]);
+    }
+
+    /** @test */
+    public function calendars_can_be_created_with_names()
+    {
+        // Arrange
+        // Create user
+        $user = $this->testUser()['user'];
+
+        // Act
+        // Navigate to page and create user calendar with a name
+        Livewire::test(Index::class)
+            ->set('calendar_type', 'user')
+            ->set('calendar_token.name', 'Chore Calendar')
+            ->call('addCalendarLink');
+
+        // Assert
+        // Calendar token exists with the given name
+        $this->assertDatabaseHas((new CalendarToken)->getTable(), [
+            'name'    => 'Chore Calendar',
+            'user_id' => $user->id,
             'team_id' => null,
         ]);
     }

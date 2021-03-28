@@ -10,6 +10,13 @@
 
     <x-slot name="form">
       <div class="col-span-8 space-y-4 lg:col-span-4">
+        <x-form.input
+          prefix="calendar_token"
+          name="name"
+          placeholder="Optional"
+        />
+
+
         <x-form.detailed-options
           title="Calendar Type"
           :options="$calendar_types"
