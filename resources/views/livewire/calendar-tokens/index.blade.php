@@ -27,13 +27,15 @@
           value="calendar_type"
         />
 
-        <x-form.select
-          prefix="calendar_token"
-          name="team_id"
-          label="Team"
-          blankOption="Select Team"
-          :options="$teams"
-        />
+        @if ($calendar_type === 'team')
+          <x-form.select
+            prefix="calendar_token"
+            name="team_id"
+            label="Team"
+            blankOption="Select Team"
+            :options="$teams"
+          />
+        @endif
       </div>
     </x-slot>
 
