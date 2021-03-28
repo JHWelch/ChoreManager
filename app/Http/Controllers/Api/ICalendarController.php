@@ -11,7 +11,7 @@ use Spatie\IcalendarGenerator\Components\Event;
 
 class ICalendarController extends Controller
 {
-    public function index(Request $request, $token)
+    public function show(Request $request, $token)
     {
         $calendar_token = CalendarToken::getToken($token);
 

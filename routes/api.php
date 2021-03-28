@@ -18,5 +18,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/ical/{token}', [\App\Http\Controllers\Api\ICalendarController::class, 'index'])
-    ->name('icalendar.index');
+Route::get('/ical/{token}', [\App\Http\Controllers\Api\ICalendarController::class, 'show'])
+    ->name('icalendar.show');

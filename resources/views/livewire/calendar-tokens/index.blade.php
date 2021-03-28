@@ -65,15 +65,15 @@
               <div class="flex items-center justify-between">
                 <div class="flex flex-col">
                   <div class="text-lg">{{ $token->display_name }}</div>
-                  <div class="text-sm text-gray-400">
+                  <div class="text-sm text-gray-500">
                     {{ $token->full_type_name }}
                   </div>
                 </div>
 
                 <div class="flex items-center">
-                  <button class="underline cursor-pointer">
+                  <div class="text-xs text-gray-400">
                     {{ $token->url }}
-                  </button>
+                  </div>
 
                   <button class="ml-6 text-sm text-red-500 cursor-pointer"
                     wire:click="confirmApiTokenDeletion({{ $token->id }})">

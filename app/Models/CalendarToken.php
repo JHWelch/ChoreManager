@@ -72,4 +72,9 @@ class CalendarToken extends Model
             ? "Team: {$this->team->name}"
             : "User: {$this->user->name}";
     }
+
+    public function getURLAttribute()
+    {
+        return route('icalendar.show', ['token' => $this->token]);
+    }
 }
