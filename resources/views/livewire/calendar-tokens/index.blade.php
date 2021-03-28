@@ -63,21 +63,17 @@
           <div class="space-y-6">
             @foreach ($calendar_tokens as $token)
               <div class="flex items-center justify-between">
-                <div>
-                  {{ $token->display_name }}
+                <div class="flex flex-col">
+                  <div class="text-lg">{{ $token->display_name }}</div>
+                  <div class="text-sm text-gray-400">
+                    {{ $token->full_type_name }}
+                  </div>
                 </div>
 
                 <div class="flex items-center">
-                  {{-- @if ($token->last_used_at)
-                    <div class="text-sm text-gray-400">
-                      {{ __('Last used') }} {{ $token->last_used_at->diffForHumans() }}
-                    </div>
-                  @endif --}}
-
-                  {{-- <button class="ml-6 text-sm text-gray-400 underline cursor-pointer"
-                    wire:click="manageApiTokenPermissions({{ $token->id }})">
-                    {{ __('Permissions') }}
-                  </button> --}}
+                  <button class="underline cursor-pointer">
+                    {{ $token->url }}
+                  </button>
 
                   <button class="ml-6 text-sm text-red-500 cursor-pointer"
                     wire:click="confirmApiTokenDeletion({{ $token->id }})">

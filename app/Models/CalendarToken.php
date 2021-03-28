@@ -60,9 +60,16 @@ class CalendarToken extends Model
     public function getDisplayNameAttribute()
     {
         return $this->name ?? (
-            $this->team_id
+            $this->is_team_calendar
                 ? "{$this->team->name} Chores"
                 : "{$this->user->name}'s Chores"
         );
+    }
+
+    public function getFullTypeNameAttribute()
+    {
+        return $this->is_team_calendar
+            ? "Team: {$this->team->name}"
+            : "User: {$this->user->name}";
     }
 }
