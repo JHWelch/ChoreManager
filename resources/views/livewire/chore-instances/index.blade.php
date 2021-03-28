@@ -28,7 +28,7 @@
           }
         @endphp
 
-        <div wire:key="{{ $group }}" class="mb-4 overflow-hidden shadow sm:rounded-lg {{ $outer_class }}">
+        <div wire:key="{{ $group }}" class="mb-4 shadow sm:rounded-lg {{ $outer_class }}">
           <div class="flex justify-center w-full px-3 py-2">
             <h2 class="text-xl ">{{ Str::snakeToLabel($group) }}</h2>
           </div>
@@ -52,7 +52,7 @@
                 </div>
               @endif
 
-              <ul class="relative z-0 divide-y divide-gray-200">
+              <ul class="relative divide-y divide-gray-200">
                 @foreach ($chore_instances as $chore_instance)
                   <livewire:chore-instances.index-line :key="$chore_instance['chore_instance_id']" :chore="$chore_instance" />
                 @endforeach

@@ -8,7 +8,13 @@
     x-cloak
     @click.away="show = false"
     x-on:choreinstanceupdated.window="show = false"
-    class="absolute top-0 right-16 z-50 flex flex-col items-center justify-between w-36 space-y-2.5 p-2.5 bg-indigo-400 border border-indigo-500 rounded-xl"
+    x-transition:enter="transform ease-out duration-200 transition"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="absolute -top-0.5 right-16 z-50 flex flex-col items-center justify-between w-36 space-y-2.5 p-2.5 bg-indigo-400 border border-indigo-500 rounded-xl"
   >
     <span class="font-semibold">Snooze Until</span>
     <x-popover-button click="snoozeUntilTomorrow">
