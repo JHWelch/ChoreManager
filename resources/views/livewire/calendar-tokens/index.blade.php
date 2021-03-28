@@ -1,3 +1,7 @@
+@push('head')
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+@endpush
+
 <div>
   <x-jet-form-section submit="addCalendarLink">
     <x-slot name="title">
@@ -71,14 +75,18 @@
                 </div>
 
                 <div class="flex items-center">
-                  <div class="text-xs text-gray-400">
+                  <button
+                    id="url-{{ $loop->index }}"
+                    data-clipboard-action="copy"
+                    data-clipboard-target="#url-{{ $loop->index }}"
+                    class="text-xs text-gray-400 underline cursor-pointer url-link">
                     {{ $token->url }}
-                  </div>
+                  </button>
 
-                  <button class="ml-6 text-sm text-red-500 cursor-pointer"
+                  {{-- <button class="ml-6 text-sm text-red-500 cursor-pointer"
                     wire:click="confirmApiTokenDeletion({{ $token->id }})">
                     {{ __('Delete') }}
-                  </button>
+                  </button> --}}
                 </div>
               </div>
             @endforeach
@@ -87,4 +95,8 @@
       </x-jet-action-section>
     </div>
   @endif
+
+  <script>
+    new ClipboardJS('.url-link');
+  </script>
 </div>
