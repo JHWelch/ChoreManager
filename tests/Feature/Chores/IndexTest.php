@@ -20,7 +20,7 @@ class IndexTest extends TestCase
     {
         // Arrange
         // Create and act as a user
-        $this->testUser();
+        $this->testUser()['user'];
 
         // Act
         // Navigate to the Chores index page
@@ -36,7 +36,7 @@ class IndexTest extends TestCase
     {
         // Arrange
         // create a user and some chores
-        $user = $this->testUser();
+        $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
             ->state(new Sequence(
@@ -65,10 +65,9 @@ class IndexTest extends TestCase
     /** @test */
     public function chores_can_be_sorted_by_title()
     {
-        $this->withoutExceptionHandling();
         // Arrange
         // Create chores with known titles'
-        $user = $this->testUser();
+        $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
             ->sequence(
@@ -94,7 +93,7 @@ class IndexTest extends TestCase
     {
         // Arrange
         // Create chores with known titles'
-        $user = $this->testUser();
+        $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
             ->sequence(
@@ -123,7 +122,7 @@ class IndexTest extends TestCase
         $date1  = today()->addDays(1);
         $date2  = today()->addDays(2);
         $date3  = today()->addDays(3);
-        $user   = $this->testUser();
+        $user   = $this->testUser()['user'];
         $chores = Chore::factory()
             ->count(3)
             ->sequence(
@@ -154,7 +153,7 @@ class IndexTest extends TestCase
         $this->withoutExceptionHandling();
         // Arrange
         // Create chores with known titles'
-        $user = $this->testUser();
+        $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
             ->sequence(

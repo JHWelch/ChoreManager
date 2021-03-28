@@ -17,7 +17,7 @@ class IndexTest extends TestCase
     {
         // Arrange
         // Create a test user
-        $this->testUser();
+        $this->testUser()['user'];
 
         // Act
         // Navigate to Chore instance Index page
@@ -33,7 +33,7 @@ class IndexTest extends TestCase
     {
         // Arrange
         // Create a chore with a chore instance
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->withFirstInstance()->create();
 
         // Act
@@ -50,7 +50,7 @@ class IndexTest extends TestCase
     {
         // Arrange
         // Createa a chore without chore instance
-        $user  = $this->testUser();
+        $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
 
         // Act
