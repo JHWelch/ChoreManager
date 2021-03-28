@@ -15,7 +15,7 @@ class ICalendarController extends Controller
     {
         $calendar_token = CalendarToken::getToken($token);
 
-        $cal = Calendar::create('Your Chores');
+        $cal = Calendar::create($calendar_token->name);
 
         $calendar_token
             ->chores()
@@ -29,9 +29,11 @@ class ICalendarController extends Controller
                 );
             });
 
+        $filename = preg_replace("/[^a-z0-9\.]/", '', strtolower($calendar_token->name));
+
         return response($cal->get(), 200, [
             'Content-Type'        => 'text/calendar',
-            'Content-Disposition' => 'attachment; filename="my-awesome-calendar.ics"',
+            'Content-Disposition' => "attachment; filename=\"{$filename}.ics\"",
             'charset'             => 'utf-8',
          ]);
     }
