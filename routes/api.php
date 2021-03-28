@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/ical/{token}', [\App\Http\Controllers\Api\ICalendarController::class, 'index'])
+    ->name('icalendar.index');
