@@ -38,7 +38,7 @@ class ICalendarTest extends TestCase
 
         // Act
         // Call ICalendar route with token key
-        $response = $this->get(route('icalendar.index', ['token' => 'fake_uuid']));
+        $response = $this->get(route('icalendar.show', ['token' => 'fake_uuid']));
 
         // Assert
         // Calendar output has names
@@ -82,7 +82,7 @@ class ICalendarTest extends TestCase
 
         // Act
         // Call ICalendar route with token key
-        $response = $this->get(route('icalendar.index', ['token' => 'fake_uuid']));
+        $response = $this->get(route('icalendar.show', ['token' => 'fake_uuid']));
 
         // Assert
         // Calendar output has names
