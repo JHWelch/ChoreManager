@@ -16,18 +16,7 @@ class Index extends Component
     public $calendar_type = 'user';
 
     public $teams;
-    public $calendar_types = [
-        [
-            'label'       => 'User Calendar',
-            'value'       => 'user',
-            'description' => 'This calendar will include upcoming chores assigned to you, across Teams.',
-        ],
-        [
-            'label'       => 'Team Calendar',
-            'value'       => 'team',
-            'description' => 'This calendar will include upcoming chores for everyone in a given Team.',
-        ],
-    ];
+    public $calendar_types = \App\Models\CalendarToken::CALENDAR_TYPES;
 
     protected $rules = [
         'calendar_type'          => 'in:user,team',

@@ -9,6 +9,19 @@ class CalendarToken extends Model
 {
     use HasFactory;
 
+    const CALENDAR_TYPES = [
+        [
+            'label'       => 'User Calendar',
+            'value'       => 'user',
+            'description' => 'This calendar will include upcoming chores assigned to you, across Teams.',
+        ],
+        [
+            'label'       => 'Team Calendar',
+            'value'       => 'team',
+            'description' => 'This calendar will include upcoming chores for everyone in a given Team.',
+        ],
+    ];
+
     protected $guarded = [];
 
     public static function getToken($token)
