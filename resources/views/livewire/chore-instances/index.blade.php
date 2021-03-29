@@ -1,4 +1,4 @@
-<div class="h-full">
+<div class="max-h-full">
   <div class="flex justify-between px-2 pb-4 align-middle sm:px-0">
     <div>
       <h1 class="text-xl">Upcoming Chores</h1>
