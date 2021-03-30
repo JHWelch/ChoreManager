@@ -55,7 +55,7 @@
             <tbody>
               <!-- Odd row -->
               @foreach ($chores as $chore)
-                <tr onclick="window.location='{{ route('chores.edit', ['chore' => $chore]) }}';" class="cursor-pointer {{ ! ($loop->index % 2) ? 'bg-white' : 'bg-gray-50'}}">
+                <tr onclick="window.location='{{ route('chores.show', ['chore' => $chore]) }}';" class="cursor-pointer {{ ! ($loop->index % 2) ? 'bg-white' : 'bg-gray-50'}}">
                   <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                     {{ $chore->title }}
                   </td>

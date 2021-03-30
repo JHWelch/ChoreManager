@@ -11,7 +11,7 @@
     <div class="flex-1 min-w-0">
       <div class="flex w-full">
         <div class="w-8/12">
-          <a href="{{ route('chores.edit', ['chore' => $chore]) }}" class="focus:outline-none">
+          <a href="{{ route('chores.show', ['chore' => $chore]) }}" class="focus:outline-none">
             <!-- Extend touch target to entire panel -->
             {{-- <span class="absolute inset-0" aria-hidden="true"></span> --}}
             <p class="text-sm font-medium text-gray-900">
