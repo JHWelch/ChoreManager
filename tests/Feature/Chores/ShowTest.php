@@ -6,7 +6,6 @@ use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -52,5 +51,24 @@ class ShowTest extends TestCase
         $component->assertSee('Walk the dog.');
         $component->assertSee('Do not forget the poop bags.');
         $component->assertSee(new Frequency(1, 2));
+    }
+
+    /** @test */
+    public function can_complete_chore_from_chore_page()
+    {
+        // Arrange
+        // Create a chore
+        $chore    = Chore::factory()->withFirstInstance()->create();
+        $instance = $chore->nextChoreInstance;
+
+        // Act
+        // Navigate to chore page and complete chore
+        Livewire::test(Show::class, ['chore' => $chore])
+            ->call('complete');
+
+        // Assert
+        // Chore instance has been completed
+        $instance->refresh();
+        $this->assertEquals(true, $instance->is_completed);
     }
 }
