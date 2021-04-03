@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class ChoreInstance extends Model
 {
@@ -30,7 +31,8 @@ class ChoreInstance extends Model
     {
         $this->chore->createNewInstance();
 
-        $this->completed_date = today();
+        $this->completed_date  = today();
+        $this->completed_by_id = Auth::id();
         $this->save();
     }
 
