@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Chore;
+use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -310,5 +311,27 @@ class ChoreInstanceCompleteTest extends TestCase
             $user->id,
             $chore->nextChoreInstance->user_id,
         );
+    }
+
+    /** @test */
+    public function when_a_chore_is_completed_the_completed_by_id_is_set_to_the_user_completing_it()
+    {
+        // Arrange
+        // Create a test user acting as and a chore assigned to a different user.
+        $acting_as_user = $this->testUser()['user'];
+        $assigned_user  = User::factory()->create();
+        $chore          = Chore::factory()->for($assigned_user)->withFirstInstance()->create();
+
+        // Act
+        // Complete Chore
+        $chore->nextChoreInstance->complete();
+
+        // Assert
+        // Completed chore instance is marked completed by acting_as_user
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'user_id'         => $assigned_user->id,
+            'completed_by_id' => $acting_as_user->id,
+            'chore_id'        => $chore->id,
+        ]);
     }
 }
