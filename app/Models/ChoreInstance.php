@@ -21,6 +21,11 @@ class ChoreInstance extends Model
         return $this->belongsTo(Chore::class);
     }
 
+    /**
+     * Create next chore instance if required and mark this one complete.
+     *
+     * @return void
+     */
     public function complete()
     {
         $this->chore->createNewInstance();
@@ -32,5 +37,16 @@ class ChoreInstance extends Model
     public function getIsCompletedAttribute()
     {
         return ! is_null($this->completed_date);
+    }
+
+    /**
+     * Scope a query to only include completed ChoreInstances.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCompleted($query)
+    {
+        return $query->where('completed_date', '!=', null);
     }
 }
