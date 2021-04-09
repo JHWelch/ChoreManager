@@ -105,10 +105,13 @@ class ShowTest extends TestCase
 
         // Assert
         // You see chore instance history
-        $component->assertSee($user1->name);
-        $component->assertSee('yesterday');
-        $component->assertSee($user2->name);
-        $component->assertSee('2 days ago');
-        $component->assertSee('3 days ago');
+        $component->assertSeeInOrder([
+            $user1->name,
+            'yesterday',
+            $user2->name,
+            '2 days ago',
+            $user1->name,
+            '3 days ago',
+        ]);
     }
 }
