@@ -46,6 +46,13 @@ class Chore extends Model
         return $this->hasOne(ChoreInstance::class)->where('completed_date', null);
     }
 
+    public function pastChoreInstances()
+    {
+        return $this->hasMany(ChoreInstance::class)
+            ->completed()
+            ->orderBy('completed_date', 'desc');
+    }
+
     /**
      * Join Chore to the Next Chore instance if available.
      *

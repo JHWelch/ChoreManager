@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Enums\Frequency;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
@@ -18,7 +19,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chore with Daily Frequency
         $chore = Chore::factory()->create([
-            'frequency_id' => 0,
+            'frequency_id' => Frequency::DOES_NOT_REPEAT,
         ]);
 
         // Act
@@ -39,7 +40,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chore with Daily Frequency
         $chore = Chore::factory()->create([
-            'frequency_id' => 1,
+            'frequency_id' => Frequency::DAILY,
         ]);
 
         // Act
@@ -60,7 +61,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chore with Daily Frequency
         $chore = Chore::factory()->create([
-            'frequency_id' => 2,
+            'frequency_id' => Frequency::WEEKLY,
         ]);
 
         // Act
@@ -81,7 +82,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chore with monthly Frequency
         $chore = Chore::factory()->create([
-            'frequency_id' => 3,
+            'frequency_id' => Frequency::MONTHLY,
         ]);
 
         // Act
@@ -102,7 +103,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chore with monthly Frequency
         $chore = Chore::factory()->create([
-            'frequency_id' => 4,
+            'frequency_id' => Frequency::QUARTERLY,
         ]);
 
         // Act
@@ -123,7 +124,7 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chore with monthly Frequency
         $chore = Chore::factory()->create([
-            'frequency_id' => 5,
+            'frequency_id' => Frequency::YEARLY,
         ]);
 
         // Act
@@ -144,11 +145,11 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chores with Daily Frequency every 2 and every 3 days
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => 1,
+            'frequency_id'       => Frequency::DAILY,
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => 1,
+            'frequency_id'       => Frequency::DAILY,
             'frequency_interval' => 3,
         ]);
 
@@ -175,11 +176,11 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chores with weekly Frequency every 2 and every 3 weeks
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => 2,
+            'frequency_id'       => Frequency::WEEKLY,
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => 2,
+            'frequency_id'       => Frequency::WEEKLY,
             'frequency_interval' => 3,
         ]);
 
@@ -206,11 +207,11 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chores with monthly Frequency every 2 and every 3 months
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => 3,
+            'frequency_id'       => Frequency::MONTHLY,
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => 3,
+            'frequency_id'       => Frequency::MONTHLY,
             'frequency_interval' => 3,
         ]);
 
@@ -237,11 +238,11 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chores with quarterly Frequency every 2 and every 3 months
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => 4,
+            'frequency_id'       => Frequency::QUARTERLY,
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => 4,
+            'frequency_id'       => Frequency::QUARTERLY,
             'frequency_interval' => 3,
         ]);
 
@@ -268,11 +269,11 @@ class ChoreInstanceCompleteTest extends TestCase
         // Arrange
         // Create Chores with yearly Frequency every 2 and every 3 months
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => 5,
+            'frequency_id'       => Frequency::YEARLY,
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => 5,
+            'frequency_id'       => Frequency::YEARLY,
             'frequency_interval' => 3,
         ]);
 

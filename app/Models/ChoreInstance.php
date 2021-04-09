@@ -14,7 +14,8 @@ class ChoreInstance extends Model
     protected $guarded;
 
     protected $casts = [
-        'due_date' => 'date:Y-m-d',
+        'due_date'       => 'date:Y-m-d',
+        'completed_date' => 'date:Y-m-d',
     ];
 
     public function chore()
@@ -50,5 +51,10 @@ class ChoreInstance extends Model
     public function scopeCompleted($query)
     {
         return $query->where('completed_date', '!=', null);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

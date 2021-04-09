@@ -36,13 +36,7 @@
           @foreach ($chore_instance_date_groups as $date => $chore_instances)
             @php
               $due_date = \Carbon\Carbon::parse($date)->startOfDay();
-              $difference = ucfirst($due_date->diffForHumans(
-                today(),
-                [
-                  'options' => \Carbon\CarbonInterface::ONE_DAY_WORDS,
-                  'syntax'  => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW
-                ]
-              ));
+              $difference = ucfirst($due_date->diffDaysForHumans());
             @endphp
 
             <div wire:key="{{ $date }}">

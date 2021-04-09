@@ -8,31 +8,38 @@ namespace App\Enums;
  */
 class Frequency
 {
+    const DOES_NOT_REPEAT = 0;
+    const DAILY           = 1;
+    const WEEKLY          = 2;
+    const MONTHLY         = 3;
+    const QUARTERLY       = 4;
+    const YEARLY          = 5;
+
     const FREQUENCIES = [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
+        self::DOES_NOT_REPEAT,
+        self::DAILY,
+        self::WEEKLY,
+        self::MONTHLY,
+        self::QUARTERLY,
+        self::YEARLY,
     ];
 
     const ADJECTIVES = [
-        0 => 'Does not repeat',
-        1 => 'Daily',
-        2 => 'Weekly',
-        3 => 'Monthly',
-        4 => 'Quarterly',
-        5 => 'Yearly',
+        self::DOES_NOT_REPEAT => 'Does not repeat',
+        self::DAILY           => 'Daily',
+        self::WEEKLY          => 'Weekly',
+        self::MONTHLY         => 'Monthly',
+        self::QUARTERLY       => 'Quarterly',
+        self::YEARLY          => 'Yearly',
     ];
 
     const NOUNS = [
-        0 => 'Does not repeat',
-        1 => 'Days',
-        2 => 'Weeks',
-        3 => 'Months',
-        4 => 'Quarters',
-        5 => 'Years',
+        self::DOES_NOT_REPEAT => 'Does not repeat',
+        self::DAILY           => 'Days',
+        self::WEEKLY          => 'Weeks',
+        self::MONTHLY         => 'Months',
+        self::QUARTERLY       => 'Quarters',
+        self::YEARLY          => 'Years',
     ];
 
     public $frequency_id;
@@ -77,10 +84,19 @@ class Frequency
 
     public function __toString()
     {
+        return $this->toPrefixedString();
+    }
+
+    public function toPrefixedString($prefix = '')
+    {
         if ($this->frequency_interval === 1) {
-            return self::ADJECTIVES[$this->frequency_id];
+            return $prefix
+                ? $prefix . lcfirst(self::ADJECTIVES[$this->frequency_id])
+                : self::ADJECTIVES[$this->frequency_id];
         }
 
-        return 'Every ' . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id]);
+        return $prefix
+            ? "$prefix every " . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id])
+            : 'Every ' . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id]);
     }
 }
