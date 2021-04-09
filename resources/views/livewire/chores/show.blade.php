@@ -89,6 +89,7 @@
                                   <a href="#" class="font-medium text-gray-900">
                                     {{ $past_chore_instance->user->name }}
                                   </a>
+
                                   completed chore
                                 </span>
 
@@ -101,6 +102,32 @@
                         </div>
                       </li>
                     @endforeach
+
+                    <li>
+                      <div class="relative pb-8">
+                        <div class="relative flex items-start space-x-3">
+                          <div>
+                            <div class="relative px-1">
+                              <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full ring-8 ring-white">
+                                <x-icons.pencil-paper class="w-5 h-5 text-gray-500" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="min-w-0 flex-1 py-1.5">
+                            <div class="text-sm text-gray-500">
+                              <span class="mr-0.5">
+                                Chore Created
+                              </span>
+
+                              <span class="whitespace-nowrap">
+                                {{ $chore->created_at->diffForHumans() }}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </div>
