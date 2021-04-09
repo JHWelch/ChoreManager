@@ -5,6 +5,8 @@ namespace Tests\Feature\Chores;
 use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
+use App\Models\ChoreInstance;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -70,5 +72,43 @@ class ShowTest extends TestCase
         // Chore instance has been completed
         $instance->refresh();
         $this->assertEquals(true, $instance->is_completed);
+    }
+
+    /** @test */
+    public function can_see_chore_history()
+    {
+        // Arrange
+        // Create chore with several completed instances
+        $user1 = $this->testUser()['user'];
+        $user2 = User::factory()->create();
+
+        $chore = Chore::factory()->has(
+            ChoreInstance::factory()->count(3)->sequence(
+                [
+                    'completed_date' => today()->subDays(1),
+                    'user_id'        => $user1->id,
+                ],
+                [
+                    'completed_date' => today()->subDays(2),
+                    'user_id'        => $user2->id,
+                ],
+                [
+                    'completed_date' => today()->subDays(3),
+                    'user_id'        => $user1->id,
+                ],
+            )
+        )->create();
+
+        // Act
+        // Navigate to Chore Show page
+        $component = Livewire::test(Show::class, ['chore' => $chore]);
+
+        // Assert
+        // You see chore instance history
+        $component->assertSee($user1->name);
+        $component->assertSee('yesterday');
+        $component->assertSee($user2->name);
+        $component->assertSee('2 days ago');
+        $component->assertSee('3 days ago');
     }
 }

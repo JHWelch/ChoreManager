@@ -14,7 +14,8 @@ class ChoreInstance extends Model
     protected $guarded;
 
     protected $casts = [
-        'due_date' => 'date:Y-m-d',
+        'due_date'       => 'date:Y-m-d',
+        'completed_date' => 'date:Y-m-d',
     ];
 
     public function chore()

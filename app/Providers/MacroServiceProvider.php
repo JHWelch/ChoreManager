@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
@@ -35,5 +36,16 @@ class MacroServiceProvider extends ServiceProvider
          * @return string
          */
         Str::macro('snakeToLabel', fn ($string) => ucfirst(str_replace('_', ' ', $string)));
+
+        Carbon::macro('diffDaysForHumans', function () {
+            /** @var Carbon $this */
+            return $this->diffForHumans(
+                today(),
+                [
+                  'options' => \Carbon\CarbonInterface::ONE_DAY_WORDS,
+                  'syntax'  => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW,
+                ]
+            );
+        });
     }
 }
