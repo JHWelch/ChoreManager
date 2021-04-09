@@ -51,4 +51,9 @@ class ChoreInstance extends Model
     {
         return $query->where('completed_date', '!=', null);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

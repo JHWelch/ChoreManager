@@ -34,42 +34,32 @@
               </div>
             </div>
             <aside class="mt-8 xl:hidden">
-              <h2 class="sr-only">Details</h2>
-                <div class="py-6 mt-6 space-y-8 border-t border-b border-gray-200">
-                  <div>
-                    <h2 class="text-sm font-medium text-gray-500">Owner</h2>
-                    <ul class="mt-3 space-y-3">
-                      <li class="flex justify-start">
-                        <a href="#" class="flex items-center space-x-3">
-                          <div class="flex-shrink-0">
-                            <img class="w-5 h-5 rounded-full" src="https://images.unsplash.com/photo-1520785643438-5bf77931f493?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80" alt="">
-                          </div>
-                          <div class="text-sm font-medium text-gray-900">Eduardo Benz</div>
-                        </a>
-                      </li>
-                    </ul>
+              @if ($chore_instance)
+                <div>
+                  <h2 class="text-sm font-medium text-gray-500">Next Instance</h2>
+
+                  <div class="mt-3 space-y-5">
+                    <div class="flex items-center space-x-2">
+                      <x-icons.calendar solid="true" class="w-5 h-5 text-gray-400" />
+                      <span class="text-sm font-medium text-gray-900">
+                        Due on
+                        <time datetime="{{ $chore_instance->due_date->toDateString() }}">
+                          {{ $chore_instance->due_date->toFormattedDateString() }}
+                        </time>
+                      </span>
+                    </div>
+                    <x-users.avatar-line :user="$chore_instance->user" />
                   </div>
                 </div>
+              @endif
 
-              <div class="space-y-5">
-                <div class="flex items-center py-6 mt-6 space-x-2 border-b border-gray-200">
-                  <x-icons.calendar solid="true" class="w-5 h-5 text-gray-400" />
+              <div class="py-6 mt-6 space-y-8 border-t border-b border-gray-200">
+                <div>
+                  <h2 class="text-sm font-medium text-gray-500">Owner</h2>
 
-                  <span class="text-sm font-medium text-gray-900">
-                    Created on
-                    <time datetime="{{ $chore->created_at->toDateString() }}">
-                      {{ $chore->created_at->toFormattedDateString() }}
-                    </time>
-                  </span>
-                </div>
-                <div class="flex items-center space-x-2">
-                  <!-- Heroicon name: solid/lock-open -->
-                  <svg class="w-5 h-5 text-green-500" xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                    <path
-                      d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z" />
-                  </svg>
-                  <span class="text-sm font-medium text-green-700">Open Issue</span>
+                  <div class="mt-3">
+                    <x-users.avatar-line :user="$chore->user" />
+                  </div>
                 </div>
               </div>
             </aside>
