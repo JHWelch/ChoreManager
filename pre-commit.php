@@ -6,7 +6,7 @@ exec('vendor/bin/phpunit', $output, $returnCode);
 
 if ($returnCode !== 0) {
     // Show full output
-    echo PHP_EOL . implode($output, PHP_EOL) . PHP_EOL;
+    echo PHP_EOL . implode(PHP_EOL, $output) . PHP_EOL;
     echo 'Aborting commit..' . PHP_EOL;
     exit(1);
 }
