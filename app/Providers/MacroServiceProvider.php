@@ -39,13 +39,15 @@ class MacroServiceProvider extends ServiceProvider
 
         Carbon::macro('diffDaysForHumans', function () {
             /** @var Carbon $this */
-            return $this->diffForHumans(
-                today(),
-                [
-                  'options' => \Carbon\CarbonInterface::ONE_DAY_WORDS,
-                  'syntax'  => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW,
-                ]
-            );
+            return $this == today()
+                ? 'today'
+                : $this->diffForHumans(
+                    today(),
+                    [
+                    'options' => \Carbon\CarbonInterface::ONE_DAY_WORDS,
+                    'syntax'  => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW,
+                    ]
+                );
         });
     }
 }

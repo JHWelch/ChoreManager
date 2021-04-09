@@ -15,12 +15,19 @@ class Show extends Component
 
     public function mount()
     {
-        $this->chore_instance       = $this->chore->nextChoreInstance;
-        $this->past_chore_instances = $this->chore->pastChoreInstances;
+        $this->loadContent();
     }
 
     public function complete()
     {
         $this->chore_instance->complete();
+        $this->chore->refresh();
+        $this->loadContent();
+    }
+
+    public function loadContent()
+    {
+        $this->chore_instance       = $this->chore->nextChoreInstance;
+        $this->past_chore_instances = $this->chore->pastChoreInstances;
     }
 }

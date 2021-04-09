@@ -107,11 +107,57 @@ class ShowTest extends TestCase
         // You see chore instance history
         $component->assertSeeInOrder([
             $user1->name,
+            'completed chore',
             'yesterday',
             $user2->name,
+            'completed chore',
             '2 days ago',
             $user1->name,
+            'completed chore',
             '3 days ago',
+        ]);
+    }
+
+    /** @test */
+    public function when_completing_a_chore_it_will_appear_in_history_and_next_instance_updates()
+    {
+        // Arrange
+        // Create a daily chore and a first instance due today
+        $today = today();
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory([
+            'frequency_id' => Frequency::DAILY,
+        ])
+            ->withFirstInstance($today)
+            ->for($user)
+            ->create();
+
+        // Act 1
+        // Navigate to show page
+        $component = Livewire::test(Show::class, ['chore' => $chore]);
+
+        // Assert 1
+        // Current chore instance is showing, nothing is showing for history
+        $component->assertSeeInOrder([
+            'Due on',
+            $today->toFormattedDateString(),
+        ]);
+        $component->assertDontSee('completed chore');
+
+        // Act 2
+        // Complete ChoreInstance
+        $component->call('complete');
+
+        // Assert 2
+        // See completed chore instance in history and new chore instance in detail view
+        $component->assertSeeInOrder([
+            'Due on',
+            $today->addDay(1)->toFormattedDateString(),
+        ]);
+        $component->assertSeeInOrder([
+            $user->name,
+            'completed chore',
+            'today',
         ]);
     }
 }
