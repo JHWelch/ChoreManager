@@ -50,7 +50,7 @@ class ShowTest extends TestCase
         // Can see all chore details
         $component->assertSee('Walk the dog.');
         $component->assertSee('Do not forget the poop bags.');
-        $component->assertSee(new Frequency(1, 2));
+        $component->assertSee('Repeats every 2 days');
     }
 
     /** @test */

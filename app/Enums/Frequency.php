@@ -77,10 +77,19 @@ class Frequency
 
     public function __toString()
     {
+        return $this->toPrefixedString();
+    }
+
+    public function toPrefixedString($prefix = '')
+    {
         if ($this->frequency_interval === 1) {
-            return self::ADJECTIVES[$this->frequency_id];
+            return $prefix
+                ? $prefix . lcfirst(self::ADJECTIVES[$this->frequency_id])
+                : self::ADJECTIVES[$this->frequency_id];
         }
 
-        return 'Every ' . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id]);
+        return $prefix
+            ? "$prefix every " . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id])
+            : 'Every ' . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id]);
     }
 }
