@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Chores;
 
+use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Index;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -97,9 +98,9 @@ class IndexTest extends TestCase
         Chore::factory()
             ->count(3)
             ->sequence(
-                ['title' => 'Do dishes', 'frequency_id' => 3],
-                ['title' => 'Walk dog', 'frequency_id' => 1],
-                ['title' => 'Clean car', 'frequency_id' => 2],
+                ['title' => 'Do dishes', 'frequency_id' => Frequency::MONTHLY],
+                ['title' => 'Walk dog', 'frequency_id'  => Frequency::DAILY],
+                ['title' => 'Clean car', 'frequency_id' => Frequency::WEEKLY],
             )
             ->for($user)
             ->create();
@@ -126,9 +127,9 @@ class IndexTest extends TestCase
         $chores = Chore::factory()
             ->count(3)
             ->sequence(
-                ['title' => 'Do dishes', 'frequency_id' => 1],
-                ['title' => 'Walk dog', 'frequency_id' => 1],
-                ['title' => 'Clean car', 'frequency_id' => 1],
+                ['title' => 'Do dishes', 'frequency_id' => Frequency::DAILY],
+                ['title' => 'Walk dog', 'frequency_id'  => Frequency::DAILY],
+                ['title' => 'Clean car', 'frequency_id' => Frequency::DAILY],
             )
             ->for($user)
             ->create();

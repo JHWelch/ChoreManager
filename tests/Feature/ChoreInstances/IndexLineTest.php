@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\ChoreInstances;
 
+use App\Enums\Frequency;
 use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -43,7 +44,7 @@ class IndexLineTest extends TestCase
         $now   = today();
         $user  = $this->testUser()['user'];
         $chore = Chore::factory(
-            ['frequency_id' => 1]
+            ['frequency_id' => Frequency::DAILY]
         )
             ->for($user)
             ->withFirstInstance($now)

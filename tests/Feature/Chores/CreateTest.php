@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Chores;
 
+use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\Team;
@@ -47,7 +48,7 @@ class CreateTest extends TestCase
         $this->assertDatabaseHas((new Chore)->getTable(), [
             'title'        => 'Do dishes',
             'description'  => 'Do the dishes every night.',
-            'frequency_id' => 1,
+            'frequency_id' => Frequency::DAILY,
             'user_id'      => $user->id,
         ]);
     }

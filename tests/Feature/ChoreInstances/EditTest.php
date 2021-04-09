@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\ChoreInstances;
 
+use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -87,7 +88,7 @@ class EditTest extends TestCase
         $this->testUser();
         $date  = Carbon::now();
         $chore = Chore::factory()->withFirstInstance($date)->create([
-            'frequency_id' => 1,
+            'frequency_id' => Frequency::DAILY,
         ]);
 
         $chore->nextChoreInstance->complete();
