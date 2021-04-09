@@ -1,4 +1,4 @@
-<main class="relative flex-1 overflow-y-auto focus:outline-none" tabindex="-1">
+<main class="relative flex-1 min-h-screen mb-4 overflow-y-auto bg-white shadow focus:outline-none sm:rounded-lg" tabindex="-1">
   <div class="py-8 xl:py-10">
     <div class="max-w-3xl px-4 mx-auto sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-3">
       <div class="xl:col-span-2 xl:pr-8 xl:border-r xl:border-gray-200">
