@@ -89,9 +89,13 @@ class Frequency
 
     public function toPrefixedString($prefix = '')
     {
+        if ($this->frequency_id === self::DOES_NOT_REPEAT) {
+            return self::ADJECTIVES[$this->frequency_id];
+        }
+
         if ($this->frequency_interval === 1) {
             return $prefix
-                ? $prefix . lcfirst(self::ADJECTIVES[$this->frequency_id])
+                ? $prefix . ' ' . lcfirst(self::ADJECTIVES[$this->frequency_id])
                 : self::ADJECTIVES[$this->frequency_id];
         }
 
