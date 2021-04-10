@@ -26,7 +26,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::directive('markdown', function ($markdown) {
             if ($markdown) {
-                return "<?php echo \Illuminate\Mail\Markdown::Parse((string) {$markdown}); ?>";
+                return '
+                <?php
+                $converter = new \League\CommonMark\CommonMarkConverter([\'html_input\' => \'escape\', \'allow_unsafe_links\' => false]);
+                echo $converter->convertToHtml((string) ' . $markdown . ');
+                ?>
+                ';
             }
 
             return '<?php ob_start(); ?>';

@@ -21,6 +21,40 @@ class BladeTestCase extends TestCase
     }
 
     /**
+     * Evaluate a Blade expression with the given $variables in scope equals a given string.
+     *
+     * @param string $expected   The expected output.
+     * @param string $expression The Blade directive, as it would be written in a view.
+     * @param array  $variables  Variables to extract() into the scope of the eval() statement.
+     * @param string $message    A message to display if the output does not match $expected.
+     */
+    protected function assertDirectiveOutputEquals(
+        string $expected,
+        string $expression = '',
+        array $variables = [],
+        string $message = ''
+    ) {
+        $this->assertDirectiveOutput(true, $expected, $expression, $variables, $message);
+    }
+
+    /**
+     * Evaluate a Blade expression with the given $variables in scope does not equal a given string.
+     *
+     * @param string $expected   The expected output.
+     * @param string $expression The Blade directive, as it would be written in a view.
+     * @param array  $variables  Variables to extract() into the scope of the eval() statement.
+     * @param string $message    A message to display if the output does not match $expected.
+     */
+    protected function assertDirectiveOutputNotEquals(
+        string $expected,
+        string $expression = '',
+        array $variables = [],
+        string $message = ''
+    ) {
+        $this->assertDirectiveOutput(false, $expected, $expression, $variables, $message);
+    }
+
+    /**
      * Evaluate a Blade expression with the given $variables in scope.
      *
      * @param string $expected   The expected output.
@@ -28,7 +62,8 @@ class BladeTestCase extends TestCase
      * @param array  $variables  Variables to extract() into the scope of the eval() statement.
      * @param string $message    A message to display if the output does not match $expected.
      */
-    protected function assertDirectiveOutput(
+    private function assertDirectiveOutput(
+        bool $equals,
         string $expected,
         string $expression = '',
         array $variables = [],
@@ -40,6 +75,8 @@ class BladeTestCase extends TestCase
         eval(' ?>' . $compiled . '<?php ');
         $output = ob_get_clean();
 
-        $this->assertEquals($expected, $output, $message);
+        $equals
+            ? $this->assertEquals($expected, trim($output), $message)
+            : $this->assertNotEquals($expected, trim($output), $message);
     }
 }

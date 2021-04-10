@@ -30,16 +30,32 @@ class MarkdownDirectiveTest extends BladeTestCase
         <li>With</li>
         <li>Items</li>
         </ul>
-
         EOD;
 
         // Assert
         // Markdown directive converts to HTML.
-        $this->assertDirectiveOutput(
+        $this->assertDirectiveOutputEquals(
             $expected,
             '@markdown($markdown)',
             ['markdown' => $markdown],
             'Expected Markdown to be converted to HTML'
+        );
+    }
+
+    /** @test */
+    public function markdown_directive_parses_dangerous_input()
+    {
+        // Arrange
+        // Markdown with script and not wanted script output
+        $markdown = '<script>alert(\'Gotcha!\')</script>';
+
+        // Assert
+        // Markdown is santizied and script is not output directly.
+        $this->assertDirectiveOutputNotEquals(
+            $markdown,
+            '@markdown($markdown)',
+            ['markdown' => $markdown],
+            'Expected dangerous script to be removed.'
         );
     }
 }
