@@ -57,7 +57,7 @@
               <h2 class="sr-only">Description</h2>
 
               <div class="prose max-w-none">
-                {{ $chore->description }}
+                @markdown($chore->description)
               </div>
             </div>
           </div>

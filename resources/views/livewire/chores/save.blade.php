@@ -1,11 +1,11 @@
 <div class="flex justify-center">
-  <div class="p-8 bg-white rounded-lg shadow-md w-96">
+  <div class="w-full p-8 bg-white rounded-lg shadow-md lg:w-8/12">
     <form wire:submit.prevent="save" class="space-y-4">
       <h2 class="text-lg font-medium">Chore</h2>
 
       <x-form.input prefix="chore" name="title" />
 
-      <x-form.input prefix="chore" name="description" />
+      <x-form.textarea prefix="chore" name="description" />
 
       <div class="flex flex-col">
         <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
