@@ -1,5 +1,5 @@
 <div class="flex justify-center">
-  <div class="p-8 bg-white rounded-lg shadow-md">
+  <div class="w-full p-8 bg-white rounded-lg shadow-md lg:w-8/12">
     <form wire:submit.prevent="save" class="space-y-4">
       <h2 class="text-lg font-medium">Chore</h2>
 
