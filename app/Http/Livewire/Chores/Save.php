@@ -60,12 +60,10 @@ class Save extends Component
         $this->chore->team_id = Auth::user()->currentTeam->id;
         $this->chore->save();
 
-        if (! $this->chore_instance->exists) {
-            if ($this->chore_instance->due_date !== null) {
-                $this->chore_instance->chore_id = $this->chore->id;
-                $this->chore_instance->user_id  = $this->chore->user_id;
-                $this->chore_instance->save();
-            }
+        if (! $this->chore_instance->exists && $this->chore_instance->due_date !== null) {
+            $this->chore_instance->chore_id = $this->chore->id;
+            $this->chore_instance->user_id  = $this->chore->next_assigned_id;
+            $this->chore_instance->save();
         } else {
             if ($this->chore_instance->isDirty()) {
                 if ($this->chore_instance->due_date !== null) {

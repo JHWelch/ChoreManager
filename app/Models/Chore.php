@@ -125,4 +125,15 @@ class Chore extends Model
             'user_id'  => $this->user_id,
         ]);
     }
+
+    /**
+     * Get the id of the next user who should be assigned to an instance of this chore.
+     * Either the owner of the chore, or a member of the team if no owner is specified.
+     *
+     * @return int A User Id.
+     */
+    public function getNextAssignedIdAttribute()
+    {
+        return $this->user_id ?? $this->team->allUsers()->random()->id;
+    }
 }

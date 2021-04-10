@@ -5,6 +5,7 @@ namespace Tests\Feature\Chores;
 use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
+use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -90,7 +91,7 @@ class CreateTest extends TestCase
     public function a_chore_can_be_assigned_to_a_team()
     {
         // Arrange
-        // Create user
+        // Create user and chore info
         $this->testUser();
         $chore = Chore::factory()->raw();
 
@@ -111,6 +112,33 @@ class CreateTest extends TestCase
             'description'  => $chore['description'],
             'frequency_id' => $chore['frequency_id'],
             'user_id'      => null,
+        ]);
+    }
+
+    /** @test */
+    public function chores_assigned_to_team_with_due_date_create_instance_assigned_to_team_member()
+    {
+        // Arrange
+        // Create user and chore info
+        $user     = $this->testUser()['user'];
+        $chore    = Chore::factory()->raw();
+        $due_date = today()->addDay(1);
+
+        // Act
+        // Navigate to create chore, create chore without owner
+        Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', $chore['frequency_id'])
+            ->set('chore.user_id', null)
+            ->set('chore_instance.due_date', $due_date)
+            ->call('save');
+
+        // Assert
+        // Chore is create with no owner.
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'user_id'  => $user->id,
+            'due_date' => $due_date,
         ]);
     }
 }
