@@ -85,4 +85,32 @@ class CreateTest extends TestCase
              'frequency_id' => $chore['frequency_id'],
          ]);
     }
+
+    /** @test */
+    public function a_chore_can_be_assigned_to_a_team()
+    {
+        // Arrange
+        // Create user
+        $this->testUser();
+        $chore = Chore::factory()->raw();
+
+        // Act
+        // Navigate to create chore, create chore without owner
+        $component = Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', $chore['frequency_id'])
+            ->set('chore.user_id', null)
+            ->call('save');
+
+        // Assert
+        // Chore is create with no owner.
+        $component->assertHasNoErrors();
+        $this->assertDatabaseHas((new Chore)->getTable(), [
+            'title'        => $chore['title'],
+            'description'  => $chore['description'],
+            'frequency_id' => $chore['frequency_id'],
+            'user_id'      => null,
+        ]);
+    }
 }
