@@ -47,7 +47,7 @@ class Index extends Component
                 return ['future' => $chore_instance];
             })
             ->map(function ($date_group) {
-                return $date_group->mapToGroups(fn ($chore) => [$chore->due_date->toDateString() => $chore]);
+                return $date_group->mapToGroups(fn ($chore) => [$chore->due_date->diffDaysForHumans() => $chore]);
             });
     }
 
