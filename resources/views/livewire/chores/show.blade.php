@@ -13,7 +13,7 @@
                 </p>
               </div>
 
-              <div class="flex mt-4 space-x-3 md:mt-0">
+              <div class="flex items-center mt-4 space-x-3 md:mt-0">
                 <a
                   href="{{ route('chores.edit', $chore) }}"
                   class="inline-flex justify-center px-4 py-2 text-sm font-medium text-indigo-700 bg-white border border-indigo-300 rounded-md shadow-sm hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-900"
@@ -22,6 +22,7 @@
 
                   <span>Edit</span>
                 </a>
+
                 <button
                   wire:click="complete"
                   type="button"
@@ -31,9 +32,16 @@
 
                   <span>Complete</span>
                 </button>
+
+                <x-dropdown-menu>
+                  <x-dropdown-option click="$toggle('showDeleteConfirmation')" status="danger">
+                    Delete
+                  </x-dropdown-option>
+                </x-dropdown-menu>
               </div>
             </div>
-            <aside class="mt-8 xl:hidden">
+
+            <aside class="mt-6 xl:hidden">
               <x-chore-instances.next-instance :instance="$chore_instance" class="mb-6" />
 
               <div class="{{ $chore_instance ? 'border-t py-6' : '' }} space-y-8 border-b border-gray-200">
@@ -150,4 +158,25 @@
       </aside>
     </div>
   </div>
+
+  <x-jet-confirmation-modal wire:model="showDeleteConfirmation">
+    <x-slot name="title">
+        Delete "{{ $chore->title }}"
+    </x-slot>
+
+    <x-slot name="content">
+        Are you sure you want to delete this chore? All completion history will be permanently deleted.
+      </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-secondary-button wire:click="$toggle('showDeleteConfirmation')" wire:loading.attr="disabled">
+            Nevermind
+        </x-jet-secondary-button>
+
+        <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
+            Delete
+        </x-jet-danger-button>
+    </x-slot>
+  </x-jet-confirmation-modal>
 </main>
+
