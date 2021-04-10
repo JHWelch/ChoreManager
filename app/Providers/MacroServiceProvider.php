@@ -17,9 +17,29 @@ class MacroServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /**
+         * Convert a collection to an array of options that can be used in an HTML select.
+         * @return array
+         */
         EloquentCollection::macro('toOptionsArray', function () {
             /** @var Collection $this */
             return $this->map(fn ($model) => ['value' => $model->id, 'label' => $model->name])->toArray();
+        });
+
+        /**
+         * The next item in a collection after a given value.
+         * @param mixed $needle - The item to search for
+         * @param bool $strict - Whether to use strict comparison in the collection search
+         * @param bool $wrap - if $needle specifies last item in collection, return the first.
+         * @return mixed
+         */
+        EloquentCollection::macro('nextAfter', function ($needle, $strict = false, $wrap = false) {
+            /** @var Collection $this */
+            $found_index = $this->values()->search($needle, $strict);
+
+            return $wrap && $found_index === $this->count() - 1
+                ? $this->first()
+                : $this->get($found_index + 1);
         });
 
         /**
