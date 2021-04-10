@@ -5,7 +5,6 @@ namespace Tests\Feature\Chores;
 use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire;
 use Tests\TestCase;
 

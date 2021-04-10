@@ -1,9 +1,13 @@
+@props([
+  'class' => ''
+])
+
 <div
   x-data="{ show: false }"
-  class="relative inline-block text-left"
+  class="relative inline-block text-left {{ $class }}"
 >
   <button x-on:click="show = !show">
-    <x-icons.dots-vertical class="w-6 h-6 text-gray-500 " />
+    <x-icons.dots-vertical class="w-6 h-6 text-gray-500" />
   </button>
 
   <div

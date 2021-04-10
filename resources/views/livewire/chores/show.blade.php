@@ -5,12 +5,15 @@
         <div>
           <div>
             <div class="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
-              <div>
-                <h1 class="text-2xl font-bold text-gray-900">{{ $chore->title }}</h1>
+              <div class="flex justify-between">
+                <div>
+                  <h1 class="text-2xl font-bold text-gray-900">{{ $chore->title }}</h1>
+                  <p class="mt-2 text-sm text-gray-600">
+                    {{ $chore->frequency->toPrefixedString('Repeats') }}
+                  </p>
+                </div>
 
-                <p class="mt-2 text-sm text-gray-600">
-                  {{ $chore->frequency->toPrefixedString('Repeats') }}
-                </p>
+                <x-chores.show-menu class="md:hidden"/>
               </div>
 
               <div class="flex items-center mt-4 space-x-3 md:mt-0">
@@ -33,11 +36,7 @@
                   <span>Complete</span>
                 </button>
 
-                <x-dropdown-menu>
-                  <x-dropdown-option click="$toggle('showDeleteConfirmation')" status="danger">
-                    Delete
-                  </x-dropdown-option>
-                </x-dropdown-menu>
+                <x-chores.show-menu class="hidden md:block"/>
               </div>
             </div>
 
@@ -143,6 +142,7 @@
           </div>
         </section>
       </div>
+
       <aside class="hidden xl:block xl:pl-8">
         <x-chore-instances.next-instance :instance="$chore_instance" class="mb-6" />
 
