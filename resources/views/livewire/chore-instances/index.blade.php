@@ -33,16 +33,11 @@
             <h2 class="text-xl ">{{ Str::snakeToLabel($group) }}</h2>
           </div>
 
-          @foreach ($chore_instance_date_groups as $date => $chore_instances)
-            @php
-              $due_date = \Carbon\Carbon::parse($date)->startOfDay();
-              $difference = ucfirst($due_date->diffDaysForHumans());
-            @endphp
-
-            <div wire:key="{{ $date }}">
+          @foreach ($chore_instance_date_groups as $group => $chore_instances)
+            <div wire:key="{{ $group }}">
               @if ($group !== 'today')
                 <div class="sticky top-0 z-10 px-6 py-1 text-sm font-medium text-gray-500 border-t border-b border-gray-200 bg-gray-50">
-                  <h3>{{ $difference }}</h3>
+                  <h3>{{ $group }}</h3>
                 </div>
               @endif
 
