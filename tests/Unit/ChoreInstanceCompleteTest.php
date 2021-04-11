@@ -372,4 +372,41 @@ class ChoreInstanceCompleteTest extends TestCase
             'completed_date' => null,
         ]);
     }
+
+    /** @test */
+    public function when_an_instance_is_assigned_to_the_last_person_alphabetically_it_will_wrap_around()
+    {
+        // Arrange
+        // Create three users, a chore with a first instance assigned to the third user
+        $user_and_team = $this->testUser(['name' => 'Albert Albany']);
+        $user1         = $user_and_team['user'];
+        $team          = $user_and_team['team'];
+        $users         = User::factory()
+            ->hasAttached($team)
+            ->count(2)
+            ->sequence(
+                ['name' => 'Bobby Boston'],
+                ['name' => 'Charlie Chicago'],
+            )
+            ->create();
+        $user2 = $users->first();
+        $user3 = $users->last();
+        $chore = Chore::factory(['frequency_id' => Frequency::DAILY])
+            ->for($team)
+            ->assignedToTeam()
+            ->has(ChoreInstance::factory()->for($user3))
+            ->create();
+
+        // Act
+        // Complete the first instnace
+        $chore->nextChoreInstance->complete();
+
+        // Assert
+        // The next chore instance is assigned to the first user
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'user_id'        => $user1->id,
+            'chore_id'       => $chore->id,
+            'completed_date' => null,
+        ]);
+    }
 }

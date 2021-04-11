@@ -39,7 +39,7 @@ class MacroServiceProvider extends ServiceProvider
 
             return $wrap && $found_index === $this->count() - 1
                 ? $this->first()
-                : $this->get($found_index + 1);
+                : $this->values()->get($found_index + 1);
         });
 
         /**

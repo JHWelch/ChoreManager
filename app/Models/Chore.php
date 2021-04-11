@@ -143,7 +143,7 @@ class Chore extends Model
                 ->sortBy('name')
                 ->map
                 ->id
-                ->nextAfter($last_assigned->id)
+                ->nextAfter($last_assigned->user_id, false, true)
             : $this
                 ->team
                 ->allUsers()
