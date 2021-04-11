@@ -49,4 +49,18 @@ class ChoreFactory extends Factory
                     );
                 }));
     }
+
+    /**
+     * Creates a chore that is assigned to the team, not an individual user.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function assignedToTeam()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'user_id' => null,
+            ];
+        });
+    }
 }

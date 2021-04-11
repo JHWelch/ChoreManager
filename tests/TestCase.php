@@ -15,9 +15,9 @@ abstract class TestCase extends BaseTestCase
      *
      * @return
      */
-    protected function testUser()
+    protected function testUser($attributes = [])
     {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory($attributes)->withPersonalTeam()->create());
         $user->switchTeam($team = Team::first());
 
         return [
