@@ -119,4 +119,29 @@ class FilterTest extends TestCase
         $component->call('setTeamFilter', 'team');
         $component->assertSee('Walk the dog.');
     }
+
+    /** @test */
+    public function chores_assigned_to_team_show_on_team_page_but_not_user_page()
+    {
+        // Arrange
+        // Create chore assigned to no one
+        $team = $this->testUser()['team'];
+        Chore::factory([
+            'title' => 'Walk the dog',
+        ])
+            ->assignedToTeam()
+            ->for($team)
+            ->create();
+
+        // Act
+        // Navigate to index page and filter by group
+        $component = Livewire::test(ChoreIndex::class)
+            ->call('setTeamFilter', 'team');
+
+        // Assert
+        // That the chore can be seen
+        $component->assertSee('Walk the dog');
+        $component->call('setTeamFilter', 'user');
+        $component->assertDontSee('Walk the dog');
+    }
 }
