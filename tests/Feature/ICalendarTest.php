@@ -34,8 +34,6 @@ class ICalendarTest extends TestCase
             ->withFirstInstance()
             ->create();
 
-        ray(Chore::all());
-
         // Act
         // Call ICalendar route with token key
         $response = $this->get(route('icalendar.show', ['token' => 'fake_uuid']));

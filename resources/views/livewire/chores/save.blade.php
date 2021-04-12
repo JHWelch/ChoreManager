@@ -38,6 +38,7 @@
         label="Owner"
         prefix="chore"
         :options="$user_options"
+        blankOption="Assign to Team - {{ $team }}"
       />
 
       @if ($chore_instance->exists)

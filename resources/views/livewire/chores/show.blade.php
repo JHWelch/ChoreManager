@@ -43,12 +43,16 @@
             <aside class="mt-6 xl:hidden">
               <x-chore-instances.next-instance :instance="$chore_instance" class="mb-6" />
 
-              <div class="{{ $chore_instance ? 'border-t py-6' : '' }} space-y-8 border-b border-gray-200">
+              <div class="{{ $chore_instance ? 'border-t py-6' : 'pb-6' }} space-y-8 border-b border-gray-200">
                 <div>
                   <h2 class="text-sm font-medium text-gray-500">Owner</h2>
 
                   <div class="mt-3">
-                    <x-users.avatar-line :user="$chore->user" />
+                    @if ($chore->user)
+                      <x-users.avatar-line :user="$chore->user" />
+                    @else
+                      <x-teams.line :team="$chore->team->name" />
+                    @endif
                   </div>
                 </div>
               </div>
@@ -151,7 +155,11 @@
             <h2 class="text-sm font-medium text-gray-500">Owner</h2>
 
             <div class="mt-3">
-              <x-users.avatar-line :user="$chore->user" />
+              @if ($chore->user)
+                <x-users.avatar-line :user="$chore->user" />
+              @else
+                <x-teams.line :team="$chore->team->name" />
+              @endif
             </div>
           </div>
         </div>

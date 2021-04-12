@@ -122,7 +122,34 @@ class Chore extends Model
         ChoreInstance::create([
             'chore_id' => $this->id,
             'due_date' => $due_date,
-            'user_id'  => $this->user_id,
+            'user_id'  => $this->next_assigned_id,
         ]);
+    }
+
+    /**
+     * Get the id of the next user who should be assigned to an instance of this chore.
+     * Either the owner of the chore, or a member of the team if no owner is specified.
+     *
+     * @return int A User Id.
+     */
+    public function getNextAssignedIdAttribute()
+    {
+        $last_assigned = $this->choreInstances()->orderBy('created_at', 'desc')->first();
+
+        return $this->user_id ?? ($last_assigned
+            ? $this
+                ->team
+                ->allUsers()
+                ->sortBy('name')
+                ->map
+                ->id
+                ->nextAfter($last_assigned->user_id, false, true)
+            : $this
+                ->team
+                ->allUsers()
+                ->sortBy('name')
+                ->first()
+                ->id
+        );
     }
 }

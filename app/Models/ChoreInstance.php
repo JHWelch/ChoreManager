@@ -30,11 +30,11 @@ class ChoreInstance extends Model
      */
     public function complete()
     {
-        $this->chore->createNewInstance();
-
         $this->completed_date  = today();
         $this->completed_by_id = Auth::id();
         $this->save();
+
+        $this->chore->createNewInstance();
     }
 
     public function getIsCompletedAttribute()

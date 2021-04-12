@@ -164,4 +164,29 @@ class ShowTest extends TestCase
             'today',
         ]);
     }
+
+    /** @test */
+    public function chores_assigned_to_team_display_team_as_owner()
+    {
+        // Arrange
+        // Create chore assigned to team
+        $team  = $this->testUser()['team'];
+        $chore = Chore::factory([
+            'title' => 'Walk the dog',
+        ])
+            ->assignedToTeam()
+            ->for($team)
+            ->create();
+
+        // Act
+        // Navigate to show page
+        $component = Livewire::test(Show::class, ['chore' => $chore]);
+
+        // Assert
+        // The team is assigned as the owner
+        $component->assertSeeInOrder([
+            'Owner',
+            $team->name,
+        ]);
+    }
 }

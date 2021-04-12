@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chores;
 
 use App\Enums\Frequency;
 use App\Http\Livewire\Concerns\GoesBack;
+use App\Http\Livewire\Concerns\TrimAndNullEmptyStrings;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use Livewire\Component;
 class Save extends Component
 {
     use GoesBack;
+    use TrimAndNullEmptyStrings;
 
     public Chore $chore;
     public ChoreInstance $chore_instance;
@@ -21,6 +23,7 @@ class Save extends Component
     public $due_date;
 
     public $user_options;
+    public string $team;
 
     protected function rules()
     {
@@ -29,7 +32,7 @@ class Save extends Component
             'chore.description'        => 'string|nullable',
             'chore.frequency_id'       => Rule::in(Frequency::FREQUENCIES),
             'chore.frequency_interval' => 'min:1',
-            'chore.user_id'            => 'required',
+            'chore.user_id'            => 'nullable',
             'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
             'chore_instance.user_id'   => 'nullable',
         ];
@@ -45,13 +48,15 @@ class Save extends Component
         }
         $this->chore_instance = $chore->nextChoreInstance ?? ChoreInstance::make();
         $this->setFrequencies();
-        $this->user_options   = array_values(
+        $this->user_options = array_values(
             Auth::user()
                 ->currentTeam
                 ->allUsers()
                 ->sortBy(fn ($user) => $user->name)
                 ->toOptionsArray()
         );
+
+        $this->team = Auth::user()->currentTeam()->select('name')->first()->name;
     }
 
     public function save()
@@ -60,12 +65,10 @@ class Save extends Component
         $this->chore->team_id = Auth::user()->currentTeam->id;
         $this->chore->save();
 
-        if (! $this->chore_instance->exists) {
-            if ($this->chore_instance->due_date !== null) {
-                $this->chore_instance->chore_id = $this->chore->id;
-                $this->chore_instance->user_id  = $this->chore->user_id;
-                $this->chore_instance->save();
-            }
+        if (! $this->chore_instance->exists && $this->chore_instance->due_date !== null) {
+            $this->chore_instance->chore_id = $this->chore->id;
+            $this->chore_instance->user_id  = $this->chore->next_assigned_id;
+            $this->chore_instance->save();
         } else {
             if ($this->chore_instance->isDirty()) {
                 if ($this->chore_instance->due_date !== null) {
