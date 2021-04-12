@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chores;
 
 use App\Enums\Frequency;
 use App\Http\Livewire\Concerns\GoesBack;
+use App\Http\Livewire\Concerns\TrimAndNullEmptyStrings;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use Livewire\Component;
 class Save extends Component
 {
     use GoesBack;
+    use TrimAndNullEmptyStrings;
 
     public Chore $chore;
     public ChoreInstance $chore_instance;
@@ -21,6 +23,7 @@ class Save extends Component
     public $due_date;
 
     public $user_options;
+    public string $team;
 
     protected function rules()
     {
@@ -45,13 +48,15 @@ class Save extends Component
         }
         $this->chore_instance = $chore->nextChoreInstance ?? ChoreInstance::make();
         $this->setFrequencies();
-        $this->user_options   = array_values(
+        $this->user_options = array_values(
             Auth::user()
                 ->currentTeam
                 ->allUsers()
                 ->sortBy(fn ($user) => $user->name)
                 ->toOptionsArray()
         );
+
+        $this->team = Auth::user()->currentTeam()->select('name')->first()->name;
     }
 
     public function save()
