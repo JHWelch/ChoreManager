@@ -1,20 +1,16 @@
 @props([
-  'user'
+  'team'
 ])
 
 <div class="flex items-center space-x-2">
   <div class="flex justify-start">
     <a href="#" class="flex items-center space-x-3">
       <div class="flex-shrink-0">
-        <img
-          class="w-5 h-5 rounded-full"
-          src="{{ $user->profile_photo_url }}"
-          alt="{{ $user->name }}'s profile photo."
-        >
+        <x-icons.group class="w-5 h-5 text-gray-500" />
       </div>
 
       <div class="text-sm font-medium text-gray-900">
-        {{ $user->name }}
+        {{ $team }}
       </div>
     </a>
   </div>
