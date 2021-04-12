@@ -60,6 +60,7 @@ class ShowTest extends TestCase
     {
         // Arrange
         // Create a chore
+        $this->testUser();
         $chore    = Chore::factory()->withFirstInstance()->create();
         $instance = $chore->nextChoreInstance;
 
@@ -85,16 +86,19 @@ class ShowTest extends TestCase
         $chore = Chore::factory()->has(
             ChoreInstance::factory()->count(3)->sequence(
                 [
-                    'completed_date' => today()->subDays(1),
-                    'user_id'        => $user1->id,
+                    'completed_date'  => today()->subDays(1),
+                    'user_id'         => $user1->id,
+                    'completed_by_id' => $user1->id,
                 ],
                 [
-                    'completed_date' => today()->subDays(2),
-                    'user_id'        => $user2->id,
+                    'completed_date'  => today()->subDays(2),
+                    'user_id'         => $user2->id,
+                    'completed_by_id' => $user2->id,
                 ],
                 [
-                    'completed_date' => today()->subDays(3),
-                    'user_id'        => $user1->id,
+                    'completed_date'  => today()->subDays(3),
+                    'user_id'         => $user1->id,
+                    'completed_by_id' => $user1->id,
                 ],
             )
         )->create();

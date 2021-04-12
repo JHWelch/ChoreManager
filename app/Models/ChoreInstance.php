@@ -57,4 +57,14 @@ class ChoreInstance extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Relationship to user who completed the chore.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function completedBy()
+    {
+        return $this->belongsTo(User::class, 'completed_by_id');
+    }
 }
