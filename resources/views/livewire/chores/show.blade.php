@@ -81,8 +81,8 @@
                             <div class="relative">
                               <img
                                 class="flex items-center justify-center w-10 h-10 bg-gray-400 rounded-full ring-8 ring-white"
-                                src="{{ $past_chore_instance->user->profile_photo_url }}"
-                                alt="{{ $past_chore_instance->user->name }}'s profile photo."
+                                src="{{ $past_chore_instance->completedBy->profile_photo_url }}"
+                                alt="{{ $past_chore_instance->completedBy->name }}'s profile photo."
                               >
 
                               <span class="absolute -bottom-0.5 -right-1 bg-white rounded-tl px-0.5 py-px opacity-80">
@@ -94,7 +94,7 @@
                               <div class="text-sm leading-8 text-gray-500">
                                 <span class="mr-0.5">
                                   <a href="#" class="font-medium text-gray-900">
-                                    {{ $past_chore_instance->user->name }}
+                                    {{ $past_chore_instance->completedBy->name }}
                                   </a>
 
                                   completed chore
