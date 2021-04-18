@@ -87,6 +87,8 @@
 
               <x-icons.markdown class="h-3" />
             </a>
+
+            <x-form.bare.error prefix="chore" name="description" />
           </div>
         </div>
       </div>
@@ -95,11 +97,5 @@
         {{ __('Save') }}
       </x-jet-button>
     </form>
-
-    @if(isset($errors))
-      @foreach ($errors->all() as $error)
-        <div>{{ $error }}</div>
-      @endforeach
-    @endif
   </div>
 </div>

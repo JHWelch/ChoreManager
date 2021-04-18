@@ -17,4 +17,6 @@
       'placeholder' => $placeholder,
     ]) }}
   />
+
+  <x-form.bare.error :prefix="$prefix" :name="$name" />
 </div>
