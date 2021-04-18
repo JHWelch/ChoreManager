@@ -1,17 +1,25 @@
 <div class="flex justify-center">
-  <div class="w-full p-8 bg-white rounded-lg shadow-md lg:w-8/12">
+  <div class="w-full p-8 bg-white rounded-lg shadow-md lg:w-10/12">
+    <x-breakpoint-indicator />
+
     <form wire:submit.prevent="save" class="space-y-4">
       <h2 class="text-lg font-medium">Chore</h2>
 
-      <x-form.input prefix="chore" name="title" />
+      <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+        <div class="md:w-1/2">
+          <x-form.input prefix="chore" name="title" />
+        </div>
 
-      <x-form.select
-        name="user_id"
-        label="Owner"
-        prefix="chore"
-        :options="$user_options"
-        blankOption="Assign to Team - {{ $team }}"
-      />
+        <div class="md:w-1/2">
+          <x-form.select
+            name="user_id"
+            label="Owner"
+            prefix="chore"
+            :options="$user_options"
+            blankOption="Assign to Team - {{ $team }}"
+          />
+        </div>
+      </div>
 
       <!-- Frequency -->
       <div class="flex flex-col">
@@ -44,16 +52,22 @@
         <h2 class="text-lg font-medium">Next Instance</h2>
       @endif
 
-      <x-form.input type="date" prefix="chore_instance" name="due_date" label="Due Date" />
+      <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+        <div class="{{ $chore_instance->exists ? 'md:w-1/2' : 'md:w-full' }}">
+          <x-form.input type="date" prefix="chore_instance" name="due_date" label="Due Date" />
+        </div>
 
-      @if ($chore_instance->exists)
-        <x-form.select
-          name="user_id"
-          label="Owner"
-          prefix="chore_instance"
-          :options="$user_options"
-        />
-      @endif
+        @if ($chore_instance->exists)
+          <div class="md:w-1/2">
+            <x-form.select
+              name="user_id"
+              label="Owner"
+              prefix="chore_instance"
+              :options="$user_options"
+            />
+          </div>
+        @endif
+      </div>
 
       <div class="flex flex-col space-y-1">
         <x-form.textarea prefix="chore" name="description" />
