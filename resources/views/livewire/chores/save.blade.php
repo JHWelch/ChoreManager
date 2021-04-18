@@ -5,8 +5,15 @@
 
       <x-form.input prefix="chore" name="title" />
 
-      <x-form.textarea prefix="chore" name="description" />
+      <x-form.select
+        name="user_id"
+        label="Owner"
+        prefix="chore"
+        :options="$user_options"
+        blankOption="Assign to Team - {{ $team }}"
+      />
 
+      <!-- Frequency -->
       <div class="flex flex-col">
         <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
 
@@ -33,14 +40,6 @@
         </div>
       </div>
 
-      <x-form.select
-        name="user_id"
-        label="Owner"
-        prefix="chore"
-        :options="$user_options"
-        blankOption="Assign to Team - {{ $team }}"
-      />
-
       @if ($chore_instance->exists)
         <h2 class="text-lg font-medium">Next Instance</h2>
       @endif
@@ -55,6 +54,19 @@
           :options="$user_options"
         />
       @endif
+
+      <div class="flex flex-col space-y-1">
+        <x-form.textarea prefix="chore" name="description" />
+
+        <a
+          href="https://www.markdownguide.org/basic-syntax/"
+          class="flex items-center content-end self-end space-x-2 text-xs text-gray-400 hover:underline hover:text-gray-500"
+        >
+          <span>This field can be styled using Markdown</span>
+
+          <x-icons.markdown class="h-3" />
+        </a>
+      </div>
 
       <x-jet-button>
         {{ __('Save') }}
