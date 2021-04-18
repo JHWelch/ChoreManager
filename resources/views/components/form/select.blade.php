@@ -17,4 +17,6 @@
     :options="$options"
     :disabled="$disabled"
   />
+
+  <x-form.bare.error :prefix="$prefix" :name="$name" />
 </div>
