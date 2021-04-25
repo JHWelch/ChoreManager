@@ -28,13 +28,13 @@
           }
         @endphp
 
-        <div wire:key="{{ $group }}" class="mb-4 shadow sm:rounded-lg pb-1 {{ $outer_class }}">
+        <div wire:key="outer-{{ $group }}" class="mb-4 shadow sm:rounded-lg pb-1 {{ $outer_class }}">
           <div class="flex justify-center w-full px-3 py-2">
             <h2 class="text-xl ">{{ Str::snakeToLabel($group) }}</h2>
           </div>
 
           @foreach ($chore_instance_date_groups as $group => $chore_instances)
-            <div wire:key="{{ $group }}">
+            <div wire:key="inner-{{ $group }}">
               @if ($group !== 'today')
                 <div class="sticky top-0 z-10 px-6 py-1 text-sm font-medium text-gray-500 border-t border-b border-gray-200 bg-gray-50">
                   <h3>{{ $group }}</h3>
