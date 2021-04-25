@@ -17,6 +17,7 @@ class Show extends Component
     public Collection $past_chore_instances;
 
     public $showDeleteConfirmation = false;
+    public $user_id;
 
     public function mount()
     {
@@ -24,11 +25,16 @@ class Show extends Component
         $this->loadContent();
     }
 
-    public function complete()
+    public function complete($for = null)
     {
-        $this->chore_instance->complete();
+        $this->chore_instance->complete($for);
         $this->chore->refresh();
         $this->loadContent();
+    }
+
+    public function completeForUser()
+    {
+        $this->complete($this->user_id);
     }
 
     public function loadContent()
