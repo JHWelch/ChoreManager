@@ -152,4 +152,15 @@ class Chore extends Model
                 ->id
         );
     }
+
+    /**
+     * Complete the next chore instance.
+     *
+     * @param int $for User to complete the Chore for
+     * @return void
+     */
+    public function complete($for = null)
+    {
+        return $this->nextChoreInstance?->complete($for);
+    }
 }
