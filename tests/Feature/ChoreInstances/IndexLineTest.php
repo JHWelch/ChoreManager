@@ -6,6 +6,7 @@ use App\Enums\Frequency;
 use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;

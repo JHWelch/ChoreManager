@@ -186,5 +186,34 @@
         </x-jet-danger-button>
     </x-slot>
   </x-jet-confirmation-modal>
+
+  <x-jet-dialog-modal wire:model="showCompleteForUserDialog">
+    <x-slot name="title">
+      {{ __('Complete Chore for Other User')}}
+    </x-slot>
+
+    <x-slot name="content">
+      {{ __('Choose another user on your team to mark the chore completed by them.') }}
+
+      <div class="mt-4">
+        <x-form.select
+          name="user_id"
+          label="Complete Chore for User"
+          blankOption="Select User"
+          :options="$this->user_options"
+        />
+      </div>
+    </x-slot>
+
+    <x-slot name="footer">
+      <x-jet-secondary-button wire:click="$set('showCompleteForUserDialog', false)">
+        {{ __('Cancel')}}
+      </x-jet-secondary-button>
+
+      <x-jet-button wire:click="completeForUser">
+        {{ __('Complete')}}
+      </x-jet-button>
+    </x-slot>
+  </x-jet-dialog-modal>
 </main>
 

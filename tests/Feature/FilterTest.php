@@ -95,7 +95,7 @@ class FilterTest extends TestCase
         // Arrange
         // Create two users on a team with chores
         $acting_as_user = $this->testUser()['user'];
-        $team           = Team::first();
+        $team           = $this->team;
         $other_user     = User::factory()->hasAttached($team)->create();
 
         Chore::factory([

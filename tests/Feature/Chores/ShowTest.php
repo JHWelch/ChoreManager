@@ -189,4 +189,34 @@ class ShowTest extends TestCase
             $team->name,
         ]);
     }
+
+    /** @test */
+    public function can_complete_chore_for_another_another_team_user()
+    {
+        // Arrange
+        // Create acting as user and another user in the same team and chore.
+        $this->testUser();
+        $other_user = User::factory()->hasAttached($this->team)->create();
+
+        $chore = Chore::factory()
+            ->for($other_user)
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Complete the chore for the other user
+        Livewire::test(Show::class, [
+            'chore' => $chore,
+        ])
+            ->set('user_id', $other_user->id)
+            ->call('completeForUser');
+
+        // Assert
+        // The chore is completed and completed by the user
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'chore_id'        => $chore->id,
+            'completed_date'  => today(),
+            'completed_by_id' => $other_user->id,
+        ]);
+    }
 }

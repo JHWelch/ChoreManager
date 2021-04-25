@@ -10,6 +10,9 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
+    protected User $user;
+    protected Team $team;
+
     /**
      * Create a new user and act as them for the tests.
      *
@@ -19,6 +22,9 @@ abstract class TestCase extends BaseTestCase
     {
         $this->actingAs($user = User::factory($attributes)->withPersonalTeam()->create());
         $user->switchTeam($team = Team::first());
+
+        $this->user = $user;
+        $this->team = $team;
 
         return [
             'user' => $user,
