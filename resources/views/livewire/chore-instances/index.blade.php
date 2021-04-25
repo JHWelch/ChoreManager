@@ -28,7 +28,7 @@
           }
         @endphp
 
-        <div wire:key="{{ $group }}" class="mb-4 shadow sm:rounded-lg {{ $outer_class }}">
+        <div wire:key="{{ $group }}" class="mb-4 shadow sm:rounded-lg pb-1 {{ $outer_class }}">
           <div class="flex justify-center w-full px-3 py-2">
             <h2 class="text-xl ">{{ Str::snakeToLabel($group) }}</h2>
           </div>
