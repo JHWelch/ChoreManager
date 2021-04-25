@@ -304,7 +304,7 @@ class ChoreInstanceCompleteTest extends TestCase
 
         // Act
         // Complete chore instance
-        $chore->nextChoreInstance->complete();
+        $chore->complete();
 
         // Assert
         // Next chore instance has the same user
@@ -325,7 +325,7 @@ class ChoreInstanceCompleteTest extends TestCase
 
         // Act
         // Complete Chore
-        $chore->nextChoreInstance->complete();
+        $chore->complete();
 
         // Assert
         // Completed chore instance is marked completed by acting_as_user
@@ -362,7 +362,7 @@ class ChoreInstanceCompleteTest extends TestCase
 
         // Act
         // Complete the first instnace
-        $chore->nextChoreInstance->complete();
+        $chore->complete();
 
         // Assert
         // The next chore instance is assigned to the third user
@@ -399,7 +399,7 @@ class ChoreInstanceCompleteTest extends TestCase
 
         // Act
         // Complete the first instnace
-        $chore->nextChoreInstance->complete();
+        $chore->complete();
 
         // Assert
         // The next chore instance is assigned to the first user

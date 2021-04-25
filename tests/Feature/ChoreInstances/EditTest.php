@@ -91,7 +91,7 @@ class EditTest extends TestCase
             'frequency_id' => Frequency::DAILY,
         ]);
 
-        $chore->nextChoreInstance->complete();
+        $chore->complete();
         $chore->refresh();
 
         // Act
