@@ -187,7 +187,7 @@
     </x-slot>
   </x-jet-confirmation-modal>
 
-  <x-jet-dialog-modal wire:model="showCompleteForUserDialog">
+  <x-jet-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg">
     <x-slot name="title">
       {{ __('Complete Chore for Other User')}}
     </x-slot>
