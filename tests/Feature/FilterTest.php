@@ -94,15 +94,14 @@ class FilterTest extends TestCase
     {
         // Arrange
         // Create two users on a team with chores
-        $acting_as_user = $this->testUser()['user'];
-        $team           = $this->team;
-        $other_user     = User::factory()->hasAttached($team)->create();
+        $this->testUser();
+        $other_user = User::factory()->hasAttached($this->team)->create();
 
         Chore::factory([
             'title'   => 'Walk the dog.',
         ])
-            ->for($team)
-            ->for($acting_as_user)
+            ->for($this->team)
+            ->for($this->user)
             ->has(ChoreInstance::factory([
                 'user_id' => $other_user->id,
             ]))
@@ -125,12 +124,12 @@ class FilterTest extends TestCase
     {
         // Arrange
         // Create chore assigned to no one
-        $team = $this->testUser()['team'];
+        $this->testUser();
         Chore::factory([
             'title' => 'Walk the dog',
         ])
             ->assignedToTeam()
-            ->for($team)
+            ->for($this->team)
             ->create();
 
         // Act

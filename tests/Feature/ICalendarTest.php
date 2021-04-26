@@ -15,12 +15,11 @@ class ICalendarTest extends TestCase
     /** @test */
     public function user_calendar_tokens_return_users_next_chore_instances()
     {
-        $this->withoutExceptionHandling();
         // Arrange
         // Create user with chores and calendar token
-        $user           = $this->testUser()['user'];
+        $this->testUser();
         CalendarToken::create([
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'token'   => 'fake_uuid',
         ]);
         Chore::factory()
@@ -30,7 +29,7 @@ class ICalendarTest extends TestCase
                 ['title' => 'Clean the dishes'],
                 ['title' => 'Do the laundry'],
             )
-            ->for($user)
+            ->for($this->user)
             ->withFirstInstance()
             ->create();
 
@@ -49,13 +48,12 @@ class ICalendarTest extends TestCase
     /** @test */
     public function team_calendar_tokens_return_team_next_chore_instances()
     {
-        $this->withoutExceptionHandling();
         // Arrange
         // Create user with chores and calendar token
-        $actingAsUser   = $this->testUser();
+        $this->testUser();
         CalendarToken::create([
-            'user_id' => $actingAsUser['user']->id,
-            'team_id' => $actingAsUser['team']->id,
+            'user_id' => $this->user->id,
+            'team_id' => $this->team->id,
             'token'   => 'fake_uuid',
         ]);
 
@@ -65,16 +63,16 @@ class ICalendarTest extends TestCase
                 ['title' => 'Clean the dishes'],
                 ['title' => 'Do the laundry'],
             )
-            ->for($actingAsUser['user'])
-            ->for($actingAsUser['team'])
+            ->for($this->user)
+            ->for($this->team)
             ->withFirstInstance()
             ->create();
 
         Chore::factory([
             'title' => 'Walk the dog.',
         ])
-            ->for(User::factory()->hasAttached($actingAsUser['team']))
-            ->for($actingAsUser['team'])
+            ->for(User::factory()->hasAttached($this->team))
+            ->for($this->team)
             ->withFirstInstance()
             ->create();
 

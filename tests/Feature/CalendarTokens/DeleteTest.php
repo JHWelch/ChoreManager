@@ -16,7 +16,6 @@ class DeleteTest extends TestCase
     /** @test */
     public function can_delete_existing_calendar_tokens()
     {
-        $this->withoutExceptionHandling();
         // Arrange
         // Create a user with Calendar token
         $user  = $this->testUser()['user'];
