@@ -24,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /**
+         * Blade directive that will display any Markdown text as formatted HTML.
+         * @param string $markdown
+         * @return string php of the blade directive
+         */
         Blade::directive('markdown', function ($markdown) {
             if ($markdown) {
                 return '
