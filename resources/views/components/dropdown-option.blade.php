@@ -10,11 +10,11 @@
 })
 
 <button
-    x-on:click="show = false"
-    data-dropdown-option="{{ $option }}"
-    class="block w-full px-4 py-2 text-sm font-medium text-left {{ $text_color }} whitespace-nowrap hover:bg-gray-100 focus:outline-none'"
-    role="menuitem"
-    wire:click="{{ $click }}"
+  x-on:click="show = false"
+  data-dropdown-option="{{ $option }}"
+  class="block w-full px-4 py-2 text-sm font-medium text-left {{ $text_color }} whitespace-nowrap hover:bg-gray-100 focus:outline-none'"
+  role="menuitem"
+  wire:click="{{ $click }}"
 >
   {{ $slot }}
 </button>
