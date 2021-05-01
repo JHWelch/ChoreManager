@@ -24,6 +24,8 @@
     @stack('head')
   </head>
   <body class="font-sans antialiased">
+    <x-demo-banner />
+
     <x-jet-banner />
 
     <div class="h-full min-h-screen bg-gray-100">

@@ -13,5 +13,6 @@ return [
     |
     */
 
-    'enabled' => env('DEMO_MODE', false),
+    'enabled'        => env('DEMO_MODE', false),
+    'repository_url' => env('DEMO_REPO_URL', 'https://github.com/JHWelch/ChoreManager'),
 ];
