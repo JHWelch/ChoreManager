@@ -14,8 +14,8 @@
   </div>
 
   @if ($choreInstanceGroups->isEmpty())
-    <div class="flex justify-center pt-8">
-      <h2 class="text-2xl font-medium">{{ __('No chores here! Good job.') }}</h2>
+    <div class="flex justify-center p-8">
+      <h2 class="text-2xl font-medium">{{ __('All done for today') }}</h2>
     </div>
   @else
     <nav class="relative h-full overflow-y-auto" aria-label="Chores">
@@ -58,7 +58,7 @@
       class="p-1 text-sm text-indigo-600 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 hover:underline"
       wire:click="toggleShowFutureChores"
     >
-      {{ $showFutureChores ? __('Hide future chores') : __('Hide future chores')}}
+      {{ $showFutureChores ? __('Hide future chores') : __('Show future chores')}}
     </button>
   </div>
 </div>

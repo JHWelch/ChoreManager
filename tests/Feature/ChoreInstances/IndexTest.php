@@ -75,7 +75,7 @@ class IndexTest extends TestCase
 
         // Assert
         // See empty state
-        $component->assertSee('No chores here! Good job.');
+        $component->assertSee('All done for today');
     }
 
     /** @test */
