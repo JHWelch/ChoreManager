@@ -21,15 +21,7 @@ class Team extends JetstreamTeam
         'personal_team' => 'boolean',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'personal_team',
-    ];
+    protected $guarded = [];
 
     /**
      * The event map for the model.
