@@ -24,7 +24,7 @@
     @stack('head')
   </head>
   <body class="font-sans antialiased">
-    <x-demo-banner />
+    @livewire('demo-banner')
 
     <x-jet-banner />
 

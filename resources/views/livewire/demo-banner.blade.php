@@ -1,8 +1,9 @@
 @if (config('demo.enabled'))
   <div
-    x-data="{'show': true}"
+    x-data="{'show': @entangle('show')}"
     class="bg-indigo-500"
     x-show="show"
+    x-cloak
   >
     <div class="max-w-screen-xl px-3 py-2 mx-auto sm:px-6 lg:px-8">
       <div class="flex flex-wrap items-center justify-between">
