@@ -34,7 +34,7 @@ class IndexTest extends TestCase
         // Arrange
         // Create a chore with a chore instance
         $user  = $this->testUser()['user'];
-        $chore = Chore::factory()->for($user)->withFirstInstance()->create();
+        $chore = Chore::factory()->for($user)->withFirstInstance(today())->create();
 
         // Act
         // Open chore instance index
@@ -76,5 +76,30 @@ class IndexTest extends TestCase
         // Assert
         // See empty state
         $component->assertSee('No chores here! Good job.');
+    }
+
+    /** @test */
+    public function future_chores_do_not_show_by_default()
+    {
+        // Arrange
+        // Create two chores, one due today, one in future
+        $user   = $this->testUser()['user'];
+        $chore1 = Chore::factory()
+            ->for($user)
+            ->withFirstInstance(today())
+            ->create();
+        $chore2 = Chore::factory()
+            ->for($user)
+            ->withFirstInstance(today()
+            ->addDays(4))->create();
+
+        // Act
+        // View Index page
+        $component = Livewire::test(ChoreInstancesIndex::class);
+
+        // Assert
+        // Can see the chore due today, but not the one in the future.
+        $component->assertSee($chore1->title);
+        $component->assertDontSee($chore2->title);
     }
 }

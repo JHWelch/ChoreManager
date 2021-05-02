@@ -103,7 +103,8 @@ class FilterTest extends TestCase
             ->for($this->team)
             ->for($this->user)
             ->has(ChoreInstance::factory([
-                'user_id' => $other_user->id,
+                'user_id'  => $other_user->id,
+                'due_date' => today(),
             ]))
             ->create();
 

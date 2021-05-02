@@ -32,7 +32,7 @@ class Index extends Component
     public function updateChoreInstanceList()
     {
         $this->chore_instance_groups = $this->choreQueryByTeamOrUser(false)
-            ->onlyWithNextInstance()
+            ->onlyWithDueNextInstance()
             ->orderBy('chore_instances.due_date')
             ->get()
             ->mapToGroups(function ($chore_instance) {
