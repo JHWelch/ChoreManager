@@ -13,7 +13,7 @@ class Index extends Component
 
     public $choreInstanceGroups;
 
-    public $showFutureChores = false;
+    public $showFutureChores;
 
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
@@ -22,6 +22,7 @@ class Index extends Component
 
     public function mount()
     {
+        $this->showFutureChores = session('show_future_chores', false);
         $this->updateChoreInstanceList();
     }
 
@@ -61,6 +62,7 @@ class Index extends Component
     {
         $this->showFutureChores = ! $this->showFutureChores;
         $this->updateChoreInstanceList();
+        session(['show_future_chores' => $this->showFutureChores]);
     }
 
     public function setTeamFilter($filter)

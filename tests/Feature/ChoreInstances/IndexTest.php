@@ -107,7 +107,7 @@ class IndexTest extends TestCase
     public function user_can_show_future_chores()
     {
         // Arrange
-        // Create two chores, one due today, one in future
+        // Create chore in the future
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()
             ->for($user)
@@ -115,12 +115,34 @@ class IndexTest extends TestCase
             ->addDays(4))->create();
 
         // Act
-        // View Index page
+        // View index page and toggle showing future chores
         $component = Livewire::test(ChoreInstancesIndex::class)
             ->call('toggleShowFutureChores');
 
         // Assert
-        // Can see the chore due today, but not the one in the future.
+        // User can see future chore
+        $component->assertSee($chore->title);
+    }
+
+    /** @test */
+    public function show_future_chores_is_remembered_when_revisiting_page()
+    {
+        // Arrange
+        // Create chore in the future
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()
+            ->for($user)
+            ->withFirstInstance(today()
+            ->addDays(4))->create();
+
+        // Act
+        // Open component and toggle Show, load another component
+        Livewire::test(ChoreInstancesIndex::class)
+            ->call('toggleShowFutureChores');
+        $component = Livewire::test(ChoreInstancesIndex::class);
+
+        // Assert
+        // User can see future chore
         $component->assertSee($chore->title);
     }
 }
