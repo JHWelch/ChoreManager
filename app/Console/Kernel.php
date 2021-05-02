@@ -24,7 +24,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // If Demo is enabled reseed database daily.
+        $schedule
+            ->command('migrate:fresh --force')
+            ->everyMinute()
+            ->when(fn () => config('demo.enabled'))
+            ->then(function () {
+                ray('seeding');
+                $this->call('db:seed --force --class=DemoSeeder');
+            });
     }
 
     /**
@@ -34,7 +42,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
