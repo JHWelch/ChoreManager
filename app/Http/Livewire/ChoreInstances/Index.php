@@ -13,6 +13,8 @@ class Index extends Component
 
     public $chore_instance_groups;
 
+    public $show_future_chores = false;
+
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
         'chore_instance.updated'   => 'choreInstanceUpdated',
@@ -31,8 +33,12 @@ class Index extends Component
 
     public function updateChoreInstanceList()
     {
+        $only_with_filter = $this->show_future_chores
+            ? 'onlyWithNextInstance'
+            : 'onlyWithDueNextInstance';
+
         $this->chore_instance_groups = $this->choreQueryByTeamOrUser(false)
-            ->onlyWithDueNextInstance()
+            ->{$only_with_filter}()
             ->orderBy('chore_instances.due_date')
             ->get()
             ->mapToGroups(function ($chore_instance) {
@@ -49,6 +55,12 @@ class Index extends Component
             ->map(function ($date_group) {
                 return $date_group->mapToGroups(fn ($chore) => [$chore->due_date->diffDaysForHumans() => $chore]);
             });
+    }
+
+    public function showFutureChores()
+    {
+        $this->show_future_chores = true;
+        $this->updateChoreInstanceList();
     }
 
     public function setTeamFilter($filter)

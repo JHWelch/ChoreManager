@@ -102,4 +102,25 @@ class IndexTest extends TestCase
         $component->assertSee($chore1->title);
         $component->assertDontSee($chore2->title);
     }
+
+    /** @test */
+    public function user_can_show_future_chores()
+    {
+        // Arrange
+        // Create two chores, one due today, one in future
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()
+            ->for($user)
+            ->withFirstInstance(today()
+            ->addDays(4))->create();
+
+        // Act
+        // View Index page
+        $component = Livewire::test(ChoreInstancesIndex::class)
+            ->call('showFutureChores');
+
+        // Assert
+        // Can see the chore due today, but not the one in the future.
+        $component->assertSee($chore->title);
+    }
 }
