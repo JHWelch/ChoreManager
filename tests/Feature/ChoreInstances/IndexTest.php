@@ -117,7 +117,7 @@ class IndexTest extends TestCase
         // Act
         // View Index page
         $component = Livewire::test(ChoreInstancesIndex::class)
-            ->call('showFutureChores');
+            ->call('toggleShowFutureChores');
 
         // Assert
         // Can see the chore due today, but not the one in the future.

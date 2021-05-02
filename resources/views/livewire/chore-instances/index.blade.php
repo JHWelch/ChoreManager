@@ -52,4 +52,13 @@
       @endforeach
     </nav>
   @endif
+
+  <div class="flex justify-center w-full align-middle">
+    <button
+      class="p-1 text-sm text-indigo-600 rounded-md focus:outline-none focus:ring focus:border-indigo-300"
+      wire:click="toggleShowFutureChores"
+    >
+      {{ $showFutureChores ? __('Hide future chores') : __('Hide future chores')}}
+    </button>
+  </div>
 </div>

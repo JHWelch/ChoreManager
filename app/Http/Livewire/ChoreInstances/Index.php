@@ -13,7 +13,7 @@ class Index extends Component
 
     public $chore_instance_groups;
 
-    public $show_future_chores = false;
+    public $showFutureChores = false;
 
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
@@ -33,7 +33,7 @@ class Index extends Component
 
     public function updateChoreInstanceList()
     {
-        $only_with_filter = $this->show_future_chores
+        $only_with_filter = $this->showFutureChores
             ? 'onlyWithNextInstance'
             : 'onlyWithDueNextInstance';
 
@@ -57,9 +57,9 @@ class Index extends Component
             });
     }
 
-    public function showFutureChores()
+    public function toggleShowFutureChores()
     {
-        $this->show_future_chores = true;
+        $this->showFutureChores = ! $this->showFutureChores;
         $this->updateChoreInstanceList();
     }
 
