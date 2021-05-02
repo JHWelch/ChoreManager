@@ -11,7 +11,7 @@ class Index extends Component
         setTeamFilter as _setTeamFilter;
     }
 
-    public $chore_instance_groups;
+    public $choreInstanceGroups;
 
     public $showFutureChores = false;
 
@@ -33,12 +33,12 @@ class Index extends Component
 
     public function updateChoreInstanceList()
     {
-        $only_with_filter = $this->showFutureChores
+        $onlyWithFilter = $this->showFutureChores
             ? 'onlyWithNextInstance'
             : 'onlyWithDueNextInstance';
 
-        $this->chore_instance_groups = $this->choreQueryByTeamOrUser(false)
-            ->{$only_with_filter}()
+        $this->choreInstanceGroups = $this->choreQueryByTeamOrUser(false)
+            ->{$onlyWithFilter}()
             ->orderBy('chore_instances.due_date')
             ->get()
             ->mapToGroups(function ($chore_instance) {

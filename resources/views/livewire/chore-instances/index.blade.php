@@ -13,13 +13,13 @@
     </x-link>
   </div>
 
-  @if ($chore_instance_groups->isEmpty())
+  @if ($choreInstanceGroups->isEmpty())
     <div class="flex justify-center pt-8">
       <h2 class="text-2xl font-medium">{{ __('No chores here! Good job.') }}</h2>
     </div>
   @else
     <nav class="relative h-full overflow-y-auto" aria-label="Chores">
-      @foreach($chore_instance_groups as $group => $chore_instance_date_groups)
+      @foreach($choreInstanceGroups as $group => $chore_instance_date_groups)
         @php
           $outer_class = match($group) {
             'past_due' => 'border border-red-300 bg-red-100',
