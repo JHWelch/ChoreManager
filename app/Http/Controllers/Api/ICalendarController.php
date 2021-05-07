@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\CalendarToken;
 use Illuminate\Http\Request;
-use Laravel\Sanctum\Sanctum;
 use Spatie\IcalendarGenerator\Components\Calendar;
 use Spatie\IcalendarGenerator\Components\Event;
 
@@ -18,13 +17,11 @@ class ICalendarController extends Controller
         $cal = Calendar::create($calendar_token->name);
 
         $calendar_token
-            ->chores()
-            ->onlyWithNextInstance()
-            ->orderBy('chore_instances.due_date')
-            ->each(function ($chore) use ($cal) {
-                $cal->event(Event::create($chore->title)
-                    ->startsAt($chore->due_date)
-                    ->endsAt($chore->due_date)
+            ->choreInstances()
+            ->each(function ($chore_instance) use ($cal) {
+                $cal->event(Event::create($chore_instance->chore->title)
+                    ->startsAt($chore_instance->due_date)
+                    ->endsAt($chore_instance->due_date)
                     ->fullDay()
                 );
             });

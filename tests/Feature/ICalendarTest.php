@@ -86,4 +86,33 @@ class ICalendarTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Walk the dog', 'Clean the dishes', 'Do the laundry');
     }
+
+    /** @test */
+    public function chore_calendar_shows_chores_assigned_to_team_but_instance_assigned_to_user()
+    {
+        // Arrange
+        // Create chore with instance assigned to current user and personal calendar token
+        $this->testUser();
+        $cal = CalendarToken::create([
+            'user_id' => $this->user->id,
+            'token'   => 'fake_uuid',
+        ]);
+
+        Chore::factory(
+            ['title' => 'Clean the dishes']
+        )
+            ->assignedToTeam()
+            ->for($this->team)
+            ->withFirstInstance(null, $this->user->id)
+            ->create();
+
+        // Act
+        // Call ICalendar Route with Token Key
+        $response = $this->get(route('icalendar.show', ['token' => 'fake_uuid']));
+
+        // Assert
+        // Calendar output has name
+        $response->assertStatus(200);
+        $response->assertSee('Clean the dishes');
+    }
 }

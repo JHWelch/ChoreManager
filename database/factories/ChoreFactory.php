@@ -38,13 +38,13 @@ class ChoreFactory extends Factory
      *
      * @return $this
      */
-    public function withFirstInstance($due_date = null)
+    public function withFirstInstance($due_date = null, $user_id = null)
     {
         return $this->has(
             ChoreInstance::factory()
-                ->state(function (array $attributes, Chore $chore) use ($due_date) {
+                ->state(function (array $attributes, Chore $chore) use ($due_date, $user_id) {
                     return array_merge(
-                        ['user_id' => $chore->user->id],
+                        ['user_id' => $user_id ?? $chore->user->id],
                         $due_date ? ['due_date' => $due_date] : []
                     );
                 }));
