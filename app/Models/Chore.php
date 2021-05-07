@@ -119,7 +119,7 @@ class Chore extends Model
 
     public function scopeNullDueDatesAtEnd($query)
     {
-        return $query->orderBy(DB::raw('ISNULL(chore_instances.due_date), chore_instances.due_date'), 'ASC');
+        return $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
     }
 
     public function createNewInstance($due_date = null)
