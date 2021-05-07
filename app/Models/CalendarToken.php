@@ -50,6 +50,27 @@ class CalendarToken extends Model
             );
     }
 
+    public function choreInstances()
+    {
+        return $this->is_user_calendar
+            ? $this->hasManyThrough(
+                ChoreInstance::class,
+                User::class,
+                'id',
+                'user_id',
+                'user_id',
+                'id'
+            )
+                ->with('chore')
+                ->orderBy('chore_instances.due_date')
+            : ChoreInstance::join('chores', function ($join) {
+                $join->on('chore_instances.chore_id', '=', 'chores.id');
+            })
+                ->where('chores.team_id', $this->team_id)
+                ->where('chore_instances.completed_date', null)
+                ->orderBy('chore_instances.due_date');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
