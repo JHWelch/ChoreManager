@@ -11,6 +11,13 @@ class Chore extends Model
 {
     use HasFactory;
 
+    const SCOPE_COLUMNS = [
+        'chores.*',
+        'chore_instances.due_date',
+        'chore_instances.user_id',
+        'chore_instances.id AS chore_instance_id',
+    ];
+
     protected $guarded;
 
     protected $attributes = [
@@ -62,10 +69,7 @@ class Chore extends Model
     public function scopeWithNextInstance($query)
     {
         return $query->select(
-            'chores.*',
-            'chore_instances.due_date',
-            'chore_instances.user_id',
-            'chore_instances.id AS chore_instance_id',
+            ...self::SCOPE_COLUMNS
         )
             ->leftJoin('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
@@ -83,10 +87,7 @@ class Chore extends Model
     public function scopeOnlyWithNextInstance($query)
     {
         return $query->select(
-            'chores.*',
-            'chore_instances.due_date',
-            'chore_instances.user_id',
-            'chore_instances.id AS chore_instance_id',
+            ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
@@ -104,10 +105,7 @@ class Chore extends Model
     public function scopeOnlyWithDueNextInstance($query)
     {
         return $query->select(
-            'chores.*',
-            'chore_instances.due_date',
-            'chore_instances.user_id',
-            'chore_instances.id AS chore_instance_id',
+            ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', function ($join) {
                 $join->on('chores.id', '=', 'chore_instances.chore_id')
