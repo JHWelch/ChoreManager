@@ -28,7 +28,7 @@ class CreateTeam implements CreatesTeams
         AddingTeam::dispatch($user);
 
         $user->switchTeam($team = $user->ownedTeams()->create([
-            'name' => $input['name'],
+            'name'          => $input['name'],
             'personal_team' => false,
         ]));
 
