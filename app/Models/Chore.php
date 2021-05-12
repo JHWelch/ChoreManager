@@ -5,11 +5,17 @@ namespace App\Models;
 use App\Enums\Frequency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Chore extends Model
 {
     use HasFactory;
+
+    const SCOPE_COLUMNS = [
+        'chores.*',
+        'chore_instances.due_date',
+        'chore_instances.user_id',
+        'chore_instances.id AS chore_instance_id',
+    ];
 
     protected $guarded;
 
@@ -54,6 +60,18 @@ class Chore extends Model
     }
 
     /**
+     * Join used by scopes including Chore Instances.
+     *
+     * @param Illuminate\Database\Query\JoinClause $join
+     * @return Illuminate\Database\Query\JoinClause
+     */
+    public function choreInstanceScopeJoin($join)
+    {
+        return $join->on('chores.id', '=', 'chore_instances.chore_id')
+            ->where('chore_instances.completed_date', null);
+    }
+
+    /**
      * Join Chore to the Next Chore instance if available.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -62,15 +80,9 @@ class Chore extends Model
     public function scopeWithNextInstance($query)
     {
         return $query->select(
-            'chores.*',
-            'chore_instances.due_date',
-            'chore_instances.user_id',
-            'chore_instances.id AS chore_instance_id',
+            ...self::SCOPE_COLUMNS
         )
-            ->leftJoin('chore_instances', function ($join) {
-                $join->on('chores.id', '=', 'chore_instances.chore_id')
-                    ->where('chore_instances.completed_date', null);
-            })
+            ->leftJoin('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
             ->withCasts(['due_date' => 'datetime']);
     }
 
@@ -83,15 +95,9 @@ class Chore extends Model
     public function scopeOnlyWithNextInstance($query)
     {
         return $query->select(
-            'chores.*',
-            'chore_instances.due_date',
-            'chore_instances.user_id',
-            'chore_instances.id AS chore_instance_id',
+            ...self::SCOPE_COLUMNS
         )
-            ->join('chore_instances', function ($join) {
-                $join->on('chores.id', '=', 'chore_instances.chore_id')
-                    ->where('chore_instances.completed_date', null);
-            })
+            ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
             ->withCasts(['due_date' => 'datetime']);
     }
 
@@ -104,22 +110,16 @@ class Chore extends Model
     public function scopeOnlyWithDueNextInstance($query)
     {
         return $query->select(
-            'chores.*',
-            'chore_instances.due_date',
-            'chore_instances.user_id',
-            'chore_instances.id AS chore_instance_id',
+            ...self::SCOPE_COLUMNS
         )
-            ->join('chore_instances', function ($join) {
-                $join->on('chores.id', '=', 'chore_instances.chore_id')
-                    ->where('chore_instances.completed_date', null)
-                    ->where('chore_instances.due_date', '<=', today());
-            })
+            ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join)
+                ->where('chore_instances.due_date', '<=', today()))
             ->withCasts(['due_date' => 'datetime']);
     }
 
     public function scopeNullDueDatesAtEnd($query)
     {
-        return $query->orderBy(DB::raw('ISNULL(chore_instances.due_date), chore_instances.due_date'), 'ASC');
+        return $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
     }
 
     public function createNewInstance($due_date = null)
