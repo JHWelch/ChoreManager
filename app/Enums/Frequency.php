@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 /**
- * TODO: Laravel 8.1 will have enums.
+ * TODO: PHP 8.1 will have enums.
  * "All I want is to be a real Enum!".
  */
 class Frequency
