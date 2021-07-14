@@ -1,0 +1,22 @@
+name: Deploy To Server
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+jobs:
+  deploy-to-server:
+    environment: Production
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger deployment on server
+        uses: garygrossgarten/github-action-ssh@v0.6.3
+        with:
+          command: bash ./dploy-scripts/dploy.sh choremanager
+          host: ${{ secrets.HOST }}
+          username: dploy
+          passphrase: ${{ secrets.PASSPHRASE }}
+          privateKey: ${{ secrets.PRIVATE_KEY}}
