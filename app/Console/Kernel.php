@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
         // If Demo is enabled reseed database daily.
         $schedule
             ->command('migrate:fresh --force')
-            ->everyMinute()
+            ->daily()
             ->when(fn () => config('demo.enabled'))
             ->then(function () {
                 ray('seeding');
