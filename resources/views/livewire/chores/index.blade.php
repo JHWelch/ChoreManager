@@ -60,7 +60,7 @@
                     {{ $chore->title }}
                   </td>
 
-                  <td class="hidden px-6 py-4 text-sm text-gray-500 truncate whitespace-nowrap lg:block">
+                  <td class="hidden max-w-md px-6 py-4 text-sm text-gray-500 truncate whitespace-nowrap lg:block">
                     {{ $chore->description }}
                   </td>
 
