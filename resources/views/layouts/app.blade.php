@@ -23,12 +23,12 @@
     <!-- Page specific head -->
     @stack('head')
   </head>
-  <body class="font-sans antialiased">
+  <body class="font-sans antialiased bg-gray-100">
     @livewire('demo-banner')
 
     <x-jet-banner />
 
-    <div class="h-full min-h-screen bg-gray-100">
+    <div class="h-full min-h-screen">
       @livewire('navigation-menu')
 
       <!-- Page Heading -->

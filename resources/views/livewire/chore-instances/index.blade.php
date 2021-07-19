@@ -18,7 +18,7 @@
       <h2 class="text-2xl font-medium">{{ __('All done for today') }}</h2>
     </div>
   @else
-    <nav class="relative h-full overflow-y-auto" aria-label="Chores">
+    <nav class="relative h-full" aria-label="Chores">
       @foreach($choreInstanceGroups as $group => $chore_instance_date_groups)
         @php
           $outer_class = match($group) {
