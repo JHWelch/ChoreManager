@@ -144,4 +144,23 @@ class FilterTest extends TestCase
         $component->call('setTeamFilter', 'user');
         $component->assertDontSee('Walk the dog');
     }
+
+    /** @test */
+    public function filter_persists_between_component_loads()
+    {
+        // Arrange
+        // Create user
+        $this->testUser();
+
+        // Act
+        // Load Livewire component, toggle filter to Team, Load again
+        Livewire::test(ChoreInstanceIndex::class)
+            ->call('setTeamFilter', 'team');
+
+        $component = Livewire::test(ChoreInstanceIndex::class);
+
+        // Assert
+        // The Team filter is still active.
+        $component->assertSet('team_or_user', 'team');
+    }
 }
