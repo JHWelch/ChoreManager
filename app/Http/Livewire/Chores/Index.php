@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\Chores;
 
 use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
+use App\Models\Chore;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Index extends Component
@@ -16,6 +16,9 @@ class Index extends Component
     public Collection $chores;
     public $sort = 'chore_instances.due_date';
     public $desc = false;
+
+    public $showDescriptionModal = false;
+    public $showDescriptionModalChore;
 
     public function mount()
     {
@@ -48,5 +51,11 @@ class Index extends Component
     {
         $this->_setTeamFilter($filter);
         $this->loadChores();
+    }
+
+    public function setShowDescriptionModal($chore)
+    {
+        $this->showDescriptionModal = true;
+        $this->showDescriptionModalChore = Chore::find($chore);
     }
 }

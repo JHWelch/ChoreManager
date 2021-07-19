@@ -60,8 +60,13 @@
                     {{ $chore->title }}
                   </td>
 
-                  <td class="hidden max-w-md px-6 py-4 text-sm text-gray-500 truncate whitespace-nowrap lg:block">
-                    {{ $chore->description }}
+                  <td class="hidden max-w-md px-6 py-4 truncate lg:block whitespace-nowrap">
+                    <button
+                      class="text-sm text-gray-500 underline"
+                      wire:click.stop="setShowDescriptionModal({{ $chore->id }})"
+                    >
+                      {{ $chore->description }}
+                    </button>
                   </td>
 
                   <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
@@ -79,4 +84,22 @@
       </div>
     </div>
   </div>
+
+  <x-jet-dialog-modal wire:model="showDescriptionModal" maxWidth="lg">
+    <x-slot name="title">
+      {{ $showDescriptionModalChore?->title }}
+    </x-slot>
+
+    <x-slot name="content">
+      <div class="prose min-h-64">
+        @markdown($showDescriptionModalChore?->description)
+      </div>
+    </x-slot>
+
+    <x-slot name="footer">
+      <x-jet-button wire:click="$set('showDescriptionModal', false)">
+        Done
+      </x-jet-button>
+    </x-slot>
+  </x-jet-dialog-modal>
 </div>
