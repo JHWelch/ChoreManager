@@ -21,7 +21,7 @@ class FrequencyTest extends TestCase
     {
         $frequency = new Frequency(Frequency::DOES_NOT_REPEAT);
 
-        $this->assertNull($frequency->getNextDate($this->today));
+        $this->assertNull($frequency->getNextDate());
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addDay()->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -42,7 +42,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addWeek()->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -53,7 +53,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addMonthNoOverflow()->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -64,7 +64,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addQuarterNoOverflow()->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -75,7 +75,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addYearNoOverflow()->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -86,7 +86,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addDays(5)->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -97,7 +97,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addWeeks(5)->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -108,7 +108,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addMonthsNoOverflow(5)->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -119,7 +119,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addQuartersNoOverflow(5)->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 
@@ -130,7 +130,7 @@ class FrequencyTest extends TestCase
 
         $this->assertEquals(
             $this->today->addYearNoOverflow(5)->toDateString(),
-            $frequency->getNextDate($this->today)?->toDateString()
+            $frequency->getNextDate()?->toDateString()
         );
     }
 }

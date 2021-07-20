@@ -167,21 +167,7 @@ class Chore extends Model
 
     public function createNewInstance($after = null)
     {
-        $after = $after ?? today();
-
-        $i = $this->frequency_interval;
-
-        $due_date = match ($this->frequency_id) {
-            0       => null,
-            1       => $after->addDays($i),
-            2       => $after->addWeeks($i),
-            3       => $after->addMonthNoOverflows($i),
-            4       => $after->addQuarterNoOverflows($i),
-            5       => $after->addYearNoOverflows($i),
-            default => throw new \Exception('Invalid frequency_id.'),
-        };
-
-        if ($due_date === null) {
+        if (! ($due_date = $this->frequency->getNextDate($after))) {
             return;
         }
 
