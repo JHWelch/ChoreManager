@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\URL;
 
 /**
  * A Livewire component that can go back to the previous page.
- * setPrevious() function shoud be called in mount() of component.
+ * setGoBackState() function shoud be called in mount() of component.
  */
 trait GoesBack
 {
@@ -15,27 +15,27 @@ trait GoesBack
      *
      * @var string
      */
-    public $previous_url;
+    public $previousUrl;
 
     /**
      * Current page URL.
      *
      * @var string
      */
-    public $current_url;
-    public $default_back_url;
+    public $currentUrl;
+    public $defaultBackUrl;
 
     /**
      * Should be called in the mount() of the component.
      *
-     * @param string $default_back_url If the page is accessed directly from the url, where to go.
+     * @param string defaultBackUrl If the page is accessed directly from the url, where to go.
      * @return void
      */
-    private function setGoBackState($default_back_url = '/')
+    private function setGoBackState($defaultBackUrl = '/')
     {
-        $this->previous_url     = URL::previous();
-        $this->current_url      = URL::current();
-        $this->default_back_url = $default_back_url;
+        $this->previousUrl    = URL::previous();
+        $this->currentUrl     = URL::current();
+        $this->defaultBackUrl = $defaultBackUrl;
     }
 
     /**
@@ -45,10 +45,10 @@ trait GoesBack
      */
     public function back()
     {
-        if ($this->current_url === $this->previous_url) {
-            return redirect($this->default_back_url);
+        if ($this->currentUrl === $this->previousUrl) {
+            return redirect($this->defaultBackUrl);
         }
 
-        return redirect($this->previous_url);
+        return redirect($this->previousUrl);
     }
 }
