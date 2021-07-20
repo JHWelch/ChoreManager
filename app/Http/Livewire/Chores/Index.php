@@ -20,6 +20,10 @@ class Index extends Component
     public $showDescriptionModal = false;
     public $showDescriptionModalChore;
 
+    protected $rules = [
+        'chores.*.due_date'           => 'nullable',
+    ];
+
     public function mount()
     {
         $this->loadChores();

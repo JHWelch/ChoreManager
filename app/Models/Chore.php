@@ -83,7 +83,7 @@ class Chore extends Model
             ...self::SCOPE_COLUMNS
         )
             ->leftJoin('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
-            ->withCasts(['due_date' => 'datetime']);
+            ->withCasts(['due_date' => 'date:m/d/Y']);
     }
 
     /**
@@ -98,7 +98,7 @@ class Chore extends Model
             ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
-            ->withCasts(['due_date' => 'datetime']);
+            ->withCasts(['due_date' => 'date:m/d/Y']);
     }
 
     /**
@@ -114,7 +114,7 @@ class Chore extends Model
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join)
                 ->where('chore_instances.due_date', '<=', today()))
-            ->withCasts(['due_date' => 'datetime']);
+            ->withCasts(['due_date' => 'date:m/d/Y']);
     }
 
     public function scopeNullDueDatesAtEnd($query)
@@ -158,7 +158,8 @@ class Chore extends Model
     {
         $last_assigned = $this->choreInstances()->orderBy('created_at', 'desc')->first();
 
-        return $this->user_id ?? ($last_assigned
+        return $this->user_id ?? (
+            $last_assigned
             ? $this
                 ->team
                 ->allUsers()

@@ -74,7 +74,7 @@
                   </td>
 
                   <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {{ $chore->due_date?->format('n/j/Y') ?? '-' }}
+                    {{ (is_string($chore->due_date) ? $chore->due_date : $chore->due_date?->format('m/d/Y')) ?? '-' }}
                   </td>
                 </tr>
               @endforeach
