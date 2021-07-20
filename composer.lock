@@ -2252,16 +2252,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.4.0",
+            "version": "v2.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "8055af7730938cd607616fde122825ed960a9b71"
+                "reference": "de192292d68276d831e5fd9824c80c3b78a21ddf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/8055af7730938cd607616fde122825ed960a9b71",
-                "reference": "8055af7730938cd607616fde122825ed960a9b71",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/de192292d68276d831e5fd9824c80c3b78a21ddf",
+                "reference": "de192292d68276d831e5fd9824c80c3b78a21ddf",
                 "shasum": ""
             },
             "require": {
@@ -2312,7 +2312,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.4.0"
+                "source": "https://github.com/livewire/livewire/tree/v2.5.5"
             },
             "funding": [
                 {
@@ -2320,7 +2320,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-02-23T17:44:50+00:00"
+            "time": "2021-07-13T05:03:28+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
