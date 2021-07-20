@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use Carbon\Carbon;
+
 /**
  * TODO: PHP 8.1 will have enums.
  * "All I want is to be a real Enum!".
@@ -102,5 +104,29 @@ class Frequency
         return $prefix
             ? "$prefix every " . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id])
             : 'Every ' . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id]);
+    }
+
+    /**
+     * Get the next date after a given date based on Frequency
+     *
+     * @param Carbon $date optional
+     * @return Carbon|null
+     */
+    public function getNextDate(Carbon $date = null)
+    {
+        if (! $date) {
+            $date = today();
+        }
+
+        $i = $this->frequency_interval;
+
+        return match ($this->frequency_id) {
+            0 => null,
+            1 => today()->addDays($i),
+            2 => today()->addWeeks($i),
+            3 => today()->addMonthsNoOverflow($i),
+            4 => today()->addQuartersNoOverflow($i),
+            5 => today()->addYearsNoOverflow($i),
+        };
     }
 }
