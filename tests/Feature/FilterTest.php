@@ -16,6 +16,15 @@ class FilterTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function assertAndReemit($component)
+    {
+        // This is a workaround because the emit does not seem to be working
+        // Correctly in this test, but does in the running code.
+        // Make sure emit was triggered, but re-emit
+        $component->assertEmitted('filterUpdated');
+        $component->emit('filterUpdated');
+    }
+
     /** @test */
     public function when_filter_is_set_to_user_see_only_users_chores()
     {
@@ -82,6 +91,7 @@ class FilterTest extends TestCase
         // Navigate to index
         $component = Livewire::test(ChoreIndex::class)
             ->call('setTeamFilter', 'team');
+        $this->assertAndReemit($component);
 
         // Assert
         // See only the user's chores
@@ -112,11 +122,14 @@ class FilterTest extends TestCase
         // Navigate to index
         $component = Livewire::test(ChoreInstanceIndex::class)
             ->call('setTeamFilter', 'user');
+        $this->assertAndReemit($component);
+
 
         // Assert
         // See only the user's chores
         $component->assertDontSee('Walk the dog.');
         $component->call('setTeamFilter', 'team');
+        $this->assertAndReemit($component);
         $component->assertSee('Walk the dog.');
     }
 
@@ -137,11 +150,13 @@ class FilterTest extends TestCase
         // Navigate to index page and filter by group
         $component = Livewire::test(ChoreIndex::class)
             ->call('setTeamFilter', 'team');
+        $this->assertAndReemit($component);
 
         // Assert
         // That the chore can be seen
         $component->assertSee('Walk the dog');
         $component->call('setTeamFilter', 'user');
+        $this->assertAndReemit($component);
         $component->assertDontSee('Walk the dog');
     }
 

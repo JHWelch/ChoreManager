@@ -13,9 +13,10 @@ trait FiltersByTeamOrUser
     {
         $this->team_or_user = $filter;
         session(['filter_team_or_user' => $filter]);
+        $this->emitSelf('filterUpdated');
     }
 
-    public function mountFiltersByTeamOrUser()
+    public function setupFiltersByTeamOrUser()
     {
         $this->team_or_user = session('filter_team_or_user', 'user');
     }

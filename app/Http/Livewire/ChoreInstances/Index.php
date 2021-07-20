@@ -7,9 +7,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    use FiltersByTeamOrUser {
-        setTeamFilter as _setTeamFilter;
-    }
+    use FiltersByTeamOrUser;
 
     public $choreInstanceGroups;
 
@@ -18,11 +16,13 @@ class Index extends Component
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
         'chore_instance.updated'   => 'choreInstanceUpdated',
+        'filterUpdated'            => 'updateChoreInstanceList',
     ];
 
     public function mount()
     {
         $this->showFutureChores = session('show_future_chores', false);
+        $this->setupFiltersByTeamOrUser();
         $this->updateChoreInstanceList();
     }
 
@@ -63,11 +63,5 @@ class Index extends Component
         $this->showFutureChores = ! $this->showFutureChores;
         $this->updateChoreInstanceList();
         session(['show_future_chores' => $this->showFutureChores]);
-    }
-
-    public function setTeamFilter($filter)
-    {
-        $this->_setTeamFilter($filter);
-        $this->updateChoreInstanceList();
     }
 }

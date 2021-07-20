@@ -9,9 +9,7 @@ use Livewire\Component;
 
 class Index extends Component
 {
-    use FiltersByTeamOrUser {
-        setTeamFilter as _setTeamFilter;
-    }
+    use FiltersByTeamOrUser;
 
     public Collection $chores;
     public $sort = 'chore_instances.due_date';
@@ -21,11 +19,16 @@ class Index extends Component
     public $showDescriptionModalChore;
 
     protected $rules = [
-        'chores.*.due_date'           => 'nullable',
+        'chores.*.due_date' => 'nullable',
+    ];
+
+    protected $listeners = [
+        'filterUpdated' => 'loadChores',
     ];
 
     public function mount()
     {
+        $this->setupFiltersByTeamOrUser();
         $this->loadChores();
     }
 
@@ -51,15 +54,9 @@ class Index extends Component
         $this->loadChores();
     }
 
-    public function setTeamFilter($filter)
-    {
-        $this->_setTeamFilter($filter);
-        $this->loadChores();
-    }
-
     public function setShowDescriptionModal($chore)
     {
-        $this->showDescriptionModal = true;
+        $this->showDescriptionModal      = true;
         $this->showDescriptionModalChore = Chore::find($chore);
     }
 }
