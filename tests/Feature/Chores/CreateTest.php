@@ -8,6 +8,7 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
+use App\Rules\FrequencyDayOf;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -170,5 +171,172 @@ class CreateTest extends TestCase
             'frequency_interval' => 2,
             'frequency_day_of'   => Carbon::WEDNESDAY,
         ]);
+    }
+
+    /**
+     * Return a livewire testable already filled with most fields for validating frequency.
+     *
+     * @return \Livewire\Testing\TestableLivewire
+     */
+    protected function getFrequencyValidationComponent()
+    {
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()->raw();
+
+        return Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_interval', 1)
+            ->set('chore.user_id', $this->user->id);
+    }
+
+    /** @test */
+    public function chores_with_day_of_week_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::WEEKLY)
+            ->set('chore.frequency_day_of', 0)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_week_cannot_be_over_7()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+                ->set('chore.frequency_id', Frequency::WEEKLY)
+                ->set('chore.frequency_day_of', 8)
+                ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_month_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->set('chore.frequency_day_of', -1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_month_cannot_be_over_31()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->set('chore.frequency_day_of', 32)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_quarter_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::QUARTERLY)
+            ->set('chore.frequency_day_of', -1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_quarter_cannot_be_over_92()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::QUARTERLY)
+            ->set('chore.frequency_day_of', 93)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_year_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::YEARLY)
+            ->set('chore.frequency_day_of', -1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_year_cannot_be_over_365()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::YEARLY)
+            ->set('chore.frequency_day_of', 366)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_does_not_repeat_cannot_have_day_of()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::DOES_NOT_REPEAT)
+            ->set('chore.frequency_day_of', 1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_daily_cannot_have_day_of()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::DAILY)
+            ->set('chore.frequency_day_of', 1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
     }
 }
