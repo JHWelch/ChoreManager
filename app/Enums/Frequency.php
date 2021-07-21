@@ -44,23 +44,23 @@ class Frequency
         self::YEARLY          => 'Years',
     ];
 
-    public $frequency_id;
-    public $frequency_interval;
+    public $id;
+    public $interval;
 
-    public function __construct($frequency_id, $frequency_interval = 1)
+    public function __construct($id, $interval = 1)
     {
-        $this->frequency_id       = $frequency_id;
-        $this->frequency_interval = $frequency_interval;
+        $this->id       = $id;
+        $this->interval = $interval;
     }
 
     public function adjective()
     {
-        return self::ADJECTIVES[$this->frequency_id];
+        return self::ADJECTIVES[$this->id];
     }
 
     public function noun()
     {
-        return self::NOUNS[$this->frequency_id];
+        return self::NOUNS[$this->id];
     }
 
     public static function nounsAsSelectOptions()
@@ -91,19 +91,19 @@ class Frequency
 
     public function toPrefixedString($prefix = '')
     {
-        if ($this->frequency_id === self::DOES_NOT_REPEAT) {
-            return self::ADJECTIVES[$this->frequency_id];
+        if ($this->id === self::DOES_NOT_REPEAT) {
+            return self::ADJECTIVES[$this->id];
         }
 
-        if ($this->frequency_interval === 1) {
+        if ($this->interval === 1) {
             return $prefix
-                ? $prefix . ' ' . lcfirst(self::ADJECTIVES[$this->frequency_id])
-                : self::ADJECTIVES[$this->frequency_id];
+                ? $prefix . ' ' . lcfirst(self::ADJECTIVES[$this->id])
+                : self::ADJECTIVES[$this->id];
         }
 
         return $prefix
-            ? "$prefix every " . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id])
-            : 'Every ' . $this->frequency_interval . ' ' . lcfirst(self::NOUNS[$this->frequency_id]);
+            ? "$prefix every " . $this->interval . ' ' . lcfirst(self::NOUNS[$this->id])
+            : 'Every ' . $this->interval . ' ' . lcfirst(self::NOUNS[$this->id]);
     }
 
     /**
@@ -116,9 +116,9 @@ class Frequency
     {
         $after = $after ?? today();
 
-        $i = $this->frequency_interval;
+        $i = $this->interval;
 
-        return match ($this->frequency_id) {
+        return match ($this->id) {
             0 => null,
             1 => $after->addDays($i),
             2 => $after->addWeeks($i),
