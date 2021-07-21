@@ -6,6 +6,7 @@ use App\Enums\Frequency;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -40,7 +41,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function daily()
+    public function chores_can_be_completed_with_a_frequency()
     {
         // Arrange
         // Create Chore with Daily Frequency
@@ -61,7 +62,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function daily_plus_interval()
+    public function chores_can_be_completed_with_a_frequency_plus_interval()
     {
         // Arrange
         // Create Chores with Daily Frequency every 2 and every 3 days
@@ -70,7 +71,7 @@ class ChoreInstanceCompleteTest extends TestCase
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => Frequency::DAILY,
+            'frequency_id'       => Frequency::WEEKLY,
             'frequency_interval' => 3,
         ]);
 
@@ -86,7 +87,42 @@ class ChoreInstanceCompleteTest extends TestCase
             $chore1->nextChoreInstance->due_date->toDateString(),
         );
         $this->assertEquals(
-            today()->addDays(3)->toDateString(),
+            today()->addWeeks(3)->toDateString(),
+            $chore2->nextChoreInstance->due_date->toDateString(),
+        );
+    }
+
+    /** @test */
+    public function chores_can_be_completed_with_day_of_frequency()
+    {
+        // Arrange
+        // Create Chores with two different day of frequencies
+        Carbon::setTestNow('2021-07-06');
+        $date   = Carbon::parse('2021-07-06');
+        $chore1 = Chore::factory()->create([
+            'frequency_id'       => Frequency::WEEKLY,
+            'frequency_interval' => 1,
+            'frequency_day_of'   => Carbon::TUESDAY,
+        ]);
+        $chore2 = Chore::factory()->create([
+            'frequency_id'       => Frequency::MONTHLY,
+            'frequency_interval' => 1,
+            'frequency_day_of'   => 17,
+        ]);
+
+        // Act
+        // Create Chore instance
+        $chore1->createNewInstance();
+        $chore2->createNewInstance();
+
+        // Assert
+        // Chore instance due dates are in 2 and 3 days respectively.
+        $this->assertEquals(
+            '2021-07-13',
+            $chore1->nextChoreInstance->due_date->toDateString(),
+        );
+        $this->assertEquals(
+            '2021-08-17',
             $chore2->nextChoreInstance->due_date->toDateString(),
         );
     }

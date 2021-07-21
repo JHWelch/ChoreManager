@@ -82,7 +82,11 @@ class Chore extends Model
      */
     public function getFrequencyAttribute()
     {
-        return new Frequency($this->frequency_id, $this->frequency_interval);
+        return new Frequency(
+            $this->frequency_id,
+            $this->frequency_interval,
+            $this->frequency_day_of
+        );
     }
 
     public function choreInstances()
