@@ -46,11 +46,20 @@ class Frequency
 
     public $id;
     public $interval;
+    public $dayOf;
 
-    public function __construct($id, $interval = 1)
+    /**
+     * Create a new Frequency.
+     *
+     * @param int $id One of the frequency constants
+     * @param int $interval
+     * @param int $dayOf - The day of the Frequency (day of week, day of month, etc.)
+     */
+    public function __construct($id, $interval = 1, $dayOf = null)
     {
         $this->id       = $id;
         $this->interval = $interval;
+        $this->dayOf    = $dayOf;
     }
 
     public function adjective()
@@ -116,15 +125,26 @@ class Frequency
     {
         $after = $after ?? today();
 
-        $i = $this->interval;
+        $i = $this->interval; // Just to make the rest smaller.
+
+        if (! $this->dayOf) {
+            return match ($this->id) {
+                self::DOES_NOT_REPEAT => null,
+                self::DAILY           => $after->addDays($i),
+                self::WEEKLY          => $after->addWeeks($i),
+                self::MONTHLY         => $after->addMonthsNoOverflow($i),
+                self::QUARTERLY       => $after->addQuartersNoOverflow($i),
+                self::YEARLY          => $after->addYearsNoOverflow($i),
+            };
+        }
 
         return match ($this->id) {
-            0 => null,
-            1 => $after->addDays($i),
-            2 => $after->addWeeks($i),
-            3 => $after->addMonthsNoOverflow($i),
-            4 => $after->addQuartersNoOverflow($i),
-            5 => $after->addYearsNoOverflow($i),
+            self::DOES_NOT_REPEAT => null,
+            self::DAILY           => $after->addDays($i),
+            self::WEEKLY          => $after->startOfWeek()->addDays($this->dayOf - 1)->addWeeks($i),
+            self::MONTHLY         => $after->startOfMonth()->addDays($this->dayOf - 1)->addMonthsNoOverflow($i),
+            self::QUARTERLY       => $after->startOfQuarter()->addDays($this->dayOf - 1)->addQuartersNoOverflow($i),
+            self::YEARLY          => $after->startOfYear()->addDays($this->dayOf - 1)->addYearsNoOverflow($i),
         };
     }
 }
