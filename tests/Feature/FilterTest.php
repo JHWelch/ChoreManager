@@ -124,7 +124,6 @@ class FilterTest extends TestCase
             ->call('setTeamFilter', 'user');
         $this->assertAndReemit($component);
 
-
         // Assert
         // See only the user's chores
         $component->assertDontSee('Walk the dog.');
