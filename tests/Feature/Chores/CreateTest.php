@@ -8,6 +8,7 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -139,6 +140,35 @@ class CreateTest extends TestCase
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'user_id'  => $user->id,
             'due_date' => $due_date,
+        ]);
+    }
+
+    /** @test */
+    public function chores_can_be_created_with_advanced_frequency()
+    {
+        // Arrange
+        // Create user and chore info
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()->raw();
+
+        // Act
+        // Navigate to create chore, create chore with advanced frequency
+        Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::WEEKLY)
+            ->set('chore.frequency_interval', 2)
+            ->set('chore.frequency_day_of', Carbon::WEDNESDAY)
+            ->set('chore.user_id', $user->id)
+            ->call('save');
+
+        // Assert
+        // Chore is created in database
+        $this->assertDatabaseHas((new Chore)->getTable(), [
+            'user_id'            => $user->id,
+            'frequency_id'       => Frequency::WEEKLY,
+            'frequency_interval' => 2,
+            'frequency_day_of'   => Carbon::WEDNESDAY,
         ]);
     }
 }
