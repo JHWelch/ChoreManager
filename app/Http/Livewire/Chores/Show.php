@@ -18,8 +18,10 @@ class Show extends Component
     public Collection $past_chore_instances;
 
     public $showDeleteConfirmation    = false;
+
     public $showCompleteForUserDialog = false;
     public $user_id;
+    public $completed_date;
 
     public function mount()
     {
@@ -27,16 +29,16 @@ class Show extends Component
         $this->loadContent();
     }
 
-    public function complete($for = null)
+    public function complete($for = null, $on = null)
     {
-        $this->chore_instance->complete($for);
+        $this->chore_instance->complete($for, $on);
         $this->chore->refresh();
         $this->loadContent();
     }
 
-    public function completeForUser()
+    public function customComplete()
     {
-        $this->complete($this->user_id);
+        $this->complete($this->user_id, $this->completed_date);
 
         $this->showCompleteForUserDialog = false;
     }

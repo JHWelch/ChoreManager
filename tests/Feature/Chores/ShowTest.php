@@ -209,7 +209,7 @@ class ShowTest extends TestCase
             'chore' => $chore,
         ])
             ->set('user_id', $other_user->id)
-            ->call('completeForUser');
+            ->call('customComplete');
 
         // Assert
         // The chore is completed and completed by the user
@@ -217,6 +217,35 @@ class ShowTest extends TestCase
             'chore_id'        => $chore->id,
             'completed_date'  => today(),
             'completed_by_id' => $other_user->id,
+        ]);
+    }
+
+    /** @test */
+    public function can_complete_chore_on_a_past_date()
+    {
+        // Arrange
+        // Create acting as user and chore
+        $user  = $this->testUser()['user'];
+        $date  = today()->subDays(2);
+        $chore = Chore::factory()
+            ->for($user)
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Complete the chore on a date in the past
+        Livewire::test(Show::class, [
+            'chore' => $chore,
+        ])
+            ->set('completed_date', $date)
+            ->call('customComplete');
+
+        // Assert
+        // The chore is completed with a completion date in the past
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'chore_id'        => $chore->id,
+            'completed_date'  => $date,
+            'completed_by_id' => $user->id,
         ]);
     }
 }

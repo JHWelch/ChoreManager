@@ -27,11 +27,12 @@ class ChoreInstance extends Model
      * Create next chore instance if required and mark this one complete.
      *
      * @param int $for User to complete the Chore for
+     * @param \Carbon\Carbon $on date to set completed
      * @return void
      */
-    public function complete($for = null)
+    public function complete($for = null, $on = null)
     {
-        $this->completed_date  = today();
+        $this->completed_date  = $on  ?? today();
         $this->completed_by_id = $for ?? Auth::id();
         $this->save();
 
