@@ -199,7 +199,7 @@
         <x-form.select
           name="user_id"
           label="Complete Chore for User"
-          blankOption="Select User"
+          blankOption="{{ Auth::user()->name }}"
           :options="$this->user_options"
         />
       </div>

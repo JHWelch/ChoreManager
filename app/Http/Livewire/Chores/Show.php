@@ -57,9 +57,12 @@ class Show extends Component
 
     public function getUserOptionsProperty()
     {
-        return Auth::user()
+        $user = Auth::user();
+
+        return $user
             ->currentTeam
             ->allUsers()
+            ->filter(fn ($teamMember) => $teamMember->id !== $user->id)
             ->toOptionsArray();
     }
 }
