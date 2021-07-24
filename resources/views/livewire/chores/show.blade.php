@@ -210,6 +210,7 @@
           name="completed_date"
           type="date"
           label="Complete Chore on Date"
+          max="{{ today()->toDateString() }}"
         />
       </div>
     </x-slot>
