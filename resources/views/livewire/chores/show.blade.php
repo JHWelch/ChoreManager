@@ -8,6 +8,7 @@
               <div class="flex justify-between">
                 <div>
                   <h1 class="text-2xl font-bold text-gray-900">{{ $chore->title }}</h1>
+
                   <p class="mt-2 text-sm text-gray-600">
                     {{ $chore->frequency->toPrefixedString('Repeats') }}
                   </p>
@@ -189,18 +190,27 @@
 
   <x-jet-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg">
     <x-slot name="title">
-      {{ __('Complete Chore for Other User')}}
+      {{ __('Custom Chore Completion')}}
     </x-slot>
 
     <x-slot name="content">
-      {{ __('Choose another user on your team to mark the chore completed by them.') }}
+      {{ __('Choose another user on your team to mark the chore completed by them and/or pick a date in the past for the chore to be completed.') }}
 
       <div class="mt-4">
         <x-form.select
           name="user_id"
           label="Complete Chore for User"
-          blankOption="Select User"
+          blankOption="{{ Auth::user()->name }}"
           :options="$this->user_options"
+        />
+      </div>
+
+      <div class="mt-4">
+        <x-form.input
+          name="completed_date"
+          type="date"
+          label="Complete Chore on Date"
+          max="{{ today()->toDateString() }}"
         />
       </div>
     </x-slot>
@@ -210,7 +220,7 @@
         {{ __('Cancel')}}
       </x-jet-secondary-button>
 
-      <x-jet-button wire:click="completeForUser">
+      <x-jet-button wire:click="customComplete">
         {{ __('Complete')}}
       </x-jet-button>
     </x-slot>

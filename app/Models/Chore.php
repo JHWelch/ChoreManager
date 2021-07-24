@@ -180,10 +180,11 @@ class Chore extends Model
      * Complete the next chore instance.
      *
      * @param int $for User to complete the Chore for
+     * @param \Carbon\Carbon $on date to set completed
      * @return void
      */
-    public function complete($for = null)
+    public function complete($for = null, $on = null)
     {
-        return $this->nextChoreInstance?->complete($for);
+        return $this->nextChoreInstance?->complete($for, $on);
     }
 }

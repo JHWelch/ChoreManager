@@ -18,25 +18,28 @@ class Show extends Component
     public Collection $past_chore_instances;
 
     public $showDeleteConfirmation    = false;
+
     public $showCompleteForUserDialog = false;
     public $user_id;
+    public $completed_date;
 
     public function mount()
     {
         $this->setGoBackState();
+        $this->completed_date = today()->toDateString();
         $this->loadContent();
     }
 
-    public function complete($for = null)
+    public function complete($for = null, $on = null)
     {
-        $this->chore_instance->complete($for);
+        $this->chore_instance->complete($for, $on);
         $this->chore->refresh();
         $this->loadContent();
     }
 
-    public function completeForUser()
+    public function customComplete()
     {
-        $this->complete($this->user_id);
+        $this->complete($this->user_id, $this->completed_date);
 
         $this->showCompleteForUserDialog = false;
     }
@@ -55,9 +58,12 @@ class Show extends Component
 
     public function getUserOptionsProperty()
     {
-        return Auth::user()
+        $user = Auth::user();
+
+        return $user
             ->currentTeam
             ->allUsers()
+            ->filter(fn ($teamMember) => $teamMember->id !== $user->id)
             ->toOptionsArray();
     }
 }
