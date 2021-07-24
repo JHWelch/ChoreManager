@@ -26,6 +26,7 @@ class Show extends Component
     public function mount()
     {
         $this->setGoBackState();
+        $this->completed_date = today()->toDateString();
         $this->loadContent();
     }
 

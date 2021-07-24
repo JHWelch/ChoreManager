@@ -4,7 +4,7 @@
 
 <x-dropdown-menu :class="$class">
   <x-dropdown-option click="$toggle('showCompleteForUserDialog')">
-    Complete for Other User
+    Custom Complete
   </x-dropdown-option>
 
   <x-dropdown-option click="$toggle('showDeleteConfirmation')" status="danger">
