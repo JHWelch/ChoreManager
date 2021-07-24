@@ -133,9 +133,9 @@ class IndexTest extends TestCase
             )
             ->for($user)
             ->create();
-        $chores[0]->createNewInstance($date3);
-        $chores[1]->createNewInstance($date1);
-        $chores[2]->createNewInstance($date2);
+        ChoreInstance::factory(['due_date' => $date3])->for($user)->for($chores[0])->create();
+        ChoreInstance::factory(['due_date' => $date1])->for($user)->for($chores[1])->create();
+        ChoreInstance::factory(['due_date' => $date2])->for($user)->for($chores[2])->create();
 
         // Act
         // Navigate to index and sort by title

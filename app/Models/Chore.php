@@ -122,23 +122,23 @@ class Chore extends Model
         return $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
     }
 
-    public function createNewInstance($due_date = null)
+    public function createNewInstance($after = null)
     {
-        if (! $due_date) {
-            $i = $this->frequency_interval;
+        $after = $after ?? today();
 
-            $due_date = match ($this->frequency_id) {
-                0 => null,
-                1 => today()->addDays($i),
-                2 => today()->addWeeks($i),
-                3 => today()->addMonthNoOverflows($i),
-                4 => today()->addQuarterNoOverflows($i),
-                5 => today()->addYearNoOverflows($i),
-            };
+        $i = $this->frequency_interval;
 
-            if ($due_date === null) {
-                return;
-            }
+        $due_date = match ($this->frequency_id) {
+            0 => null,
+            1 => $after->addDays($i),
+            2 => $after->addWeeks($i),
+            3 => $after->addMonthNoOverflows($i),
+            4 => $after->addQuarterNoOverflows($i),
+            5 => $after->addYearNoOverflows($i),
+        };
+
+        if ($due_date === null) {
+            return;
         }
 
         ChoreInstance::create([

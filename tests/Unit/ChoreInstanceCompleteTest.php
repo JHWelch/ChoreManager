@@ -409,4 +409,27 @@ class ChoreInstanceCompleteTest extends TestCase
             'completed_date' => null,
         ]);
     }
+
+    /** @test */
+    public function when_chore_is_completed_in_the_past_the_next_instance_date_is_based_on_that_date()
+    {
+        // Arrange
+        // Create chore with predictable frequency
+        $date  = today();
+        $chore = Chore::factory()->withFirstInstance()->create([
+            'frequency_id'       => Frequency::DAILY,
+            'frequency_interval' => 4,
+        ]);
+
+        // Act
+        // Complete chore
+        $chore->complete(null, $date->subDays(3));
+
+        // Assert
+        // new instance counts from the completed dated
+        $this->assertEquals(
+            today()->addDay()->toDateString(),
+            $chore->refresh()->nextChoreInstance->due_date->toDateString(),
+        );
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Livewire\Concerns\GoesBack;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -39,7 +40,7 @@ class Show extends Component
 
     public function customComplete()
     {
-        $this->complete($this->user_id, $this->completed_date);
+        $this->complete($this->user_id, Carbon::parse($this->completed_date));
 
         $this->showCompleteForUserDialog = false;
     }
