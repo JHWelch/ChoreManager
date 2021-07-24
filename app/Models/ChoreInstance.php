@@ -36,7 +36,7 @@ class ChoreInstance extends Model
         $this->completed_by_id = $for ?? Auth::id();
         $this->save();
 
-        $this->chore->createNewInstance();
+        $this->chore->createNewInstance($this->completed_date);
     }
 
     public function getIsCompletedAttribute()
