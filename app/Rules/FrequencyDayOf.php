@@ -29,7 +29,7 @@ class FrequencyDayOf implements Rule
      */
     public function passes($attribute, $value)
     {
-        return match ($this->frequency_id) {
+        return match (intval($this->frequency_id)) {
             Frequency::DOES_NOT_REPEAT => ($value === null),
             Frequency::DAILY           => ($value === null),
             Frequency::WEEKLY          => ($value >= 1 && $value <= 7),

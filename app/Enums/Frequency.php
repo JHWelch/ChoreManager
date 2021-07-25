@@ -44,6 +44,16 @@ class Frequency
         self::YEARLY          => 'Years',
     ];
 
+    const DAYS_OF_THE_WEEK_AS_SELECT_OPTIONS = [
+        ['value' => Carbon::MONDAY,    'label' => 'Mondays'],
+        ['value' => Carbon::TUESDAY,   'label' => 'Tuesdays'],
+        ['value' => Carbon::WEDNESDAY, 'label' => 'Wednesdays'],
+        ['value' => Carbon::THURSDAY,  'label' => 'Thursdays'],
+        ['value' => Carbon::FRIDAY,    'label' => 'Fridays'],
+        ['value' => Carbon::SATURDAY,  'label' => 'Saturdays'],
+        ['value' => Carbon::SUNDAY,    'label' => 'Sundays'],
+    ];
+
     public $id;
     public $interval;
     public $dayOf;
