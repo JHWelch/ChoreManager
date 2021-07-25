@@ -74,6 +74,13 @@
                   />
 
                   <span>day of the {{ rtrim(lcfirst($this->chore->frequency->noun()), 's') }}</span>
+
+                  <button
+                    class="text-gray-500 hover:text-gray-900"
+                    wire:click.prevent="hideDayOfSection"
+                  >
+                    <x-icons.x class="w-5 h-5"/>
+                  </button>
                 @endif
               </div>
             @endif
