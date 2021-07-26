@@ -16,6 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if (config('demo.enabled')) {
+            $this->call(DemoSeeder::class);
+
+            return;
+        }
+
         User::factory()
             ->has(
                 Team::factory()
