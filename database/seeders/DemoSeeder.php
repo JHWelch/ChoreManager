@@ -9,6 +9,8 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DemoSeeder extends Seeder
 {
@@ -49,7 +51,42 @@ class DemoSeeder extends Seeder
                 EOT,
             ],
             [
-                'title'        => 'Take out recycling',
+                'title'              => 'Take out recycling',
+                'frequency_id'       => Frequency::WEEKLY,
+                'frequency_interval' => 2,
+                'due_date'           => today()->addDays(9),
+            ],
+            [
+                'title'        => 'Renew Car Registration',
+                'frequency_id' => Frequency::YEARLY,
+                'due_date'     => today()->addDays(125),
+            ],
+        ];
+    }
+
+    private function other_chores()
+    {
+        return [
+            [
+                'title'        => 'Cook Dinner',
+                'frequency_id' => Frequency::DAILY,
+                'due_date'     => today(),
+                'description'  => null,
+            ],
+            [
+                'title'              => 'Vaccuum living room',
+                'frequency_id'       => Frequency::WEEKLY,
+                'frequency_interval' => 2,
+                'due_date'           => today()->addDays(5),
+                'description'        => null,
+            ],
+            [
+                'title'        => 'Bike maintenance',
+                'frequency_id' => Frequency::QUARTERLY,
+                'due_date'     => today()->addDays(45),
+            ],
+            [
+                'title'        => 'Pick up dry cleaning',
                 'frequency_id' => Frequency::WEEKLY,
                 'due_date'     => today()->addDays(9),
             ],
@@ -67,7 +104,7 @@ class DemoSeeder extends Seeder
             'name'              => 'Demo User',
             'email'             => 'demo@example.com',
             'email_verified_at' => now(),
-            'password'          => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password'          => Hash::make(Str::random()),
         ]);
 
         $team = Team::create([
@@ -76,19 +113,40 @@ class DemoSeeder extends Seeder
             'user_id'       => $user->id,
         ]);
 
-        collect($this->chores())->each(function ($chore) use ($user, $team) {
-            $due_date = Arr::pull($chore, 'due_date');
+        $second_user = User::create([
+            'name'              => 'Steve Smith',
+            'email'             => 'ssmith@example.com',
+            'email_verified_at' => now(),
+            'password'          => Hash::make(Str::random()),
+        ]);
 
-            $chore = Chore::create(array_merge($chore, [
-                'user_id' => $user->id,
-                'team_id' => $team->id,
-            ]));
+        $second_user->teams()->attach($team, ['role' => 'editor']);
 
-            ChoreInstance::create([
-                'chore_id' => $chore->id,
-                'user_id'  => $user->id,
-                'due_date' => $due_date,
-            ]);
+        collect([
+            [
+                'user'   => $user,
+                'chores' => $this->chores(),
+            ],
+            [
+                'user'   => $second_user,
+                'chores' => $this->other_chores(),
+            ],
+        ])->each(function ($item) use ($team) {
+            $user = Arr::get($item, 'user');
+            collect(Arr::get($item, 'chores'))->each(function ($chore) use ($user, $team) {
+                $due_date = Arr::pull($chore, 'due_date');
+
+                $chore = Chore::create(array_merge($chore, [
+                    'user_id' => $user->id,
+                    'team_id' => $team->id,
+                ]));
+
+                ChoreInstance::create([
+                    'chore_id' => $chore->id,
+                    'user_id'  => $user->id,
+                    'due_date' => $due_date,
+                ]);
+            });
         });
     }
 }
