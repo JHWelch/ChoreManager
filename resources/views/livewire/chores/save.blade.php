@@ -24,7 +24,7 @@
           <div class="flex flex-col">
             <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
 
-            <div class="flex items-center space-x-2 justify-beween">
+            <div class="flex items-center space-x-3">
               @if ($chore->frequency_id != 0)
                 <div class="w-1/3 text-sm font-medium">
                   Every
@@ -46,42 +46,48 @@
               />
 
               @if ($this->isShowOnButton())
-                <button wire:click.prevent="showDayOfSection()">
+                <button
+                  wire:click.prevent="showDayOfSection()"
+                  class="text-indigo-500 font-semi-bold hover:text-indigo-700"
+                >
                   On
                 </button>
               @endif
             </div>
 
             @if ($show_on)
-              <div class="flex items-center space-x-2 justify-beween">
-                @if ($chore->frequency_id == constant('App\Enums\Frequency::WEEKLY'))
-                  <label>On</label>
+              <div class="flex justify-between">
+                <div class="flex items-center mt-2 space-x-3 text-sm">
+                  @if ($chore->frequency_id == constant('App\Enums\Frequency::WEEKLY'))
+                    <label for="frequency_day_of">On</label>
 
-                  <x-form.bare.select
-                    name="frequency_day_of"
-                    prefix="chore"
-                    :options="$this->weekly_day_of"
-                  />
-                @else
-                  <label>On the</label>
+                    <x-form.bare.select
+                      name="frequency_day_of"
+                      prefix="chore"
+                      :options="$this->weekly_day_of"
+                    />
+                  @else
+                    <label>On day</label>
 
-                  <x-form.bare.input
-                    type="number"
-                    min="1"
-                    prefix="chore"
-                    name="frequency_day_of"
-                    wire:model="chore.frequency_day_of"
-                  />
+                    <x-form.bare.input
+                      type="number"
+                      min="1"
+                      prefix="chore"
+                      name="frequency_day_of"
+                      wire:model="chore.frequency_day_of"
+                      class="w-8"
+                    />
 
-                  <span>day of the {{ rtrim(lcfirst($this->chore->frequency->noun()), 's') }}</span>
+                    <span> of the {{ rtrim(lcfirst($this->chore->frequency->noun()), 's') }}</span>
+                  @endif
+                </div>
 
-                  <button
-                    class="text-gray-500 hover:text-gray-900"
-                    wire:click.prevent="hideDayOfSection"
-                  >
-                    <x-icons.x class="w-5 h-5"/>
-                  </button>
-                @endif
+                <button
+                  class="text-gray-500 hover:text-gray-900 justify-self-end"
+                  wire:click.prevent="hideDayOfSection"
+                >
+                  <x-icons.x class="w-5 h-5"/>
+                </button>
               </div>
             @endif
           </div>
