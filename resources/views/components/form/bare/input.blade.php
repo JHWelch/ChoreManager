@@ -1,5 +1,4 @@
 @props([
-  'label'       => ucfirst($name),
   'prefix'      => '',
   'placeholder' => '',
   'type'        => 'text',
