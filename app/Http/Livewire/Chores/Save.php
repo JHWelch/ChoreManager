@@ -116,4 +116,13 @@ class Save extends Component
         $this->chore->frequency_day_of = null;
         $this->show_on                 = false;
     }
+
+    public function getMaxDayOfProperty()
+    {
+        return match (intval($this->chore->frequency_id)) {
+            Frequency::MONTHLY   => '31',
+            Frequency::QUARTERLY => '92',
+            Frequency::YEARLY    => '365',
+        };
+    }
 }

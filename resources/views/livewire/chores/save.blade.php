@@ -26,7 +26,7 @@
 
             <div class="flex items-center space-x-3">
               @if ($chore->frequency_id != 0)
-                <div class="w-1/3 text-sm font-medium">
+                <div class="text-sm font-medium">
                   Every
                 </div>
 
@@ -72,6 +72,7 @@
                     <x-form.bare.input
                       type="number"
                       min="1"
+                      max="{{ $this->max_day_of }}"
                       prefix="chore"
                       name="frequency_day_of"
                       wire:model="chore.frequency_day_of"
@@ -83,8 +84,10 @@
                 </div>
 
                 <button
+                  type="button"
                   class="text-gray-500 hover:text-gray-900 justify-self-end"
                   wire:click.prevent="hideDayOfSection"
+                  aria-label="Close Day of Section"
                 >
                   <x-icons.x class="w-5 h-5"/>
                 </button>
