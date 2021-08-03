@@ -13,7 +13,6 @@
         "@highlandsolutions/eslint-config-highland": "^1.0.1",
         "@tailwindcss/forms": "^0.2.1",
         "@tailwindcss/typography": "^0.3.0",
-        "alpinejs": "^2.8.1",
         "autoprefixer": "^10.0.2",
         "axios": "^0.21",
         "eslint": "^7.20.0",
@@ -22,5 +21,8 @@
         "postcss": "^8.2.10",
         "postcss-import": "^12.0.1",
         "tailwindcss": "^2.0.1"
+    },
+    "dependencies": {
+        "alpinejs": "^3.2.2"
     }
 }
