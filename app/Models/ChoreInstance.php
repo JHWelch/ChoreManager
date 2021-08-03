@@ -7,6 +7,36 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\Models\ChoreInstance
+ *
+ * @property int $id
+ * @property int $chore_id
+ * @property mixed $due_date
+ * @property mixed|null $completed_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $user_id
+ * @property int|null $completed_by_id
+ * @property-read \App\Models\Chore $chore
+ * @property-read \App\Models\User|null $completedBy
+ * @property-read mixed $is_completed
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance completed()
+ * @method static \Database\Factories\ChoreInstanceFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereChoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereCompletedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereCompletedDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereDueDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereUserId($value)
+ * @mixin \Eloquent
+ */
 class ChoreInstance extends Model
 {
     use HasFactory;
