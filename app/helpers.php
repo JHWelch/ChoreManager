@@ -9,6 +9,6 @@ if (! function_exists('today')) {
      */
     function today($tz = null)
     {
-        return \Carbon\Carbon::now($tz)->startOfDay();
+        return \Illuminate\Support\Carbon::now($tz)->startOfDay();
     }
 }
