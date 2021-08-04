@@ -28,7 +28,7 @@ trait GoesBack
     /**
      * Should be called in the mount() of the component.
      *
-     * @param string defaultBackUrl If the page is accessed directly from the url, where to go.
+     * @param string $defaultBackUrl If the page is accessed directly from the url, where to go.
      * @return void
      */
     private function setGoBackState($defaultBackUrl = '/')
