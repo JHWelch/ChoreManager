@@ -5,9 +5,10 @@ namespace App\Models;
 use App\Enums\Frequency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\JoinClause;
 
 /**
- * App\Models\Chore
+ * App\Models\Chore.
  *
  * @property int $id
  * @property int|null $user_id
@@ -104,10 +105,10 @@ class Chore extends Model
     /**
      * Join used by scopes including Chore Instances.
      *
-     * @param Illuminate\Database\Query\JoinClause $join
-     * @return Illuminate\Database\Query\JoinClause
+     * @param JoinClause $join
+     * @return JoinClause
      */
-    public function choreInstanceScopeJoin($join)
+    public function choreInstanceScopeJoin(JoinClause $join)
     {
         return $join->on('chores.id', '=', 'chore_instances.chore_id')
             ->where('chore_instances.completed_date', null);
@@ -227,6 +228,6 @@ class Chore extends Model
      */
     public function complete($for = null, $on = null)
     {
-        return $this->nextChoreInstance?->complete($for, $on);
+        $this->nextChoreInstance?->complete($for, $on);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Concerns;
 
 use App\Models\Chore;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 trait FiltersByTeamOrUser
 {
@@ -25,7 +25,7 @@ trait FiltersByTeamOrUser
      * Return a chore query for the current user or current Team based on filter state.
      *
      * @param bool $filter_by_chore_owner If false filter by chore instance owner
-     * @return \Illuminate\Database\Eloquent\Concerns\HasRelationships::hasMany
+     * @return \Illuminate\Database\Eloquent\Builder|Chore
      */
     public function choreQueryByTeamOrUser($filter_by_chore_owner = true)
     {
