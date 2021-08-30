@@ -20,3 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/ical/{token}', [\App\Http\Controllers\Api\ICalendarController::class, 'show'])
     ->name('icalendar.show');
+
+/*
+* MOBILE API
+*/
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/chores', [\App\Http\Controllers\Api\ChoreController::class, 'index'])
+        ->name('api.chores.index');
+});

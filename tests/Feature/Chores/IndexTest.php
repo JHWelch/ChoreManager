@@ -21,7 +21,7 @@ class IndexTest extends TestCase
     {
         // Arrange
         // Create and act as a user
-        $this->testUser()['user'];
+        $this->testUser();
 
         // Act
         // Navigate to the Chores index page
