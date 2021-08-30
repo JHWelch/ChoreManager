@@ -32,8 +32,6 @@ class IndexTest extends TestCase
         // Call chore index endpoint
         $response = $this->get(route('api.chores.index'));
 
-        ray($response);
-
         // Assert
         // Chores return in expected format.
         $response->assertJson([

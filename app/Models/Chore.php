@@ -126,7 +126,7 @@ class Chore extends Model
             ...self::SCOPE_COLUMNS
         )
             ->leftJoin('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
-            ->withCasts(['due_date' => 'date:m/d/Y']);
+            ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
     /**
@@ -141,7 +141,7 @@ class Chore extends Model
             ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
-            ->withCasts(['due_date' => 'date:m/d/Y']);
+            ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
     /**
@@ -157,7 +157,7 @@ class Chore extends Model
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join)
                 ->where('chore_instances.due_date', '<=', today()))
-            ->withCasts(['due_date' => 'date:m/d/Y']);
+            ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
     public function scopeNullDueDatesAtEnd($query)
