@@ -19,6 +19,7 @@ class ChoreInstanceController extends Controller
         return Auth::user()
             ->chores()
             ->onlyWithNextInstance()
+            ->orderBy('chore_instances.due_date')
             ->get();
     }
 

@@ -25,6 +25,10 @@ class IndexTest extends TestCase
             ->withFirstInstance()
             ->create();
 
+        $chores = $chores->sortBy(
+            fn ($chore) => $chore->nextChoreInstance->due_date->timestamp
+        )->values();
+
         // Act
         // Call chore instance index endpoint
         $response = $this->get(route('api.chore_instances.index'));
