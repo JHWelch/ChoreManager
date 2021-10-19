@@ -66,6 +66,43 @@
                       prefix="chore"
                       :options="$this->weekly_day_of"
                     />
+                  @elseif ($chore->frequency_id == constant('App\Enums\Frequency::YEARLY'))
+                    <label for="frequency_day_of">On</label>
+
+                    <div
+                      x-data="
+                        {
+                          date: null,
+                          number: @entangle('chore.frequency_day_of'),
+                          convertDateToNumber() {
+                            const d = new Date(this.date);
+                            const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+                            this.number = Math.ceil((d - startOfYear) / 1000 / 60 / 60 / 24) + 1;
+                          },
+                          formatDate(date) {
+                            return date.toISOString().split('T')[0];
+                          },
+                        }"
+                      x-init="
+                        date = formatDate(
+                          new Date(
+                            new Date().getFullYear(),
+                            0,
+                            number
+                          )
+                        )"
+                    >
+                      <x-form.bare.input
+                        x-model="date"
+                        x-on:change="convertDateToNumber()"
+                        type="date"
+                        min="{{ today()->startOfYear()->toDateString() }}"
+                        max="{{ today()->endOfYear()->toDateString() }}"
+                        class="w-8"
+                      />
+                    </div>
+
+                    <span>every year</span>
                   @else
                     <label>On day</label>
 
