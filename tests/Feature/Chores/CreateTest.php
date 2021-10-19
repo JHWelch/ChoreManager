@@ -180,14 +180,9 @@ class CreateTest extends TestCase
      */
     protected function getFrequencyValidationComponent()
     {
-        $user  = $this->testUser()['user'];
-        $chore = Chore::factory()->raw();
+        $this->testUser()['user'];
 
-        return Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_interval', 1)
-            ->set('chore.user_id', $this->user->id);
+        return Livewire::test(Save::class);
     }
 
     /** @test */
