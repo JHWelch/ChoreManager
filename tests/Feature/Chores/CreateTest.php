@@ -197,6 +197,7 @@ class CreateTest extends TestCase
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
             ->set('chore.frequency_id', Frequency::WEEKLY)
+            ->call('showDayOfSection')
             ->set('chore.frequency_day_of', 0)
             ->call('save');
 
@@ -211,9 +212,10 @@ class CreateTest extends TestCase
         // Act
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
-                ->set('chore.frequency_id', Frequency::WEEKLY)
-                ->set('chore.frequency_day_of', 8)
-                ->call('save');
+            ->set('chore.frequency_id', Frequency::WEEKLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', 8)
+            ->call('save');
 
         // Assert
         // Has error
@@ -227,6 +229,7 @@ class CreateTest extends TestCase
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
             ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->call('showDayOfSection')
             ->set('chore.frequency_day_of', -1)
             ->call('save');
 
@@ -242,6 +245,7 @@ class CreateTest extends TestCase
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
             ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->call('showDayOfSection')
             ->set('chore.frequency_day_of', 32)
             ->call('save');
 
@@ -257,6 +261,7 @@ class CreateTest extends TestCase
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
             ->set('chore.frequency_id', Frequency::QUARTERLY)
+            ->call('showDayOfSection')
             ->set('chore.frequency_day_of', -1)
             ->call('save');
 
@@ -272,6 +277,7 @@ class CreateTest extends TestCase
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
             ->set('chore.frequency_id', Frequency::QUARTERLY)
+            ->call('showDayOfSection')
             ->set('chore.frequency_day_of', 93)
             ->call('save');
 
@@ -287,6 +293,7 @@ class CreateTest extends TestCase
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
             ->set('chore.frequency_id', Frequency::YEARLY)
+            ->call('showDayOfSection')
             ->set('chore.frequency_day_of', -1)
             ->call('save');
 
@@ -302,37 +309,8 @@ class CreateTest extends TestCase
         // Set frequency and frequency day of.
         $component = $this->getFrequencyValidationComponent()
             ->set('chore.frequency_id', Frequency::YEARLY)
+            ->call('showDayOfSection')
             ->set('chore.frequency_day_of', 366)
-            ->call('save');
-
-        // Assert
-        // Has error
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
-    }
-
-    /** @test */
-    public function chores_with_does_not_repeat_cannot_have_day_of()
-    {
-        // Act
-        // Set frequency and frequency day of.
-        $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', Frequency::DOES_NOT_REPEAT)
-            ->set('chore.frequency_day_of', 1)
-            ->call('save');
-
-        // Assert
-        // Has error
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
-    }
-
-    /** @test */
-    public function chores_with_daily_cannot_have_day_of()
-    {
-        // Act
-        // Set frequency and frequency day of.
-        $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', Frequency::DAILY)
-            ->set('chore.frequency_day_of', 1)
             ->call('save');
 
         // Assert

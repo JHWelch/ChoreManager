@@ -34,7 +34,9 @@ class Save extends Component
             'chore.description'        => 'string|nullable',
             'chore.frequency_id'       => Rule::in(Frequency::FREQUENCIES),
             'chore.frequency_interval' => 'min:1',
-            'chore.frequency_day_of'   => new FrequencyDayOf($this->chore->frequency_id),
+            'chore.frequency_day_of'   => $this->show_on
+                ? new FrequencyDayOf($this->chore->frequency_id)
+                : 'nullable',
             'chore.user_id'            => 'nullable',
             'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
             'chore_instance.user_id'   => 'nullable',
@@ -123,6 +125,7 @@ class Save extends Component
             Frequency::MONTHLY   => '31',
             Frequency::QUARTERLY => '92',
             Frequency::YEARLY    => '365',
+            default              => '0',
         };
     }
 }
