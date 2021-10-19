@@ -312,4 +312,52 @@ class CreateTest extends TestCase
         // Has error
         $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
     }
+
+    /** @test */
+    public function when_you_change_to_daily_frequency_day_of_is_disabled()
+    {
+        // Arrange
+        // Open chore save page, with frequency and show on
+        $this->testUser();
+        $chore     = Chore::factory()->raw();
+        $component = Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->set('chore.frequency_day_of', 5)
+            ->set('show_on', true);
+
+        // Act
+        // Update frequency_id
+        $component->set('chore.frequency_id', Frequency::DAILY);
+
+        // Assert
+        // Show on should be off, and frequency_day_of is cleared
+        $component->assertSet('show_on', false);
+        $component->assertSet('chore.frequency_day_of', null);
+    }
+
+    /** @test */
+    public function when_you_change_to_does_not_repeat_frequency_day_of_is_disabled()
+    {
+        // Arrange
+        // Open chore save page, with frequency and show on
+        $this->testUser();
+        $chore     = Chore::factory()->raw();
+        $component = Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->set('chore.frequency_day_of', 5)
+            ->set('show_on', true);
+
+        // Act
+        // Update frequency_id
+        $component->set('chore.frequency_id', Frequency::DOES_NOT_REPEAT);
+
+        // Assert
+        // Show on should be off, and frequency_day_of is cleared
+        $component->assertSet('show_on', false);
+        $component->assertSet('chore.frequency_day_of', null);
+    }
 }
