@@ -1,49 +1,4 @@
 {
-    "name": "jhwelch/choremanager",
-    "type": "project",
-    "description": "An application for managing household chores.",
-    "keywords": [
-        "chores",
-        "home"
-    ],
-    "require": {
-        "php": "^8.0",
-        "doctrine/dbal": "^3.0",
-        "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.12",
-        "laravel/jetstream": "^2.1",
-        "laravel/sanctum": "^2.6",
-        "laravel/telescope": "^4.4",
-        "laravel/tinker": "^2.5",
-        "league/commonmark": "^1.5",
-        "livewire/livewire": "^2.0",
-        "spatie/icalendar-generator": "^2.1",
-        "spatie/laravel-ray": "^1.13"
-    },
-    "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.9",
-        "brianium/paratest": "^6.2",
-        "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
-        "friendsofphp/php-cs-fixer": "^2.19",
-        "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "nunomaduro/larastan": "^0.7.12",
-        "phpunit/phpunit": "^9.3.3"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
     "autoload": {
         "files": [
             "app/helpers.php"
@@ -59,18 +14,64 @@
             "Tests\\": "tests/"
         }
     },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "description": "An application for managing household chores.",
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "keywords": [
+        "chores",
+        "home"
+    ],
     "minimum-stability": "dev",
+    "name": "jhwelch/choremanager",
     "prefer-stable": true,
+    "require": {
+        "composer/composer": "^2.1.9",
+        "doctrine/dbal": "^3.0",
+        "fideloper/proxy": "^4.4",
+        "fruitcake/laravel-cors": "^2.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/framework": "^8.12",
+        "laravel/jetstream": "^2.1",
+        "laravel/sanctum": "^2.6",
+        "laravel/telescope": "^4.4",
+        "laravel/tinker": "^2.5",
+        "league/commonmark": "^1.5",
+        "livewire/livewire": "^2.0",
+        "php": "^8.0",
+        "spatie/icalendar-generator": "^2.1",
+        "spatie/laravel-ray": "^1.13"
+    },
+    "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.9",
+        "brianium/paratest": "^6.2",
+        "facade/ignition": "^2.5",
+        "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^2.19",
+        "laravel/sail": "^1.0.1",
+        "mockery/mockery": "^1.4.2",
+        "nunomaduro/collision": "^5.0",
+        "nunomaduro/larastan": "^0.7.12",
+        "phpunit/phpunit": "^9.3.3"
+    },
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ]
-    }
+    },
+    "type": "project"
 }
