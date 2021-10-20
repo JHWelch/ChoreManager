@@ -360,4 +360,28 @@ class CreateTest extends TestCase
         $component->assertSet('show_on', false);
         $component->assertSet('chore.frequency_day_of', null);
     }
+
+    /** @test */
+    public function when_updating_to_another_frequency_id_frequency_day_of_changes_to_1()
+    {
+        // Arrange
+        // Open chore save page, with yearly frequency and show on
+        $this->testUser();
+        $chore     = Chore::factory()->raw();
+        $component = Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::YEARLY)
+            ->set('chore.frequency_day_of', 130)
+            ->set('show_on', true);
+
+        // Act
+        // Update frequency_id to monthly
+        $component->set('chore.frequency_id', Frequency::MONTHLY);
+
+        // Assert
+        // Show on should still be on, and frequency_day_of is one
+        $component->assertSet('show_on', true);
+        $component->assertSet('chore.frequency_day_of', 1);
+    }
 }

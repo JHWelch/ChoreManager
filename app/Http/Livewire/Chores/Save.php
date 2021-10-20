@@ -135,6 +135,8 @@ class Save extends Component
             || $frequency_id === Frequency::DAILY
         ) {
             $this->hideDayOfSection();
+        } else {
+            $this->chore->frequency_day_of = 1;
         }
     }
 }
