@@ -24,9 +24,9 @@
           <div class="flex flex-col">
             <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
 
-            <div class="flex items-center space-x-2 justify-beween">
+            <div class="flex items-center space-x-3">
               @if ($chore->frequency_id != 0)
-                <div class="w-1/3 text-sm font-medium">
+                <div class="text-sm font-medium">
                   Every
                 </div>
 
@@ -42,9 +42,94 @@
               <x-form.bare.select
                 name="frequency_id"
                 prefix="chore"
-                :options="$frequencies"
+                :options="$this->frequencies"
               />
+
+              @if ($this->isShowOnButton())
+                <button
+                  wire:click.prevent="showDayOfSection()"
+                  class="text-indigo-500 font-semi-bold hover:text-indigo-700"
+                >
+                  On
+                </button>
+              @endif
             </div>
+
+            @if ($show_on)
+              <div class="flex justify-between">
+                <div class="flex items-center mt-2 space-x-3 text-sm">
+                  @if ($chore->frequency_id == constant('App\Enums\Frequency::WEEKLY'))
+                    <label for="frequency_day_of">On</label>
+
+                    <x-form.bare.select
+                      name="frequency_day_of"
+                      prefix="chore"
+                      :options="$this->weekly_day_of"
+                    />
+                  @elseif ($chore->frequency_id == constant('App\Enums\Frequency::YEARLY'))
+                    <label for="frequency_day_of">On</label>
+
+                    <div
+                      x-data="
+                        {
+                          date: null,
+                          number: @entangle('chore.frequency_day_of'),
+                          convertDateToNumber() {
+                            const d = new Date(this.date);
+                            const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+                            this.number = Math.ceil((d - startOfYear) / 1000 / 60 / 60 / 24) + 1;
+                          },
+                          formatDate(date) {
+                            return date.toISOString().split('T')[0];
+                          },
+                        }"
+                      x-init="
+                        date = formatDate(
+                          new Date(
+                            new Date().getFullYear(),
+                            0,
+                            number
+                          )
+                        )"
+                    >
+                      <x-form.bare.input
+                        x-model="date"
+                        x-on:change="convertDateToNumber()"
+                        type="date"
+                        min="{{ today()->startOfYear()->toDateString() }}"
+                        max="{{ today()->endOfYear()->toDateString() }}"
+                        class="w-8"
+                      />
+                    </div>
+
+                    <span>every year</span>
+                  @else
+                    <label>On day</label>
+
+                    <x-form.bare.input
+                      type="number"
+                      min="1"
+                      max="{{ $this->max_day_of }}"
+                      prefix="chore"
+                      name="frequency_day_of"
+                      wire:model="chore.frequency_day_of"
+                      class="w-8"
+                    />
+
+                    <span> of the {{ rtrim(lcfirst($this->chore->frequency->noun()), 's') }}</span>
+                  @endif
+                </div>
+
+                <button
+                  type="button"
+                  class="text-gray-500 hover:text-gray-900 justify-self-end"
+                  wire:click.prevent="hideDayOfSection"
+                  aria-label="Close Day of Section"
+                >
+                  <x-icons.x class="w-5 h-5"/>
+                </button>
+              </div>
+            @endif
           </div>
 
           @if ($chore_instance->exists)

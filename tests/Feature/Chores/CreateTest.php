@@ -8,6 +8,8 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
+use App\Rules\FrequencyDayOf;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -140,5 +142,246 @@ class CreateTest extends TestCase
             'user_id'  => $user->id,
             'due_date' => $due_date,
         ]);
+    }
+
+    /** @test */
+    public function chores_can_be_created_with_advanced_frequency()
+    {
+        // Arrange
+        // Create user and chore info
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()->raw();
+
+        // Act
+        // Navigate to create chore, create chore with advanced frequency
+        Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::WEEKLY)
+            ->set('chore.frequency_interval', 2)
+            ->set('chore.frequency_day_of', Carbon::WEDNESDAY)
+            ->set('chore.user_id', $user->id)
+            ->call('save');
+
+        // Assert
+        // Chore is created in database
+        $this->assertDatabaseHas((new Chore)->getTable(), [
+            'user_id'            => $user->id,
+            'frequency_id'       => Frequency::WEEKLY,
+            'frequency_interval' => 2,
+            'frequency_day_of'   => Carbon::WEDNESDAY,
+        ]);
+    }
+
+    /**
+     * Return a livewire testable already filled with most fields for validating frequency.
+     *
+     * @return \Livewire\Testing\TestableLivewire
+     */
+    protected function getFrequencyValidationComponent()
+    {
+        $this->testUser()['user'];
+
+        return Livewire::test(Save::class);
+    }
+
+    /** @test */
+    public function chores_with_day_of_week_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::WEEKLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', 0)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_week_cannot_be_over_7()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::WEEKLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', 8)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_month_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', -1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_month_cannot_be_over_31()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', 32)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_quarter_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::QUARTERLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', -1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_quarter_cannot_be_over_92()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::QUARTERLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', 93)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_year_cannot_be_under_1()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::YEARLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', -1)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function chores_with_day_of_year_cannot_be_over_365()
+    {
+        // Act
+        // Set frequency and frequency day of.
+        $component = $this->getFrequencyValidationComponent()
+            ->set('chore.frequency_id', Frequency::YEARLY)
+            ->call('showDayOfSection')
+            ->set('chore.frequency_day_of', 366)
+            ->call('save');
+
+        // Assert
+        // Has error
+        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+    }
+
+    /** @test */
+    public function when_you_change_to_daily_frequency_day_of_is_disabled()
+    {
+        // Arrange
+        // Open chore save page, with frequency and show on
+        $this->testUser();
+        $chore     = Chore::factory()->raw();
+        $component = Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->set('chore.frequency_day_of', 5)
+            ->set('show_on', true);
+
+        // Act
+        // Update frequency_id
+        $component->set('chore.frequency_id', Frequency::DAILY);
+
+        // Assert
+        // Show on should be off, and frequency_day_of is cleared
+        $component->assertSet('show_on', false);
+        $component->assertSet('chore.frequency_day_of', null);
+    }
+
+    /** @test */
+    public function when_you_change_to_does_not_repeat_frequency_day_of_is_disabled()
+    {
+        // Arrange
+        // Open chore save page, with frequency and show on
+        $this->testUser();
+        $chore     = Chore::factory()->raw();
+        $component = Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::MONTHLY)
+            ->set('chore.frequency_day_of', 5)
+            ->set('show_on', true);
+
+        // Act
+        // Update frequency_id
+        $component->set('chore.frequency_id', Frequency::DOES_NOT_REPEAT);
+
+        // Assert
+        // Show on should be off, and frequency_day_of is cleared
+        $component->assertSet('show_on', false);
+        $component->assertSet('chore.frequency_day_of', null);
+    }
+
+    /** @test */
+    public function when_updating_to_another_frequency_id_frequency_day_of_changes_to_1()
+    {
+        // Arrange
+        // Open chore save page, with yearly frequency and show on
+        $this->testUser();
+        $chore     = Chore::factory()->raw();
+        $component = Livewire::test(Save::class)
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', Frequency::YEARLY)
+            ->set('chore.frequency_day_of', 130)
+            ->set('show_on', true);
+
+        // Act
+        // Update frequency_id to monthly
+        $component->set('chore.frequency_id', Frequency::MONTHLY);
+
+        // Assert
+        // Show on should still be on, and frequency_day_of is one
+        $component->assertSet('show_on', true);
+        $component->assertSet('chore.frequency_day_of', 1);
     }
 }

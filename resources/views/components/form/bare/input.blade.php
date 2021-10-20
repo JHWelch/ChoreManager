@@ -1,9 +1,8 @@
 @props([
-  'label'       => ucfirst($name),
   'prefix'      => '',
   'placeholder' => '',
   'type'        => 'text',
-  'name',
+  'name'        => '',
 ])
 
 <div class="mt-1">
