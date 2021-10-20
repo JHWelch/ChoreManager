@@ -7,13 +7,13 @@ use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     /** @test */
     public function can_reach_show_page()
