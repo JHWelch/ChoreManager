@@ -4,14 +4,14 @@ namespace Tests\Feature\CalendarTokens;
 
 use App\Http\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     /** @test */
     public function can_create_a_calendar_token_to_display_only_their_chores()

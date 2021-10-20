@@ -6,13 +6,13 @@ use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class SnoozeTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     private function arrange()
     {

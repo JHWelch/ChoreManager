@@ -10,13 +10,13 @@ use App\Models\Team;
 use App\Models\User;
 use App\Rules\FrequencyDayOf;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     /** @test */
     public function chore_edit_page_can_be_reached()

@@ -3,14 +3,14 @@
 namespace Tests\Feature\Jetstream;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class RemoveTeamMemberTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     public function test_team_members_can_be_removed_from_teams()
     {

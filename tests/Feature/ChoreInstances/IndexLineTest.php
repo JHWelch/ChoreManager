@@ -5,15 +5,13 @@ namespace Tests\Feature\ChoreInstances;
 use App\Enums\Frequency;
 use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
-use App\Models\ChoreInstance;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class IndexLineTest extends TestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
 
     /** @test */
     public function can_complete_a_chore_instance()
