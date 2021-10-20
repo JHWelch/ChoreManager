@@ -64,4 +64,32 @@ class IndexLineTest extends TestCase
             $chore->nextChoreInstance->due_date->toDateString(),
         );
     }
+
+    /** @test */
+    public function index_line_shows_chore_information()
+    {
+        // Arrange
+        // Create chore with known information
+        $frequency = new Frequency(Frequency::DAILY, 3);
+        $user      = $this->testUser()['user'];
+        $chore     = Chore::factory([
+            'title'              => 'Clean the sink',
+            'frequency_id'       => $frequency->id,
+            'frequency_interval' => $frequency->interval,
+        ])
+            ->for($user)
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Create IndexLine
+        $component = Livewire::test(IndexLine::class, [
+            'chore' => $chore,
+        ]);
+
+        // Assert
+        // We see all information
+        $component->assertSee($frequency->__toString());
+        $component->assertSee('Clean the sink');
+    }
 }
