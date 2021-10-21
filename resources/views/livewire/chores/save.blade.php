@@ -161,7 +161,7 @@
             <x-form.bare.textarea
               prefix="chore"
               name="description"
-              class="flex-grow block w-full border-gray-300 rounded-md shadow-sm resize-y h-96 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+              class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y lg:h-96 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             />
 
             <a
