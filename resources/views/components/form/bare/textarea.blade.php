@@ -10,7 +10,7 @@
   <textarea
     {{ $attributes->merge([
       'wire:model.defer' => $prefix . '.' . $name,
-      'class'            => $class ?? 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md h-48',
+      'class'            => $class ?? 'shadow-sm focus:ring-purple-500 focus:border-purple-500 block w-full sm:text-sm border-gray-300 rounded-md h-48',
       'id'               => $name,
       'placeholder'      => $placeholder,
     ]) }}

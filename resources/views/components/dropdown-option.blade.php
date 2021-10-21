@@ -6,7 +6,7 @@
 
 @php($text_color = match ($status) {
   'danger' => 'text-red-500 hover:text-red-800',
-  default  => 'text-indigo-500 hover:text-indigo-900',
+  default  => 'text-purple-500 hover:text-purple-900',
 })
 
 <button

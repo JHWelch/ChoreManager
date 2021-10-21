@@ -64,4 +64,54 @@ class IndexLineTest extends TestCase
             $chore->nextChoreInstance->due_date->toDateString(),
         );
     }
+
+    /** @test */
+    public function index_line_shows_chore_information()
+    {
+        // Arrange
+        // Create chore with known information
+        $frequency = new Frequency(Frequency::DAILY, 3);
+        $chore     = Chore::factory([
+            'title'              => 'Clean the sink',
+            'frequency_id'       => $frequency->id,
+            'frequency_interval' => $frequency->interval,
+        ])
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Create IndexLine
+        $component = Livewire::test(IndexLine::class, [
+            'chore' => $chore,
+        ]);
+
+        // Assert
+        // We see all information
+        $component->assertSee($frequency->__toString());
+        $component->assertSee('Clean the sink');
+    }
+
+    /** @test */
+    public function index_line_has_assigned_user_image()
+    {
+        // Arrange
+        // Create user with profile picture and chore assigned to them
+        $user = $this->testUser([
+            'profile_photo_path' => 'test_photo_url.jpg',
+        ])['user'];
+        $chore = Chore::factory()
+            ->for($user)
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Create IndexLine
+        $component = Livewire::test(IndexLine::class, [
+            'chore' => $chore,
+        ]);
+
+        // Assert
+        // User profile picture is available
+        $component->assertSeeHtml("src=\"$user->profile_photo_url\"");
+    }
 }

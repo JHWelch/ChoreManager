@@ -23,7 +23,7 @@
         @php
           $outer_class = match($group) {
             'past_due' => 'border border-red-300 bg-red-100',
-            'today' => 'border border-indigo-300 bg-indigo-100',
+            'today' => 'border border-purple-300 bg-purple-100',
             default => 'bg-white'
           }
         @endphp
@@ -55,7 +55,7 @@
 
   <div class="flex justify-center w-full align-middle">
     <button
-      class="p-1 text-sm text-indigo-600 rounded-md focus:outline-none focus:ring focus:ring-indigo-300 hover:underline"
+      class="p-1 text-sm text-purple-600 rounded-md focus:outline-none focus:ring focus:ring-purple-300 hover:underline"
       wire:click="toggleShowFutureChores"
     >
       {{ $showFutureChores ? __('Hide future chores') : __('Show future chores')}}

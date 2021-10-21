@@ -9,7 +9,7 @@
 <select
   {{ $attributes->merge([
     'wire:model'  => $prefix ? $prefix . '.' . $name : $name,
-    'class'       => 'block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm',
+    'class'       => 'block w-full py-2 pl-3 pr-10 mt-1 text-base border-gray-300 rounded-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm',
     'id'          => $name,
     'name'        => $name,
   ]) }}
