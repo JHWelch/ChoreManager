@@ -1,5 +1,5 @@
 <div x-data="{ show: false }" class="flex flex-col justify-center">
-  <button x-on:click="show = true">
+  <button x-on:click.prevent="show = true">
     <x-icons.clock class="text-indigo-400 w-11 h-11" />
   </button>
 

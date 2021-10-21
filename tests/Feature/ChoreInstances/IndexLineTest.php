@@ -71,13 +71,11 @@ class IndexLineTest extends TestCase
         // Arrange
         // Create chore with known information
         $frequency = new Frequency(Frequency::DAILY, 3);
-        $user      = $this->testUser()['user'];
         $chore     = Chore::factory([
             'title'              => 'Clean the sink',
             'frequency_id'       => $frequency->id,
             'frequency_interval' => $frequency->interval,
         ])
-            ->for($user)
             ->withFirstInstance()
             ->create();
 
@@ -91,5 +89,29 @@ class IndexLineTest extends TestCase
         // We see all information
         $component->assertSee($frequency->__toString());
         $component->assertSee('Clean the sink');
+    }
+
+    /** @test */
+    public function index_line_has_assigned_user_image()
+    {
+        // Arrange
+        // Create user with profile picture and chore assigned to them
+        $user = $this->testUser([
+            'profile_photo_path' => 'test_photo_url.jpg',
+        ])['user'];
+        $chore = Chore::factory()
+            ->for($user)
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Create IndexLine
+        $component = Livewire::test(IndexLine::class, [
+            'chore' => $chore,
+        ]);
+
+        // Assert
+        // User profile picture is available
+        $component->assertSeeHtml("src=\"$user->profile_photo_url\"");
     }
 }
