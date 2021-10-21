@@ -13,7 +13,7 @@
 >
   <a
     href="{{ route('chores.show', ['chore' => $chore]) }}"
-    class="relative flex items-center px-6 py-5 space-x-3 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500"
+    class="relative flex items-center px-6 py-5 space-x-3 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-purple-500"
   >
     <div class="flex-1 min-w-0">
       <div class="flex w-full">
