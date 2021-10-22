@@ -2,12 +2,18 @@
 
 namespace App\Http\Livewire\ChoreInstances;
 
+use App\Http\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Livewire\Component;
 
 class IndexLine extends Component
 {
+    use SnoozesChores {
+        snoozeUntilTomorrow as snoozeUntilTomorrowTrait;
+        snoozeUntilWeekend as snoozeUntilWeekendTrait;
+    }
+
     public Chore $chore;
     public ChoreInstance $chore_instance;
 
@@ -26,22 +32,11 @@ class IndexLine extends Component
 
     public function snoozeUntilTomorrow()
     {
-        $this->chore_instance->due_date = today()->addDay();
-        $this->chore_instance->save();
-        $this->emit('chore_instance.updated', $this->chore_instance->id);
+        $this->snoozeUntilTomorrowTrait($this->chore_instance);
     }
 
     public function snoozeUntilWeekend()
     {
-        $today = today();
-
-        if ($today->isWeekend()) {
-            $this->chore_instance->due_date = $today->startOfWeek()->addDays(12);
-        } else {
-            $this->chore_instance->due_date = $today->startOfWeek()->addDays(5);
-        }
-
-        $this->chore_instance->save();
-        $this->emit('chore_instance.updated', $this->chore_instance->id);
+        $this->snoozeUntilWeekendTrait($this->chore_instance);
     }
 }
