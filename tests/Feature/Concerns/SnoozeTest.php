@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\ChoreInstances;
 
-use App\Http\Livewire\ChoreInstances\IndexLine;
+use App\Http\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Livewire\Livewire;
+use Livewire\Component;
 use Tests\TestCase;
 
 class SnoozeTest extends TestCase
@@ -36,9 +36,10 @@ class SnoozeTest extends TestCase
 
         // Act
         // Open Index Line and Snooze for one day.
-        Livewire::test(IndexLine::class, [
-            'chore' => $values['chore'],
-        ])->call('snoozeUntilTomorrow');
+        (new SnoozeClass())
+            ->snoozeUntilTomorrow(
+                $values['chore']->nextChoreInstance
+            );
 
         // Assert
         // The chore instance has moved one day.
@@ -58,9 +59,10 @@ class SnoozeTest extends TestCase
 
         // Act
         // Open Index line and snooze until the weekend
-        Livewire::test(IndexLine::class, [
-            'chore' => $values['chore'],
-        ])->call('snoozeUntilWeekend');
+        (new SnoozeClass())
+            ->snoozeUntilWeekend(
+                $values['chore']->nextChoreInstance
+            );
 
         // Assert
         // The chore instance is moved until the next (known) weekend
@@ -80,9 +82,10 @@ class SnoozeTest extends TestCase
 
         // Act
         // Open Index line and snooze until the weekend
-        Livewire::test(IndexLine::class, [
-            'chore' => $values['chore'],
-        ])->call('snoozeUntilWeekend');
+        (new SnoozeClass())
+            ->snoozeUntilWeekend(
+                $values['chore']->nextChoreInstance
+            );
 
         // Assert
         // The chore instance is moved until the next (known) weekend
@@ -91,4 +94,8 @@ class SnoozeTest extends TestCase
             'due_date' => Carbon::parse('2021-03-06'),
         ]);
     }
+}
+class SnoozeClass extends Component
+{
+    use SnoozesChores;
 }
