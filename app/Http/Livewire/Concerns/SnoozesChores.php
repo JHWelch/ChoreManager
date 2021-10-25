@@ -9,10 +9,6 @@ trait SnoozesChores
     public function snoozeUntilTomorrow(mixed $chore_instances)
     {
         $chore_instances->update(['due_date' => today()->addDay()]);
-
-        if ($chore_instances instanceof ChoreInstance) {
-            $this->emit('chore_instance.updated', $chore_instances->id);
-        }
     }
 
     public function snoozeUntilWeekend(mixed $chore_instances)
@@ -24,9 +20,5 @@ trait SnoozesChores
                 ? $today->startOfWeek()->addDays(12)
                 : $today->startOfWeek()->addDays(5),
         ]);
-
-        if ($chore_instances instanceof ChoreInstance) {
-            $this->emit('chore_instance.updated', $chore_instances->id);
-        }
     }
 }

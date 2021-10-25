@@ -7,7 +7,6 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Livewire\Component;
 use Tests\TestCase;
 
 class SnoozeTest extends TestCase
@@ -149,7 +148,7 @@ class SnoozeTest extends TestCase
     }
 }
 
-class SnoozeClass extends Component
+class SnoozeClass
 {
     use SnoozesChores;
 }

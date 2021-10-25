@@ -33,10 +33,12 @@ class IndexLine extends Component
     public function snoozeUntilTomorrow()
     {
         $this->snoozeUntilTomorrowTrait($this->chore_instance);
+        $this->emit('chore_instance.updated');
     }
 
     public function snoozeUntilWeekend()
     {
         $this->snoozeUntilWeekendTrait($this->chore_instance);
+        $this->emit('chore_instance.updated');
     }
 }
