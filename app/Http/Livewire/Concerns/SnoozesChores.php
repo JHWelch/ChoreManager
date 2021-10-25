@@ -6,24 +6,27 @@ use App\Models\ChoreInstance;
 
 trait SnoozesChores
 {
-    public function snoozeUntilTomorrow(ChoreInstance $chore_instance)
+    public function snoozeUntilTomorrow(mixed $chore_instances)
     {
-        $chore_instance->due_date = today()->addDay();
-        $chore_instance->save();
-        $this->emit('chore_instance.updated', $chore_instance->id);
+        $chore_instances->update(['due_date' => today()->addDay()]);
+
+        if ($chore_instances instanceof ChoreInstance) {
+            $this->emit('chore_instance.updated', $chore_instances->id);
+        }
     }
 
-    public function snoozeUntilWeekend(ChoreInstance $chore_instance)
+    public function snoozeUntilWeekend(mixed $chore_instances)
     {
         $today = today();
 
-        if ($today->isWeekend()) {
-            $chore_instance->due_date = $today->startOfWeek()->addDays(12);
-        } else {
-            $chore_instance->due_date = $today->startOfWeek()->addDays(5);
-        }
+        $chore_instances->update([
+            'due_date' => $today->isWeekend()
+                ? $today->startOfWeek()->addDays(12)
+                : $today->startOfWeek()->addDays(5),
+        ]);
 
-        $chore_instance->save();
-        $this->emit('chore_instance.updated', $chore_instance->id);
+        if ($chore_instances instanceof ChoreInstance) {
+            $this->emit('chore_instance.updated', $chore_instances->id);
+        }
     }
 }
