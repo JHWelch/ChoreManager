@@ -77,6 +77,32 @@ class Index extends Component
                         ->whereDate('chore_instances.due_date', today())
                 );
                 break;
+            case 'past_due':
+                $this->snoozeUntilTomorrow(
+                    $this->choreQueryByTeamOrUser()
+                        ->withNextInstance()
+                        ->whereDate('chore_instances.due_date', '<', today())
+                );
+        }
+    }
+
+    public function snoozeGroupUntilWeekend($group)
+    {
+        switch ($group) {
+            case 'today':
+                $this->snoozeUntilWeekend(
+                    $this->choreQueryByTeamOrUser()
+                        ->withNextInstance()
+                        ->whereDate('chore_instances.due_date', today())
+                );
+                break;
+            case 'past_due':
+                $this->snoozeUntilWeekend(
+                    $this->choreQueryByTeamOrUser()
+                        ->withNextInstance()
+                        ->whereDate('chore_instances.due_date', '<', today())
+                );
+                break;
         }
     }
 }
