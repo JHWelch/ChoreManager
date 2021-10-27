@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\ChoreInstances;
 
 use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
+use App\Http\Livewire\Concerns\SnoozesChores;
 use Livewire\Component;
 
 class Index extends Component
 {
     use FiltersByTeamOrUser;
+    use SnoozesChores;
 
     public $choreInstanceGroups;
 
@@ -63,5 +65,18 @@ class Index extends Component
         $this->showFutureChores = ! $this->showFutureChores;
         $this->updateChoreInstanceList();
         session(['show_future_chores' => $this->showFutureChores]);
+    }
+
+    public function snoozeGroupUntilTomorrow($group)
+    {
+        switch ($group) {
+            case 'today':
+                $this->snoozeUntilTomorrow(
+                    $this->choreQueryByTeamOrUser()
+                        ->withNextInstance()
+                        ->whereDate('chore_instances.due_date', today())
+                );
+                break;
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace Tests\Feature\ChoreInstances;
 
 use App\Http\Livewire\ChoreInstances\Index as ChoreInstancesIndex;
 use App\Models\Chore;
+use App\Models\ChoreInstance;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -144,5 +145,42 @@ class IndexTest extends TestCase
         // Assert
         // User can see future chore
         $component->assertSee($chore->title);
+    }
+
+    /** @test */
+    public function it_can_snooze_chores_due_today_for_a_user_until_tomorrow()
+    {
+        // Arrange
+        // Create chores due today, and one other chore
+        $this->testUser();
+        $chores = Chore::factory()
+            ->count(3)
+            ->withFirstInstance(today())
+            ->for($this->user)
+            ->create();
+        $other_chore = Chore::factory()
+            ->withFirstInstance(today()->subDays(3))
+            ->for($this->user)
+            ->create();
+        $tomorrow = today()->addDay();
+
+        // Act
+        // Snooze Chores due today until tomorrow
+        Livewire::test(ChoreInstancesIndex::class)
+            ->call('snoozeGroupUntilTomorrow', 'today');
+
+        // Assert
+        // Chores due today are snoozed, the other is not
+        foreach ($chores as $chore) {
+            $this->assertDatabaseHas(ChoreInstance::class, [
+                'chore_id' => $chore->id,
+                'due_date' => $tomorrow,
+            ]);
+        }
+
+        $this->assertDatabaseMissing(ChoreInstance::class, [
+            'chore_id' => $other_chore->id,
+            'due_date' => $tomorrow,
+        ]);
     }
 }
