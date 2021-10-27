@@ -5,6 +5,7 @@ namespace Tests;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Carbon;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -30,5 +31,25 @@ abstract class TestCase extends BaseTestCase
             'user' => $user,
             'team' => $team,
         ];
+    }
+
+    /**
+     * Travel to 2021-03-01, a known monday.
+     *
+     * @return void
+     */
+    protected function travelToKnownMonday()
+    {
+        $this->travelTo(Carbon::parse('2021-03-01'));
+    }
+
+    /**
+     * Known Saturday (2021-03-06) after the known monday.
+     *
+     * @return Carbon
+     */
+    protected function knownSaturday()
+    {
+        return Carbon::parse('2021-03-06');
     }
 }

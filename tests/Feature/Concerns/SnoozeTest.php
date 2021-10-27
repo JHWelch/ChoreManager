@@ -54,7 +54,7 @@ class SnoozeTest extends TestCase
     {
         // Arrange
         // Set current date to a known monday, get chore,user and "today"
-        $this->travelTo(Carbon::parse('2021-03-01'));
+        $this->travelToKnownMonday();
         $values = $this->arrange();
 
         // Act
@@ -68,7 +68,7 @@ class SnoozeTest extends TestCase
         // The chore instance is moved until the next (known) weekend
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id' => $values['chores']->first()->id,
-            'due_date' => Carbon::parse('2021-03-06'),
+            'due_date' => $this->knownSaturday(),
         ]);
     }
 
@@ -128,7 +128,7 @@ class SnoozeTest extends TestCase
         // Arrange
         // Create several chores due today, one that is not
         // Set current date to a known monday
-        $this->travelTo(Carbon::parse('2021-03-01'));
+        $this->travelToKnownMonday();
         $values = $this->arrange(3);
 
         // Act
@@ -142,7 +142,7 @@ class SnoozeTest extends TestCase
         $values['chores']->each(function ($chore) {
             $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
                 'chore_id' => $chore->id,
-                'due_date' => Carbon::parse('2021-03-06'),
+                'due_date' => $this->knownSaturday(),
             ]);
         });
     }
