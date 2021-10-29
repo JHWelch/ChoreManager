@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\ChoreInstances;
+namespace Tests\Feature\Concerns;
 
 use App\Http\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
