@@ -74,16 +74,20 @@ class Index extends Component
                 $this->snoozeUntilTomorrow(
                     $this->choreQueryByTeamOrUser()
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', today())
+                        ->whereDate('chore_instances.due_date', today()
+                    )
                 );
                 break;
             case 'past_due':
                 $this->snoozeUntilTomorrow(
                     $this->choreQueryByTeamOrUser()
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', '<', today())
+                        ->whereDate('chore_instances.due_date', '<', today()
+                    )
                 );
         }
+
+        $this->emit('chore_instance.updated');
     }
 
     public function snoozeGroupUntilWeekend($group)
@@ -93,16 +97,20 @@ class Index extends Component
                 $this->snoozeUntilWeekend(
                     $this->choreQueryByTeamOrUser()
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', today())
+                        ->whereDate('chore_instances.due_date', today()
+                    )
                 );
                 break;
             case 'past_due':
                 $this->snoozeUntilWeekend(
                     $this->choreQueryByTeamOrUser()
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', '<', today())
+                        ->whereDate('chore_instances.due_date', '<', today()
+                    )
                 );
                 break;
         }
+
+        $this->emit('chore_instance.updated');
     }
 }

@@ -12,8 +12,21 @@
 @endphp
 
 <div wire:key="outer-{{ $group }}" class="mb-4 shadow sm:rounded-lg pb-1 {{ $outer_class }}">
-  <div class="flex justify-center w-full px-3 py-2">
-    <h2 class="text-xl ">{{ Str::snakeToLabel($group) }}</h2>
+  <div class="grid w-full grid-cols-3 gap-4 px-3 py-2">
+    <div></div>
+    <h2 class="flex items-center justify-center text-xl">
+      {{ Str::snakeToLabel($group) }}
+    </h2>
+
+    <div class="flex justify-end">
+      @if ($group === 'past_due' || $group === 'today')
+        <x-snooze-button
+          size="medium"
+          snoozeUntilTomorrow="snoozeGroupUntilTomorrow('{{ $group }}')"
+          snoozeUntilWeekend="snoozeGroupUntilWeekend('{{ $group }}')"
+        />
+      @endif
+    </div>
   </div>
 
   @foreach ($choreInstanceDateGroups as $date_group => $chore_instances)
