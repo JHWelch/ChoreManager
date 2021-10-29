@@ -15,6 +15,10 @@ class Index extends Component
 
     public $showFutureChores;
 
+    public $showSnoozeConfirmation = false;
+    public $snoozeGroup;
+    public $snoozeUntil;
+
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
         'chore_instance.updated'   => 'choreInstanceUpdated',
@@ -112,5 +116,23 @@ class Index extends Component
         }
 
         $this->emit('chore_instance.updated');
+    }
+
+    public function showSnoozeConfirmation($group, $until)
+    {
+        $this->snoozeGroup            = $group;
+        $this->snoozeUntil            = $until;
+        $this->showSnoozeConfirmation = true;
+    }
+
+    public function snoozeGroup()
+    {
+        if ($this->snoozeUntil === 'tomorrow') {
+            $this->snoozeGroupUntilTomorrow($this->snoozeGroup);
+        } elseif ($this->snoozeUntil === 'the weekend') {
+            $this->snoozeGroupUntilWeekend($this->snoozeGroup);
+        }
+
+        $this->showSnoozeConfirmation = false;
     }
 }
