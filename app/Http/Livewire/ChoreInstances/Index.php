@@ -2,22 +2,18 @@
 
 namespace App\Http\Livewire\ChoreInstances;
 
+use App\Http\Livewire\ChoreInstances\Concerns\SnoozesGroups;
 use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
-use App\Http\Livewire\Concerns\SnoozesChores;
 use Livewire\Component;
 
 class Index extends Component
 {
     use FiltersByTeamOrUser;
-    use SnoozesChores;
+    use SnoozesGroups;
 
     public $choreInstanceGroups;
 
     public $showFutureChores;
-
-    public $showSnoozeConfirmation = false;
-    public $snoozeGroup;
-    public $snoozeUntil;
 
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
@@ -69,70 +65,5 @@ class Index extends Component
         $this->showFutureChores = ! $this->showFutureChores;
         $this->updateChoreInstanceList();
         session(['show_future_chores' => $this->showFutureChores]);
-    }
-
-    public function snoozeGroupUntilTomorrow($group)
-    {
-        switch ($group) {
-            case 'today':
-                $this->snoozeUntilTomorrow(
-                    $this->choreQueryByTeamOrUser()
-                        ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', today()
-                    )
-                );
-                break;
-            case 'past_due':
-                $this->snoozeUntilTomorrow(
-                    $this->choreQueryByTeamOrUser()
-                        ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', '<', today()
-                    )
-                );
-        }
-
-        $this->emit('chore_instance.updated');
-    }
-
-    public function snoozeGroupUntilWeekend($group)
-    {
-        switch ($group) {
-            case 'today':
-                $this->snoozeUntilWeekend(
-                    $this->choreQueryByTeamOrUser()
-                        ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', today()
-                    )
-                );
-                break;
-            case 'past_due':
-                $this->snoozeUntilWeekend(
-                    $this->choreQueryByTeamOrUser()
-                        ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', '<', today()
-                    )
-                );
-                break;
-        }
-
-        $this->emit('chore_instance.updated');
-    }
-
-    public function showSnoozeConfirmation($group, $until)
-    {
-        $this->snoozeGroup            = $group;
-        $this->snoozeUntil            = $until;
-        $this->showSnoozeConfirmation = true;
-    }
-
-    public function snoozeGroup()
-    {
-        if ($this->snoozeUntil === 'tomorrow') {
-            $this->snoozeGroupUntilTomorrow($this->snoozeGroup);
-        } elseif ($this->snoozeUntil === 'the weekend') {
-            $this->snoozeGroupUntilWeekend($this->snoozeGroup);
-        }
-
-        $this->showSnoozeConfirmation = false;
     }
 }

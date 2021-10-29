@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Concerns;
 
-use App\Models\ChoreInstance;
-
 trait SnoozesChores
 {
     public function snoozeUntilTomorrow(mixed $chore_instances)
