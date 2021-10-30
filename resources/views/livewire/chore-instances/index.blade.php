@@ -37,7 +37,10 @@
     </button>
   </div>
 
-  <x-jet-confirmation-modal wire:model="showSnoozeConfirmation">
+  <x-jet-confirmation-modal
+    wire:model="showSnoozeConfirmation"
+    style="info"
+  >
     <x-slot name="title">
       Snooze all chores due {{ Str::snakeToLabel($snoozeGroup) }}
     </x-slot>
