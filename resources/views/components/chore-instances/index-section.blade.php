@@ -22,6 +22,7 @@
       @if ($group === 'past_due' || $group === 'today')
         <x-snooze-button
           size="medium"
+          right="right-2"
           snoozeUntilTomorrow="showSnoozeConfirmation('{{ $group }}', 'tomorrow')"
           snoozeUntilWeekend="showSnoozeConfirmation('{{ $group }}', 'the weekend')"
         />

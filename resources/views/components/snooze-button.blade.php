@@ -1,5 +1,6 @@
 @props([
   'size'                => 'large',
+  'right'               => 'right-16',
   'snoozeUntilTomorrow' => 'snoozeUntilTomorrow',
   'snoozeUntilWeekend'  => 'snoozeUntilWeekend',
 ])
@@ -28,7 +29,7 @@
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
-    class="absolute -top-0.5 right-16 z-50 flex flex-col items-center justify-between w-36 space-y-2.5 p-2.5 bg-purple-400 border border-purple-500 rounded-xl"
+    class="absolute -top-6 z-50 flex flex-col items-center justify-between w-36 space-y-2.5 p-2.5 bg-purple-400 border border-purple-500 rounded-xl {{ $right }}"
   >
     <span class="font-semibold">Snooze Until</span>
 
