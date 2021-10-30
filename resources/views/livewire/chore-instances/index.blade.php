@@ -19,36 +19,11 @@
     </div>
   @else
     <nav class="relative h-full" aria-label="Chores">
-      @foreach($choreInstanceGroups as $group => $chore_instance_date_groups)
-        @php
-          $outer_class = match($group) {
-            'past_due' => 'border border-red-300 bg-red-100',
-            'today' => 'border border-purple-300 bg-purple-100',
-            default => 'bg-white'
-          }
-        @endphp
-
-        <div wire:key="outer-{{ $group }}" class="mb-4 shadow sm:rounded-lg pb-1 {{ $outer_class }}">
-          <div class="flex justify-center w-full px-3 py-2">
-            <h2 class="text-xl ">{{ Str::snakeToLabel($group) }}</h2>
-          </div>
-
-          @foreach ($chore_instance_date_groups as $group => $chore_instances)
-            <div wire:key="inner-{{ $group }}">
-              @if ($group !== 'today')
-                <div class="sticky top-0 z-10 px-6 py-1 text-sm font-medium text-gray-500 border-t border-b border-gray-200 bg-gray-50">
-                  <h3>{{ $group }}</h3>
-                </div>
-              @endif
-
-              <ul class="relative divide-y divide-gray-200">
-                @foreach ($chore_instances as $chore_instance)
-                  <livewire:chore-instances.index-line :key="$chore_instance['chore_instance_id']" :chore="$chore_instance" />
-                @endforeach
-              </ul>
-            </div>
-          @endforeach
-        </div>
+      @foreach($choreInstanceGroups as $group => $choreInstanceDateGroups)
+        <x-chore-instances.index-section
+          :group="$group"
+          :choreInstanceDateGroups="$choreInstanceDateGroups"
+        />
       @endforeach
     </nav>
   @endif
@@ -61,4 +36,34 @@
       {{ $showFutureChores ? __('Hide future chores') : __('Show future chores')}}
     </button>
   </div>
+
+  <x-jet-confirmation-modal
+    wire:model="showSnoozeConfirmation"
+    style="info"
+  >
+    <x-slot name="title">
+      Snooze all chores due {{ Str::snakeToLabel($snoozeGroup) }}
+    </x-slot>
+
+    <x-slot name="content">
+      Are you sure you want to snooze all chores due {{ Str::snakeToLabel($snoozeGroup) }} until {{ $snoozeUntil }}?
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-secondary-button
+          wire:click="$toggle('showSnoozeConfirmation')"
+          wire:loading.attr="disabled"
+        >
+            Nevermind
+        </x-jet-secondary-button>
+
+        <x-jet-button
+          class="ml-2"
+          wire:click="snoozeGroup"
+          wire:loading.attr="disabled"
+        >
+            Snooze
+        </x-jet-button>
+    </x-slot>
+  </x-jet-confirmation-modal>
 </div>

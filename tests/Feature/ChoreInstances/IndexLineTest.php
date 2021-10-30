@@ -114,4 +114,48 @@ class IndexLineTest extends TestCase
         // User profile picture is available
         $component->assertSeeHtml("src=\"$user->profile_photo_url\"");
     }
+
+    /** @test */
+    public function snooze_until_tomorrow_emits_event()
+    {
+        // Arrange
+        // create chore with due date
+        $this->testUser();
+        $chore = Chore::factory()
+            ->withFirstInstance()
+            ->for($this->user)
+            ->create();
+
+        // Act
+        // create indexline and snooze
+        $component = Livewire::test(IndexLine::class, [
+            'chore' => $chore,
+        ])->call('snoozeUntilTomorrow');
+
+        // Assert
+        // Event emitted
+        $component->assertEmitted('chore_instance.updated');
+    }
+
+    /** @test */
+    public function snooze_until_weekend_emits_event()
+    {
+        // Arrange
+        // create chore with due date
+        $this->testUser();
+        $chore = Chore::factory()
+            ->withFirstInstance()
+            ->for($this->user)
+            ->create();
+
+        // Act
+        // create indexline and snooze
+        $component = Livewire::test(IndexLine::class, [
+            'chore' => $chore,
+        ])->call('snoozeUntilWeekend');
+
+        // Assert
+        // Event emitted
+        $component->assertEmitted('chore_instance.updated');
+    }
 }

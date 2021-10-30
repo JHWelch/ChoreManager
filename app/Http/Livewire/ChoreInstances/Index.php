@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\ChoreInstances;
 
+use App\Http\Livewire\ChoreInstances\Concerns\SnoozesGroups;
 use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
 use Livewire\Component;
 
 class Index extends Component
 {
     use FiltersByTeamOrUser;
+    use SnoozesGroups;
 
     public $choreInstanceGroups;
 
