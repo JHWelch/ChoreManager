@@ -18,11 +18,12 @@
       {{ Str::snakeToLabel($group) }}
     </h2>
 
-    <div class="flex justify-end">
+    <div class="relative flex justify-end">
       @if ($group === 'past_due' || $group === 'today')
         <x-snooze-button
           size="medium"
-          right="right-2"
+          right="-right-4"
+          top="-top-12"
           snoozeUntilTomorrow="showSnoozeConfirmation('{{ $group }}', 'tomorrow')"
           snoozeUntilWeekend="showSnoozeConfirmation('{{ $group }}', 'the weekend')"
         />
