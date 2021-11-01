@@ -17,7 +17,7 @@ trait SnoozesGroups
         switch ($group) {
             case 'today':
                 $this->snoozeUntilTomorrow(
-                    $this->choreQueryByTeamOrUser()
+                    $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
                         ->whereDate('chore_instances.due_date', today()
                     )
@@ -25,7 +25,7 @@ trait SnoozesGroups
                 break;
             case 'past_due':
                 $this->snoozeUntilTomorrow(
-                    $this->choreQueryByTeamOrUser()
+                    $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
                         ->whereDate('chore_instances.due_date', '<', today()
                     )
@@ -40,7 +40,7 @@ trait SnoozesGroups
         switch ($group) {
             case 'today':
                 $this->snoozeUntilWeekend(
-                    $this->choreQueryByTeamOrUser()
+                    $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
                         ->whereDate('chore_instances.due_date', today()
                     )
@@ -48,7 +48,7 @@ trait SnoozesGroups
                 break;
             case 'past_due':
                 $this->snoozeUntilWeekend(
-                    $this->choreQueryByTeamOrUser()
+                    $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
                         ->whereDate('chore_instances.due_date', '<', today()
                     )
