@@ -347,4 +347,29 @@ class IndexTest extends TestCase
             'due_date' => $this->knownSaturday(),
         ]);
     }
+
+    /** @test */
+    public function snoozes_chores_owned_by_team_but_assigned_to_user()
+    {
+        // Arrange
+        // Create chores due in the past, and one other chore
+        $this->testUser();
+        $chore = Chore::factory()
+            ->withFirstInstance(today()->subDays(2), $this->user->id)
+            ->for($this->team)
+            ->create();
+        $tomorrow = today()->addDay();
+
+        // Act
+        // Snooze Chores due in the past until tomorrow
+        Livewire::test(ChoreInstancesIndex::class)
+            ->call('snoozeGroupUntilTomorrow', 'past_due');
+
+        // Assert
+        // Chores due today are snoozed, the other is not
+        $this->assertDatabaseHas(ChoreInstance::class, [
+            'chore_id' => $chore->id,
+            'due_date' => $tomorrow,
+        ]);
+    }
 }
