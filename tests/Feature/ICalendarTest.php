@@ -3,9 +3,6 @@
 use App\Models\CalendarToken;
 use App\Models\Chore;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Tests\TestCase;
-
 
 test('user calendar tokens return users next chore instances', function () {
     // Arrange

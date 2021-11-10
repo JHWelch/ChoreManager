@@ -2,9 +2,6 @@
 
 use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Tests\TestCase;
-
 
 test('user can delete chore from show', function () {
     // Arrange

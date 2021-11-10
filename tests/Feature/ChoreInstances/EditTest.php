@@ -6,10 +6,8 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
-use Tests\TestCase;
 
 uses(WithFaker::class);
 

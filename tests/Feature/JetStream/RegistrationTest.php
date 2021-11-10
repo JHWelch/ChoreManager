@@ -1,10 +1,7 @@
 <?php
 
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Jetstream;
-use Tests\TestCase;
-
 
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');

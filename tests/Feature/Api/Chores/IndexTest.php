@@ -2,10 +2,6 @@
 
 use App\Models\Chore;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-
 
 test('api user can get chore list', function () {
     // Arrange

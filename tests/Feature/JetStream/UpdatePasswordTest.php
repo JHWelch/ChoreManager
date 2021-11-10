@@ -1,12 +1,9 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Jetstream\Http\Livewire\UpdatePasswordForm;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('password can be updated', function () {
     $this->actingAs($user = User::factory()->create());

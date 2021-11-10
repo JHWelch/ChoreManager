@@ -1,11 +1,8 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\TwoFactorAuthenticationForm;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('two factor authentication can be enabled', function () {
     $this->actingAs($user = User::factory()->create());

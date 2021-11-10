@@ -3,10 +3,7 @@
 use App\Enums\Frequency;
 use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('can complete a chore instance', function () {
     // Arrange

@@ -2,10 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
-
 
 test('reset password link screen can be rendered', function () {
     $response = $this->get('/forgot-password');

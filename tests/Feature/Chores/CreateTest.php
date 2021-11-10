@@ -8,10 +8,7 @@ use App\Models\Team;
 use App\Models\User;
 use App\Rules\FrequencyDayOf;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('chore edit page can be reached', function () {
     // Arrange

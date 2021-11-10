@@ -1,12 +1,6 @@
 <?php
 
 use App\Models\Chore;
-use App\Models\ChoreInstance;
-use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-
 
 test('can get upcoming chores with their due dates', function () {
     // Arrange

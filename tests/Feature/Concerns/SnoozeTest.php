@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Tests\TestCase;
-
 
 test('can snooze a chore until tomorrow', function () {
     // Arrange

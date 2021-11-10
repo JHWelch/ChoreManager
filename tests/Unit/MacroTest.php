@@ -2,7 +2,6 @@
 
 use App\Providers\MacroServiceProvider;
 
-
 beforeEach(function () {
     (new MacroServiceProvider(app()))->boot();
 });

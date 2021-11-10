@@ -1,11 +1,8 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\UpdateTeamNameForm;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('team names can be updated', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());

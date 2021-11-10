@@ -2,11 +2,8 @@
 
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\DeleteTeamForm;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('teams can be deleted', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());

@@ -1,12 +1,9 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Livewire\DeleteUserForm;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('user accounts can be deleted', function () {
     if (! Features::hasAccountDeletionFeatures()) {

@@ -4,10 +4,7 @@ use App\Http\Livewire\ChoreInstances\Index as ChoreInstancesIndex;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('chore instance index page can be reached', function () {
     // Arrange

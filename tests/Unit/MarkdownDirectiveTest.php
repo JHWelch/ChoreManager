@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Tests\BladeTestCase;
 
 uses(BladeTestCase::class);

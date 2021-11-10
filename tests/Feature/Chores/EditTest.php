@@ -3,10 +3,7 @@
 use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('chore edit page can be reached', function () {
     // Arrange

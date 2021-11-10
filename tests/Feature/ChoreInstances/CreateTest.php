@@ -5,10 +5,7 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('when a user specifies a date while creating a chore a chore instance is created', function () {
     // Arrange

@@ -1,13 +1,10 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('api token permissions can be updated', function () {
     if (! Features::hasApiFeatures()) {

@@ -3,12 +3,9 @@
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Laravel\Fortify\Features;
-use Tests\TestCase;
-
 
 test('email verification screen can be rendered', function () {
     if (! Features::enabled(Features::emailVerification())) {

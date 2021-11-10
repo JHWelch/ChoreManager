@@ -6,10 +6,7 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Tests\TestCase;
-
 
 test('when filter is set to user see only users chores', function () {
     // Arrange
