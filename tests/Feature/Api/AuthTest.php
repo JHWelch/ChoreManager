@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('api user can get an api token', function () {
     // Arrange

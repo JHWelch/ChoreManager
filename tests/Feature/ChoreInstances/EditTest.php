@@ -11,8 +11,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 uses(WithFaker::class);
 
 test('when updating chore instance with null date create chore instance', function () {

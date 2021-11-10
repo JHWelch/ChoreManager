@@ -7,8 +7,6 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('can complete a chore instance', function () {
     // Arrange

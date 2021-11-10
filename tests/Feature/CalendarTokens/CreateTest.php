@@ -7,8 +7,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('can create a calendar token to display only their chores', function () {
     // Arrange

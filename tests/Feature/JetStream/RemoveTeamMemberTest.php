@@ -6,8 +6,6 @@ use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('team members can be removed from teams', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());

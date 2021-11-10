@@ -5,8 +5,6 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Jetstream;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');

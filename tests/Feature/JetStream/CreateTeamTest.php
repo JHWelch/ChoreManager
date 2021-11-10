@@ -6,8 +6,6 @@ use Laravel\Jetstream\Http\Livewire\CreateTeamForm;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('teams can be created', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());

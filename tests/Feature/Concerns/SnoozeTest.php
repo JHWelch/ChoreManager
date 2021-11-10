@@ -7,8 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('can snooze a chore until tomorrow', function () {
     // Arrange

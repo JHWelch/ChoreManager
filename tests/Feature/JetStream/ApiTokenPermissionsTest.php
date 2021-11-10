@@ -8,8 +8,6 @@ use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('api token permissions can be updated', function () {
     if (! Features::hasApiFeatures()) {

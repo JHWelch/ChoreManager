@@ -5,8 +5,6 @@ use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Features;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('confirm password screen can be rendered', function () {
     $user = Features::hasTeamFeatures()

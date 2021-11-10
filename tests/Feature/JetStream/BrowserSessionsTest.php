@@ -6,8 +6,6 @@ use Laravel\Jetstream\Http\Livewire\LogoutOtherBrowserSessionsForm;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('other browser sessions can be logged out', function () {
     $this->actingAs($user = User::factory()->create());

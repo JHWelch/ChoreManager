@@ -8,8 +8,6 @@ use Laravel\Jetstream\Mail\TeamInvitation;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('team members can be invited to team', function () {
     Mail::fake();

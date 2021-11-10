@@ -5,8 +5,6 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
-uses(TestCase::class);
-uses(LazilyRefreshDatabase::class);
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');

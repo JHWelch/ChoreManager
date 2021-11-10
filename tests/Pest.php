@@ -1,5 +1,10 @@
 <?php
 
+uses(\Tests\TestCase::class)->in('Feature');
+uses(\Illuminate\Foundation\Testing\LazilyRefreshDatabase::class)->in('Feature');
+uses(\Illuminate\Foundation\Testing\WithFaker::class)->in('');
+uses(\Tests\BladeTestCase::class)->in('');
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
