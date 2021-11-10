@@ -3,7 +3,6 @@
 use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Livewire;
 use Tests\TestCase;
 
 uses(TestCase::class);
