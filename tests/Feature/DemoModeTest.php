@@ -24,7 +24,7 @@ test('when demo mode is enabled user does not need to log in', function () {
 
     // Assert
     // Demo user is logged in, and page can be accessed.
-    $this->assertEquals(Auth::id(), demoUser()->id);
+    expect(demoUser()->id)->toEqual(Auth::id());
     $response->assertRedirect(route('dashboard'));
 });
 

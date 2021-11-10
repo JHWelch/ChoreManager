@@ -18,7 +18,7 @@ test('collection next after gets the item that comes after an item', function ()
 
     // Assert
     // The item after the specified item as found
-    $this->assertEquals(3, $item_found);
+    expect($item_found)->toEqual(3);
 });
 
 test('collection next after wraps around when the item is last if wrap is specified', function () {
@@ -32,7 +32,7 @@ test('collection next after wraps around when the item is last if wrap is specif
 
     // Assert
     // The first item is returned.
-    $this->assertEquals(1, $item_found);
+    expect($item_found)->toEqual(1);
 });
 
 test('collection next after returns null if wrap is not specified', function () {
@@ -46,5 +46,5 @@ test('collection next after returns null if wrap is not specified', function () 
 
     // Assert
     // The first item is returned.
-    $this->assertEquals(null, $item_found);
+    expect($item_found)->toEqual(null);
 });

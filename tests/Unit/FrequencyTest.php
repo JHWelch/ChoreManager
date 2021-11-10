@@ -10,7 +10,7 @@ test('does not repeat frequency returns null', function () {
     $frequency = new Frequency(Frequency::DOES_NOT_REPEAT);
     $date      = Carbon::parse('2021-05-01');
 
-    $this->assertNull($frequency->getNextDate($date));
+    expect($frequency->getNextDate($date))->toBeNull();
 });
 
 test('daily', function () {

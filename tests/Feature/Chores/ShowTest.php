@@ -63,7 +63,7 @@ test('can complete chore from chore page', function () {
     // Assert
     // Chore instance has been completed
     $instance->refresh();
-    $this->assertEquals(true, $instance->is_completed);
+    expect($instance->is_completed)->toEqual(true);
 });
 
 test('can see chore history', function () {

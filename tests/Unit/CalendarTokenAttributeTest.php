@@ -19,8 +19,8 @@ test('calendar token is team calendar', function () {
 
     // Assert
     // is team token
-    $this->assertEquals(true, $calendar_token->is_team_calendar);
-    $this->assertEquals(false, $calendar_token->is_user_calendar);
+    expect($calendar_token->is_team_calendar)->toEqual(true);
+    expect($calendar_token->is_user_calendar)->toEqual(false);
 });
 
 test('is team calendar attribute false', function () {
@@ -33,8 +33,8 @@ test('is team calendar attribute false', function () {
 
     // Assert
     // is team token
-    $this->assertEquals(false, $calendar_token->is_team_calendar);
-    $this->assertEquals(true, $calendar_token->is_user_calendar);
+    expect($calendar_token->is_team_calendar)->toEqual(false);
+    expect($calendar_token->is_user_calendar)->toEqual(true);
 });
 
 test('display name with defined name is name', function () {
@@ -48,7 +48,7 @@ test('display name with defined name is name', function () {
 
     // Assert
     // Calendar display name is defined name
-    $this->assertEquals('Special Calendar', $calendar_token->display_name);
+    expect($calendar_token->display_name)->toEqual('Special Calendar');
 });
 
 test('user calendar without defined name named after user', function () {
@@ -64,7 +64,7 @@ test('user calendar without defined name named after user', function () {
 
     // Assert
     // Calendar display name is defined name
-    $this->assertEquals('Steve Smith\'s Chores', $calendar_token->display_name);
+    expect($calendar_token->display_name)->toEqual('Steve Smith\'s Chores');
 });
 
 test('team calendar without defined name named after team', function () {
@@ -80,5 +80,5 @@ test('team calendar without defined name named after team', function () {
 
     // Assert
     // Calendar display name is defined name
-    $this->assertEquals('Smith Family Chores', $calendar_token->display_name);
+    expect($calendar_token->display_name)->toEqual('Smith Family Chores');
 });

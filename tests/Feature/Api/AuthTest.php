@@ -26,8 +26,8 @@ test('api user can get an api token', function () {
     // Assert
     // Token is created and returned
     $token = PersonalAccessToken::first();
-    $this->assertEquals($user->id, $token->tokenable_id);
+    expect($token->tokenable_id)->toEqual($user->id);
     [$id, $response_token] = explode('|', $response->baseResponse->content(), 2);
-    $this->assertEquals(hash('sha256', $response_token), $token->token);
-    $this->assertEquals('Phone X 10', $token->name);
+    expect($token->token)->toEqual(hash('sha256', $response_token));
+    expect($token->name)->toEqual('Phone X 10');
 });

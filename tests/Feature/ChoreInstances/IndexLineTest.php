@@ -27,7 +27,7 @@ test('can complete a chore instance', function () {
     // It is completed
     $chore_instance->refresh();
 
-    $this->assertTrue($chore_instance->is_completed);
+    expect($chore_instance->is_completed)->toBeTrue();
 });
 
 test('when a chore instance is completed a new one is created daily', function () {
