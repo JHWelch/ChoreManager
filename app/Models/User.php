@@ -13,7 +13,7 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * App\Models\User
+ * App\Models\User.
  *
  * @property int $id
  * @property string $name
@@ -115,6 +115,11 @@ class User extends Authenticatable
     public function chores()
     {
         return $this->hasMany(Chore::class);
+    }
+
+    public function choreInstances()
+    {
+        return $this->hasMany(ChoreInstance::class);
     }
 
     public function calendarTokens()

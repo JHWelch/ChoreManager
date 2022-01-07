@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * App\Models\ChoreInstance
+ * App\Models\ChoreInstance.
  *
  * @property int $id
  * @property int $chore_id
@@ -83,6 +83,28 @@ class ChoreInstance extends Model
     public function scopeCompleted($query)
     {
         return $query->where('completed_date', '!=', null);
+    }
+
+    /**
+     * Scope a query to only include not completed ChoreInstances.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeNotCompleted($query)
+    {
+        return $query->where('completed_date', null);
+    }
+
+    /**
+     * Scope a query to only include Choreinstance due today.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDueToday($query)
+    {
+        return $query->where('due_date', today());
     }
 
     public function user()
