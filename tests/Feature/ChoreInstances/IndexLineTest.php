@@ -8,6 +8,7 @@ use App\Models\Chore;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
+use YlsIdeas\FeatureFlags\Facades\Features;
 
 class IndexLineTest extends TestCase
 {
@@ -96,6 +97,7 @@ class IndexLineTest extends TestCase
     {
         // Arrange
         // Create user with profile picture and chore assigned to them
+        Features::turnOn('index-profile-photos');
         $user = $this->testUser([
             'profile_photo_path' => 'test_photo_url.jpg',
         ])['user'];
