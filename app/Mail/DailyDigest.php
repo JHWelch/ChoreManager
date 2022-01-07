@@ -34,6 +34,7 @@ class DailyDigest extends Mailable
         $chore_instances = $this->user
             ->choreInstances()
             ->notCompleted()
+            ->dueToday()
             ->with('chore')
             ->get();
 
