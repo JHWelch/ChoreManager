@@ -30,7 +30,7 @@ class SendDailyDigestTest extends TestCase
 
         // Act
         // Send digest
-        (new SendDailyDigest)->send();
+        (new SendDailyDigest)();
 
         // Assert
         // Digest sent to user
@@ -49,7 +49,7 @@ class SendDailyDigestTest extends TestCase
 
         // Act
         // Send digest
-        (new SendDailyDigest)->send();
+        (new SendDailyDigest)();
 
         // Assert
         // Digest sent to user

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 class SendDailyDigest
 {
-    public function send()
+    public function __invoke()
     {
         $users = User::withSetting('has_daily_digest', true);
 
