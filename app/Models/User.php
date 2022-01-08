@@ -13,7 +13,7 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * App\Models\User
+ * App\Models\User.
  *
  * @property int $id
  * @property string $name
@@ -110,6 +110,9 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::addGlobalScope(new OrderByNameScope);
+        static::created(function ($user) {
+            UserSetting::create(['user_id' => $user->id]);
+        });
     }
 
     public function chores()
@@ -117,8 +120,27 @@ class User extends Authenticatable
         return $this->hasMany(Chore::class);
     }
 
+    public function choreInstances()
+    {
+        return $this->hasMany(ChoreInstance::class);
+    }
+
     public function calendarTokens()
     {
         return $this->hasMany(CalendarToken::class);
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(UserSetting::class);
+    }
+
+    public static function withSetting(string $setting, bool $value, string $operator = '=')
+    {
+        return self::with('settings')
+            ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
+                $query->where($setting, $operator, $value);
+            })
+            ->get();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Actions\Schedule\SendDailyDigest;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -33,6 +34,10 @@ class Kernel extends ConsoleKernel
                 ray('seeding');
                 $this->call('db:seed --force --class=DemoSeeder');
             });
+
+        $schedule
+            ->call(new SendDailyDigest)
+            ->dailyAt('07:00');
     }
 
     /**
