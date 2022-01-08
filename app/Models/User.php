@@ -110,6 +110,9 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::addGlobalScope(new OrderByNameScope);
+        static::created(function ($user) {
+            UserSetting::create(['user_id' => $user->id]);
+        });
     }
 
     public function chores()
@@ -125,5 +128,10 @@ class User extends Authenticatable
     public function calendarTokens()
     {
         return $this->hasMany(CalendarToken::class);
+    }
+
+    public function settings()
+    {
+        return $this->hasOne(UserSetting::class);
     }
 }
