@@ -38,4 +38,21 @@ class SendDailyDigestTest extends TestCase
             return $mail->hasTo($user->email);
         });
     }
+
+    /** @test */
+    public function user_without_digest_enabled_will_not_recieve_chore_email()
+    {
+        // Arrange
+        // Create user with digest enabled in preferences
+        $user = User::factory()->create();
+        $user->settings->update(['has_daily_digest' => false]);
+
+        // Act
+        // Send digest
+        (new SendDailyDigest)->send();
+
+        // Assert
+        // Digest sent to user
+        Mail::assertNotSent(DailyDigest::class);
+    }
 }
