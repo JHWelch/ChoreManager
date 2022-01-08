@@ -96,4 +96,21 @@ class DailyDigestTest extends TestCase
         // Has chore title
         $mail_digest->assertDontSeeInHtml($chore->title);
     }
+
+    /** @test */
+    public function if_user_has_no_chores_due_today_display_message()
+    {
+        // Arrange
+        // Create user without chores
+        $user = User::factory()->create();
+
+        // Act
+        // Create a new daily digest
+        $mail_digest = new DailyDigest($user);
+
+        // Assert
+        // Has no chore message
+        $mail_digest->assertDontSeeInHtml('<ul>');
+        $mail_digest->assertSeeInHtml('No chores due today!');
+    }
 }
