@@ -134,4 +134,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserSetting::class);
     }
+
+    public static function withSetting(string $setting, bool $value, string $operator = '=')
+    {
+        return self::query()
+            ->with(['settings' => function ($query) use ($setting, $operator, $value) {
+                $query->where($setting, $operator, $value);
+            }])
+            ->get();
+    }
 }
