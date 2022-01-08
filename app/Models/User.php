@@ -137,8 +137,7 @@ class User extends Authenticatable
 
     public static function withSetting(string $setting, bool $value, string $operator = '=')
     {
-        return self::query()
-            ->with('settings')
+        return self::with('settings')
             ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
                 $query->where($setting, $operator, $value);
             })

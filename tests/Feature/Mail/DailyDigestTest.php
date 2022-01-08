@@ -13,20 +13,27 @@ class DailyDigestTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    protected User $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+    }
+
     /** @test */
     public function daily_digest_has_users_chores_for_the_day()
     {
         // Arrange
         // Create user with Chores
-        $user   = User::factory()->create();
         $chores = Chore::factory()
-            ->withFirstInstance(today(), $user->id)
+            ->withFirstInstance(today(), $this->user->id)
             ->count(3)
             ->create();
 
         // Act
         // create new daily digest
-        $mail_digest = new DailyDigest($user);
+        $mail_digest = new DailyDigest($this->user);
 
         // Assert
         // Has chore titles
@@ -40,14 +47,13 @@ class DailyDigestTest extends TestCase
     {
         // Arrange
         // Create user with chore not due today
-        $user  = User::factory()->create();
         $chore = Chore::factory()
-            ->withFirstInstance(today()->addDay(), $user->id)
+            ->withFirstInstance(today()->addDay(), $this->user->id)
             ->create();
 
         // Act
         // create new daily digest
-        $mail_digest = new DailyDigest($user);
+        $mail_digest = new DailyDigest($this->user);
 
         // Assert
         // Has chore title
@@ -59,7 +65,6 @@ class DailyDigestTest extends TestCase
     {
         // Arrange
         // Create user and chore for a different user
-        $user        = User::factory()->create();
         $other_user  = User::factory()->create();
         $chore       = Chore::factory()
             ->withFirstInstance(today(), $other_user->id)
@@ -67,7 +72,7 @@ class DailyDigestTest extends TestCase
 
         // Act
         // create new daily digest
-        $mail_digest = new DailyDigest($user);
+        $mail_digest = new DailyDigest($this->user);
 
         // Assert
         // Has chore title
@@ -79,18 +84,17 @@ class DailyDigestTest extends TestCase
     {
         // Arrange
         // Create user and chore already completed
-        $user        = User::factory()->create();
         $chore       = Chore::factory()->create();
         ChoreInstance::factory()
             ->dueToday()
             ->completed()
             ->for($chore)
-            ->for($user)
+            ->for($this->user)
             ->create();
 
         // Act
         // create new daily digest
-        $mail_digest = new DailyDigest($user);
+        $mail_digest = new DailyDigest($this->user);
 
         // Assert
         // Has chore title
@@ -102,11 +106,10 @@ class DailyDigestTest extends TestCase
     {
         // Arrange
         // Create user without chores
-        $user = User::factory()->create();
 
         // Act
         // Create a new daily digest
-        $mail_digest = new DailyDigest($user);
+        $mail_digest = new DailyDigest($this->user);
 
         // Assert
         // Has no chore message
