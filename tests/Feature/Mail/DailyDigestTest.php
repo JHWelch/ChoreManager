@@ -84,7 +84,7 @@ class DailyDigestTest extends TestCase
     {
         // Arrange
         // Create user and chore already completed
-        $chore       = Chore::factory()->create();
+        $chore = Chore::factory()->create();
         ChoreInstance::factory()
             ->dueToday()
             ->completed()
@@ -104,9 +104,6 @@ class DailyDigestTest extends TestCase
     /** @test */
     public function if_user_has_no_chores_due_today_display_message()
     {
-        // Arrange
-        // Create user without chores
-
         // Act
         // Create a new daily digest
         $mail_digest = new DailyDigest($this->user);
@@ -115,5 +112,24 @@ class DailyDigestTest extends TestCase
         // Has no chore message
         $mail_digest->assertDontSeeInHtml('<ul>');
         $mail_digest->assertSeeInHtml('No chores due today!');
+    }
+
+    /** @test */
+    public function chores_have_links_to_web()
+    {
+        // Arrange
+        // Create user with chore
+        $chore = Chore::factory()
+            ->withFirstInstance(today(), $this->user->id)
+            ->create();
+
+        // Act
+        // create a new daily digest
+        $mail_digest = new DailyDigest($this->user);
+
+        // Assert
+        // email has link to chore
+        $chore_url = route('chores.show', ['chore' => $chore]);
+        $mail_digest->assertSeeInHtml("href=\"$chore_url");
     }
 }

@@ -7,7 +7,9 @@
     <ul>
       @foreach($chore_instances as $chore_instance)
         <li>
-          {{ $chore_instance }}
+          <a href="{{ $chore_instance['url'] }}">
+            {{ $chore_instance['title'] }}
+          </a>
         </li>
       @endforeach
     </ul>

@@ -39,7 +39,12 @@ class DailyDigest extends Mailable
             ->get();
 
         return $this->view('mail.daily-digest', [
-            'chore_instances' => $chore_instances->map(fn ($instance) => $instance->chore->title),
+            'chore_instances' => $chore_instances->map(function ($instance) {
+                return  [
+                    'title' => $instance->chore->title,
+                    'url'   => route('chores.show', ['chore' => $instance->chore]),
+                ];
+            }),
         ]);
     }
 }
