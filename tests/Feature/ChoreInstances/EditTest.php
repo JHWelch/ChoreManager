@@ -69,7 +69,7 @@ class EditTest extends TestCase
         // Create a chore with a chore instance
         $this->testUser();
         $date  = today()->addDays(5);
-        $chore = Chore::factory()->withFirstInstance($date)->create();
+        $chore = Chore::factory()->for($this->user)->withFirstInstance($date)->create();
 
         // Act
         // navigate to edit page
@@ -87,9 +87,12 @@ class EditTest extends TestCase
         // Create a chore with a chore instance
         $this->testUser();
         $date  = Carbon::now();
-        $chore = Chore::factory()->withFirstInstance($date)->create([
-            'frequency_id' => Frequency::DAILY,
-        ]);
+        $chore = Chore::factory()
+            ->withFirstInstance($date)
+            ->for($this->user)
+            ->create([
+                'frequency_id' => Frequency::DAILY,
+            ]);
 
         $chore->complete();
         $chore->refresh();
@@ -109,9 +112,10 @@ class EditTest extends TestCase
         // Arrange
         // Create a user with a chore assigned to a user
         $this->testUser();
-        $user  = User::factory()->create();
+        $user  = User::factory()->hasAttached($this->team)->create();
         $chore = Chore::factory()
             ->for($user)
+            ->for($this->team)
             ->withFirstInstance()
             ->create();
 

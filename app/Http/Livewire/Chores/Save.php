@@ -8,12 +8,14 @@ use App\Http\Livewire\Concerns\TrimAndNullEmptyStrings;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Rules\FrequencyDayOf;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Save extends Component
 {
+    use AuthorizesRequests;
     use GoesBack;
     use TrimAndNullEmptyStrings;
 
@@ -48,6 +50,8 @@ class Save extends Component
         $this->setGoBackState(route('chores.index'));
         $this->chore = $chore;
 
+        $this->authorizePage();
+
         if ($this->chore->id === null) {
             $this->chore->user_id = Auth::id();
         }
@@ -63,6 +67,13 @@ class Save extends Component
         $this->team = Auth::user()->currentTeam()->select('name')->first()->name;
 
         $this->show_on = $this->chore->frequency_day_of !== null;
+    }
+
+    protected function authorizePage()
+    {
+        $this->chore->exists
+            ? $this->authorize('update', $this->chore)
+            : $this->authorize('create', Chore::class);
     }
 
     public function save()
