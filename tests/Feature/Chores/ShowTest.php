@@ -9,6 +9,7 @@ use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
@@ -28,7 +29,24 @@ class ShowTest extends TestCase
 
         // Assert
         // that page can be reached.
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    /** @test */
+    public function user_cannot_view_chores_for_another_user()
+    {
+        // Arrange
+        // Create user and  chores for another user
+        $this->testUser();
+        $chore = Chore::factory()->forUser()->create();
+
+        // Act
+        // Call show endpoint
+        $response = $this->get(route('chores.show', ['chore' => $chore]));
+
+        // Assert
+        // Unauthorized
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
@@ -61,7 +79,7 @@ class ShowTest extends TestCase
         // Arrange
         // Create a chore
         $this->testUser();
-        $chore    = Chore::factory()->withFirstInstance()->create();
+        $chore    = Chore::factory()->for($this->user)->withFirstInstance()->create();
         $instance = $chore->nextChoreInstance;
 
         // Act
@@ -83,25 +101,28 @@ class ShowTest extends TestCase
         $user1 = $this->testUser()['user'];
         $user2 = User::factory()->create();
 
-        $chore = Chore::factory()->has(
-            ChoreInstance::factory()->count(3)->sequence(
-                [
-                    'completed_date'  => today()->subDays(1),
-                    'user_id'         => $user1->id,
-                    'completed_by_id' => $user1->id,
-                ],
-                [
-                    'completed_date'  => today()->subDays(2),
-                    'user_id'         => $user2->id,
-                    'completed_by_id' => $user2->id,
-                ],
-                [
-                    'completed_date'  => today()->subDays(3),
-                    'user_id'         => $user1->id,
-                    'completed_by_id' => $user1->id,
-                ],
+        $chore = Chore::factory()
+            ->for($this->user)
+            ->has(
+                ChoreInstance::factory()->count(3)->sequence(
+                    [
+                        'completed_date'  => today()->subDays(1),
+                        'user_id'         => $user1->id,
+                        'completed_by_id' => $user1->id,
+                    ],
+                    [
+                        'completed_date'  => today()->subDays(2),
+                        'user_id'         => $user2->id,
+                        'completed_by_id' => $user2->id,
+                    ],
+                    [
+                        'completed_date'  => today()->subDays(3),
+                        'user_id'         => $user1->id,
+                        'completed_by_id' => $user1->id,
+                    ],
+                )
             )
-        )->create();
+            ->create();
 
         // Act
         // Navigate to Chore Show page
@@ -199,6 +220,7 @@ class ShowTest extends TestCase
         $other_user = User::factory()->hasAttached($this->team)->create();
 
         $chore = Chore::factory()
+            ->for($this->team)
             ->for($other_user)
             ->withFirstInstance()
             ->create();
