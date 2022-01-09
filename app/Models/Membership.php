@@ -5,7 +5,7 @@ namespace App\Models;
 use Laravel\Jetstream\Membership as JetstreamMembership;
 
 /**
- * App\Models\Membership
+ * App\Models\Membership.
  *
  * @property int $id
  * @property int $team_id

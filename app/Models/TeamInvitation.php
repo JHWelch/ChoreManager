@@ -6,7 +6,7 @@ use Laravel\Jetstream\Jetstream;
 use Laravel\Jetstream\TeamInvitation as JetstreamTeamInvitation;
 
 /**
- * App\Models\TeamInvitation
+ * App\Models\TeamInvitation.
  *
  * @property int $id
  * @property int $team_id
