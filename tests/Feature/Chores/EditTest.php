@@ -7,6 +7,7 @@ use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class EditTest extends TestCase
@@ -27,7 +28,24 @@ class EditTest extends TestCase
 
         // Assert
         // A page is successfully returned
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    /** @test */
+    public function user_cannot_edit_chores_for_another_user()
+    {
+        // Arrange
+        // Create user and  chores for another user
+        $this->testUser();
+        $chore = Chore::factory()->forUser()->create();
+
+        // Act
+        // Call show endpoint
+        $response = $this->get(route('chores.edit', ['chore' => $chore]));
+
+        // Assert
+        // Unauthorized
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     /** @test */
