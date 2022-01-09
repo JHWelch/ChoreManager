@@ -2,8 +2,6 @@
 
 namespace Tests;
 
-use Tests\TestCase;
-
 /**
  * Tests for custom Blade directives, defined in AppServiceProvider.php.
  *

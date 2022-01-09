@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\CalendarToken
+ * App\Models\CalendarToken.
  *
  * @property int $id
  * @property string|null $name

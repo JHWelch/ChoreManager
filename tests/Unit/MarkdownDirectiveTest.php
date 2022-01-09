@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Support\Facades\Route;
 use Tests\BladeTestCase;
 
 class MarkdownDirectiveTest extends BladeTestCase
