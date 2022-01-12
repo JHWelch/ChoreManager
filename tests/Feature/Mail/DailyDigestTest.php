@@ -7,11 +7,13 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DailyDigestTest extends TestCase
 {
     use LazilyRefreshDatabase;
+    use WithFaker;
 
     protected User $user;
 
@@ -43,7 +45,28 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function daily_digest_does_not_show_chores_due_different_day()
+    public function daily_digest_has_users_past_due_chores()
+    {
+        // Arrange
+        // Create user with Chores
+        $chores = Chore::factory()
+            ->has(ChoreInstance::factory()->for($this->user)->pastDue())
+            ->count(3)
+            ->create();
+
+        // Act
+        // create new daily digest
+        $mail_digest = new DailyDigest($this->user);
+
+        // Assert
+        // Has chore titles
+        foreach ($chores as $chore) {
+            $mail_digest->assertSeeInHtml($chore->title);
+        }
+    }
+
+    /** @test */
+    public function daily_digest_does_not_show_chores_due_in_the_future()
     {
         // Arrange
         // Create user with chore not due today
