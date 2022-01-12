@@ -37,7 +37,7 @@ class DailyDigest extends Mailable
             ->with('chore')
             ->get();
 
-        return $this->view('mail.daily-digest', [
+        return $this->markdown('mail.daily-digest', [
             'chore_instances' => $chore_instances->map(function ($instance) {
                 return  [
                     'title' => $instance->chore->title,
