@@ -41,6 +41,20 @@ class ChoreInstanceFactory extends Factory
     }
 
     /**
+     * Creates a chore instance due today.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function pastDue()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'due_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),
+            ];
+        });
+    }
+
+    /**
      * Creates a chore instance already completed.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory

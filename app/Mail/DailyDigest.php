@@ -30,20 +30,31 @@ class DailyDigest extends Mailable
      */
     public function build()
     {
-        $chore_instances = $this->user
+        $chore_instance_groups = $this->user
             ->choreInstances()
             ->notCompleted()
-            ->dueToday()
+            ->dueTodayOrPast()
+            ->orderBy('due_date')
             ->with('chore')
-            ->get();
+            ->get()
+            ->mapToGroups(function ($chore_instance) {
+                if ($chore_instance->due_date->startOfDay() < today()) {
+                    return ['past_due' => $this->mapChoreInstance($chore_instance)];
+                }
 
-        return $this->view('mail.daily-digest', [
-            'chore_instances' => $chore_instances->map(function ($instance) {
-                return  [
-                    'title' => $instance->chore->title,
-                    'url'   => route('chores.show', ['chore' => $instance->chore]),
-                ];
-            }),
+                return ['today' => $this->mapChoreInstance($chore_instance)];
+            });
+
+        return $this->markdown('mail.daily-digest', [
+            'chore_instance_groups' => $chore_instance_groups,
         ]);
+    }
+
+    protected function mapChoreInstance($instance)
+    {
+        return [
+            'title' => $instance->chore->title,
+            'url'   => route('chores.show', ['chore' => $instance->chore]),
+        ];
     }
 }

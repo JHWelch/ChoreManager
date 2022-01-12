@@ -106,6 +106,17 @@ class ChoreInstance extends Model
         return $query->where('due_date', today());
     }
 
+    /**
+     * Scope a query to only include Choreinstance due today or in the past.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDueTodayOrPast($query)
+    {
+        return $query->where('due_date', '<=', today());
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
