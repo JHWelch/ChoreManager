@@ -17,8 +17,13 @@ class ChoreController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+
         return  ChoreResource::collection(
-            Auth::user()->chores()->with('nextChoreInstance')->get(),
+            Chore::where('user_id', $user->id)
+                ->orWhere('team_id', $user->currentTeam->id)
+                ->with('nextChoreInstance')
+                ->get(),
         );
     }
 

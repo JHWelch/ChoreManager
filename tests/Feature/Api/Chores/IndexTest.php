@@ -81,4 +81,45 @@ class IndexTest extends TestCase
             'due_date_updated_at' => $chore_instance->updated_at->toJSON(),
         ]]]);
     }
+
+    /** @test */
+    public function includes_chores_for_team()
+    {
+        // Arrange
+        // Create chore for team
+        $chore = Chore::factory()
+            ->for($this->team)
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Call endpoint
+        $response = $this->get(route('api.chores.index'));
+
+        // Assert
+        // Chore included
+        $response->assertJson(['data' => [[
+            'id' => $chore->id,
+        ]]]);
+    }
+
+    /** @test */
+    public function user_will_not_get_other_s_chores()
+    {
+        // Arrange
+        // Create chore for other
+        $chore = Chore::factory()
+            ->withFirstInstance()
+            ->create();
+
+        // Act
+        // Call endpoint
+        $response = $this->get(route('api.chores.index'));
+
+        // Assert
+        // Chore included
+        $response->assertJsonMissing(['data' => [[
+            'id' => $chore->id,
+        ]]]);
+    }
 }
