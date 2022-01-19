@@ -210,6 +210,16 @@ class Chore extends Model
         );
     }
 
+    public function getNextDueDateAttribute()
+    {
+        return $this->nextChoreInstance?->due_date;
+    }
+
+    public function getDueDateUpdatedAtAttribute()
+    {
+        return $this->nextChoreInstance?->updated_at;
+    }
+
     /**
      * Complete the next chore instance.
      *

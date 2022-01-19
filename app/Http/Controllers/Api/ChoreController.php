@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ChoreResource;
 use App\Models\Chore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,9 @@ class ChoreController extends Controller
      */
     public function index()
     {
-        return Auth::user()->chores;
+        return  ChoreResource::collection(
+            Auth::user()->chores()->with('nextChoreInstance')->get(),
+        );
     }
 
     /**
