@@ -55,6 +55,7 @@ class IndexTest extends TestCase
             'frequency_day_of',
             'created_at',
             'updated_at',
+            'next_due_user_id',
             'next_due_date',
             'due_date_updated_at',
         ]]]);
