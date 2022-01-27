@@ -35,7 +35,8 @@ class DatabaseSeeder extends Seeder
                 'name'     => 'John Smith',
                 'email'    => 'jsmith@example.com',
                 'password' => Hash::make('pw1234'),
-            ]);
+            ])
+                ->switchTeam(Team::first());
 
         $this->call(ChoreSeeder::class);
     }

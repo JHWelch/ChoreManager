@@ -20,7 +20,7 @@ class ChoreSeeder extends Seeder
             'team_id' => $user->allTeams()->first(),
         ])
             ->count(5)
-            ->withFirstInstance()
+            ->withFirstInstance(null, $user->id)
             ->create());
     }
 }
