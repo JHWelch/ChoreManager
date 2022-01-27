@@ -27,10 +27,15 @@ Route::get('/ical/{token}', [\App\Http\Controllers\Api\ICalendarController::clas
 Route::post('/token', [App\Http\Controllers\Api\AuthController::class, 'store'])
     ->name('api.token');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/chores', [\App\Http\Controllers\Api\ChoreController::class, 'index'])
-        ->name('api.chores.index');
+Route::middleware('auth:sanctum')
+    ->name('api.')
+    ->group(function () {
+        Route::apiResource('users', \App\Http\Controllers\Api\UserController::class)
+            ->only(['show']);
 
-    Route::get('/chore_instances', [\App\Http\Controllers\Api\ChoreInstanceController::class, 'index'])
-        ->name('api.chore_instances.index');
-});
+        Route::get('/chores', [\App\Http\Controllers\Api\ChoreController::class, 'index'])
+            ->name('chores.index');
+
+        Route::get('/chore_instances', [\App\Http\Controllers\Api\ChoreInstanceController::class, 'index'])
+            ->name('chore_instances.index');
+    });
