@@ -30,6 +30,9 @@ Route::post('/token', [App\Http\Controllers\Api\AuthController::class, 'store'])
 Route::middleware('auth:sanctum')
     ->name('api.')
     ->group(function () {
+        Route::get('/auth_user', [\App\Http\Controllers\Api\AuthUserController::class, 'show'])
+            ->name('auth_user.show');
+
         Route::apiResource('users', \App\Http\Controllers\Api\UserController::class)
             ->only(['show']);
 
