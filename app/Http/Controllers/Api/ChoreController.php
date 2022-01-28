@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ChoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Chore::class, 'chore');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -79,7 +84,11 @@ class ChoreController extends Controller
      */
     public function update(Request $request, Chore $chore)
     {
-        //
+        if ($request->has('completed')) {
+            if ($request->get('completed')) {
+                $chore->complete();
+            }
+        }
     }
 
     /**

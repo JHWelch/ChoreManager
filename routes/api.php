@@ -36,8 +36,8 @@ Route::middleware('auth:sanctum')
         Route::apiResource('users', \App\Http\Controllers\Api\UserController::class)
             ->only(['show']);
 
-        Route::get('/chores', [\App\Http\Controllers\Api\ChoreController::class, 'index'])
-            ->name('chores.index');
+        Route::apiResource('chores', \App\Http\Controllers\Api\ChoreController::class)
+            ->only(['index', 'update']);
 
         Route::get('/chore_instances', [\App\Http\Controllers\Api\ChoreInstanceController::class, 'index'])
             ->name('chore_instances.index');
