@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ChoreInstance;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ChoreInstanceFactory extends Factory
@@ -22,6 +23,7 @@ class ChoreInstanceFactory extends Factory
     public function definition()
     {
         return [
+            'user_id'  => User::factory(),
             'due_date' => $this->faker->dateTimeBetween('+0 days', '+1 year'),
         ];
     }

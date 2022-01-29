@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ChoreController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Chore::class, 'chore');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -60,17 +65,6 @@ class ChoreController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Chore  $chore
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Chore $chore)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -79,7 +73,13 @@ class ChoreController extends Controller
      */
     public function update(Request $request, Chore $chore)
     {
-        //
+        if ($request->has('completed')) {
+            if ($request->get('completed')) {
+                $chore->complete();
+            }
+        }
+
+        return ChoreResource::make($chore->refresh());
     }
 
     /**
