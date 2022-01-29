@@ -65,17 +65,6 @@ class ChoreController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Chore  $chore
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Chore $chore)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -89,6 +78,8 @@ class ChoreController extends Controller
                 $chore->complete();
             }
         }
+
+        return ChoreResource::make($chore->refresh());
     }
 
     /**

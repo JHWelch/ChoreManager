@@ -12,6 +12,14 @@ class UpdateTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    protected function callCompleteEndpoint(Chore $chore)
+    {
+        return $this->patch(
+            route('api.chores.update', ['chore' => $chore]),
+            ['completed' => true],
+        );
+    }
+
     /** @test */
     public function calling_update_with_complete_flag_completes_current_instance()
     {
@@ -21,9 +29,7 @@ class UpdateTest extends TestCase
             ->for($chore)
             ->create();
 
-        $response = $this->patch(route('api.chores.update', ['chore' => $chore]),
-            ['completed' => true],
-        );
+        $response = $this->callCompleteEndpoint($chore);
 
         $response->assertStatus(Response::HTTP_OK);
         $this->assertTrue($chore_instance->refresh()->is_completed);
@@ -38,9 +44,7 @@ class UpdateTest extends TestCase
             ->for($chore)
             ->create();
 
-        $response = $this->patch(route('api.chores.update', ['chore' => $chore]),
-            ['completed' => true],
-        );
+        $response = $this->callCompleteEndpoint($chore);
 
         $response->assertStatus(Response::HTTP_OK);
         $this->assertTrue($chore_instance->refresh()->is_completed);
@@ -55,11 +59,35 @@ class UpdateTest extends TestCase
             ->for($chore)
             ->create();
 
-        $response = $this->patch(route('api.chores.update', ['chore' => $chore]),
-            ['completed' => true],
-        );
+        $response = $this->callCompleteEndpoint($chore);
 
         $response->assertForbidden();
         $this->assertFalse($chore_instance->refresh()->is_completed);
+    }
+
+    /** @test */
+    public function chore_is_returned_with_new_information()
+    {
+        $this->testUser();
+        $chore = Chore::factory()->for($this->user)->withFirstInstance()->create();
+
+        $response = $this->callCompleteEndpoint($chore);
+        $chore->refresh();
+
+        $response->assertJson(['data' => [
+            'id'                  => $chore->id,
+            'user_id'             => $chore->user_id,
+            'title'               => $chore->title,
+            'description'         => $chore->description,
+            'team_id'             => $chore->team_id,
+            'frequency_id'        => $chore->frequency_id,
+            'frequency_interval'  => $chore->frequency_interval,
+            'frequency_day_of'    => $chore->frequency_day_of,
+            'created_at'          => $chore->created_at->toIsoString(),
+            'updated_at'          => $chore->updated_at->toIsoString(),
+            'next_due_user_id'    => $chore->nextChoreInstance->user_id,
+            'next_due_date'       => $chore->next_due_date->toDateString(),
+            'due_date_updated_at' => $chore->due_date_updated_at->toIsoString(),
+        ]]);
     }
 }
