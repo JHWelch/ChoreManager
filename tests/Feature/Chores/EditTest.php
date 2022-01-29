@@ -7,7 +7,6 @@ use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class EditTest extends TestCase
@@ -28,7 +27,7 @@ class EditTest extends TestCase
 
         // Assert
         // A page is successfully returned
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
     }
 
     /** @test */
@@ -45,7 +44,7 @@ class EditTest extends TestCase
 
         // Assert
         // Unauthorized
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
     }
 
     /** @test */

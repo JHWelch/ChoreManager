@@ -5,7 +5,6 @@ namespace Tests\Feature\Api\Chores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class UpdateTest extends TestCase
@@ -31,7 +30,7 @@ class UpdateTest extends TestCase
 
         $response = $this->callCompleteEndpoint($chore);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
         $this->assertTrue($chore_instance->refresh()->is_completed);
     }
 
@@ -46,7 +45,7 @@ class UpdateTest extends TestCase
 
         $response = $this->callCompleteEndpoint($chore);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
         $this->assertTrue($chore_instance->refresh()->is_completed);
     }
 
@@ -85,7 +84,7 @@ class UpdateTest extends TestCase
             'frequency_day_of'    => $chore->frequency_day_of,
             'created_at'          => $chore->created_at->toIsoString(),
             'updated_at'          => $chore->updated_at->toIsoString(),
-            'next_due_user_id'    => $chore->nextChoreInstance->user_id,
+            'next_due_user_id'    => $chore->nextChoreInstance?->user_id,
             'next_due_date'       => $chore->next_due_date->toDateString(),
             'due_date_updated_at' => $chore->due_date_updated_at->toIsoString(),
         ]]);

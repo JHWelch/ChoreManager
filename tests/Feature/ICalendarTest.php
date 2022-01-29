@@ -40,7 +40,7 @@ class ICalendarTest extends TestCase
         // Assert
         // Calendar output has names
         // NOTE: Not testing the ICalendar library, so we are not overyly worried about structure.
-        $response->assertStatus(200);
+        $response->assertOk();
         $response->assertSee('BEGIN:VCALENDAR');
         $response->assertSee('Walk the dog', 'Clean the dishes', 'Do the laundry');
     }
@@ -83,7 +83,7 @@ class ICalendarTest extends TestCase
         // Assert
         // Calendar output has names
         // NOTE: Not testing the ICalendar library, so we are not worried about structure.
-        $response->assertStatus(200);
+        $response->assertOk();
         $response->assertSee('Walk the dog', 'Clean the dishes', 'Do the laundry');
     }
 
@@ -112,7 +112,7 @@ class ICalendarTest extends TestCase
 
         // Assert
         // Calendar output has name
-        $response->assertStatus(200);
+        $response->assertOk();
         $response->assertSee('Clean the dishes');
     }
 }

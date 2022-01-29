@@ -6,7 +6,6 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
@@ -23,7 +22,7 @@ class ShowTest extends TestCase
             ['user' => $this->user]
         ));
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
         $response->assertJson(['data' => [
             'id'                 => $this->user->id,
             'name'               => $this->user->name,
@@ -46,7 +45,7 @@ class ShowTest extends TestCase
             ['user' => $user]
         ));
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
         $response->assertJson(['data' => [
             'id'                 => $user->id,
             'name'               => $user->name,
@@ -72,6 +71,6 @@ class ShowTest extends TestCase
             ['user' => $user]
         ));
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
     }
 }

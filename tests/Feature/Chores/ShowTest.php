@@ -9,7 +9,6 @@ use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
@@ -29,7 +28,7 @@ class ShowTest extends TestCase
 
         // Assert
         // that page can be reached.
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
     }
 
     /** @test */
@@ -46,7 +45,7 @@ class ShowTest extends TestCase
 
         // Assert
         // Unauthorized
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
     }
 
     /** @test */

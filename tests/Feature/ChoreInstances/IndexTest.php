@@ -27,7 +27,7 @@ class IndexTest extends TestCase
 
         // Assert
         // A page is successfully returned
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     /** @test */
