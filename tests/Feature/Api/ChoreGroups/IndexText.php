@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\ChoreGroups;
 
 use App\Models\Chore;
 use App\Models\ChoreInstance;
+use App\Models\Team;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -29,6 +30,7 @@ class IndexText extends TestCase
             route('api.teams.chore_groups.index', ['team' => $this->team]
         ));
 
+        $response->assertOk();
         $response->assertJson(['data' => [
             'past_due' => [
                 [
@@ -50,5 +52,22 @@ class IndexText extends TestCase
                 ],
             ],
         ]]);
+    }
+
+    /** @test */
+    public function user_cannot_get_chores_from_another_team()
+    {
+        $this->testUser();
+        $other_team = Team::factory()->create();
+        ChoreInstance::factory()
+            ->for(Chore::factory()->for($other_team))
+            ->count(3)
+            ->create();
+
+        $response = $this->get(
+            route('api.teams.chore_groups.index', ['team' => $other_team]
+        ));
+
+        $response->assertForbidden();
     }
 }

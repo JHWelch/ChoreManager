@@ -53,5 +53,7 @@ Route::middleware('auth:sanctum')
         Route::get(
             '/teams/{team}/chore_groups',
             [\App\Http\Controllers\Api\TeamsChoreGroupsController::class, 'index'],
-        )->name('teams.chore_groups.index');
+        )
+            ->name('teams.chore_groups.index')
+            ->can('view', 'team');
     });
