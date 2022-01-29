@@ -40,6 +40,6 @@ class RemoveTeamMemberTest extends TestCase
         $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
                         ->set('teamMemberIdBeingRemoved', $user->id)
                         ->call('removeTeamMember')
-                        ->assertStatus(403);
+                        ->assertForbidden();
     }
 }

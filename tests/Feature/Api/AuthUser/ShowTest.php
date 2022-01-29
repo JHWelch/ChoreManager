@@ -3,7 +3,6 @@
 namespace Tests\Feature\Api\AuthUser;
 
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
@@ -17,7 +16,7 @@ class ShowTest extends TestCase
 
         $response = $this->get(route('api.auth_user.show'));
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
         $response->assertJson(['user' => [
                 'id'                 => $this->user->id,
                 'name'               => $this->user->name,

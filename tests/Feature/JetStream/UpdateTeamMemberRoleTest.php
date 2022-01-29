@@ -44,7 +44,7 @@ class UpdateTeamMemberRoleTest extends TestCase
                         ->set('managingRoleFor', $otherUser)
                         ->set('currentRole', 'editor')
                         ->call('updateRole')
-                        ->assertStatus(403);
+                        ->assertForbidden();
 
         $this->assertTrue($otherUser->fresh()->hasTeamRole(
             $user->currentTeam->fresh(), 'admin'

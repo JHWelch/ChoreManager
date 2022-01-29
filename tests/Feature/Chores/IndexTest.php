@@ -28,7 +28,7 @@ class IndexTest extends TestCase
 
         // Assert
         // Assert that it is returns a 200
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     /** @test */
