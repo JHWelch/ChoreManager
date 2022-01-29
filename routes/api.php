@@ -30,15 +30,28 @@ Route::post('/token', [App\Http\Controllers\Api\AuthController::class, 'store'])
 Route::middleware('auth:sanctum')
     ->name('api.')
     ->group(function () {
-        Route::get('/auth_user', [\App\Http\Controllers\Api\AuthUserController::class, 'show'])
-            ->name('auth_user.show');
+        Route::get(
+            '/auth_user',
+            [\App\Http\Controllers\Api\AuthUserController::class, 'show']
+        )->name('auth_user.show');
 
-        Route::apiResource('users', \App\Http\Controllers\Api\UserController::class)
-            ->only(['show']);
+        Route::apiResource(
+            'users',
+            \App\Http\Controllers\Api\UserController::class
+        )->only(['show']);
 
-        Route::apiResource('chores', \App\Http\Controllers\Api\ChoreController::class)
-            ->only(['index', 'update']);
+        Route::apiResource(
+            'chores',
+            \App\Http\Controllers\Api\ChoreController::class
+        )->only(['index', 'update']);
 
-        Route::get('/chore_instances', [\App\Http\Controllers\Api\ChoreInstanceController::class, 'index'])
-            ->name('chore_instances.index');
+        Route::get(
+            '/chore_instances',
+            [\App\Http\Controllers\Api\ChoreInstanceController::class, 'index']
+        )->name('chore_instances.index');
+
+        Route::get(
+            '/teams/{team}/chore_groups',
+            [\App\Http\Controllers\Api\TeamsChoreGroupsController::class, 'index'],
+        )->name('teams.chore_groups.index');
     });

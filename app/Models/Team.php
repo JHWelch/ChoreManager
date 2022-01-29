@@ -66,4 +66,9 @@ class Team extends JetstreamTeam
     {
         return $this->hasMany(Chore::class);
     }
+
+    public function choreInstances()
+    {
+        return $this->hasManyThrough(ChoreInstance::class, Chore::class);
+    }
 }
