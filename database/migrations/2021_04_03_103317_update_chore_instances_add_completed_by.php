@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateChoreInstancesAddCompletedBy extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -27,4 +27,4 @@ class UpdateChoreInstancesAddCompletedBy extends Migration
             ->get()
             ->each(fn ($ci) => $ci->update(['completed_by_id' => $ci->user_id]));
     }
-}
+};
