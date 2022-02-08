@@ -12,13 +12,6 @@ use Illuminate\Support\Arr;
 class ChoreFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Chore::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
