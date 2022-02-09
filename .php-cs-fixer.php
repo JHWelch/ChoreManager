@@ -8,9 +8,10 @@ $rules = [
     'blank_line_before_statement'  => ['statements' => ['return']],
     'braces'                       => true,
     'cast_spaces'                  => true,
-    'class_attributes_separation'  => ['elements' => ['method']],
+    'class_attributes_separation'  => ['elements' => ['method' => 'one']],
     'class_definition'             => true,
     'concat_space'                 => ['spacing' => 'one'],
+    'constant_case'                => ['case' => 'lower'],
     'declare_equal_normalize'      => true,
     'elseif'                       => true,
     'encoding'                     => true,
@@ -18,6 +19,7 @@ $rules = [
     'fully_qualified_strict_types' => true,
     'function_declaration'         => true,
     'function_typehint_space'      => true,
+    'general_phpdoc_tag_rename'    => ['replacements' => ['inheritDocs' => 'inheritDoc']],
     'heredoc_to_nowdoc'            => true,
     'include'                      => true,
     'increment_style'              => ['style' => 'post'],
@@ -25,7 +27,6 @@ $rules = [
     'linebreak_after_opening_tag'  => true,
     'line_ending'                  => true,
     'lowercase_cast'               => true,
-    'lowercase_constants'          => true,
     'lowercase_keywords'           => true,
     'lowercase_static_reference'   => true,
     'magic_method_casing'          => true,
@@ -69,9 +70,9 @@ $rules = [
     'normalize_index_brace'                       => true,
     'not_operator_with_successor_space'           => true,
     'object_operator_without_whitespace'          => true,
-    'ordered_imports'                             => ['sortAlgorithm' => 'alpha'],
+    'ordered_imports'                             => ['sort_algorithm' => 'alpha'],
     'phpdoc_indent'                               => true,
-    'phpdoc_inline_tag'                           => true,
+    'phpdoc_inline_tag_normalizer'                => true,
     'phpdoc_no_access'                            => true,
     'phpdoc_no_package'                           => true,
     'phpdoc_no_useless_inheritdoc'                => true,
@@ -82,7 +83,7 @@ $rules = [
     'phpdoc_trim'                                 => true,
     'phpdoc_types'                                => true,
     'phpdoc_var_without_name'                     => true,
-    'psr4'                                        => true,
+    'psr_autoloading'                             => true,
     'self_accessor'                               => true,
     'short_scalar_cast'                           => true,
     'simplified_null_return'                      => true,
@@ -98,7 +99,7 @@ $rules = [
     'switch_case_semicolon_to_colon'              => true,
     'switch_case_space'                           => true,
     'ternary_operator_spaces'                     => true,
-    'trailing_comma_in_multiline_array'           => true,
+    'trailing_comma_in_multiline'                 => ['elements' => ['arrays']],
     'trim_array_spaces'                           => true,
     'unary_operator_spaces'                       => true,
     'visibility_required'                         => ['elements' => ['method', 'property']],
@@ -114,6 +115,7 @@ $finder = PhpCsFixer\Finder::create()
     ->notName('*.blade.php')
     ->notName('index.php')
     ->notName('server.php')
+    ->notName('_ide_helper.php')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 

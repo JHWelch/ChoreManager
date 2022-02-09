@@ -14,7 +14,7 @@ class DemoModeTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         (new DatabaseSeeder())->call(DemoSeeder::class);

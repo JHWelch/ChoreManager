@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class MacroTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         (new MacroServiceProvider(app()))->boot();
