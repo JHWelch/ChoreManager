@@ -19,16 +19,21 @@ trait SnoozesGroups
                 $this->snoozeUntilTomorrow(
                     $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', today()
-                    )
+                        ->whereDate(
+                            'chore_instances.due_date',
+                            today()
+                        )
                 );
                 break;
             case 'past_due':
                 $this->snoozeUntilTomorrow(
                     $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', '<', today()
-                    )
+                        ->whereDate(
+                            'chore_instances.due_date',
+                            '<',
+                            today()
+                        )
                 );
         }
 
@@ -42,16 +47,21 @@ trait SnoozesGroups
                 $this->snoozeUntilWeekend(
                     $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', today()
-                    )
+                        ->whereDate(
+                            'chore_instances.due_date',
+                            today()
+                        )
                 );
                 break;
             case 'past_due':
                 $this->snoozeUntilWeekend(
                     $this->choreQueryByTeamOrUser(false)
                         ->withNextInstance()
-                        ->whereDate('chore_instances.due_date', '<', today()
-                    )
+                        ->whereDate(
+                            'chore_instances.due_date',
+                            '<',
+                            today()
+                        )
                 );
                 break;
         }

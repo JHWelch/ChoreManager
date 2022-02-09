@@ -27,8 +27,11 @@ class IndexText extends TestCase
             ->create();
 
         $response = $this->get(
-            route('api.teams.chore_groups.index', ['team' => $this->team]
-        ));
+            route(
+                'api.teams.chore_groups.index',
+                ['team' => $this->team]
+            )
+        );
 
         $response->assertOk();
         $response->assertJson(['data' => [
@@ -65,8 +68,11 @@ class IndexText extends TestCase
             ->create();
 
         $response = $this->get(
-            route('api.teams.chore_groups.index', ['team' => $other_team]
-        ));
+            route(
+                'api.teams.chore_groups.index',
+                ['team' => $other_team]
+            )
+        );
 
         $response->assertForbidden();
     }

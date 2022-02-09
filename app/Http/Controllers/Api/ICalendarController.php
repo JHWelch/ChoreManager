@@ -19,7 +19,8 @@ class ICalendarController extends Controller
         $calendar_token
             ->choreInstances()
             ->each(function ($chore_instance) use ($cal) {
-                $cal->event(Event::create($chore_instance->chore->title)
+                $cal->event(
+                    Event::create($chore_instance->chore->title)
                     ->startsAt($chore_instance->due_date)
                     ->endsAt($chore_instance->due_date)
                     ->fullDay()

@@ -40,7 +40,8 @@ class ChoreFactory extends Factory
                         ['user_id' => $user_id ?? $chore->user->id],
                         $due_date ? ['due_date' => $due_date] : []
                     );
-                }));
+                })
+        );
     }
 
     /**
