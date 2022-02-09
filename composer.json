@@ -32,6 +32,13 @@
     "minimum-stability": "dev",
     "name": "jhwelch/choremanager",
     "prefer-stable": true,
+    "repositories":
+    [
+            {
+                "type": "vcs",
+                "url": "https://github.com/JHWelch/feature-flags"
+            }
+    ],
     "require": {
         "php": "^8.0",
         "composer/composer": "^2.2",
@@ -47,7 +54,7 @@
         "livewire/livewire": "^2.0",
         "spatie/icalendar-generator": "^2.3",
         "spatie/laravel-ray": "^1.29",
-        "ylsideas/feature-flags": "^1.4"
+        "ylsideas/feature-flags": "master"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
