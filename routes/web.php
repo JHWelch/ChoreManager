@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\CalendarTokens\Index as CalendarTokensIndex;
+use App\Http\Livewire\CalendarView;
 use App\Http\Livewire\ChoreInstances\Index as ChoreInstancesIndex;
 use App\Http\Livewire\Chores\Index as ChoresIndex;
 use App\Http\Livewire\Chores\Save as ChoresSave;
@@ -28,6 +29,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/chores/create', ChoresSave::class)->name('chores.create');
     Route::get('/chores/{chore}', ChoresShow::class)->name('chores.show');
     Route::get('/chores/{chore}/edit', ChoresSave::class)->name('chores.edit');
+
+    Route::get('/calendar', CalendarView::class)->name('calendar');
 
     Route::get('/calendar_links', CalendarTokensIndex::class)->name('calendar_tokens.index');
 });
