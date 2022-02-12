@@ -16,7 +16,9 @@ class CountStreaks
 
     protected function createNewStreaks()
     {
-        $users_without_streaks = User::doesntHave('currentStreak')->get();
+        $users_without_streaks = User::withoutUnfinishedChores()
+            ->whereDoesntHave('currentStreak')
+            ->get();
 
         StreakCount::insert(
             $users_without_streaks->map(fn ($user) => ['user_id' => $user->id])->toArray()
@@ -33,8 +35,6 @@ class CountStreaks
     protected function endStreaks()
     {
         StreakCount::whereIn('user_id', User::withUnfinishedChores()->get()->map->id)
-            ->update([
-                'ended_at' => today()->subDay(),
-            ]);
+            ->update(['ended_at' => today()->subDay()]);
     }
 }

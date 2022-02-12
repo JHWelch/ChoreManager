@@ -14,6 +14,14 @@ class CountStreaksTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    protected function uncompletedChore($user)
+    {
+        Chore::factory()
+            ->for($user)
+            ->withFirstInstance((new Carbon)->subDay(), $user->id)
+            ->create();
+    }
+
     /** @test */
     public function it_creates_streaks_for_users_who_have_not_started_one()
     {
@@ -26,6 +34,17 @@ class CountStreaksTest extends TestCase
             'count'    => 1,
             'ended_at' => null,
         ]);
+    }
+
+    /** @test */
+    public function it_will_not_create_streak_if_user_has_unfinished_chores()
+    {
+        $user = User::factory()->create();
+        $this->uncompletedChore($user);
+
+        (new CountStreaks)();
+
+        $this->assertDatabaseCount((new StreakCount)->getTable(), 0);
     }
 
     /** @test */
@@ -47,15 +66,31 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
+    public function it_will_not_increment_streak_if_user_has_unfinished_chores()
+    {
+        $user   = User::factory()->create();
+        $streak = StreakCount::factory()
+            ->for($user)
+            ->create(['count' => 5]);
+        $this->uncompletedChore($user);
+
+        (new CountStreaks)();
+
+        $this->assertDatabaseHas((new StreakCount)->getTable(), [
+            'id'       => $streak->id,
+            'user_id'  => $user->id,
+            'count'    => 5,
+        ]);
+    }
+
+    /** @test */
     public function it_ends_streak_if_user_has_uncompleted_chores()
     {
         $user   = User::factory()->create();
         $streak = StreakCount::factory()
             ->for($user)
             ->create(['count' => 5]);
-        Chore::factory()
-            ->withFirstInstance(new Carbon(), $user->id)
-            ->create(0);
+        $this->uncompletedChore($user);
 
         (new CountStreaks)();
 
