@@ -19,6 +19,12 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignId('team_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
         });

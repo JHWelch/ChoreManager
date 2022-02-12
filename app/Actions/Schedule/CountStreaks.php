@@ -3,6 +3,7 @@
 namespace App\Actions\Schedule;
 
 use App\Models\StreakCount;
+use App\Models\Team;
 use App\Models\User;
 
 class CountStreaks
@@ -16,25 +17,53 @@ class CountStreaks
 
     protected function createNewStreaks()
     {
-        $users_without_streaks = User::withoutUnfinishedChores()
+        StreakCount::insert(
+            $this->withoutStreaks(User::class)
+                ->map(fn ($user) => ['user_id' => $user->id])
+                ->toArray(),
+        );
+        StreakCount::insert(
+            $this->withoutStreaks(Team::class)
+                ->map(fn ($team) => ['team_id' => $team->id])
+                ->toArray(),
+        );
+    }
+
+    protected function withoutStreaks($class)
+    {
+        return $class::withoutUnfinishedChores(today()->subDay())
             ->whereDoesntHave('currentStreak')
             ->get();
-
-        StreakCount::insert(
-            $users_without_streaks->map(fn ($user) => ['user_id' => $user->id])->toArray()
-        );
     }
 
     protected function incrementRunningStreaks()
     {
+        $this->incrementRunningStreakFor('user_id', User::class);
+        $this->incrementRunningStreakFor('team_id', Team::class);
+    }
+
+    protected function incrementRunningStreakFor($class_id, $class)
+    {
         StreakCount::current()
-            ->whereIn('user_id', User::withoutUnfinishedChores()->get()->map->id)
+            ->whereIn(
+                $class_id,
+                $class::withoutUnfinishedChores(today()->subDay())->get()->map->id
+            )
             ->increment('count');
     }
 
     protected function endStreaks()
     {
-        StreakCount::whereIn('user_id', User::withUnfinishedChores()->get()->map->id)
+        $this->endStreaksFor('user_id', User::class);
+        $this->endStreaksFor('team_id', Team::class);
+    }
+
+    protected function endStreaksFor($class_id, $class)
+    {
+        StreakCount::whereIn(
+            $class_id,
+            $class::withUnfinishedChores(today()->subDay())->get()->map->id
+        )
             ->update(['ended_at' => today()->subDay()]);
     }
 }

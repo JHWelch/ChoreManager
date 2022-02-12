@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Console\Schedule;
+namespace Tests\Feature\Actions\Schedule;
 
 use App\Actions\Schedule\SendDailyDigest;
 use App\Mail\DailyDigest;

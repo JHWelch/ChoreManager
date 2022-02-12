@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasChoreStreaks;
+use App\Models\Concerns\HasUnfinishedChoreScopes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
@@ -37,10 +39,15 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $choreInstances
  * @property-read int|null $chore_instances_count
+ * @property-read \App\Models\StreakCount|null $currentStreak
+ * @method static \Illuminate\Database\Eloquent\Builder|Team withUnfinishedChores($on_or_before = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Team withoutUnfinishedChores($on_or_before = null)
  */
 class Team extends JetstreamTeam
 {
+    use HasChoreStreaks;
     use HasFactory;
+    use HasUnfinishedChoreScopes;
 
     /**
      * The attributes that should be cast to native types.
