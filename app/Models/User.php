@@ -122,26 +122,26 @@ class User extends Authenticatable
         });
     }
 
-    public function scopeWithUnfinishedChores(Builder $query)
+    public function scopeWithUnfinishedChores(Builder $query, $on_or_before = null)
     {
         return $query->whereHas(
             'choreInstances',
-            fn ($q) => $this->uncompletedChores($q)
+            fn ($q) => $this->uncompletedChores($q, $on_or_before)
         );
     }
 
-    public function scopeWithoutUnfinishedChores(Builder $query)
+    public function scopeWithoutUnfinishedChores(Builder $query, $on_or_before = null)
     {
         return $query->whereDoesntHave(
             'choreInstances',
-            fn ($q) => $this->uncompletedChores($q)
+            fn ($q) => $this->uncompletedChores($q, $on_or_before)
         );
     }
 
-    protected function uncompletedChores(Builder $query)
+    protected function uncompletedChores(Builder $query, $on_or_before = null)
     {
         $query
-            ->where('due_date', '<=', new Carbon)
+            ->where('due_date', '<=', $on_or_before ?? new Carbon)
             ->whereNull('completed_date');
     }
 
