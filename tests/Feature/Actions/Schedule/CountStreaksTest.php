@@ -3,9 +3,11 @@
 namespace Tests\Feature\Actions\Schedule;
 
 use App\Actions\Schedule\CountStreaks;
+use App\Models\Chore;
 use App\Models\StreakCount;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class CountStreaksTest extends TestCase
@@ -42,5 +44,23 @@ class CountStreaksTest extends TestCase
             'count'    => 6,
             'ended_at' => null,
         ]);
+    }
+
+    /** @test */
+    public function it_ends_streak_if_user_has_uncompleted_chores()
+    {
+        $user   = User::factory()->create();
+        $streak = StreakCount::factory()
+            ->for($user)
+            ->create(['count' => 5]);
+        Chore::factory()
+            ->withFirstInstance(new Carbon(), $user->id)
+            ->create(0);
+
+        (new CountStreaks)();
+
+        $streak->refresh();
+        $this->assertNotNull($streak->ended_at);
+        $this->assertEquals($streak->count, 5);
     }
 }

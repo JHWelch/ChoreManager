@@ -9,8 +9,9 @@ class CountStreaks
 {
     public function __invoke()
     {
-        $this->createNewStreaks();
         $this->incrementRunningStreaks();
+        $this->createNewStreaks();
+        $this->endStreaks();
     }
 
     protected function createNewStreaks()
@@ -24,6 +25,16 @@ class CountStreaks
 
     protected function incrementRunningStreaks()
     {
-        StreakCount::current()->increment('count');
+        StreakCount::current()
+            ->whereIn('user_id', User::withoutUnfinishedChores()->get()->map->id)
+            ->increment('count');
+    }
+
+    protected function endStreaks()
+    {
+        StreakCount::whereIn('user_id', User::withUnfinishedChores()->get()->map->id)
+            ->update([
+                'ended_at' => today()->subDay(),
+            ]);
     }
 }

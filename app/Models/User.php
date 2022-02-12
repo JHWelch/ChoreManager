@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Scopes\OrderByNameScope;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -114,6 +116,29 @@ class User extends Authenticatable
         });
     }
 
+    public function scopeWithUnfinishedChores(Builder $query)
+    {
+        return $query->whereHas(
+            'choreInstances',
+            fn ($q) => $this->uncompletedChores($q)
+        );
+    }
+
+    public function scopeWithoutUnfinishedChores(Builder $query)
+    {
+        return $query->whereDoesntHave(
+            'choreInstances',
+            fn ($q) => $this->uncompletedChores($q)
+        );
+    }
+
+    protected function uncompletedChores(Builder $query)
+    {
+        $query
+            ->where('due_date', '<=', new Carbon)
+            ->whereNull('completed_date');
+    }
+
     public function chores()
     {
         return $this->hasMany(Chore::class);
@@ -134,6 +159,11 @@ class User extends Authenticatable
         return $this->hasOne(UserSetting::class);
     }
 
+    public function currentStreak()
+    {
+        return $this->hasOne(StreakCount::class)->whereNull('ended_at');
+    }
+
     public static function withSetting(string $setting, bool $value, string $operator = '=')
     {
         return self::with('settings')
@@ -141,10 +171,5 @@ class User extends Authenticatable
                 $query->where($setting, $operator, $value);
             })
             ->get();
-    }
-
-    public function currentStreak()
-    {
-        return $this->hasOne(StreakCount::class)->whereNull('ended_at');
     }
 }
