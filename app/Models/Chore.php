@@ -48,6 +48,8 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore withNextInstance()
  * @mixin \Eloquent
+ * @property-read mixed $due_date_updated_at
+ * @property-read mixed $next_due_date
  */
 class Chore extends Model
 {

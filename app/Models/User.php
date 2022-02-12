@@ -59,6 +59,12 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $choreInstances
+ * @property-read int|null $chore_instances_count
+ * @property-read \App\Models\StreakCount|null $currentStreak
+ * @property-read \App\Models\UserSetting|null $settings
+ * @method static \Illuminate\Database\Eloquent\Builder|User withUnfinishedChores()
+ * @method static \Illuminate\Database\Eloquent\Builder|User withoutUnfinishedChores()
  */
 class User extends Authenticatable
 {
