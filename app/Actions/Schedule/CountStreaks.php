@@ -17,50 +17,52 @@ class CountStreaks
 
     protected function createNewStreaks()
     {
-        $users_without_streaks = User::withoutUnfinishedChores(today()->subDay())
-            ->whereDoesntHave('currentStreak')
-            ->get();
-
-        $teams_without_streaks = Team::withoutUnfinishedChores(today()->subDay())
-            ->whereDoesntHave('currentStreak')
-            ->get();
-
         StreakCount::insert(
-            $users_without_streaks->map(fn ($user) => ['user_id' => $user->id])->toArray(),
+            $this->withoutStreaks(User::class)
+                ->map(fn ($user) => ['user_id' => $user->id])
+                ->toArray(),
         );
         StreakCount::insert(
-            $teams_without_streaks->map(fn ($team) => ['team_id' => $team->id])->toArray(),
+            $this->withoutStreaks(Team::class)
+                ->map(fn ($team) => ['team_id' => $team->id])
+                ->toArray(),
         );
+    }
+
+    protected function withoutStreaks($class)
+    {
+        return $class::withoutUnfinishedChores(today()->subDay())
+            ->whereDoesntHave('currentStreak')
+            ->get();
     }
 
     protected function incrementRunningStreaks()
     {
-        StreakCount::current()
-            ->whereIn(
-                'user_id',
-                User::withoutUnfinishedChores(today()->subDay())->get()->map->id
-            )
-            ->increment('count');
+        $this->incrementRunningStreakFor('user_id', User::class);
+        $this->incrementRunningStreakFor('team_id', Team::class);
+    }
 
+    protected function incrementRunningStreakFor($class_id, $class)
+    {
         StreakCount::current()
             ->whereIn(
-                'team_id',
-                Team::withoutUnfinishedChores(today()->subDay())->get()->map->id
+                $class_id,
+                $class::withoutUnfinishedChores(today()->subDay())->get()->map->id
             )
             ->increment('count');
     }
 
     protected function endStreaks()
     {
-        StreakCount::whereIn(
-            'user_id',
-            User::withUnfinishedChores(today()->subDay())->get()->map->id
-        )
-            ->update(['ended_at' => today()->subDay()]);
+        $this->endStreaksFor('user_id', User::class);
+        $this->endStreaksFor('team_id', Team::class);
+    }
 
+    protected function endStreaksFor($class_id, $class)
+    {
         StreakCount::whereIn(
-            'team_id',
-            Team::withUnfinishedChores(today()->subDay())->get()->map->id
+            $class_id,
+            $class::withUnfinishedChores(today()->subDay())->get()->map->id
         )
             ->update(['ended_at' => today()->subDay()]);
     }
