@@ -35,6 +35,9 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance dueToday()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance dueTodayOrPast()
+ * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance notCompleted()
  */
 class ChoreInstance extends Model
 {
