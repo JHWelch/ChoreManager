@@ -142,4 +142,9 @@ class User extends Authenticatable
             })
             ->get();
     }
+
+    public function currentStreak()
+    {
+        return $this->hasOne(StreakCount::class)->whereNull('ended_at');
+    }
 }
