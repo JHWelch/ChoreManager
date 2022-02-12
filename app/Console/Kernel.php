@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Actions\Schedule\CountStreaks;
 use App\Actions\Schedule\SendDailyDigest;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -29,6 +30,10 @@ class Kernel extends ConsoleKernel
         $schedule
             ->call(new SendDailyDigest)
             ->dailyAt('07:00');
+
+        $schedule
+            ->call(new CountStreaks)
+            ->dailyAt('02:00');
     }
 
     /**
