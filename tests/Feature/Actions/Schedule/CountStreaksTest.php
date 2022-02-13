@@ -190,4 +190,49 @@ class CountStreaksTest extends TestCase
         $this->assertNotNull($streak->ended_at);
         $this->assertEquals($streak->count, 5);
     }
+
+    /** @test */
+    public function it_sets_time_stamps_correctly_for_user()
+    {
+        $user = User::factory()->create();
+
+        (new CountStreaks)();
+
+        $this->assertDatabaseMissing((new StreakCount)->getTable(), [
+            'user_id'    => $user->id,
+            'created_at' => null,
+            'updated_at' => null,
+        ]);
+    }
+
+    /** @test */
+    public function it_sets_time_stamps_correctly_for_team()
+    {
+        $team = Team::factory()->hasUsers()->create();
+
+        (new CountStreaks)();
+
+        $this->assertDatabaseMissing((new StreakCount)->getTable(), [
+            'team_id'    => $team->id,
+            'created_at' => null,
+            'updated_at' => null,
+        ]);
+    }
+
+    /** @test */
+    public function it_updates_timestamp_on_increment()
+    {
+        $user   = User::factory()->create();
+        $streak = StreakCount::factory()
+            ->for($user)
+            ->create(['count' => 5]);
+        Carbon::setTestNow(Carbon::now()->addDay());
+
+        (new CountStreaks)();
+
+        $this->assertDatabaseMissing((new StreakCount)->getTable(), [
+            'id'         => $streak->id,
+            'updated_at' => $streak->updated_at,
+        ]);
+    }
 }

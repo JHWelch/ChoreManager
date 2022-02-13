@@ -5,6 +5,7 @@ namespace App\Actions\Schedule;
 use App\Models\StreakCount;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 
 class CountStreaks
 {
@@ -49,7 +50,11 @@ class CountStreaks
             $class::withoutUnfinishedChores(today()->subDay())
                 ->whereDoesntHave('currentStreak')
                 ->get()
-                ->map(fn ($team) => [$class_id => $team->id])
+                ->map(fn ($class_instance) => [
+                    $class_id    => $class_instance->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ])
                 ->toArray(),
         );
     }
