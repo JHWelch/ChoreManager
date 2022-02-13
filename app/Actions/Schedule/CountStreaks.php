@@ -15,31 +15,22 @@ class CountStreaks
         $this->endStreaks();
     }
 
-    protected function createNewStreaks()
-    {
-        StreakCount::insert(
-            $this->withoutStreaks(User::class)
-                ->map(fn ($user) => ['user_id' => $user->id])
-                ->toArray(),
-        );
-        StreakCount::insert(
-            $this->withoutStreaks(Team::class)
-                ->map(fn ($team) => ['team_id' => $team->id])
-                ->toArray(),
-        );
-    }
-
-    protected function withoutStreaks($class)
-    {
-        return $class::withoutUnfinishedChores(today()->subDay())
-            ->whereDoesntHave('currentStreak')
-            ->get();
-    }
-
     protected function incrementRunningStreaks()
     {
         $this->incrementRunningStreakFor('user_id', User::class);
         $this->incrementRunningStreakFor('team_id', Team::class);
+    }
+
+    protected function createNewStreaks()
+    {
+        $this->createNewStreakFor('user_id', User::class);
+        $this->createNewStreakFor('team_id', Team::class);
+    }
+
+    protected function endStreaks()
+    {
+        $this->endStreaksFor('user_id', User::class);
+        $this->endStreaksFor('team_id', Team::class);
     }
 
     protected function incrementRunningStreakFor($class_id, $class)
@@ -52,10 +43,15 @@ class CountStreaks
             ->increment('count');
     }
 
-    protected function endStreaks()
+    protected function createNewStreakFor($class_id, $class)
     {
-        $this->endStreaksFor('user_id', User::class);
-        $this->endStreaksFor('team_id', Team::class);
+        StreakCount::insert(
+            $class::withoutUnfinishedChores(today()->subDay())
+                ->whereDoesntHave('currentStreak')
+                ->get()
+                ->map(fn ($team) => [$class_id => $team->id])
+                ->toArray(),
+        );
     }
 
     protected function endStreaksFor($class_id, $class)
