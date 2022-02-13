@@ -56,4 +56,11 @@ Route::middleware('auth:sanctum')
         )
             ->name('teams.chore_groups.index')
             ->can('view', 'team');
+
+        Route::get(
+            '/teams/{team}/current_streak',
+            [\App\Http\Controllers\Api\TeamCurrentStreakCountController::class, 'index'],
+        )
+            ->name('team_current_streak.index')
+            ->can('view', 'team');
     });
