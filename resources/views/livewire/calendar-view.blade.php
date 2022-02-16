@@ -1,10 +1,11 @@
 <div class="lg:flex lg:h-full lg:flex-col">
   <header class="relative z-20 flex items-center justify-between px-6 py-4 border-b border-gray-200 lg:flex-none">
     <h1 class="text-lg font-semibold text-gray-900">
-      <time datetime="{{ today()->isFormat('Y-MM') }}">
+      <time datetime="{{ today()->isoFormat('Y-MM') }}">
         {{ today()->isoFormat('MMMM Y') }}
       </time>
     </h1>
+
     <div class="flex items-center">
       <div class="flex items-center rounded-md shadow-sm md:items-stretch">
         <button type="button" class="flex items-center justify-center py-2 pl-3 pr-4 text-gray-400 bg-white border border-r-0 border-gray-300 rounded-l-md hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
@@ -14,8 +15,11 @@
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
           </svg>
         </button>
+
         <button type="button" class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block">Today</button>
+
         <span class="relative w-px h-5 -mx-px bg-gray-300 md:hidden"></span>
+
         <button type="button" class="flex items-center justify-center py-2 pl-4 pr-3 text-gray-400 bg-white border border-l-0 border-gray-300 rounded-r-md hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
           <span class="sr-only">Next month</span>
           <!-- Heroicon name: solid/chevron-right -->
@@ -24,6 +28,7 @@
           </svg>
         </button>
       </div>
+
       <div class="hidden md:ml-4 md:flex md:items-center">
         <div class="relative">
           <button type="button" class="flex items-center py-2 pl-3 pr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50" id="menu-button" aria-expanded="false" aria-haspopup="true">
@@ -57,6 +62,7 @@
         <div class="w-px h-6 ml-6 bg-gray-300"></div>
         <button type="button" class="px-4 py-2 ml-6 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm focus:outline-none hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add event</button>
       </div>
+
       <div class="relative ml-6 md:hidden">
         <button type="button" class="flex items-center p-2 -mx-2 text-gray-400 border border-transparent rounded-full hover:text-gray-500" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
           <span class="sr-only">Open menu</span>

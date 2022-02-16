@@ -2,12 +2,24 @@
 
 namespace App\Http\Livewire;
 
+use App\Data\Calendar;
 use Livewire\Component;
 
 class CalendarView extends Component
 {
-    public function render()
+    public array $calendar = [];
+
+    public function mount()
     {
-        return view('livewire.calendar-view');
+        $this->generateCalendar();
+    }
+
+    public function generateCalendar()
+    {
+        $today          = today();
+        $this->calendar = Calendar::generateCalendarFor(
+            $today->month,
+            $today->year,
+        );
     }
 }
