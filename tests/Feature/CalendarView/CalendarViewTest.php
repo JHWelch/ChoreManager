@@ -40,15 +40,4 @@ class CalendarViewTest extends TestCase
 
         $component->assertSee('February 2021');
     }
-
-    /** @test */
-    public function generateCalendar_creates_calendar_for_month_without_extra_days()
-    {
-        $this->testUser();
-        $this->travelTo(Carbon::parse('2/1/2021'));
-
-        $component = Livewire::test(CalendarView::class)
-            ->call('generateCalendar')
-            ->assertSet('calendar', MockCalendarData::feb2021());
-    }
 }

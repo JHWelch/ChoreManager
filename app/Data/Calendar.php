@@ -31,7 +31,7 @@ class Calendar
             $date->addWeek();
         }
 
-        if ($date->clone()->endOfWeek()->day == 7) {
+        if ($date->clone()->endOfWeek()->day === 7) {
             return $calendar;
         }
 
@@ -47,6 +47,7 @@ class Calendar
             $date->dayOfWeekIso - 1,
             null
         );
+
         $calendar[] = self::week(1, $empty_at_start);
     }
 
@@ -58,7 +59,11 @@ class Calendar
             null
         );
 
-        $calendar[] = self::week(1, [], $empty_at_end);
+        $calendar[] = self::week(
+            $date->clone()->startOfWeek()->day,
+            [],
+            $empty_at_end
+        );
     }
 
     public static function week($start_number, $add_in_front = [], $add_at_end = [])
@@ -74,11 +79,11 @@ class Calendar
             );
         }
 
-        return array_merge(
-            $add_in_front,
-            $week,
-            $add_at_end,
-        );
+        return [
+            ...$add_in_front,
+            ...$week,
+            ...$add_at_end,
+        ];
     }
 
     public static function day($day, $day_of_week)
