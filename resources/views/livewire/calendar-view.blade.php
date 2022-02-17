@@ -10,10 +10,9 @@
       <div class="flex items-center rounded-md shadow-sm md:items-stretch">
         <button type="button" class="flex items-center justify-center py-2 pl-3 pr-4 text-gray-400 bg-white border border-r-0 border-gray-300 rounded-l-md hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
           <span class="sr-only">Previous month</span>
-          <!-- Heroicon name: solid/chevron-left -->
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-          </svg>
+
+          <x-icons.chevron-left />
+
         </button>
 
         <button type="button" class="hidden border-t border-b border-gray-300 bg-white px-3.5 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900 focus:relative md:block">Today</button>
@@ -22,10 +21,9 @@
 
         <button type="button" class="flex items-center justify-center py-2 pl-4 pr-3 text-gray-400 bg-white border border-l-0 border-gray-300 rounded-r-md hover:text-gray-500 focus:relative md:w-9 md:px-2 md:hover:bg-gray-50">
           <span class="sr-only">Next month</span>
-          <!-- Heroicon name: solid/chevron-right -->
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-          </svg>
+
+          <x-icons.chevron-right />
+
         </button>
       </div>
 
@@ -33,10 +31,8 @@
         <div class="relative">
           <button type="button" class="flex items-center py-2 pl-3 pr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50" id="menu-button" aria-expanded="false" aria-haspopup="true">
             Month view
-            <!-- Heroicon name: solid/chevron-down -->
-            <svg class="w-5 h-5 ml-2 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
+
+            <x-icons.chevron-down class="w-5 h-5 ml-2 text-gray-400" />
           </button>
 
           <!--
@@ -66,10 +62,9 @@
       <div class="relative ml-6 md:hidden">
         <button type="button" class="flex items-center p-2 -mx-2 text-gray-400 border border-transparent rounded-full hover:text-gray-500" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
           <span class="sr-only">Open menu</span>
-          <!-- Heroicon name: solid/dots-horizontal -->
-          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-          </svg>
+
+          <x-icons.dots-horizontal />
+
         </button>
 
         <!--
@@ -510,10 +505,8 @@
         <div class="flex-auto">
           <p class="font-semibold text-gray-900">Maple syrup museum</p>
           <time datetime="2022-01-15T09:00" class="flex items-center mt-2 text-gray-700">
-            <!-- Heroicon name: solid/clock -->
-            <svg class="w-5 h-5 mr-2 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-            </svg>
+            <x-icons.clock-solid class="w-5 h-5 mr-2 text-gray-400"/>
+
             3PM
           </time>
         </div>
@@ -524,10 +517,8 @@
         <div class="flex-auto">
           <p class="font-semibold text-gray-900">Hockey game</p>
           <time datetime="2022-01-22T19:00" class="flex items-center mt-2 text-gray-700">
-            <!-- Heroicon name: solid/clock -->
-            <svg class="w-5 h-5 mr-2 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-            </svg>
+            <x-icons.clock-solid class="w-5 h-5 mr-2 text-gray-400"/>
+
             7PM
           </time>
         </div>
