@@ -23,7 +23,6 @@ class Kernel extends ConsoleKernel
             ->daily()
             ->when(fn () => config('demo.enabled'))
             ->then(function () {
-                ray('seeding');
                 $this->call('db:seed --force --class=DemoSeeder');
             });
 
