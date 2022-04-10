@@ -68,7 +68,11 @@ class UpdateTest extends TestCase
     public function chore_is_returned_with_new_information()
     {
         $this->testUser();
-        $chore = Chore::factory()->for($this->user)->withFirstInstance()->create();
+        $chore = Chore::factory()
+            ->for($this->user)
+            ->daily()
+            ->withFirstInstance()
+            ->create();
 
         $response = $this->callCompleteEndpoint($chore);
         $chore->refresh();

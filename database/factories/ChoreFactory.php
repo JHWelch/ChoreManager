@@ -57,4 +57,9 @@ class ChoreFactory extends Factory
             ];
         });
     }
+
+    public function daily()
+    {
+        return $this->state(['frequency_id' => Frequency::DAILY]);
+    }
 }
