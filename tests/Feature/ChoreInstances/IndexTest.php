@@ -123,7 +123,7 @@ class IndexTest extends TestCase
 
         // Assert
         // User can see future chore
-        $component->assertSee($chore->title);
+        $component->assertSeeInOrder(['Future', $chore->title]);
     }
 
     /** @test */
@@ -371,5 +371,31 @@ class IndexTest extends TestCase
             'chore_id' => $chore->id,
             'due_date' => $tomorrow,
         ]);
+    }
+
+    /** @test */
+    public function chore_instances_are_split_into_groups_based_on_date()
+    {
+        $this->testUser();
+        Chore::factory(['title' => 'walk dog'])
+            ->for($this->user)
+            ->withFirstInstance(today()->addDay(), $this->user)
+            ->create();
+        Chore::factory(['title' => 'do laundry'])
+            ->for($this->user)
+            ->withFirstInstance(today()->subDay(), $this->user)
+            ->create();
+        Chore::factory(['title' => 'clean dishes'])
+            ->for($this->user)
+            ->withFirstInstance(today(), $this->user)
+            ->create();
+
+        Livewire::test(ChoreInstancesIndex::class)
+            ->assertSeeInOrder([
+                'Past due',
+                'do laundry',
+                'Today',
+                'clean dishes',
+            ]);
     }
 }
