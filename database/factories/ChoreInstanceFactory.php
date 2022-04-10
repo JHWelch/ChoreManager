@@ -27,11 +27,7 @@ class ChoreInstanceFactory extends Factory
      */
     public function dueToday()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'due_date' => today(),
-            ];
-        });
+        return $this->state(['due_date' => today()]);
     }
 
     /**
@@ -41,11 +37,9 @@ class ChoreInstanceFactory extends Factory
      */
     public function pastDue()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'due_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),
-            ];
-        });
+        return $this->state([
+            'due_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),
+        ]);
     }
 
     /**
@@ -55,10 +49,8 @@ class ChoreInstanceFactory extends Factory
      */
     public function completed()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'completed_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),
-            ];
-        });
+        return $this->state([
+            'completed_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),
+        ]);
     }
 }
