@@ -51,10 +51,11 @@ class ChoreFactory extends Factory
      */
     public function assignedToTeam()
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'user_id' => null,
-            ];
-        });
+        return $this->state(['user_id' => null]);
+    }
+
+    public function daily()
+    {
+        return $this->state(['frequency_id' => Frequency::DAILY]);
     }
 }

@@ -9,8 +9,6 @@ class MarkdownDirectiveTest extends BladeTestCase
     /** @test */
     public function markdown_directive_converts_markdown_to_html()
     {
-        // Arrange
-        // Markdown string and mock component
         $markdown = <<<'EOD'
         # This is a markdown string
         It is rather important
@@ -31,8 +29,6 @@ class MarkdownDirectiveTest extends BladeTestCase
         </ul>
         EOD;
 
-        // Assert
-        // Markdown directive converts to HTML.
         $this->assertDirectiveOutputEquals(
             $expected,
             '@markdown($markdown)',
@@ -44,12 +40,8 @@ class MarkdownDirectiveTest extends BladeTestCase
     /** @test */
     public function markdown_directive_parses_dangerous_input()
     {
-        // Arrange
-        // Markdown with script and not wanted script output
         $markdown = '<script>alert(\'Gotcha!\')</script>';
 
-        // Assert
-        // Markdown is santizied and script is not output directly.
         $this->assertDirectiveOutputNotEquals(
             $markdown,
             '@markdown($markdown)',

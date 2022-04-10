@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,7 +33,6 @@ class DatabaseSeeder extends Seeder
             ->create([
                 'name'     => 'John Smith',
                 'email'    => 'jsmith@example.com',
-                'password' => Hash::make('pw1234'),
             ])
                 ->switchTeam(Team::first());
 
