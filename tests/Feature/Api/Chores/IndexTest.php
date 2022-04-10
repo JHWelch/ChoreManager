@@ -21,8 +21,6 @@ class IndexTest extends TestCase
     /** @test */
     public function api_user_can_get_chore_list()
     {
-        // Arrange
-        // Create user with chores
         Chore::factory()
             ->count(3)
             ->state(new Sequence(
@@ -33,12 +31,8 @@ class IndexTest extends TestCase
             ->for($this->user)
             ->create();
 
-        // Act
-        // Call chore index endpoint
         $response = $this->get(route('api.chores.index'));
 
-        // Assert
-        // Chores return in expected format.
         $response->assertJson(['data' => [
             ['title' => 'Do dishes'],
             ['title' => 'Walk dog'],
@@ -64,19 +58,13 @@ class IndexTest extends TestCase
     /** @test */
     public function chores_returned_have_next_due_date()
     {
-        // Arrange
-        // Create chore with chore instance
         $chore_instance = ChoreInstance::factory()
             ->for(Chore::factory()->for($this->user))
             ->for($this->user)
             ->create();
 
-        // Act
-        // call endpoint
         $response = $this->get(route('api.chores.index'));
 
-        // Assert
-        // has next due date and update
         $response->assertJson(['data' => [[
             'next_due_date'       => $chore_instance->due_date->toDateString(),
             'due_date_updated_at' => $chore_instance->updated_at->toJSON(),
@@ -86,19 +74,13 @@ class IndexTest extends TestCase
     /** @test */
     public function includes_chores_for_team()
     {
-        // Arrange
-        // Create chore for team
         $chore = Chore::factory()
             ->for($this->team)
             ->withFirstInstance()
             ->create();
 
-        // Act
-        // Call endpoint
         $response = $this->get(route('api.chores.index'));
 
-        // Assert
-        // Chore included
         $response->assertJson(['data' => [[
             'id' => $chore->id,
         ]]]);
@@ -107,18 +89,12 @@ class IndexTest extends TestCase
     /** @test */
     public function user_will_not_get_other_s_chores()
     {
-        // Arrange
-        // Create chore for other
         $chore = Chore::factory()
             ->withFirstInstance()
             ->create();
 
-        // Act
-        // Call endpoint
         $response = $this->get(route('api.chores.index'));
 
-        // Assert
-        // Chore included
         $response->assertJsonMissing(['data' => [[
             'id' => $chore->id,
         ]]]);

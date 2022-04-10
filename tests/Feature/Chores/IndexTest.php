@@ -18,24 +18,16 @@ class IndexTest extends TestCase
     /** @test */
     public function a_user_can_navigate_to_chores_index()
     {
-        // Arrange
-        // Create and act as a user
         $this->testUser();
 
-        // Act
-        // Navigate to the Chores index page
         $response = $this->get(route('chores.index'));
 
-        // Assert
-        // Assert that it is returns a 200
         $response->assertOk();
     }
 
     /** @test */
     public function chores_display_on_index_page()
     {
-        // Arrange
-        // create a user and some chores
         $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
@@ -47,8 +39,6 @@ class IndexTest extends TestCase
             ->for($user)
             ->create();
 
-        // Act
-        // Navigate to the chores index page
         $component = Livewire::test(Index::class);
 
         // Assert
@@ -65,8 +55,6 @@ class IndexTest extends TestCase
     /** @test */
     public function chores_can_be_sorted_by_title()
     {
-        // Arrange
-        // Create chores with known titles'
         $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
@@ -78,21 +66,15 @@ class IndexTest extends TestCase
             ->for($user)
             ->create();
 
-        // Act
-        // Navigate to index and sort by title
         $component = Livewire::test(Index::class)
             ->call('sortBy', 'chores.title');
 
-        // Assert
-        // The titles are in the sorted order
         $component->assertSeeInOrder(['Clean car', 'Do dishes', 'Walk dog']);
     }
 
     /** @test */
     public function chores_can_be_sorted_by_frequency()
     {
-        // Arrange
-        // Create chores with known titles'
         $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
@@ -104,21 +86,15 @@ class IndexTest extends TestCase
             ->for($user)
             ->create();
 
-        // Act
-        // Navigate to index and sort by title
         $component = Livewire::test(Index::class)
             ->call('sortBy', 'chores.frequency_id');
 
-        // Assert
-        // The titles are in the sorted order
         $component->assertSeeInOrder(['Walk dog', 'Clean car', 'Do dishes']);
     }
 
     /** @test */
     public function chores_can_be_sorted_by_next_due_date()
     {
-        // Arrange
-        // Create chores with known titles'
         $date1  = today()->addDays(1);
         $date2  = today()->addDays(2);
         $date3  = today()->addDays(3);
@@ -136,23 +112,16 @@ class IndexTest extends TestCase
         ChoreInstance::factory(['due_date' => $date1])->for($user)->for($chores[1])->create();
         ChoreInstance::factory(['due_date' => $date2])->for($user)->for($chores[2])->create();
 
-        // Act
-        // Navigate to index and sort by title
         $component = Livewire::test(Index::class)
             ->set('sort', 'chores.title') // Default is due date.
             ->call('sortBy', 'chore_instances.due_date');
 
-        // Assert
-        // The titles are in the sorted order
         $component->assertSeeInOrder(['Walk dog', 'Clean car', 'Do dishes']);
     }
 
     /** @test */
     public function chores_can_be_sorted_by_descending_title()
     {
-        $this->withoutExceptionHandling();
-        // Arrange
-        // Create chores with known titles'
         $user = $this->testUser()['user'];
         Chore::factory()
             ->count(3)
@@ -164,14 +133,10 @@ class IndexTest extends TestCase
             ->for($user)
             ->create();
 
-        // Act
-        // Navigate to index and sort by title
         $component = Livewire::test(Index::class)
             ->call('sortBy', 'chores.title')
             ->call('sortBy', 'chores.title');
 
-        // Assert
-        // The titles are in the sorted order
         $component->assertSeeInOrder(['Walk dog', 'Do dishes', 'Clean car']);
     }
 }
