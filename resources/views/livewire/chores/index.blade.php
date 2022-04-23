@@ -52,30 +52,44 @@
 
               </tr>
             </thead>
-            <tbody>
-              <!-- Odd row -->
-              @foreach ($chores as $chore)
-                <tr onclick="window.location='{{ route('chores.show', ['chore' => $chore]) }}';" class="cursor-pointer {{ ! ($loop->index % 2) ? 'bg-white' : 'bg-gray-50'}}">
-                  <td class="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                    {{ $chore->title }}
-                  </td>
 
-                  <td class="hidden max-w-md px-6 py-4 truncate lg:block whitespace-nowrap">
+            <tbody>
+              @foreach ($chores as $chore)
+                <tr class="{{ ! ($loop->index % 2) ? 'bg-white' : 'bg-gray-50'}}">
+                  <x-chores.index-table-cell
+                    :chore="$chore"
+                    class="font-medium text-gray-900"
+                  >
+                    {{ $chore->title }}
+                  </x-chores.index-table-cell>
+
+
+                  <x-chores.index-table-cell
+                    :chore="$chore"
+                    class="hidden max-w-md truncate lg:block"
+                  >
                     <button
                       class="text-sm text-gray-500 underline"
-                      wire:click.stop="setShowDescriptionModal({{ $chore->id }})"
+                      wire:click.prevent="setShowDescriptionModal({{ $chore->id }})"
                     >
                       {{ $chore->description }}
                     </button>
-                  </td>
+                  </x-chores.index-table-cell>
 
-                  <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+
+                  <x-chores.index-table-cell :chore="$chore">
                     {{ $chore->frequency }}
-                  </td>
+                  </x-chores.index-table-cell>
 
-                  <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                    {{ (is_string($chore->due_date) ? $chore->due_date : $chore->due_date?->format('m/d/Y')) ?? '-' }}
-                  </td>
+
+                  <x-chores.index-table-cell :chore="$chore">
+                    {{
+                      (is_string($chore->due_date)
+                          ? $chore->due_date
+                          : $chore->due_date?->format('m/d/Y')
+                      ) ?? '-'
+                    }}
+                  </x-chores.index-table-cell>
                 </tr>
               @endforeach
             </tbody>
