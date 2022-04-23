@@ -45,10 +45,8 @@ trait GoesBack
      */
     public function back()
     {
-        if ($this->currentUrl === $this->previousUrl) {
-            return redirect($this->defaultBackUrl);
-        }
-
-        return redirect($this->previousUrl);
+        return $this->currentUrl === $this->previousUrl
+            ? redirect($this->defaultBackUrl)
+            : redirect($this->previousUrl);
     }
 }

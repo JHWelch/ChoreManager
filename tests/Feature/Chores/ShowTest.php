@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Chores;
 
-use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -61,11 +60,12 @@ class ShowTest extends TestCase
         $chore    = Chore::factory()->for($this->user)->withFirstInstance()->create();
         $instance = $chore->nextChoreInstance;
 
-        Livewire::test(Show::class, ['chore' => $chore])
+        $component = Livewire::test(Show::class, ['chore' => $chore])
             ->call('complete');
 
         $instance->refresh();
         $this->assertEquals(true, $instance->is_completed);
+        $component->assertRedirect('/');
     }
 
     /** @test */
@@ -109,38 +109,6 @@ class ShowTest extends TestCase
             'completed chore',
             '3 days ago',
         ]);
-    }
-
-    /** @test */
-    public function when_completing_a_chore_it_will_appear_in_history_and_next_instance_updates()
-    {
-        $today = today();
-        $user  = $this->testUser()['user'];
-        $chore = Chore::factory([
-            'frequency_id' => Frequency::DAILY,
-        ])
-            ->withFirstInstance($today)
-            ->for($user)
-            ->create();
-
-        $component = Livewire::test(Show::class, ['chore' => $chore])
-            ->assertSeeInOrder([
-                'Due on',
-                $today->toFormattedDateString(),
-            ])
-            ->assertDontSee('completed chore');
-
-        $component->call('complete');
-
-        $component->assertSeeInOrder([
-            'Due on',
-            $today->addDay(1)->toFormattedDateString(),
-        ])
-            ->assertSeeInOrder([
-                $user->name,
-                'completed chore',
-                'today',
-            ]);
     }
 
     /** @test */
@@ -197,7 +165,7 @@ class ShowTest extends TestCase
             ->withFirstInstance()
             ->create();
 
-        Livewire::test(Show::class, [
+        $component = Livewire::test(Show::class, [
             'chore' => $chore,
         ])
             ->set('completed_date', $date)
@@ -208,5 +176,6 @@ class ShowTest extends TestCase
             'completed_date'  => $date,
             'completed_by_id' => $user->id,
         ]);
+        $component->assertRedirect('/');
     }
 }
