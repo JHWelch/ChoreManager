@@ -37,15 +37,12 @@ class Show extends Component
     public function complete($for = null, $on = null)
     {
         $this->chore_instance->complete($for, $on);
-        $this->chore->refresh();
-        $this->loadContent();
+        $this->back();
     }
 
     public function customComplete()
     {
         $this->complete($this->user_id, Carbon::parse($this->completed_date));
-
-        $this->showCompleteForUserDialog = false;
     }
 
     public function loadContent()
