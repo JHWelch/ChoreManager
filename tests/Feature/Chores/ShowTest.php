@@ -112,6 +112,43 @@ class ShowTest extends TestCase
     }
 
     /** @test */
+    public function can_see_tooltip_of_exact_date()
+    {
+        $user1 = $this->testUser()['user'];
+        $user2 = User::factory()->create();
+        $chore = Chore::factory()
+            ->for($this->user)
+            ->has(
+                ChoreInstance::factory()->count(3)->sequence(
+                    [
+                        'completed_date'  => $date1 = today()->subDays(1),
+                        'user_id'         => $user1->id,
+                        'completed_by_id' => $user1->id,
+                    ],
+                    [
+                        'completed_date'  => $date2 = today()->subDays(2),
+                        'user_id'         => $user2->id,
+                        'completed_by_id' => $user2->id,
+                    ],
+                    [
+                        'completed_date'  => $date3 = today()->subDays(3),
+                        'user_id'         => $user1->id,
+                        'completed_by_id' => $user1->id,
+                    ],
+                )
+            )
+            ->create();
+
+        $component = Livewire::test(Show::class, ['chore' => $chore]);
+
+        $component->assertSeeInOrder([
+            $date1->format('m/d/Y'),
+            $date2->format('m/d/Y'),
+            $date3->format('m/d/Y'),
+        ]);
+    }
+
+    /** @test */
     public function chores_assigned_to_team_display_team_as_owner()
     {
         $team  = $this->testUser()['team'];
