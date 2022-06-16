@@ -6,6 +6,7 @@ Chore manager is a simple chore management application for taking care of househ
 ## Table of Contents
 - [Key Features](#key-features)
 - [Set Up Local Environment](#set-up-local-environment)
+- [Related Projects](#related-projects)
 - [Technologies](#technologies)
 
 ## Key Features
@@ -16,12 +17,16 @@ Chore manager is a simple chore management application for taking care of househ
 * [iCalendar format support](app/Http/Controllers/Api/ICalendarController.php) to integrate with calendar applications like Google Calendar
 
 ## Set Up Local Environment
-These instructions assume you are using [Laravel Valet](https://laravel.com/docs/8.x/valet) and [Composer](https://getcomposer.org/) running on macOS.  
+These instructions assume you are using [Laravel Valet](https://laravel.com/docs/8.x/valet) and [Composer](https://getcomposer.org/) running on macOS.
 
 1. Clone the repository to `~/Sites` or wherever is parked in Valet
 2. `cd` into the directory
 3. `sh .bin/init.sh`
 4. Optionally make changes to `.env` and `.env.testing`.
+
+## Related Projects
+* [Chore Manager Mobile - Flutter application](https://github.com/JHWelch/chore_manager_mobile)
+* [Chore Manager Magic Mirror Module](https://github.com/JHWelch/MMM-Chore-Manager)
 
 ## Technologies
 Chore Manager is built using a **TALL** stack.
