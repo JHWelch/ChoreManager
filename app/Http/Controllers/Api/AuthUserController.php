@@ -8,12 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthUserController extends Controller
 {
-    /**
-     * Return the current auth'd user.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
+    public function show() : AuthUserResource
     {
         return AuthUserResource::make(Auth::user());
     }

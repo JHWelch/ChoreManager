@@ -36,6 +36,7 @@ class FrequencyDayOf implements Rule
             Frequency::MONTHLY         => ($value >= 1 && $value <= 31),
             Frequency::QUARTERLY       => ($value >= 1 && $value <= 92),
             Frequency::YEARLY          => ($value >= 1 && $value <= 365),
+            default                    => false,
         };
     }
 
@@ -53,6 +54,7 @@ class FrequencyDayOf implements Rule
             Frequency::MONTHLY         => 'Day of the month must be between 1 and 31.',
             Frequency::QUARTERLY       => 'Day of the quarter must be between 1 and 92',
             Frequency::YEARLY          => 'Day of the year must be between 1 and 365',
+            default                    => 'Invalid frequency ' . $this->frequency_id,
         };
     }
 }

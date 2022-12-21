@@ -3,6 +3,7 @@
 namespace App\Enums;
 
 use Carbon\Carbon;
+use InvalidArgumentException;
 
 /**
  * TODO: PHP 8.1 will have enums.
@@ -128,7 +129,7 @@ class Frequency
     /**
      * Get the next date after a given date based on Frequency.
      *
-     * @param Carbon $date optional
+     * @param Carbon $after optional
      * @return Carbon|null
      */
     public function getNextDate(Carbon $after = null)
@@ -145,6 +146,7 @@ class Frequency
                 self::MONTHLY         => $after->addMonthsNoOverflow($i),
                 self::QUARTERLY       => $after->addQuartersNoOverflow($i),
                 self::YEARLY          => $after->addYearsNoOverflow($i),
+                default               => throw new InvalidArgumentException('Invalid interval ' . $i),
             };
         }
 
@@ -155,6 +157,7 @@ class Frequency
             self::MONTHLY         => $after->startOfMonth()->addDays($this->dayOf - 1)->addMonthsNoOverflow($i),
             self::QUARTERLY       => $after->startOfQuarter()->addDays($this->dayOf - 1)->addQuartersNoOverflow($i),
             self::YEARLY          => $after->startOfYear()->addDays($this->dayOf - 1)->addYearsNoOverflow($i),
+            default               => throw new InvalidArgumentException('Invalid interval ' . $i),
         };
     }
 }

@@ -6,8 +6,11 @@ use App\Models\Concerns\HasChoreStreaks;
 use App\Models\Concerns\HasUnfinishedChoreScopes;
 use App\Scopes\OrderByNameScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -77,20 +80,10 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -98,25 +91,15 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'profile_photo_url',
     ];
 
-    protected static function booted()
+    protected static function booted() : void
     {
         static::addGlobalScope(new OrderByNameScope);
         static::created(function ($user) {
@@ -124,28 +107,31 @@ class User extends Authenticatable
         });
     }
 
-    public function chores()
+    public function chores() : HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
-    public function choreInstances()
+    public function choreInstances() : HasMany
     {
         return $this->hasMany(ChoreInstance::class);
     }
 
-    public function calendarTokens()
+    public function calendarTokens() : HasMany
     {
         return $this->hasMany(CalendarToken::class);
     }
 
-    public function settings()
+    public function settings() : HasOne
     {
         return $this->hasOne(UserSetting::class);
     }
 
-    public static function withSetting(string $setting, bool $value, string $operator = '=')
-    {
+    public static function withSetting(
+        string $setting,
+        bool $value,
+        string $operator = '='
+    ) : Collection {
         return self::with('settings')
             ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
                 $query->where($setting, $operator, $value);
