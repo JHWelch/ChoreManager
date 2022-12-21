@@ -49,22 +49,12 @@ class Team extends JetstreamTeam
     use HasFactory;
     use HasUnfinishedChoreScopes;
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'personal_team' => 'boolean',
     ];
 
     protected $guarded = [];
 
-    /**
-     * The event map for the model.
-     *
-     * @var array
-     */
     protected $dispatchesEvents = [
         'created' => TeamCreated::class,
         'updated' => TeamUpdated::class,

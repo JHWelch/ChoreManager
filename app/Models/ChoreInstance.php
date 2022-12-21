@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -50,19 +53,7 @@ class ChoreInstance extends Model
         'completed_date' => 'date:Y-m-d',
     ];
 
-    public function chore()
-    {
-        return $this->belongsTo(Chore::class);
-    }
-
-    /**
-     * Create next chore instance if required and mark this one complete.
-     *
-     * @param int $for User to complete the Chore for
-     * @param \Carbon\Carbon $on date to set completed
-     * @return void
-     */
-    public function complete($for = null, $on = null)
+    public function complete(int $for = null, Carbon $on = null) : void
     {
         $this->completed_date  = $on  ?? today();
         $this->completed_by_id = $for ?? Auth::id();
@@ -71,67 +62,43 @@ class ChoreInstance extends Model
         $this->chore->createNewInstance($this->completed_date);
     }
 
-    public function getIsCompletedAttribute()
+    public function chore() : BelongsTo
     {
-        return ! is_null($this->completed_date);
+        return $this->belongsTo(Chore::class);
     }
 
-    /**
-     * Scope a query to only include completed ChoreInstances.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeCompleted($query)
-    {
-        return $query->where('completed_date', '!=', null);
-    }
-
-    /**
-     * Scope a query to only include not completed ChoreInstances.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeNotCompleted($query)
-    {
-        return $query->where('completed_date', null);
-    }
-
-    /**
-     * Scope a query to only include Choreinstance due today.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeDueToday($query)
-    {
-        return $query->where('due_date', today());
-    }
-
-    /**
-     * Scope a query to only include Choreinstance due today or in the past.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeDueTodayOrPast($query)
-    {
-        return $query->where('due_date', '<=', today());
-    }
-
-    public function user()
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relationship to user who completed the chore.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function completedBy()
+    public function completedBy() : BelongsTo
     {
         return $this->belongsTo(User::class, 'completed_by_id');
+    }
+
+    public function getIsCompletedAttribute() : bool
+    {
+        return ! is_null($this->completed_date);
+    }
+
+    public function scopeCompleted(Builder $query) : Builder
+    {
+        return $query->where('completed_date', '!=', null);
+    }
+
+    public function scopeNotCompleted(Builder $query) : Builder
+    {
+        return $query->where('completed_date', null);
+    }
+
+    public function scopeDueToday(Builder $query) : Builder
+    {
+        return $query->where('due_date', today());
+    }
+
+    public function scopeDueTodayOrPast(Builder $query) : Builder
+    {
+        return $query->where('due_date', '<=', today());
     }
 }
