@@ -30,7 +30,7 @@ class StreakCountPolicy
      */
     public function view(User $user, StreakCount $streakCount)
     {
-        return $user->is($streakCount->user_id);
+        return $user->id === $streakCount->user_id;
     }
 
     /**

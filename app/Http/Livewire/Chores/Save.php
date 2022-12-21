@@ -55,7 +55,7 @@ class Save extends Component
         if ($this->chore->id === null) {
             $this->chore->user_id = Auth::id();
         }
-        $this->chore_instance = $chore->nextChoreInstance ?? ChoreInstance::make();
+        $this->chore_instance = $chore->nextChoreInstance ?? new ChoreInstance();
         $this->user_options   = array_values(
             Auth::user()
                 ->currentTeam
@@ -64,7 +64,9 @@ class Save extends Component
                 ->toOptionsArray()
         );
 
-        $this->team = Auth::user()->currentTeam()->select('name')->first()->name;
+        /** @var \App\Models\Team $team */
+        $team       = Auth::user()->currentTeam()->select('name')->first();
+        $this->team = $team->name;
 
         $this->show_on = $this->chore->frequency_day_of !== null;
     }

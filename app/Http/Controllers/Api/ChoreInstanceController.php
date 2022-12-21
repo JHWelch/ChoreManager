@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class ChoreInstanceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index() : Collection
     {
         return Auth::user()
             ->chores()

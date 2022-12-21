@@ -27,7 +27,7 @@ class Index extends Component
     public function mount()
     {
         $this->teams          = Auth::user()->allTeams()->toOptionsArray();
-        $this->calendar_token = CalendarToken::make();
+        $this->calendar_token = new CalendarToken();
         $this->loadCalendarTokens();
     }
 
@@ -51,7 +51,7 @@ class Index extends Component
         $this->emit('calendar-token.created');
         $this->loadCalendarTokens();
 
-        $this->calendar_token = CalendarToken::make();
+        $this->calendar_token = new CalendarToken();
     }
 
     public function deleteToken(CalendarToken $token)

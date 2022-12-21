@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin \App\Models\StreakCount */
 class StreakCountResource extends JsonResource
 {
     /**

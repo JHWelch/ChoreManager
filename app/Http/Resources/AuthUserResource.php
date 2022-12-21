@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @mixin \App\Models\User */
 class AuthUserResource extends JsonResource
 {
     public static $wrap = 'user';
