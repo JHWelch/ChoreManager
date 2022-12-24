@@ -69,6 +69,7 @@ class Chore extends Model
 
     protected $guarded;
 
+    /** @var array<string, mixed> */
     protected $attributes = [
         'frequency_id'       => 0,
         'frequency_interval' => 1,

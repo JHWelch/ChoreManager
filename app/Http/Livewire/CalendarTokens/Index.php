@@ -13,30 +13,31 @@ class Index extends Component
     public CalendarToken $calendar_token;
     public Collection $calendar_tokens;
 
-    public $calendar_type = 'user';
+    public string $calendar_type = 'user';
 
-    public $teams;
-    public $calendar_types = \App\Models\CalendarToken::CALENDAR_TYPES;
+    public array $teams;
+    public array $calendar_types = \App\Models\CalendarToken::CALENDAR_TYPES;
 
+    /** @var array<string, string> */
     protected $rules = [
         'calendar_type'          => 'in:user,team',
         'calendar_token.team_id' => 'required_if:calendar_type,team',
         'calendar_token.name'    => 'nullable',
     ];
 
-    public function mount()
+    public function mount() : void
     {
         $this->teams          = Auth::user()->allTeams()->toOptionsArray();
         $this->calendar_token = new CalendarToken();
         $this->loadCalendarTokens();
     }
 
-    public function loadCalendarTokens()
+    public function loadCalendarTokens() : void
     {
         $this->calendar_tokens = Auth::user()->calendarTokens;
     }
 
-    public function addCalendarLink()
+    public function addCalendarLink() : void
     {
         $this->validate();
 
@@ -54,7 +55,7 @@ class Index extends Component
         $this->calendar_token = new CalendarToken();
     }
 
-    public function deleteToken(CalendarToken $token)
+    public function deleteToken(CalendarToken $token) : void
     {
         $token->delete();
         $this->loadCalendarTokens();

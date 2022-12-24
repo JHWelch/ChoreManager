@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\StreakCount.
@@ -37,17 +39,17 @@ class StreakCount extends Model
 
     protected $guarded;
 
-    public function user()
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function team()
+    public function team() : BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function scopeCurrent($query)
+    public function scopeCurrent(Builder $query) : Builder
     {
         return $query->whereNull('ended_at');
     }

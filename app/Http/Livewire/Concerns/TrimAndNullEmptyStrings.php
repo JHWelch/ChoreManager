@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Concerns;
 
 trait TrimAndNullEmptyStrings
 {
-    public function updatedTrimAndNullEmptyStrings($name, $value)
+    public function updatedTrimAndNullEmptyStrings(string $name, mixed $value) : void
     {
         if (is_string($value)) {
             $value = trim($value);

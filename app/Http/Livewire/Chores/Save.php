@@ -22,12 +22,10 @@ class Save extends Component
     public Chore $chore;
     public ChoreInstance $chore_instance;
 
-    public $due_date;
-
     public $user_options;
     public string $team;
 
-    public $show_on = false;
+    public bool $show_on = false;
 
     protected function rules()
     {

@@ -8,11 +8,11 @@ trait SnoozesGroups
 {
     use SnoozesChores;
 
-    public $showSnoozeConfirmation = false;
-    public $snoozeGroup;
+    public bool $showSnoozeConfirmation = false;
+    public string $snoozeGroup;
     public $snoozeUntil;
 
-    public function snoozeGroupUntilTomorrow($group)
+    public function snoozeGroupUntilTomorrow(string $group) : void
     {
         switch ($group) {
             case 'today':
@@ -40,7 +40,7 @@ trait SnoozesGroups
         $this->emit('chore_instance.updated');
     }
 
-    public function snoozeGroupUntilWeekend($group)
+    public function snoozeGroupUntilWeekend(string $group) : void
     {
         switch ($group) {
             case 'today':
@@ -69,14 +69,14 @@ trait SnoozesGroups
         $this->emit('chore_instance.updated');
     }
 
-    public function showSnoozeConfirmation($group, $until)
+    public function showSnoozeConfirmation(string $group, string $until) : void
     {
         $this->snoozeGroup            = $group;
         $this->snoozeUntil            = $until;
         $this->showSnoozeConfirmation = true;
     }
 
-    public function snoozeGroup()
+    public function snoozeGroup() : void
     {
         if ($this->snoozeUntil === 'tomorrow') {
             $this->snoozeGroupUntilTomorrow($this->snoozeGroup);

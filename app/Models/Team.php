@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Concerns\HasChoreStreaks;
 use App\Models\Concerns\HasUnfinishedChoreScopes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
@@ -49,24 +51,26 @@ class Team extends JetstreamTeam
     use HasFactory;
     use HasUnfinishedChoreScopes;
 
+    /** @var array<string, string> */
     protected $casts = [
         'personal_team' => 'boolean',
     ];
 
     protected $guarded = [];
 
+    /** @var array<string, string> */
     protected $dispatchesEvents = [
         'created' => TeamCreated::class,
         'updated' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
 
-    public function chores()
+    public function chores() : HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
-    public function choreInstances()
+    public function choreInstances() : HasManyThrough
     {
         return $this->hasManyThrough(ChoreInstance::class, Chore::class);
     }

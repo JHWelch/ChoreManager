@@ -91,10 +91,12 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
+    /** @var array<string, string> */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
+    /** @var string[] */
     protected $appends = [
         'profile_photo_url',
     ];

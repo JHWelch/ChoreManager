@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Rule;
 
 class FrequencyDayOf implements Rule
 {
-    protected $frequency_id;
+    protected int $frequency_id;
 
     /**
      * Create a new rule instance.

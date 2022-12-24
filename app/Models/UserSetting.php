@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\UserSetting
+ * App\Models\UserSetting.
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -29,11 +29,12 @@ class UserSetting extends Model
 
     protected $guarded = [];
 
-    // Default Setting values
+    /** @var array<string, mixed> */
     public $attributes = [
         'has_daily_digest' => false,
     ];
 
+    /** @var array<string, string> */
     public $casts = [
         'has_daily_digest' => 'boolean',
     ];

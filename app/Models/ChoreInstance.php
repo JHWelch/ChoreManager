@@ -46,8 +46,9 @@ class ChoreInstance extends Model
 {
     use HasFactory;
 
-    protected $guarded;
+    protected $guarded = [];
 
+    /** @var array<string, string> */
     protected $casts = [
         'due_date'       => 'date:Y-m-d',
         'completed_date' => 'date:Y-m-d',
