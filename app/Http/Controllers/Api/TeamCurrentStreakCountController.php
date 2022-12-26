@@ -8,7 +8,7 @@ use App\Models\Team;
 
 class TeamCurrentStreakCountController extends Controller
 {
-    public function index(Team $team)
+    public function index(Team $team): StreakCountResource
     {
         return StreakCountResource::make($team->currentStreak);
     }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\URL;
 
 /**
  * A Livewire component that can go back to the previous page.
- * setGoBackState() function shoud be called in mount() of component.
+ * setGoBackState() function should be called in mount() of component.
  */
 trait GoesBack
 {

@@ -10,7 +10,7 @@ trait SnoozesGroups
 
     public bool $showSnoozeConfirmation = false;
     public string $snoozeGroup;
-    public $snoozeUntil;
+    public string $snoozeUntil;
 
     public function snoozeGroupUntilTomorrow(string $group) : void
     {

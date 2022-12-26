@@ -15,7 +15,9 @@ class Index extends Component
 
     public string $calendar_type = 'user';
 
+    /** @var array<array<string, mixed>> */
     public array $teams;
+    /** @var array<array<string, string>> */
     public array $calendar_types = \App\Models\CalendarToken::CALENDAR_TYPES;
 
     /** @var array<string, string> */

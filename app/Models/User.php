@@ -129,6 +129,14 @@ class User extends Authenticatable
         return $this->hasOne(UserSetting::class);
     }
 
+    /**
+     * Get all users with a specific setting.
+     *
+     * @param string $setting
+     * @param bool $value
+     * @param string $operator
+     * @return Collection<User>
+     */
     public static function withSetting(
         string $setting,
         bool $value,

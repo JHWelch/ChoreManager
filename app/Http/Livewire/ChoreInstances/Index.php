@@ -4,6 +4,7 @@ namespace App\Http\Livewire\ChoreInstances;
 
 use App\Http\Livewire\ChoreInstances\Concerns\SnoozesGroups;
 use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class Index extends Component
@@ -11,30 +12,32 @@ class Index extends Component
     use FiltersByTeamOrUser;
     use SnoozesGroups;
 
-    public $choreInstanceGroups;
+    /** @var Collection<string, array<string, mixed>> */
+    public Collection $choreInstanceGroups;
 
-    public $showFutureChores;
+    public bool $showFutureChores = false;
 
+    /** @var array<string, string> */
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
         'chore_instance.updated'   => 'choreInstanceUpdated',
         'filterUpdated'            => 'updateChoreInstanceList',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->showFutureChores = session('show_future_chores', false);
         $this->setupFiltersByTeamOrUser();
         $this->updateChoreInstanceList();
     }
 
-    public function choreInstanceUpdated()
+    public function choreInstanceUpdated(): void
     {
         $this->updateChoreInstanceList();
         $this->dispatchBrowserEvent('choreinstanceupdated');
     }
 
-    public function updateChoreInstanceList()
+    public function updateChoreInstanceList(): void
     {
         $onlyWithFilter = $this->showFutureChores
             ? 'onlyWithNextInstance'
@@ -58,7 +61,7 @@ class Index extends Component
             });
     }
 
-    public function toggleShowFutureChores()
+    public function toggleShowFutureChores(): void
     {
         $this->showFutureChores = ! $this->showFutureChores;
         $this->updateChoreInstanceList();

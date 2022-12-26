@@ -17,26 +17,26 @@ class IndexLine extends Component
     public Chore $chore;
     public ChoreInstance $chore_instance;
 
-    public function mount(Chore $chore)
+    public function mount(Chore $chore): void
     {
         $this->chore          = $chore;
         $this->chore_instance = $chore->nextChoreInstance;
     }
 
-    public function complete($for = null)
+    public function complete(?int $for = null): void
     {
         $this->chore_instance->complete($for);
         $this->chore_instance->refresh();
         $this->emit('chore_instance.completed', $this->chore_instance->id);
     }
 
-    public function snoozeUntilTomorrow()
+    public function snoozeUntilTomorrow(): void
     {
         $this->snoozeUntilTomorrowTrait($this->chore_instance);
         $this->emit('chore_instance.updated');
     }
 
-    public function snoozeUntilWeekend()
+    public function snoozeUntilWeekend(): void
     {
         $this->snoozeUntilWeekendTrait($this->chore_instance);
         $this->emit('chore_instance.updated');

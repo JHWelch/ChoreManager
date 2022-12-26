@@ -20,10 +20,10 @@ class Show extends Component
     public ?ChoreInstance $chore_instance;
     public Collection $past_chore_instances;
 
-    public bool $showDeleteConfirmation = false;
-
+    public bool $showDeleteConfirmation    = false;
     public bool $showCompleteForUserDialog = false;
-    public $user_id;
+
+    public ?int $user_id = null;
     public string $completed_date;
 
     public function mount() : void
@@ -34,7 +34,7 @@ class Show extends Component
         $this->loadContent();
     }
 
-    public function complete($for = null, $on = null) : void
+    public function complete(?int $for = null, ?Carbon $on = null) : void
     {
         $this->chore_instance->complete($for, $on);
         $this->back();
@@ -57,6 +57,7 @@ class Show extends Component
         $this->back();
     }
 
+    /** @return array<string, mixed> */
     public function getUserOptionsProperty() : array
     {
         $user = Auth::user();

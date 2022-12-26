@@ -10,8 +10,10 @@ use Spatie\IcalendarGenerator\Components\Event;
 
 class ICalendarController extends Controller
 {
-    public function show(Request $request, $token)
-    {
+    public function show(
+        Request $request,
+        string $token
+    ): \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory {
         $calendar_token = CalendarToken::getToken($token);
 
         $cal = Calendar::create($calendar_token->name);

@@ -63,7 +63,7 @@ class InviteTeamMember implements InvitesTeamMembers
      * Get the validation rules for inviting a team member.
      *
      * @param  mixed  $team
-     * @return array
+     * @return array<string, mixed>
      */
     protected function rules($team)
     {

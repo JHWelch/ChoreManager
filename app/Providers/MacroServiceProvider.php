@@ -19,7 +19,7 @@ class MacroServiceProvider extends ServiceProvider
     {
         /**
          * Convert a collection to an array of options that can be used in an HTML select.
-         * @return array
+         * @return array<array<string, mixed>>
          */
         EloquentCollection::macro('toOptionsArray', function () {
             /** @var Collection $this */
