@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Concerns;
 
 use App\Models\Chore;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +25,7 @@ trait FiltersByTeamOrUser
 
     /**
      * Return a chore query for the current user or current Team based on filter state.
+     * @return Builder<Chore>|HasMany<Chore>
      */
     public function choreQueryByTeamOrUser(bool $filter_by_chore_owner = true) : Builder|HasMany
     {

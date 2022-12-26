@@ -2,12 +2,10 @@ includes:
     - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
-
     paths:
         - app
 
-    # The level 8 is the highest level
-    level: 5
+    level: 6
 
     ignoreErrors:
         # - '#Unsafe usage of new static#'
@@ -16,3 +14,5 @@ parameters:
         # - ./*/*/FileToBeExcluded.php
 
     # checkMissingIterableValueType: false
+
+    checkGenericClassInNonGenericObjectType: false
