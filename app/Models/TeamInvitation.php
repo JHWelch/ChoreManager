@@ -28,11 +28,7 @@ use Laravel\Jetstream\TeamInvitation as JetstreamTeamInvitation;
  */
 class TeamInvitation extends JetstreamTeamInvitation
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    /** @var array<string> */
     protected $fillable = [
         'email',
         'role',

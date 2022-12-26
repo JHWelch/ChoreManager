@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             ->create([
                 'name'     => 'John Smith',
                 'email'    => 'jsmith@example.com',
+                'password' => bcrypt('password'),
             ])
                 ->switchTeam(Team::first());
 

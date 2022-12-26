@@ -20,13 +20,13 @@ class Show extends Component
     public ?ChoreInstance $chore_instance;
     public Collection $past_chore_instances;
 
-    public $showDeleteConfirmation    = false;
+    public bool $showDeleteConfirmation    = false;
+    public bool $showCompleteForUserDialog = false;
 
-    public $showCompleteForUserDialog = false;
-    public $user_id;
-    public $completed_date;
+    public ?int $user_id = null;
+    public string $completed_date;
 
-    public function mount()
+    public function mount() : void
     {
         $this->authorize('view', $this->chore);
         $this->setGoBackState();
@@ -34,30 +34,31 @@ class Show extends Component
         $this->loadContent();
     }
 
-    public function complete($for = null, $on = null)
+    public function complete(?int $for = null, ?Carbon $on = null) : void
     {
         $this->chore_instance->complete($for, $on);
         $this->back();
     }
 
-    public function customComplete()
+    public function customComplete() : void
     {
         $this->complete($this->user_id, Carbon::parse($this->completed_date));
     }
 
-    public function loadContent()
+    public function loadContent() : void
     {
         $this->chore_instance       = $this->chore->nextChoreInstance;
         $this->past_chore_instances = $this->chore->pastChoreInstances;
     }
 
-    public function delete()
+    public function delete() : void
     {
         $this->chore->delete();
         $this->back();
     }
 
-    public function getUserOptionsProperty()
+    /** @return array<string, mixed> */
+    public function getUserOptionsProperty() : array
     {
         $user = Auth::user();
 

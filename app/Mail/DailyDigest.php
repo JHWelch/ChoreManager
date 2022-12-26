@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -23,12 +24,7 @@ class DailyDigest extends Mailable
         $this->user = $user;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
+    public function build() : self
     {
         $chore_instance_groups = $this->user
             ->choreInstances()
@@ -50,7 +46,13 @@ class DailyDigest extends Mailable
         ]);
     }
 
-    protected function mapChoreInstance($instance)
+    /**
+     * Map a chore instance to an array.
+     *
+     * @param ChoreInstance $instance
+     * @return array<string, string>
+     */
+    protected function mapChoreInstance(ChoreInstance $instance) : array
     {
         return [
             'title' => $instance->chore->title,

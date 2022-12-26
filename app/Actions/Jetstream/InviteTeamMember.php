@@ -63,7 +63,7 @@ class InviteTeamMember implements InvitesTeamMembers
      * Get the validation rules for inviting a team member.
      *
      * @param  mixed  $team
-     * @return array
+     * @return array<string, mixed>
      */
     protected function rules($team)
     {
@@ -71,7 +71,7 @@ class InviteTeamMember implements InvitesTeamMembers
             'email' => ['required', 'email', Rule::unique('team_invitations')->where(function ($query) use ($team) {
                 $query->where('team_id', $team->id);
             })],
-            'role' => Jetstream::hasRoles()
+            'role'  => Jetstream::hasRoles()
                             ? ['required', 'string', new Role]
                             : null,
         ]);

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 class SendDailyDigest
 {
-    public function __invoke()
+    public function __invoke(): void
     {
         $users = User::withSetting('has_daily_digest', true);
 
@@ -17,7 +17,7 @@ class SendDailyDigest
         }
     }
 
-    protected function sendToUser(User $user)
+    protected function sendToUser(User $user): void
     {
         Mail::to($user)->send(new DailyDigest($user));
     }

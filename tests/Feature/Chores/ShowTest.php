@@ -172,8 +172,7 @@ class ShowTest extends TestCase
     {
         $this->testUser();
         $other_user = User::factory()->hasAttached($this->team)->create();
-
-        $chore = Chore::factory()
+        $chore      = Chore::factory()
             ->for($this->team)
             ->for($other_user)
             ->withFirstInstance()

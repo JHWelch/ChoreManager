@@ -5,29 +5,24 @@ namespace App\Policies;
 use App\Models\Chore;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class ChorePolicy
 {
     use HandlesAuthorization;
 
-    protected function userOwnsChore(User $user, Chore $chore)
+    protected function userOwnsChore(User $user, Chore $chore) : bool
     {
         return $chore->user()->is($user) ||
             $this->usersTeamOwnsChore($user, $chore);
     }
 
-    protected function usersTeamOwnsChore(User $user, Chore $chore)
+    protected function usersTeamOwnsChore(User $user, Chore $chore) : bool
     {
         return $user->allTeams()->map->id->contains($chore->team_id);
     }
 
-    /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(User $user)
+    public function viewAny(User $user) : Response|bool
     {
         return true;
     }
@@ -39,66 +34,32 @@ class ChorePolicy
      * @param  \App\Models\Chore  $chore
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Chore $chore)
+    public function view(User $user, Chore $chore) : Response|bool
     {
         return $this->userOwnsChore($user, $chore);
     }
 
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(User $user)
+    public function create(User $user) : Response|bool
     {
         return true;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Chore  $chore
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function update(User $user, Chore $chore)
+    public function update(User $user, Chore $chore) : Response|bool
     {
         return $this->userOwnsChore($user, $chore);
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Chore  $chore
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user, Chore $chore)
+    public function delete(User $user, Chore $chore) : Response|bool
     {
         return $this->userOwnsChore($user, $chore);
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Chore  $chore
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Chore $chore)
+    public function restore(User $user, Chore $chore) : Response|bool
     {
         return $this->userOwnsChore($user, $chore);
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Chore  $chore
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Chore $chore)
+    public function forceDelete(User $user, Chore $chore) : Response|bool
     {
         return $this->userOwnsChore($user, $chore);
     }

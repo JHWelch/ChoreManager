@@ -14,7 +14,7 @@ class CreateTeam implements CreatesTeams
      * Validate and create a new team for the given user.
      *
      * @param  mixed  $user
-     * @param  array  $input
+     * @param  array<string, mixed>  $input
      * @return mixed
      */
     public function create($user, array $input)

@@ -9,32 +9,32 @@ use Illuminate\Support\Carbon;
 
 class CountStreaks
 {
-    public function __invoke()
+    public function __invoke() : void
     {
         $this->incrementRunningStreaks();
         $this->createNewStreaks();
         $this->endStreaks();
     }
 
-    protected function incrementRunningStreaks()
+    protected function incrementRunningStreaks() : void
     {
         $this->incrementRunningStreakFor('user_id', User::class);
         $this->incrementRunningStreakFor('team_id', Team::class);
     }
 
-    protected function createNewStreaks()
+    protected function createNewStreaks() : void
     {
         $this->createNewStreakFor('user_id', User::class);
         $this->createNewStreakFor('team_id', Team::class);
     }
 
-    protected function endStreaks()
+    protected function endStreaks() : void
     {
         $this->endStreaksFor('user_id', User::class);
         $this->endStreaksFor('team_id', Team::class);
     }
 
-    protected function incrementRunningStreakFor($class_id, $class)
+    protected function incrementRunningStreakFor(string $class_id, string $class) : void
     {
         StreakCount::current()
             ->whereIn(
@@ -44,7 +44,7 @@ class CountStreaks
             ->increment('count');
     }
 
-    protected function createNewStreakFor($class_id, $class)
+    protected function createNewStreakFor(string $class_id, string $class) : void
     {
         StreakCount::insert(
             $class::withoutUnfinishedChores(today()->subDay())
@@ -59,7 +59,7 @@ class CountStreaks
         );
     }
 
-    protected function endStreaksFor($class_id, $class)
+    protected function endStreaksFor(string $class_id, string $class) : void
     {
         StreakCount::whereIn(
             $class_id,

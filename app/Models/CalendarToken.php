@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * App\Models\CalendarToken.
@@ -58,12 +61,12 @@ class CalendarToken extends Model
 
     protected $guarded = [];
 
-    public static function getToken($token)
+    public static function getToken(string $token) : ?self
     {
         return self::firstWhere('token', $token);
     }
 
-    public function chores()
+    public function chores() : HasManyThrough
     {
         return $this->is_user_calendar
             ? $this->hasManyThrough(
@@ -84,7 +87,7 @@ class CalendarToken extends Model
             );
     }
 
-    public function choreInstances()
+    public function choreInstances() : Builder
     {
         return $this->is_user_calendar
             ? $this->hasManyThrough(
@@ -105,27 +108,27 @@ class CalendarToken extends Model
                 ->orderBy('chore_instances.due_date');
     }
 
-    public function user()
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function team()
+    public function team() : BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function getIsTeamCalendarAttribute()
+    public function getIsTeamCalendarAttribute() : bool
     {
         return $this->team_id !== null;
     }
 
-    public function getIsUserCalendarAttribute()
+    public function getIsUserCalendarAttribute() : bool
     {
         return ! $this->is_team_calendar;
     }
 
-    public function getDisplayNameAttribute()
+    public function getDisplayNameAttribute() : string
     {
         return $this->name ?? (
             $this->is_team_calendar
@@ -134,14 +137,14 @@ class CalendarToken extends Model
         );
     }
 
-    public function getFullTypeNameAttribute()
+    public function getFullTypeNameAttribute() : string
     {
         return $this->is_team_calendar
             ? "Team: {$this->team->name}"
             : "User: {$this->user->name}";
     }
 
-    public function getURLAttribute()
+    public function getURLAttribute() : string
     {
         return route('icalendar.show', ['token' => $this->token]);
     }

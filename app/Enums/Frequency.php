@@ -55,9 +55,9 @@ class Frequency
         ['value' => Carbon::SUNDAY,    'label' => 'Sundays'],
     ];
 
-    public $id;
-    public $interval;
-    public $dayOf;
+    public int $id;
+    public int $interval;
+    public ?int $dayOf;
 
     /**
      * Create a new Frequency.
@@ -73,27 +73,37 @@ class Frequency
         $this->dayOf    = $dayOf;
     }
 
-    public function adjective()
+    public function adjective(): string
     {
         return self::ADJECTIVES[$this->id];
     }
 
-    public function noun()
+    public function noun(): string
     {
         return self::NOUNS[$this->id];
     }
 
-    public static function nounsAsSelectOptions()
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public static function nounsAsSelectOptions(): array
     {
         return self::frequenciesAsSelectOptions(self::NOUNS);
     }
 
-    public static function adjectivesAsSelectOptions()
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public static function adjectivesAsSelectOptions(): array
     {
         return self::frequenciesAsSelectOptions(self::ADJECTIVES);
     }
 
-    public static function frequenciesAsSelectOptions($words)
+    /**
+     * @param array<int, string> $words
+     * @return array<int, array<string, mixed>>
+     */
+    public static function frequenciesAsSelectOptions(array $words): array
     {
         $frequencies = [];
 
@@ -109,7 +119,7 @@ class Frequency
         return $this->toPrefixedString();
     }
 
-    public function toPrefixedString($prefix = '')
+    public function toPrefixedString(string $prefix = ''): string
     {
         if ($this->id === self::DOES_NOT_REPEAT) {
             return self::ADJECTIVES[$this->id];
@@ -130,6 +140,7 @@ class Frequency
      * Get the next date after a given date based on Frequency.
      *
      * @param Carbon $after optional
+     * @throws InvalidArgumentException if the frequency is invalid
      * @return Carbon|null
      */
     public function getNextDate(Carbon $after = null)

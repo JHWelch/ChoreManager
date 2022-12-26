@@ -47,7 +47,7 @@ class IndexText extends TestCase
                     'owner'    => $chores[1]->user->name,
                 ],
             ],
-            'today' => [
+            'today'    => [
                 [
                     'due_date' => $chores[2]->due_date->toDateString(),
                     'title'    => $chores[2]->chore->title,
