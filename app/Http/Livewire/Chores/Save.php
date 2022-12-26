@@ -146,7 +146,7 @@ class Save extends Component
 
     public function updatedChoreFrequencyId(int $frequency_id): void
     {
-        if ($frequency_id === Frequency::DOES_NOT_REPEAT
+        if ($frequency_id    === Frequency::DOES_NOT_REPEAT
             || $frequency_id === Frequency::DAILY
         ) {
             $this->hideDayOfSection();

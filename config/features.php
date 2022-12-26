@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'default' => 'database',
+    'default'      => 'database',
 
     /*
     |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ return [
     |
     */
 
-    'feature' => [
+    'feature'      => [
         // 'login' => true,
     ],
 
@@ -38,15 +38,15 @@ return [
         'database' => [
             'table' => 'features',
         ],
-        'config' => [
+        'config'   => [
             'key' => 'features.feature',
         ],
-        'redis' => [
+        'redis'    => [
             'prefix'     => 'features',
             'connection' => 'default',
         ],
-        'chain' => [
-            'drivers' => [
+        'chain'    => [
+            'drivers'           => [
                 'config',
                 'redis',
                 'database',

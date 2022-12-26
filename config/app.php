@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name'            => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env'             => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug'           => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url'             => env('APP_URL', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url'       => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => env('DEFAULT_TIMEZONE', 'UTC'),
+    'timezone'        => env('DEFAULT_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale'          => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale'    => 'en_US',
 
     /*
     |--------------------------------------------------------------------------
@@ -119,9 +119,9 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key'             => env('APP_KEY'),
 
-    'cipher' => 'AES-256-CBC',
+    'cipher'          => 'AES-256-CBC',
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +134,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers'       => [
 
         /*
          * Laravel Framework Service Providers...
@@ -192,7 +192,7 @@ return [
     |
     */
 
-    'aliases' => [
+    'aliases'         => [
 
         'App'          => Illuminate\Support\Facades\App::class,
         'Arr'          => Illuminate\Support\Arr::class,
@@ -220,16 +220,16 @@ return [
         'Queue'        => Illuminate\Support\Facades\Queue::class,
         'Redirect'     => Illuminate\Support\Facades\Redirect::class,
         // 'Redis' => Illuminate\Support\Facades\Redis::class,
-        'Request'   => Illuminate\Support\Facades\Request::class,
-        'Response'  => Illuminate\Support\Facades\Response::class,
-        'Route'     => Illuminate\Support\Facades\Route::class,
-        'Schema'    => Illuminate\Support\Facades\Schema::class,
-        'Session'   => Illuminate\Support\Facades\Session::class,
-        'Storage'   => Illuminate\Support\Facades\Storage::class,
-        'Str'       => Illuminate\Support\Str::class,
-        'URL'       => Illuminate\Support\Facades\URL::class,
-        'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View'      => Illuminate\Support\Facades\View::class,
+        'Request'      => Illuminate\Support\Facades\Request::class,
+        'Response'     => Illuminate\Support\Facades\Response::class,
+        'Route'        => Illuminate\Support\Facades\Route::class,
+        'Schema'       => Illuminate\Support\Facades\Schema::class,
+        'Session'      => Illuminate\Support\Facades\Session::class,
+        'Storage'      => Illuminate\Support\Facades\Storage::class,
+        'Str'          => Illuminate\Support\Str::class,
+        'URL'          => Illuminate\Support\Facades\URL::class,
+        'Validator'    => Illuminate\Support\Facades\Validator::class,
+        'View'         => Illuminate\Support\Facades\View::class,
 
     ],
 
