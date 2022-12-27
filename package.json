@@ -1,13 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "dev": "yarn run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
+        "dev": "vite",
         "prod": "yarn run production",
-        "production": "mix --production"
+        "build": "vite build"
     },
     "devDependencies": {
         "@highlandsolutions/eslint-config-highland": "^1.0.1",
