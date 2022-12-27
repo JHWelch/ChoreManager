@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Blade;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Model::preventLazyLoading(! app()->isProduction());
+
         /**
          * Blade directive that will display any Markdown text as formatted HTML.
          * @param string $markdown
