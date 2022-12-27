@@ -47,6 +47,11 @@ class Show extends Component
 
     public function loadContent() : void
     {
+        $this->chore->load(
+            'nextChoreInstance',
+            'pastChoreInstances',
+            'pastChoreInstances.completedBy'
+        );
         $this->chore_instance       = $this->chore->nextChoreInstance;
         $this->past_chore_instances = $this->chore->pastChoreInstances;
     }

@@ -19,6 +19,7 @@ class IndexLine extends Component
 
     public function mount(Chore $chore): void
     {
+        $chore->load('nextChoreInstance');
         $this->chore          = $chore;
         $this->chore_instance = $chore->nextChoreInstance;
     }
