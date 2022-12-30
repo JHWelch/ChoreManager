@@ -4,27 +4,19 @@ namespace App\Http\Livewire\Concerns;
 
 use Illuminate\Support\Facades\URL;
 
-/**
- * A Livewire component that can go back to the previous page.
- * setGoBackState() function should be called in mount() of component.
- */
 trait GoesBack
 {
+    /**
+     * Default back url. Can be overridden in the component.
+     */
+    public string $defaultBackUrl = '/';
     public string $previousUrl;
     public string $currentUrl;
-    public string $defaultBackUrl;
 
-    /**
-     * Should be called in the mount() of the component.
-     *
-     * @param string $defaultBackUrl If the page is accessed directly from the url, where to go.
-     * @return void
-     */
-    private function setGoBackState($defaultBackUrl = '/'): void
+    public function mountGoesBack(): void
     {
-        $this->previousUrl    = URL::previous();
-        $this->currentUrl     = URL::current();
-        $this->defaultBackUrl = $defaultBackUrl;
+        $this->previousUrl = URL::previous();
+        $this->currentUrl  = URL::current();
     }
 
     /**
