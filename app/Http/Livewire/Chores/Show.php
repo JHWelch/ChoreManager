@@ -29,7 +29,6 @@ class Show extends Component
     public function mount() : void
     {
         $this->authorize('view', $this->chore);
-        $this->setGoBackState();
         $this->completed_date = today()->toDateString();
         $this->loadContent();
     }

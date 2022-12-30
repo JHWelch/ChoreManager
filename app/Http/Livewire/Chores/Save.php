@@ -47,7 +47,8 @@ class Save extends Component
 
     public function mount(Chore $chore): void
     {
-        $this->setGoBackState(route('chores.index'));
+        $this->defaultBackUrl = route('chores.index');
+
         $this->chore = $chore;
 
         $this->authorizePage();
