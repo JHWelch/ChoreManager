@@ -6,6 +6,8 @@ Chore manager is a simple chore management application for taking care of househ
 ## Table of Contents
 - [Key Features](#key-features)
 - [Set Up Local Environment](#set-up-local-environment)
+- [Testing](#testing)
+- [Linting/Static Analysis](#lintingstatic-analysis)
 - [Related Projects](#related-projects)
 - [Technologies](#technologies)
 
@@ -23,6 +25,34 @@ These instructions assume you are using [Laravel Valet](https://laravel.com/docs
 2. `cd` into the directory
 3. `sh .bin/init.sh`
 4. Optionally make changes to `.env` and `.env.testing`.
+
+## Testing
+
+This application is built with a comprehensive test suite using [PHPUnit](https://phpunit.de/).
+
+To Run tests
+```sh
+php artisan test
+```
+
+## Linting/Static Analysis
+
+This application is standardized and protected using [PHP CS Fixer](https://cs.symfony.com/) for linting/fixing and [PHPStan](https://phpstan.org/)/[Larastan](https://github.com/nunomaduro/larastan) for static code analysis.
+
+To run linter
+```sh
+vendor/bin/php-cs-fixer fix --dry-run --diff
+```
+
+To run linter & fix errors automatically
+```sh
+vendor/bin/php-cs-fixer fix
+```
+
+To run static analysis
+```sh
+vendor/bin/phpstan
+```
 
 ## Related Projects
 * [Chore Manager Mobile - Flutter application](https://github.com/JHWelch/chore_manager_mobile)
