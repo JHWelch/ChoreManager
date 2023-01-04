@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\CalendarToken.
@@ -60,6 +61,17 @@ class CalendarToken extends Model
     ];
 
     protected $guarded = [];
+
+    protected static function boot() : void
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (! $model->token) {
+                $model->token = Str::uuid();
+            }
+        });
+    }
 
     public static function getToken(string $token) : ?self
     {

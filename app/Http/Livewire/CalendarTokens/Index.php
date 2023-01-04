@@ -5,7 +5,6 @@ namespace App\Http\Livewire\CalendarTokens;
 use App\Models\CalendarToken;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Index extends Component
@@ -48,7 +47,6 @@ class Index extends Component
         }
 
         $this->calendar_token->user_id = Auth::id();
-        $this->calendar_token->token   = Str::uuid();
 
         $this->calendar_token->save();
         $this->emit('calendar-token.created');

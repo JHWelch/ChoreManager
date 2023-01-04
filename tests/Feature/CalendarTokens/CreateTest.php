@@ -28,6 +28,18 @@ class CreateTest extends TestCase
     }
 
     /** @test */
+    public function calendar_token_has_generated_uuid()
+    {
+        $this->testUser();
+
+        Livewire::test(Index::class)
+            ->set('calendar_type', 'user')
+            ->call('addCalendarLink');
+
+        $this->assertEquals(36, strlen(CalendarToken::first()->token));
+    }
+
+    /** @test */
     public function can_create_a_calendar_token_to_display_their_teams_chores()
     {
         $userAndTeam = $this->testUser();
