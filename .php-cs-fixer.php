@@ -108,6 +108,7 @@ $rules = [
 
 $finder = PhpCsFixer\Finder::create()
     ->notPath('bootstrap')
+    ->notPath('node_modules')
     ->notPath('storage')
     ->notPath('vendor')
     ->in(getcwd())
