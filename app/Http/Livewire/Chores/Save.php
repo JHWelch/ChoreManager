@@ -57,19 +57,24 @@ class Save extends Component
             $this->chore->user_id = Auth::id();
         }
         $this->chore_instance = $chore->nextChoreInstance ?? new ChoreInstance();
-        $this->user_options   = array_values(
-            Auth::user()
-                ->currentTeam
-                ->allUsers()
-                ->sortBy(fn ($user) => $user->name)
-                ->toOptionsArray()
-        );
+        $this->setupUserOptions();
 
         /** @var \App\Models\Team $team */
         $team       = Auth::user()->currentTeam()->select('name')->first();
         $this->team = $team->name;
 
         $this->show_on = $this->chore->frequency_day_of !== null;
+    }
+
+    public function save() : \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+    {
+        $this->validate();
+        $this->chore->team_id = Auth::user()->currentTeam->id;
+        $this->chore->save();
+
+        $this->saveChoreInstance();
+
+        return $this->back();
     }
 
     protected function authorizePage(): void
@@ -79,27 +84,48 @@ class Save extends Component
             : $this->authorize('create', Chore::class);
     }
 
-    public function save() : \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+    protected function setupUserOptions(): void
     {
-        $this->validate();
-        $this->chore->team_id = Auth::user()->currentTeam->id;
-        $this->chore->save();
+        $this->user_options = array_values(
+            Auth::user()
+                ->currentTeam
+                ->allUsers()
+                ->sortBy(fn ($user) => $user->name)
+                ->toOptionsArray()
+        );
+    }
 
-        if (! $this->chore_instance->exists && $this->chore_instance->due_date !== null) {
-            $this->chore_instance->chore_id = $this->chore->id;
-            $this->chore_instance->user_id  = $this->chore->next_assigned_id;
-            $this->chore_instance->save();
+    protected function saveChoreInstance(): void
+    {
+        if ($this->chore_instance->exists) {
+            $this->saveExistingChoreInstance();
         } else {
-            if ($this->chore_instance->isDirty()) {
-                if ($this->chore_instance->due_date !== null) {
-                    $this->chore_instance->save();
-                } else {
-                    $this->chore_instance->delete();
-                }
-            }
+            $this->saveNewChoreInstance();
+        }
+    }
+
+    protected function saveNewChoreInstance(): void
+    {
+        if ($this->chore_instance->due_date === null) {
+            return;
         }
 
-        return $this->back();
+        $this->chore_instance->chore_id = $this->chore->id;
+        $this->chore_instance->user_id  = $this->chore->next_assigned_id;
+        $this->chore_instance->save();
+    }
+
+    protected function saveExistingChoreInstance(): void
+    {
+        if (! $this->chore_instance->isDirty()) {
+            return;
+        }
+
+        if ($this->chore_instance->due_date !== null) {
+            $this->chore_instance->save();
+        } else {
+            $this->chore_instance->delete();
+        }
     }
 
     /** @return array<int, array<string, mixed>> */
@@ -118,8 +144,8 @@ class Save extends Component
 
     public function isShowOnButton(): bool
     {
-        return (! $this->show_on)                                       &&
-            $this->chore->frequency_id !== Frequency::DOES_NOT_REPEAT   &&
+        return (! $this->show_on)                                     &&
+            $this->chore->frequency_id !== Frequency::DOES_NOT_REPEAT &&
             $this->chore->frequency_id !== Frequency::DAILY;
     }
 
