@@ -18,7 +18,7 @@ class AdminTeamSeeder extends Seeder
         Team::factory()->create([
             'name'          => 'Admins',
             'personal_team' => false,
-            'user_id'       => User::first()->id,
+            'user_id'       => User::first()?->id ?? User::factory(),
         ]);
     }
 }
