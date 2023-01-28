@@ -65,6 +65,11 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
+    public static function adminTeam() : ?self
+    {
+        return self::firstWhere('name', 'Admins');
+    }
+
     public function chores() : HasMany
     {
         return $this->hasMany(Chore::class);

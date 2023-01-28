@@ -29,7 +29,8 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->is($model)
+        return $user->isAdmin()
+            || $user->is($model)
             || $user
                 ->allTeams()
                 ->intersect($model->allTeams())
@@ -44,7 +45,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -56,7 +57,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return false;
+        return $user->isAdmin();
     }
 
     /**
@@ -68,6 +69,6 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return false;
+        return $user->isAdmin();
     }
 }

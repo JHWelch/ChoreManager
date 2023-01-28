@@ -109,6 +109,26 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * Get all users with a specific setting.
+     *
+     * @param string $setting
+     * @param bool $value
+     * @param string $operator
+     * @return Collection<int, User>
+     */
+    public static function withSetting(
+        string $setting,
+        bool $value,
+        string $operator = '='
+    ) : Collection {
+        return self::with('settings')
+            ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
+                $query->where($setting, $operator, $value);
+            })
+            ->get();
+    }
+
     public function chores() : HasMany
     {
         return $this->hasMany(Chore::class);
@@ -129,23 +149,20 @@ class User extends Authenticatable
         return $this->hasOne(UserSetting::class);
     }
 
-    /**
-     * Get all users with a specific setting.
-     *
-     * @param string $setting
-     * @param bool $value
-     * @param string $operator
-     * @return Collection<int, User>
-     */
-    public static function withSetting(
-        string $setting,
-        bool $value,
-        string $operator = '='
-    ) : Collection {
-        return self::with('settings')
-            ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
-                $query->where($setting, $operator, $value);
-            })
-            ->get();
+    public function isAdmin(): bool
+    {
+        $admin_team = Team::adminTeam();
+
+        return $this->ownsAdminTeam($admin_team) || $this->onAdminTeam($admin_team);
+    }
+
+    private function ownsAdminTeam(?Team $admin_team) : bool
+    {
+        return $admin_team && $admin_team->user_id === $this->id;
+    }
+
+    private function onAdminTeam(?Team $admin_team) : bool
+    {
+        return $admin_team && $admin_team->users()->where('user_id', $this->id)->exists();
     }
 }
