@@ -135,7 +135,7 @@ class User extends Authenticatable
      * @param string $setting
      * @param bool $value
      * @param string $operator
-     * @return Collection<User>
+     * @return Collection<int, User>
      */
     public static function withSetting(
         string $setting,
