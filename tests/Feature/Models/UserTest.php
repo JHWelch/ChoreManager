@@ -11,6 +11,12 @@ class UserTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Team::$admin_team = null;
+    }
+
     private function adminTeam($user = null)
     {
         return Team::factory([
@@ -44,5 +50,18 @@ class UserTest extends TestCase
         $user = User::factory()->create();
 
         $this->assertFalse($user->isAdmin());
+    }
+
+    /** @test */
+    public function isAdmin_caches_value()
+    {
+        $user       = User::factory()->create();
+        $admin_team = $this->adminTeam()->hasAttached($user)->create();
+
+        $this->assertTrue($user->isAdmin());
+
+        $admin_team->users()->detach($user);
+
+        $this->assertTrue($user->isAdmin());
     }
 }

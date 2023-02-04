@@ -101,6 +101,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    protected ?bool $is_admin = null;
+
     protected static function booted() : void
     {
         static::addGlobalScope(new OrderByNameScope);
@@ -151,9 +153,13 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        $admin_team = Team::adminTeam();
+        if (! $this->is_admin) {
+            $admin_team     = Team::adminTeam();
+            $this->is_admin = $this->ownsAdminTeam($admin_team)
+                || $this->onAdminTeam($admin_team);
+        }
 
-        return $this->ownsAdminTeam($admin_team) || $this->onAdminTeam($admin_team);
+        return $this->is_admin;
     }
 
     private function ownsAdminTeam(?Team $admin_team) : bool
@@ -163,6 +169,9 @@ class User extends Authenticatable
 
     private function onAdminTeam(?Team $admin_team) : bool
     {
-        return $admin_team && $admin_team->users()->where('user_id', $this->id)->exists();
+        return $admin_team && $admin_team
+            ->users()
+            ->where('user_id', $this->id)
+            ->exists();
     }
 }

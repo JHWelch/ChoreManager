@@ -51,7 +51,7 @@ class Team extends JetstreamTeam
     use HasFactory;
     use HasUnfinishedChoreScopes;
 
-    protected static ?Team $admin_team = null;
+    public static ?Team $admin_team = null;
 
     /** @var array<string, string> */
     protected $casts = [
@@ -69,7 +69,7 @@ class Team extends JetstreamTeam
 
     public static function adminTeam() : ?self
     {
-        if (self::$admin_team === null) {
+        if (! self::$admin_team) {
             self::$admin_team = self::firstWhere('name', 'Admins');
         }
 
