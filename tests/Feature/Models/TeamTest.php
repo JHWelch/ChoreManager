@@ -11,6 +11,12 @@ class TeamTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Team::$admin_team = null;
+    }
+
     /** @test */
     public function adminTeam_returns_null_if_team_not_seeded()
     {
