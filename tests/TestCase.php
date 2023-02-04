@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Models\Team;
 use App\Models\User;
+use Database\Seeders\AdminTeamSeeder;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Carbon;
 
@@ -13,6 +14,12 @@ abstract class TestCase extends BaseTestCase
 
     protected User $user;
     protected Team $team;
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Team::$admin_team = null;
+    }
 
     /**
      * Create a new user and act as them for the tests.
@@ -31,6 +38,13 @@ abstract class TestCase extends BaseTestCase
             'user' => $user,
             'team' => $team,
         ];
+    }
+
+    protected function testAdminUser($attributes = [])
+    {
+        $this->testUser($attributes);
+        $this->seed(AdminTeamSeeder::class);
+        Team::adminTeam()->users()->attach($this->user);
     }
 
     /**

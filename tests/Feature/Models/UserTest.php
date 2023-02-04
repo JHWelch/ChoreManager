@@ -11,12 +11,6 @@ class UserTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        Team::$admin_team = null;
-    }
-
     private function adminTeam($user = null)
     {
         return Team::factory([
