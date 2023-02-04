@@ -31,23 +31,10 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
 
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
                     ->maxLength(255),
-
-                Forms\Components\Textarea::make('two_factor_secret')
-                    ->maxLength(65535),
-
-                Forms\Components\Textarea::make('two_factor_recovery_codes')
-                    ->maxLength(65535),
-
-                Forms\Components\TextInput::make('current_team_id'),
-                Forms\Components\Textarea::make('profile_photo_path')
-                    ->maxLength(65535),
-
             ]);
     }
 
@@ -65,8 +52,6 @@ class UserResource extends Resource
                         'heroicon-o-x'     => fn ($state): bool => $state !== null,
                         'heroicon-o-check' => fn ($state): bool => is_null($state),
                     ]),
-
-                Tables\Columns\TextColumn::make('current_team_id'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
