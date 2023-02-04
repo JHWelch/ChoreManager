@@ -20,6 +20,11 @@ class UserResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $createAndEdit = [
+            Pages\CreateUser::class,
+            Pages\EditUser::class,
+        ];
+
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
@@ -31,10 +36,20 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
 
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->hiddenOn($createAndEdit),
+
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
                     ->maxLength(255),
+
+                Forms\Components\TextInput::make('current_team_id')
+                    ->hiddenOn($createAndEdit),
+
+                Forms\Components\Textarea::make('profile_photo_path')
+                    ->hiddenOn($createAndEdit)
+                    ->maxLength(65535),
             ]);
     }
 
@@ -53,6 +68,8 @@ class UserResource extends Resource
                         'heroicon-o-check' => fn ($state): bool => is_null($state),
                     ]),
 
+                Tables\Columns\TextColumn::make('Teams')->counts('teams'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
 
@@ -63,6 +80,7 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -82,6 +100,7 @@ class UserResource extends Resource
         return [
             'index'  => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
+            'view'   => Pages\ViewUser::route('/{record}'),
             'edit'   => Pages\EditUser::route('/{record}/edit'),
         ];
     }
