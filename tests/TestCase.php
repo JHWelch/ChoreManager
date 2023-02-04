@@ -40,7 +40,7 @@ abstract class TestCase extends BaseTestCase
         ];
     }
 
-    protected function testAdminUser($attributes = [])
+    protected function adminTestUser($attributes = [])
     {
         $this->testUser($attributes);
         $this->seed(AdminTeamSeeder::class);

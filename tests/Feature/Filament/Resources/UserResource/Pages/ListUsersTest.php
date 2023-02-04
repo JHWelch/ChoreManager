@@ -16,7 +16,7 @@ class ListUsersTest extends TestCase
     /** @test */
     public function admin_can_see_index_page()
     {
-        $this->testAdminUser();
+        $this->adminTestUser();
 
         $response = $this->get(UserResource::getUrl('index'));
 
@@ -36,7 +36,7 @@ class ListUsersTest extends TestCase
     /** @test */
     public function can_see_user_fields()
     {
-        $this->testAdminUser();
+        $this->adminTestUser();
         $user = User::factory()->create();
 
         Livewire::test(ListUsers::class)
