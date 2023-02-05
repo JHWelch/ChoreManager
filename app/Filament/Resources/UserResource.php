@@ -14,7 +14,7 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -64,11 +64,13 @@ class UserResource extends Resource
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Email Verified')
                     ->options([
-                        'heroicon-o-x'     => fn ($state): bool => $state !== null,
+                        'heroicon-o-x'     => fn ($state): bool => ! is_null($state),
                         'heroicon-o-check' => fn ($state): bool => is_null($state),
                     ]),
 
-                Tables\Columns\TextColumn::make('Teams')->counts('teams'),
+                Tables\Columns\TextColumn::make('teams_count')
+                    ->counts('teams')
+                    ->label('Teams'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
