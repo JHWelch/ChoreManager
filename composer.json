@@ -42,6 +42,7 @@
         "php": "^8.0",
         "composer/composer": "^2.2",
         "doctrine/dbal": "^3.3",
+        "filament/filament": "^2.16",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
@@ -56,6 +57,7 @@
         "ylsideas/feature-flags": "master"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-ide-helper": "^2.12",
         "brianium/paratest": "^6.4",
         "fakerphp/faker": "^1.9.1",
@@ -79,7 +81,8 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan filament:upgrade"
         ]
     },
     "type": "project"

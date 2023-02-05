@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ChoreInstance;
 use App\Models\Team;
-use Illuminate\Support\Collection;
 
 class TeamsChoreGroupsController extends Controller
 {
@@ -13,7 +12,7 @@ class TeamsChoreGroupsController extends Controller
      * Get the chore groups for the team.
      *
      * @param Team $team
-     * @return array<string, Collection<string, Collection<int, array<string, mixed>>>>
+     * @return array<string, array<string, array<string, string>>>
      */
     public function index(Team $team): array
     {
@@ -25,14 +24,14 @@ class TeamsChoreGroupsController extends Controller
             ->with('chore', 'user')
             ->get();
 
-        return ['data' => $groups->mapToGroups(fn ($i) => $this->mapToGroups($i))];
+        return ['data' => $groups->mapToGroups(fn ($i) => $this->mapToGroups($i))->toArray()];
     }
 
     /**
      * Map the chore instance to a group.
      *
      * @param ChoreInstance $instance
-     * @return array<string, array<string, mixed>>
+     * @return array<string, array<string, string>>
      */
     protected function mapToGroups($instance)
     {
@@ -47,7 +46,7 @@ class TeamsChoreGroupsController extends Controller
      * Map the chore instance to an array.
      *
      * @param ChoreInstance $instance
-     * @return array<string, mixed>
+     * @return array<string, string>
      */
     protected function mapChoreInstance(ChoreInstance $instance): array
     {

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\HasChoreStreaks;
 use App\Models\Concerns\HasUnfinishedChoreScopes;
 use App\Scopes\OrderByNameScope;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -69,7 +70,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User withUnfinishedChores()
  * @method static \Illuminate\Database\Eloquent\Builder|User withoutUnfinishedChores()
  */
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasChoreStreaks;
@@ -101,12 +102,39 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    protected ?bool $is_admin = null;
+
+    public function canAccessFilament(): bool
+    {
+        return $this->isAdmin();
+    }
+
     protected static function booted() : void
     {
         static::addGlobalScope(new OrderByNameScope);
         static::created(function ($user) {
             UserSetting::create(['user_id' => $user->id]);
         });
+    }
+
+    /**
+     * Get all users with a specific setting.
+     *
+     * @param string $setting
+     * @param bool $value
+     * @param string $operator
+     * @return Collection<int, User>
+     */
+    public static function withSetting(
+        string $setting,
+        bool $value,
+        string $operator = '='
+    ) : Collection {
+        return self::with('settings')
+            ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
+                $query->where($setting, $operator, $value);
+            })
+            ->get();
     }
 
     public function chores() : HasMany
@@ -129,23 +157,27 @@ class User extends Authenticatable
         return $this->hasOne(UserSetting::class);
     }
 
-    /**
-     * Get all users with a specific setting.
-     *
-     * @param string $setting
-     * @param bool $value
-     * @param string $operator
-     * @return Collection<User>
-     */
-    public static function withSetting(
-        string $setting,
-        bool $value,
-        string $operator = '='
-    ) : Collection {
-        return self::with('settings')
-            ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
-                $query->where($setting, $operator, $value);
-            })
-            ->get();
+    public function isAdmin(): bool
+    {
+        if (! $this->is_admin) {
+            $admin_team     = Team::adminTeam();
+            $this->is_admin = $this->ownsAdminTeam($admin_team)
+                || $this->onAdminTeam($admin_team);
+        }
+
+        return $this->is_admin;
+    }
+
+    private function ownsAdminTeam(?Team $admin_team) : bool
+    {
+        return $admin_team && $admin_team->user_id === $this->id;
+    }
+
+    private function onAdminTeam(?Team $admin_team) : bool
+    {
+        return $admin_team && $admin_team
+            ->users()
+            ->where('user_id', $this->id)
+            ->exists();
     }
 }
