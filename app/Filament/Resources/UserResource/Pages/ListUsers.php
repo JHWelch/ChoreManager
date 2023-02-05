@@ -10,6 +10,7 @@ class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
 
+    /** @return array<\Filament\Pages\Actions\Action> */
     protected function getActions(): array
     {
         return [

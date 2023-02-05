@@ -90,6 +90,7 @@ class UserResource extends Resource
             ]);
     }
 
+    /** @return array<string, array<mixed>> */
     public static function getRelations(): array
     {
         return [
@@ -97,6 +98,7 @@ class UserResource extends Resource
         ];
     }
 
+    /** @return array<string, array<mixed>> */
     public static function getPages(): array
     {
         return [
