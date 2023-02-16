@@ -13,8 +13,6 @@ class ChoreFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
@@ -28,8 +26,6 @@ class ChoreFactory extends Factory
 
     /**
      * Indicate that the user should have a personal team.
-     *
-     * @return $this
      */
     public function withFirstInstance($due_date = null, $user_id = null): static
     {
@@ -46,8 +42,6 @@ class ChoreFactory extends Factory
 
     /**
      * Creates a chore that is assigned to the team, not an individual user.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     public function assignedToTeam(): Factory
     {

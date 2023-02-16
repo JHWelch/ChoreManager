@@ -14,7 +14,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      *
      * @param  mixed $user
      * @param  array<string, mixed> $input
-     * @return void
      */
     public function update($user, array $input): void
     {
@@ -44,7 +43,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      *
      * @param  mixed $user
      * @param  array<string, mixed> $input
-     * @return void
      */
     protected function updateVerifiedUser($user, array $input): void
     {

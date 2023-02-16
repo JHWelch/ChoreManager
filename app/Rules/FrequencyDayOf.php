@@ -12,7 +12,6 @@ class FrequencyDayOf implements Rule
     /**
      * Create a new rule instance.
      *
-     * @param int $frequency_id
      * @return void
      */
     public function __construct(int $frequency_id)
@@ -23,9 +22,7 @@ class FrequencyDayOf implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
      * @param  mixed  $value
-     * @return bool
      */
     public function passes(string $attribute, $value): bool
     {
@@ -42,8 +39,6 @@ class FrequencyDayOf implements Rule
 
     /**
      * Get the validation error message.
-     *
-     * @return string
      */
     public function message(): string
     {

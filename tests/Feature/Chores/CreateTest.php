@@ -142,8 +142,6 @@ class CreateTest extends TestCase
 
     /**
      * Return a livewire testable already filled with most fields for validating frequency.
-     *
-     * @return \Livewire\Testing\TestableLivewire
      */
     protected function getFrequencyValidationComponent(): TestableLivewire
     {

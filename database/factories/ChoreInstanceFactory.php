@@ -9,8 +9,6 @@ class ChoreInstanceFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
@@ -22,8 +20,6 @@ class ChoreInstanceFactory extends Factory
 
     /**
      * Creates a chore instance due today.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     public function dueToday(): Factory
     {
@@ -32,8 +28,6 @@ class ChoreInstanceFactory extends Factory
 
     /**
      * Creates a chore instance due today.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     public function pastDue(): Factory
     {
@@ -44,8 +38,6 @@ class ChoreInstanceFactory extends Factory
 
     /**
      * Creates a chore instance already completed.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
     public function completed(): Factory
     {

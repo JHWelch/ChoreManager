@@ -63,7 +63,6 @@ class Frequency
      * Create a new Frequency.
      *
      * @param int $id One of the frequency constants
-     * @param int $interval
      * @param int $dayOf - The day of the Frequency (day of week, day of month, etc.)
      */
     public function __construct(int $id, int $interval = 1, int $dayOf = null)
@@ -141,7 +140,6 @@ class Frequency
      *
      * @param Carbon $after optional
      * @throws InvalidArgumentException if the frequency is invalid
-     * @return Carbon|null
      */
     public function getNextDate(Carbon $after = null): ?Carbon
     {

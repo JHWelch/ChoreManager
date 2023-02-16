@@ -120,9 +120,6 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Get all users with a specific setting.
      *
-     * @param string $setting
-     * @param bool $value
-     * @param string $operator
      * @return Collection<int, User>
      */
     public static function withSetting(
