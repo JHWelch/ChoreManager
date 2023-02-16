@@ -15,7 +15,7 @@ abstract class TestCase extends BaseTestCase
     protected User $user;
     protected Team $team;
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         Team::$admin_team = null;
