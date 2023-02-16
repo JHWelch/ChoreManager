@@ -164,10 +164,10 @@ class Frequency
         return match ($this->id) {
             self::DOES_NOT_REPEAT => null,
             self::DAILY           => $after->addDays($i),
-            self::WEEKLY          => $after->startOfWeek()->addDays($this->dayOf - 1)->addWeeks($i),
-            self::MONTHLY         => $after->startOfMonth()->addDays($this->dayOf - 1)->addMonthsNoOverflow($i),
+            self::WEEKLY          => $after->startOfWeek()->addDays($this->dayOf    - 1)->addWeeks($i),
+            self::MONTHLY         => $after->startOfMonth()->addDays($this->dayOf   - 1)->addMonthsNoOverflow($i),
             self::QUARTERLY       => $after->startOfQuarter()->addDays($this->dayOf - 1)->addQuartersNoOverflow($i),
-            self::YEARLY          => $after->startOfYear()->addDays($this->dayOf - 1)->addYearsNoOverflow($i),
+            self::YEARLY          => $after->startOfYear()->addDays($this->dayOf    - 1)->addYearsNoOverflow($i),
             default               => throw new InvalidArgumentException('Invalid interval ' . $i),
         };
     }
