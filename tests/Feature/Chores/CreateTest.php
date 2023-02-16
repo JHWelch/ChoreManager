@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Chores;
 
-use Livewire\Testing\TestableLivewire;
 use App\Enums\Frequency;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
@@ -13,6 +12,7 @@ use App\Rules\FrequencyDayOf;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
+use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
