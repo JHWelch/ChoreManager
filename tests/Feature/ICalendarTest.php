@@ -13,7 +13,7 @@ class ICalendarTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function user_calendar_tokens_return_users_next_chore_instances()
+    public function user_calendar_tokens_return_users_next_chore_instances(): void
     {
         $this->testUser();
         CalendarToken::create([
@@ -40,7 +40,7 @@ class ICalendarTest extends TestCase
     }
 
     /** @test */
-    public function team_calendar_tokens_return_team_next_chore_instances()
+    public function team_calendar_tokens_return_team_next_chore_instances(): void
     {
         $this->testUser();
         CalendarToken::create([
@@ -73,7 +73,7 @@ class ICalendarTest extends TestCase
     }
 
     /** @test */
-    public function chore_calendar_shows_chores_assigned_to_team_but_instance_assigned_to_user()
+    public function chore_calendar_shows_chores_assigned_to_team_but_instance_assigned_to_user(): void
     {
         $this->testUser();
         CalendarToken::create([

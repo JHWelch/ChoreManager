@@ -10,7 +10,7 @@ class ShowTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function a_user_can_view_their_own_info()
+    public function a_user_can_view_their_own_info(): void
     {
         $this->testUser();
 

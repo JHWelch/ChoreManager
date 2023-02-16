@@ -15,7 +15,7 @@ class IndexLineTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function can_complete_a_chore_instance()
+    public function can_complete_a_chore_instance(): void
     {
         $user           = $this->testUser()['user'];
         $chore          = Chore::factory()->for($user)->withFirstInstance()->create();
@@ -30,7 +30,7 @@ class IndexLineTest extends TestCase
     }
 
     /** @test */
-    public function when_a_chore_instance_is_completed_a_new_one_is_created_daily()
+    public function when_a_chore_instance_is_completed_a_new_one_is_created_daily(): void
     {
         $now   = today();
         $user  = $this->testUser()['user'];
@@ -53,7 +53,7 @@ class IndexLineTest extends TestCase
     }
 
     /** @test */
-    public function index_line_shows_chore_information()
+    public function index_line_shows_chore_information(): void
     {
         $frequency = new Frequency(Frequency::DAILY, 3);
         $chore     = Chore::factory([
@@ -73,7 +73,7 @@ class IndexLineTest extends TestCase
     }
 
     /** @test */
-    public function index_line_has_assigned_user_image()
+    public function index_line_has_assigned_user_image(): void
     {
         Features::turnOn('index-profile-photos');
         $user = $this->testUser([
@@ -92,7 +92,7 @@ class IndexLineTest extends TestCase
     }
 
     /** @test */
-    public function snooze_until_tomorrow_emits_event()
+    public function snooze_until_tomorrow_emits_event(): void
     {
         $this->testUser();
         $chore = Chore::factory()
@@ -108,7 +108,7 @@ class IndexLineTest extends TestCase
     }
 
     /** @test */
-    public function snooze_until_weekend_emits_event()
+    public function snooze_until_weekend_emits_event(): void
     {
         $this->testUser();
         $chore = Chore::factory()

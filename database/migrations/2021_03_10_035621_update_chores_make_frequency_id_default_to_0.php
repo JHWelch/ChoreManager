@@ -10,7 +10,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('chores', function (Blueprint $table) {
             $table->integer('frequency_id')->default(0)->change();

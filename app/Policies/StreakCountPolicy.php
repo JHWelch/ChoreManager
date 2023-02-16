@@ -16,7 +16,7 @@ class StreakCountPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return true;
     }
@@ -28,7 +28,7 @@ class StreakCountPolicy
      * @param  \App\Models\StreakCount  $streakCount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, StreakCount $streakCount)
+    public function view(User $user, StreakCount $streakCount): bool
     {
         return $user->id === $streakCount->user_id;
     }
@@ -39,7 +39,7 @@ class StreakCountPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return false;
     }
@@ -51,7 +51,7 @@ class StreakCountPolicy
      * @param  \App\Models\StreakCount  $streakCount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, StreakCount $streakCount)
+    public function update(User $user, StreakCount $streakCount): bool
     {
         return false;
     }
@@ -63,7 +63,7 @@ class StreakCountPolicy
      * @param  \App\Models\StreakCount  $streakCount
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, StreakCount $streakCount)
+    public function delete(User $user, StreakCount $streakCount): bool
     {
         return false;
     }

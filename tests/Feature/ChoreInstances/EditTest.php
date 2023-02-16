@@ -19,7 +19,7 @@ class EditTest extends TestCase
     use WithFaker;
 
     /** @test */
-    public function when_updating_chore_instance_with_null_date_create_chore_instance()
+    public function when_updating_chore_instance_with_null_date_create_chore_instance(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()
@@ -38,7 +38,7 @@ class EditTest extends TestCase
     }
 
     /** @test */
-    public function when_removing_the_due_date_from_a_chore_it_will_delete_the_chore_instance()
+    public function when_removing_the_due_date_from_a_chore_it_will_delete_the_chore_instance(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->withFirstInstance()->create();
@@ -51,7 +51,7 @@ class EditTest extends TestCase
     }
 
     /** @test */
-    public function when_opening_chore_edit_due_date_is_populated()
+    public function when_opening_chore_edit_due_date_is_populated(): void
     {
         $this->testUser();
         $date  = today()->addDays(5);
@@ -63,7 +63,7 @@ class EditTest extends TestCase
     }
 
     /** @test */
-    public function after_completing_a_chore_you_can_see_next_chore_instance_date()
+    public function after_completing_a_chore_you_can_see_next_chore_instance_date(): void
     {
         $this->testUser();
         $date  = Carbon::now();
@@ -82,7 +82,7 @@ class EditTest extends TestCase
     }
 
     /** @test */
-    public function a_chore_instance_can_be_assigned_to_a_new_user()
+    public function a_chore_instance_can_be_assigned_to_a_new_user(): void
     {
         $this->testUser();
         $user  = User::factory()->hasAttached($this->team)->create();

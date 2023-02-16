@@ -19,7 +19,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function api_user_can_get_chore_list()
+    public function api_user_can_get_chore_list(): void
     {
         Chore::factory()
             ->count(3)
@@ -56,7 +56,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chores_returned_have_next_due_date()
+    public function chores_returned_have_next_due_date(): void
     {
         $chore_instance = ChoreInstance::factory()
             ->for(Chore::factory()->for($this->user))
@@ -72,7 +72,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function includes_chores_for_team()
+    public function includes_chores_for_team(): void
     {
         $chore = Chore::factory()
             ->for($this->team)
@@ -87,7 +87,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function user_will_not_get_other_s_chores()
+    public function user_will_not_get_other_s_chores(): void
     {
         $chore = Chore::factory()
             ->withFirstInstance()

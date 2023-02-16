@@ -15,7 +15,7 @@ class IndexTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function chore_instance_index_page_can_be_reached()
+    public function chore_instance_index_page_can_be_reached(): void
     {
         $this->testUser()['user'];
 
@@ -25,7 +25,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chores_with_chore_instances_show_on_index()
+    public function chores_with_chore_instances_show_on_index(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->withFirstInstance(today())->create();
@@ -36,7 +36,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chores_without_chore_instances_do_not_show_on_index()
+    public function chores_without_chore_instances_do_not_show_on_index(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
@@ -47,7 +47,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function when_there_are_no_chore_instances_see_empty_state()
+    public function when_there_are_no_chore_instances_see_empty_state(): void
     {
         $this->testUser();
 
@@ -57,7 +57,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function future_chores_do_not_show_by_default()
+    public function future_chores_do_not_show_by_default(): void
     {
         $user   = $this->testUser()['user'];
         $chore1 = Chore::factory()
@@ -76,7 +76,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function user_can_show_future_chores()
+    public function user_can_show_future_chores(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()
@@ -91,7 +91,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function show_future_chores_is_remembered_when_revisiting_page()
+    public function show_future_chores_is_remembered_when_revisiting_page(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()
@@ -107,7 +107,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function it_can_snooze_chores_due_today_for_a_user_until_tomorrow()
+    public function it_can_snooze_chores_due_today_for_a_user_until_tomorrow(): void
     {
         $this->testUser();
         $chores = Chore::factory()
@@ -138,7 +138,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function it_can_snooze_chores_due_today_for_a_user_untiL_the_weekend()
+    public function it_can_snooze_chores_due_today_for_a_user_untiL_the_weekend(): void
     {
         $this->testUser();
         $chores = Chore::factory()
@@ -169,7 +169,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function it_can_snooze_chores_due_in_the_past_for_a_user_until_tomorrow()
+    public function it_can_snooze_chores_due_in_the_past_for_a_user_until_tomorrow(): void
     {
         $this->testUser();
         $chores = Chore::factory()
@@ -200,7 +200,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function it_can_snooze_chores_due_in_the_past_for_a_user_untiL_the_weekend()
+    public function it_can_snooze_chores_due_in_the_past_for_a_user_untiL_the_weekend(): void
     {
         $this->travelToKnownMonday();
         $this->testUser();
@@ -231,7 +231,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function it_wont_snooze_chores_due_today_for_a_team_untiL_the_weekend_if_filter_is_user()
+    public function it_wont_snooze_chores_due_today_for_a_team_untiL_the_weekend_if_filter_is_user(): void
     {
         $this->travelToKnownMonday();
         $this->testUser();
@@ -251,7 +251,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function it_wont_snooze_chores_due_in_the_past_for_a_team_untiL_the_weekend_if_filter_is_user()
+    public function it_wont_snooze_chores_due_in_the_past_for_a_team_untiL_the_weekend_if_filter_is_user(): void
     {
         $this->travelToKnownMonday();
         $this->testUser();
@@ -271,7 +271,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function snoozes_chores_owned_by_team_but_assigned_to_user()
+    public function snoozes_chores_owned_by_team_but_assigned_to_user(): void
     {
         $this->testUser();
         $chore = Chore::factory()
@@ -290,7 +290,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chore_instances_are_split_into_groups_based_on_date()
+    public function chore_instances_are_split_into_groups_based_on_date(): void
     {
         $this->testUser();
         Chore::factory(['title' => 'walk dog'])

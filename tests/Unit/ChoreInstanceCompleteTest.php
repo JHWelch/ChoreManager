@@ -20,7 +20,7 @@ class ChoreInstanceCompleteTest extends TestCase
      */
 
     /** @test */
-    public function do_not_repeat_chore_creates_no_instance()
+    public function do_not_repeat_chore_creates_no_instance(): void
     {
         $chore = Chore::factory()->create([
             'frequency_id' => Frequency::DOES_NOT_REPEAT,
@@ -35,7 +35,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function chores_can_be_completed_with_a_frequency()
+    public function chores_can_be_completed_with_a_frequency(): void
     {
         $chore = Chore::factory()->create([
             'frequency_id' => Frequency::DAILY,
@@ -50,7 +50,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function chores_can_be_completed_with_a_frequency_plus_interval()
+    public function chores_can_be_completed_with_a_frequency_plus_interval(): void
     {
         $chore1 = Chore::factory()->create([
             'frequency_id'       => Frequency::DAILY,
@@ -75,7 +75,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function chores_can_be_completed_with_day_of_frequency()
+    public function chores_can_be_completed_with_day_of_frequency(): void
     {
         Carbon::setTestNow('2021-07-06');
         $chore1 = Chore::factory()->create([
@@ -103,7 +103,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function completing_a_chore_instance_creates_a_new_instance_with_same_owner()
+    public function completing_a_chore_instance_creates_a_new_instance_with_same_owner(): void
     {
         $user  = User::factory()->create();
         $chore = Chore::factory()->for($user)->withFirstInstance()->create();
@@ -117,7 +117,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function when_a_chore_is_completed_the_completed_by_id_is_set_to_the_user_completing_it()
+    public function when_a_chore_is_completed_the_completed_by_id_is_set_to_the_user_completing_it(): void
     {
         $acting_as_user = $this->testUser()['user'];
         $assigned_user  = User::factory()->create();
@@ -133,7 +133,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function when_a_chore_assigned_to_a_team_is_completed_the_next_instance_is_assigned_to_the_next_person_alphabetically()
+    public function when_a_chore_assigned_to_a_team_is_completed_the_next_instance_is_assigned_to_the_next_person_alphabetically(): void
     {
         $user_and_team = $this->testUser(['name' => 'Albert Albany']);
         $team          = $user_and_team['team'];
@@ -163,7 +163,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function when_an_instance_is_assigned_to_the_last_person_alphabetically_it_will_wrap_around()
+    public function when_an_instance_is_assigned_to_the_last_person_alphabetically_it_will_wrap_around(): void
     {
         $user_and_team = $this->testUser(['name' => 'Albert Albany']);
         $user1         = $user_and_team['user'];
@@ -193,7 +193,7 @@ class ChoreInstanceCompleteTest extends TestCase
     }
 
     /** @test */
-    public function when_chore_is_completed_in_the_past_the_next_instance_date_is_based_on_that_date()
+    public function when_chore_is_completed_in_the_past_the_next_instance_date_is_based_on_that_date(): void
     {
         $date  = today();
         $chore = Chore::factory()->withFirstInstance()->create([

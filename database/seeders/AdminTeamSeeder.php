@@ -13,7 +13,7 @@ class AdminTeamSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Team::factory()->create([
             'name'          => 'Admins',

@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         // If Demo is enabled reseed database daily.
         $schedule
@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__ . '/Commands');
 

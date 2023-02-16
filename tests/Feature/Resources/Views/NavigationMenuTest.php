@@ -10,7 +10,7 @@ class NavigationMenuTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function user_can_see_account_management_links()
+    public function user_can_see_account_management_links(): void
     {
         $this->testUser();
 
@@ -22,7 +22,7 @@ class NavigationMenuTest extends TestCase
     }
 
     /** @test */
-    public function admin_users_can_see_admin_actions()
+    public function admin_users_can_see_admin_actions(): void
     {
         $this->adminTestUser();
 
@@ -32,7 +32,7 @@ class NavigationMenuTest extends TestCase
     }
 
     /** @test */
-    public function non_admin_users_cannot_see_admin_actions()
+    public function non_admin_users_cannot_see_admin_actions(): void
     {
         $this->testUser();
 

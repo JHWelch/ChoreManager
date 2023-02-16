@@ -7,7 +7,7 @@ use Tests\BladeTestCase;
 class MarkdownDirectiveTest extends BladeTestCase
 {
     /** @test */
-    public function markdown_directive_converts_markdown_to_html()
+    public function markdown_directive_converts_markdown_to_html(): void
     {
         $markdown = <<<'EOD'
         # This is a markdown string
@@ -38,7 +38,7 @@ class MarkdownDirectiveTest extends BladeTestCase
     }
 
     /** @test */
-    public function markdown_directive_parses_dangerous_input()
+    public function markdown_directive_parses_dangerous_input(): void
     {
         $markdown = '<script>alert(\'Gotcha!\')</script>';
 

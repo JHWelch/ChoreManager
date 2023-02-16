@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class Authenticate extends Middleware
      * @param  \Illuminate\Http\Request  $request
      * @return string|null
      */
-    protected function redirectTo($request)
+    protected function redirectTo(Request $request): ?string
     {
         if (! $request->expectsJson()) {
             if (config('demo.enabled', false)) {

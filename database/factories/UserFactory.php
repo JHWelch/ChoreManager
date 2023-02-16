@@ -14,7 +14,7 @@ class UserFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name'              => $this->faker->name(),
@@ -30,7 +30,7 @@ class UserFactory extends Factory
      *
      * @return $this
      */
-    public function withPersonalTeam()
+    public function withPersonalTeam(): static
     {
         return $this->has(
             Team::factory()

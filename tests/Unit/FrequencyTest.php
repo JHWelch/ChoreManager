@@ -11,7 +11,7 @@ class FrequencyTest extends TestCase
     protected Carbon $today;
 
     /** @test */
-    public function does_not_repeat_frequency_returns_null()
+    public function does_not_repeat_frequency_returns_null(): void
     {
         $frequency = new Frequency(Frequency::DOES_NOT_REPEAT);
         $date      = Carbon::parse('2021-05-01');
@@ -20,7 +20,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function daily()
+    public function daily(): void
     {
         $frequency = new Frequency(Frequency::DAILY);
         $date      = Carbon::parse('2021-05-01');
@@ -32,7 +32,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function weekly()
+    public function weekly(): void
     {
         $frequency = new Frequency(Frequency::WEEKLY);
         $date      = Carbon::parse('2021-05-01');
@@ -44,7 +44,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function monthly()
+    public function monthly(): void
     {
         $frequency = new Frequency(Frequency::MONTHLY);
         $date      = Carbon::parse('2021-05-01');
@@ -56,7 +56,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function quarterly()
+    public function quarterly(): void
     {
         $frequency = new Frequency(Frequency::QUARTERLY);
         $date      = Carbon::parse('2021-05-01');
@@ -68,7 +68,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function yearly()
+    public function yearly(): void
     {
         $frequency = new Frequency(Frequency::YEARLY);
         $date      = Carbon::parse('2021-05-01');
@@ -80,7 +80,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function daily_plus_interval()
+    public function daily_plus_interval(): void
     {
         $frequency = new Frequency(Frequency::DAILY, 5);
         $date      = Carbon::parse('2021-05-01');
@@ -92,7 +92,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function weekly_plus_interval()
+    public function weekly_plus_interval(): void
     {
         $frequency = new Frequency(Frequency::WEEKLY, 5);
         $date      = Carbon::parse('2021-05-01');
@@ -104,7 +104,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function monthly_plus_interval()
+    public function monthly_plus_interval(): void
     {
         $frequency = new Frequency(Frequency::MONTHLY, 5);
         $date      = Carbon::parse('2021-05-01');
@@ -116,7 +116,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function quarterly_plus_interval()
+    public function quarterly_plus_interval(): void
     {
         $frequency = new Frequency(Frequency::QUARTERLY, 5);
         $date      = Carbon::parse('2021-05-01');
@@ -128,7 +128,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function yearly_plus_interval()
+    public function yearly_plus_interval(): void
     {
         $frequency = new Frequency(Frequency::YEARLY, 5);
         $date      = Carbon::parse('2021-05-01');
@@ -140,7 +140,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function weekly_on_tuesdays()
+    public function weekly_on_tuesdays(): void
     {
         $frequency = new Frequency(Frequency::WEEKLY, 1, Carbon::TUESDAY);
         $date      = Carbon::parse('2021-07-15');
@@ -152,7 +152,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function monthly_on_the_12th()
+    public function monthly_on_the_12th(): void
     {
         $frequency = new Frequency(Frequency::MONTHLY, 1, 12);
         $date      = Carbon::parse('2021-07-12');
@@ -164,7 +164,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function quarterly_on_the_third_day()
+    public function quarterly_on_the_third_day(): void
     {
         $frequency = new Frequency(Frequency::QUARTERLY, 1, 3);
         $date      = Carbon::parse('2021-07-12');
@@ -176,7 +176,7 @@ class FrequencyTest extends TestCase
     }
 
     /** @test */
-    public function yearly_on_the_100th_day()
+    public function yearly_on_the_100th_day(): void
     {
         $frequency = new Frequency(Frequency::YEARLY, 1, 100);
         $date      = Carbon::parse('2021-07-12');

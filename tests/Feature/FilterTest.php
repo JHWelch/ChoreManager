@@ -26,7 +26,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function when_filter_is_set_to_user_see_only_users_chores()
+    public function when_filter_is_set_to_user_see_only_users_chores(): void
     {
         $team  = Team::factory()->create();
         $users = User::factory()->count(2)->hasAttached($team)->create();
@@ -52,7 +52,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function when_filter_is_set_to_team_see_all_users_in_that_teams_chores()
+    public function when_filter_is_set_to_team_see_all_users_in_that_teams_chores(): void
     {
         $users = User::factory()->count(2)->hasTeams()->create();
         $team  = Team::first();
@@ -82,7 +82,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function chores_with_instances_assigned_to_others_do_not_show_on_chore_owners_filter()
+    public function chores_with_instances_assigned_to_others_do_not_show_on_chore_owners_filter(): void
     {
         $this->testUser();
         $other_user = User::factory()->hasAttached($this->team)->create();
@@ -110,7 +110,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function chores_assigned_to_team_show_on_team_page_but_not_user_page()
+    public function chores_assigned_to_team_show_on_team_page_but_not_user_page(): void
     {
         $this->testUser();
         Chore::factory([
@@ -133,7 +133,7 @@ class FilterTest extends TestCase
     }
 
     /** @test */
-    public function filter_persists_between_component_loads()
+    public function filter_persists_between_component_loads(): void
     {
         $this->testUser();
 

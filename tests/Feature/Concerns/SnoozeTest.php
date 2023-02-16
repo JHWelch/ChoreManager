@@ -28,7 +28,7 @@ class SnoozeTest extends TestCase
     }
 
     /** @test */
-    public function can_snooze_a_chore_until_tomorrow()
+    public function can_snooze_a_chore_until_tomorrow(): void
     {
         $values = $this->arrange();
 
@@ -44,7 +44,7 @@ class SnoozeTest extends TestCase
     }
 
     /** @test */
-    public function can_snooze_a_chore_until_the_weekend()
+    public function can_snooze_a_chore_until_the_weekend(): void
     {
         $this->travelToKnownMonday();
         $values = $this->arrange();
@@ -61,7 +61,7 @@ class SnoozeTest extends TestCase
     }
 
     /** @test */
-    public function snoozing_until_weekend_on_a_weekend_pushes_to_next_weekend()
+    public function snoozing_until_weekend_on_a_weekend_pushes_to_next_weekend(): void
     {
         $this->travelTo(Carbon::parse('2021-02-28'));
         $values = $this->arrange();
@@ -78,7 +78,7 @@ class SnoozeTest extends TestCase
     }
 
     /** @test */
-    public function user_can_snooze_a_group_of_chores_until_tomorrow_at_the_same_time()
+    public function user_can_snooze_a_group_of_chores_until_tomorrow_at_the_same_time(): void
     {
         $values = $this->arrange(3);
 
@@ -99,7 +99,7 @@ class SnoozeTest extends TestCase
     }
 
     /** @test */
-    public function user_can_snooze_a_group_of_chores_until_the_weekend()
+    public function user_can_snooze_a_group_of_chores_until_the_weekend(): void
     {
         // Set current date to a known monday
         $this->travelToKnownMonday();

@@ -20,7 +20,7 @@ class SendDailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function user_with_digest_enabled_will_recieve_chore_email()
+    public function user_with_digest_enabled_will_recieve_chore_email(): void
     {
         $user = User::factory()->create();
         $user->settings->update(['has_daily_digest' => true]);
@@ -33,7 +33,7 @@ class SendDailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function user_without_digest_enabled_will_not_recieve_chore_email()
+    public function user_without_digest_enabled_will_not_recieve_chore_email(): void
     {
         $user = User::factory()->create();
         $user->settings->update(['has_daily_digest' => false]);

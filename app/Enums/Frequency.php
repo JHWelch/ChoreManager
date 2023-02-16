@@ -66,7 +66,7 @@ class Frequency
      * @param int $interval
      * @param int $dayOf - The day of the Frequency (day of week, day of month, etc.)
      */
-    public function __construct($id, $interval = 1, $dayOf = null)
+    public function __construct(int $id, int $interval = 1, int $dayOf = null)
     {
         $this->id       = $id;
         $this->interval = $interval;
@@ -143,7 +143,7 @@ class Frequency
      * @throws InvalidArgumentException if the frequency is invalid
      * @return Carbon|null
      */
-    public function getNextDate(Carbon $after = null)
+    public function getNextDate(Carbon $after = null): ?Carbon
     {
         $after = $after ?? today();
 

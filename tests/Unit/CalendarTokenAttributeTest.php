@@ -13,7 +13,7 @@ class CalendarTokenAttributeTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function calendar_token_is_team_calendar()
+    public function calendar_token_is_team_calendar(): void
     {
         $calendar_token = CalendarToken::make([
             'user_id' => 1,
@@ -25,7 +25,7 @@ class CalendarTokenAttributeTest extends TestCase
     }
 
     /** @test */
-    public function is_team_calendar_attribute_false()
+    public function is_team_calendar_attribute_false(): void
     {
         $calendar_token = CalendarToken::make([
             'user_id' => 1,
@@ -37,7 +37,7 @@ class CalendarTokenAttributeTest extends TestCase
     }
 
     /** @test */
-    public function display_name_with_defined_name_is_name()
+    public function display_name_with_defined_name_is_name(): void
     {
         $user           = User::factory()->create();
         $calendar_token = CalendarToken::make([
@@ -49,7 +49,7 @@ class CalendarTokenAttributeTest extends TestCase
     }
 
     /** @test */
-    public function user_calendar_without_defined_name_named_after_user()
+    public function user_calendar_without_defined_name_named_after_user(): void
     {
         $user = User::factory([
             'name' => 'Steve Smith',
@@ -63,7 +63,7 @@ class CalendarTokenAttributeTest extends TestCase
     }
 
     /** @test */
-    public function team_calendar_without_defined_name_named_after_team()
+    public function team_calendar_without_defined_name_named_after_team(): void
     {
         $team = Team::factory([
             'name' => 'Smith Family',

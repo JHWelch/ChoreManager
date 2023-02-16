@@ -13,7 +13,7 @@ class IndexText extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function returns_chores_grouped_by_today_and_past_due_for_team()
+    public function returns_chores_grouped_by_today_and_past_due_for_team(): void
     {
         $this->testUser();
         $chores = ChoreInstance::factory()
@@ -58,7 +58,7 @@ class IndexText extends TestCase
     }
 
     /** @test */
-    public function user_cannot_get_chores_from_another_team()
+    public function user_cannot_get_chores_from_another_team(): void
     {
         $this->testUser();
         $other_team = Team::factory()->create();

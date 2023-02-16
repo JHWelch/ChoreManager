@@ -13,7 +13,7 @@ class ChoreSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         User::with('ownedTeams', 'teams')
             ->get()

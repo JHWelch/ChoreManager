@@ -15,7 +15,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
         return true;
     }
@@ -27,7 +27,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model): bool
     {
         return $user->isAdmin()
             || $user->is($model)
@@ -43,7 +43,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return $user->isAdmin();
     }
@@ -55,7 +55,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model): bool
     {
         return $user->isAdmin();
     }
@@ -67,7 +67,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, User $model): bool
     {
         return $user->isAdmin();
     }

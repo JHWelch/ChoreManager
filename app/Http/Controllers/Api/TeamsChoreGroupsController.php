@@ -33,7 +33,7 @@ class TeamsChoreGroupsController extends Controller
      * @param ChoreInstance $instance
      * @return array<string, array<string, string>>
      */
-    protected function mapToGroups($instance)
+    protected function mapToGroups(ChoreInstance $instance): array
     {
         if ($instance->due_date->startOfDay() < today()) {
             return ['past_due' => $this->mapChoreInstance($instance)];

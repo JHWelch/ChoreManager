@@ -12,7 +12,7 @@ class IndexTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function user_can_get_current_streak_for_their_team()
+    public function user_can_get_current_streak_for_their_team(): void
     {
         $this->testUser();
         $streak = StreakCount::factory()->for($this->team)->create();
@@ -35,7 +35,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function user_cannot_get_streak_for_another_team()
+    public function user_cannot_get_streak_for_another_team(): void
     {
         $this->testUser();
         $other_team = Team::factory()->create();

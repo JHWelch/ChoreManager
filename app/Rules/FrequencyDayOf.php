@@ -15,7 +15,7 @@ class FrequencyDayOf implements Rule
      * @param int $frequency_id
      * @return void
      */
-    public function __construct($frequency_id)
+    public function __construct(int $frequency_id)
     {
         $this->frequency_id = $frequency_id;
     }
@@ -27,7 +27,7 @@ class FrequencyDayOf implements Rule
      * @param  mixed  $value
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes(string $attribute, $value): bool
     {
         return match (intval($this->frequency_id)) {
             Frequency::DOES_NOT_REPEAT => ($value === null),
@@ -45,7 +45,7 @@ class FrequencyDayOf implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return match ($this->frequency_id) {
             Frequency::DOES_NOT_REPEAT => 'Does not repeat frequency cannot have specific day.',

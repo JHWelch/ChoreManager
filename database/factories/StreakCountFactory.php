@@ -14,7 +14,7 @@ class StreakCountFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'count' => $this->faker->randomNumber(),

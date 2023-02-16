@@ -16,7 +16,7 @@ class IndexTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function a_user_can_navigate_to_chores_index()
+    public function a_user_can_navigate_to_chores_index(): void
     {
         $this->testUser();
 
@@ -26,7 +26,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chores_display_on_index_page()
+    public function chores_display_on_index_page(): void
     {
         $user = $this->testUser()['user'];
         Chore::factory()
@@ -53,7 +53,7 @@ class IndexTest extends TestCase
      *****************************/
 
     /** @test */
-    public function chores_can_be_sorted_by_title()
+    public function chores_can_be_sorted_by_title(): void
     {
         $user = $this->testUser()['user'];
         Chore::factory()
@@ -73,7 +73,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chores_can_be_sorted_by_frequency()
+    public function chores_can_be_sorted_by_frequency(): void
     {
         $user = $this->testUser()['user'];
         Chore::factory()
@@ -93,7 +93,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chores_can_be_sorted_by_next_due_date()
+    public function chores_can_be_sorted_by_next_due_date(): void
     {
         $date1  = today()->addDays(1);
         $date2  = today()->addDays(2);
@@ -120,7 +120,7 @@ class IndexTest extends TestCase
     }
 
     /** @test */
-    public function chores_can_be_sorted_by_descending_title()
+    public function chores_can_be_sorted_by_descending_title(): void
     {
         $user = $this->testUser()['user'];
         Chore::factory()

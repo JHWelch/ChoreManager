@@ -16,7 +16,7 @@ class ChoreFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'title'        => implode(' ', $this->faker->words(3)),
@@ -31,7 +31,7 @@ class ChoreFactory extends Factory
      *
      * @return $this
      */
-    public function withFirstInstance($due_date = null, $user_id = null)
+    public function withFirstInstance($due_date = null, $user_id = null): static
     {
         return $this->has(
             ChoreInstance::factory()
@@ -49,7 +49,7 @@ class ChoreFactory extends Factory
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function assignedToTeam()
+    public function assignedToTeam(): Factory
     {
         return $this->state(['user_id' => null]);
     }

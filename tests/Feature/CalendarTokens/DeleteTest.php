@@ -13,7 +13,7 @@ class DeleteTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function can_delete_existing_calendar_tokens()
+    public function can_delete_existing_calendar_tokens(): void
     {
         $user  = $this->testUser()['user'];
         $token = CalendarToken::factory()

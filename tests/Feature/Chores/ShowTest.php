@@ -15,7 +15,7 @@ class ShowTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function can_reach_show_page()
+    public function can_reach_show_page(): void
     {
         $chore = Chore::factory()->for($this->testUser()['user'])->create();
 
@@ -25,7 +25,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function user_cannot_view_chores_for_another_user()
+    public function user_cannot_view_chores_for_another_user(): void
     {
         $this->testUser();
         $chore = Chore::factory()->forUser()->create();
@@ -36,7 +36,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function can_see_chore_info_on_chores_show()
+    public function can_see_chore_info_on_chores_show(): void
     {
         $chore = Chore::factory([
             'title'              => 'Walk the dog.',
@@ -54,7 +54,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function can_complete_chore_from_chore_page()
+    public function can_complete_chore_from_chore_page(): void
     {
         $this->testUser();
         $chore    = Chore::factory()->for($this->user)->withFirstInstance()->create();
@@ -69,7 +69,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function can_see_chore_history()
+    public function can_see_chore_history(): void
     {
         $user1 = $this->testUser()['user'];
         $user2 = User::factory()->create();
@@ -112,7 +112,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function can_see_tooltip_of_exact_date()
+    public function can_see_tooltip_of_exact_date(): void
     {
         $user1 = $this->testUser()['user'];
         $user2 = User::factory()->create();
@@ -149,7 +149,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function chores_assigned_to_team_display_team_as_owner()
+    public function chores_assigned_to_team_display_team_as_owner(): void
     {
         $team  = $this->testUser()['team'];
         $chore = Chore::factory([
@@ -168,7 +168,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function can_complete_chore_for_another_another_team_user()
+    public function can_complete_chore_for_another_another_team_user(): void
     {
         $this->testUser();
         $other_user = User::factory()->hasAttached($this->team)->create();
@@ -192,7 +192,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function can_complete_chore_on_a_past_date()
+    public function can_complete_chore_on_a_past_date(): void
     {
         $user  = $this->testUser()['user'];
         $date  = today()->subDays(2);

@@ -15,7 +15,7 @@ class MacroServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         /**
          * Convert a collection to an array of options that can be used in an HTML select.

@@ -14,7 +14,7 @@ class ListUsersTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function admin_can_see_index_page()
+    public function admin_can_see_index_page(): void
     {
         $this->adminTestUser();
 
@@ -24,7 +24,7 @@ class ListUsersTest extends TestCase
     }
 
     /** @test */
-    public function standard_user_cannot_see_index_page()
+    public function standard_user_cannot_see_index_page(): void
     {
         $this->testUser();
 
@@ -34,7 +34,7 @@ class ListUsersTest extends TestCase
     }
 
     /** @test */
-    public function can_see_user_fields()
+    public function can_see_user_fields(): void
     {
         $this->adminTestUser();
         $user = User::factory()->create();

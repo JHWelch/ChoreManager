@@ -16,7 +16,7 @@ class CreateTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function when_a_user_specifies_a_date_while_creating_a_chore_a_chore_instance_is_created()
+    public function when_a_user_specifies_a_date_while_creating_a_chore_a_chore_instance_is_created(): void
     {
         $this->testUser();
         $date = Carbon::now()->addDays(6);
@@ -36,7 +36,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function a_chore_can_be_created_without_a_date_and_chore_instance()
+    public function a_chore_can_be_created_without_a_date_and_chore_instance(): void
     {
         $this->testUser();
 
@@ -51,7 +51,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function when_creating_a_chore_with_an_owner_the_chore_instance_has_the_same_owner()
+    public function when_creating_a_chore_with_an_owner_the_chore_instance_has_the_same_owner(): void
     {
         $this->testUser();
         $date = Carbon::now()->addDays(6);

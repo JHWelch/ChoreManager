@@ -13,7 +13,7 @@ class CreateTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function can_create_a_calendar_token_to_display_only_their_chores()
+    public function can_create_a_calendar_token_to_display_only_their_chores(): void
     {
         $user = $this->testUser()['user'];
 
@@ -28,7 +28,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function calendar_token_has_generated_uuid()
+    public function calendar_token_has_generated_uuid(): void
     {
         $this->testUser();
 
@@ -40,7 +40,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function can_create_a_calendar_token_to_display_their_teams_chores()
+    public function can_create_a_calendar_token_to_display_their_teams_chores(): void
     {
         $userAndTeam = $this->testUser();
 
@@ -56,7 +56,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function when_team_calendar_is_selected_user_must_pick_team()
+    public function when_team_calendar_is_selected_user_must_pick_team(): void
     {
         $this->testUser();
 
@@ -69,7 +69,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function if_user_calendar_selected_will_not_have_team_even_if_specified()
+    public function if_user_calendar_selected_will_not_have_team_even_if_specified(): void
     {
         $userAndTeam = $this->testUser();
 
@@ -85,7 +85,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function calendars_can_be_created_with_names()
+    public function calendars_can_be_created_with_names(): void
     {
         $user = $this->testUser()['user'];
 

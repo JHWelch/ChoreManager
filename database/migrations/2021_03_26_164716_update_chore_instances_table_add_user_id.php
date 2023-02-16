@@ -10,7 +10,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('chore_instances', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');

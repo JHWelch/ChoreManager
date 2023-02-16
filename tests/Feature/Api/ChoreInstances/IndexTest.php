@@ -11,7 +11,7 @@ class IndexTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function can_get_upcoming_chores_with_their_due_dates()
+    public function can_get_upcoming_chores_with_their_due_dates(): void
     {
         $user   = $this->testUser()['user'];
         $chores = Chore::factory()
