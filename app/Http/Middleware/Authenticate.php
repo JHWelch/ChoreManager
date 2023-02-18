@@ -14,16 +14,16 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        if (! $request->expectsJson()) {
-            if (config('demo.enabled', false)) {
-                Auth::login(User::where('email', 'demo@example.com')->first());
-
-                return $request->getRequestUri();
-            } else {
-                return route('login');
-            }
+        if ($request->expectsJson()) {
+            return null;
         }
 
-        return null;
+        if (config('demo.enabled', false)) {
+            Auth::login(User::where('email', 'demo@example.com')->first());
+
+            return $request->getRequestUri();
+        }
+
+        return route('login');
     }
 }
