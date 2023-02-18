@@ -11,10 +11,8 @@ class UserFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name'              => $this->faker->name(),
@@ -27,10 +25,8 @@ class UserFactory extends Factory
 
     /**
      * Indicate that the user should have a personal team.
-     *
-     * @return $this
      */
-    public function withPersonalTeam()
+    public function withPersonalTeam(): static
     {
         return $this->has(
             Team::factory()

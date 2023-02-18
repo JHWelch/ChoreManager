@@ -14,7 +14,7 @@ class MacroTest extends TestCase
     }
 
     /** @test */
-    public function Collection_nextAfter_gets_the_item_that_comes_after_an_item()
+    public function Collection_nextAfter_gets_the_item_that_comes_after_an_item(): void
     {
         $collection = collect([1, 2, 3, 4]);
 
@@ -24,7 +24,7 @@ class MacroTest extends TestCase
     }
 
     /** @test */
-    public function Collection_nextAfter_wraps_around_when_the_item_is_last_if_wrap_is_specified()
+    public function Collection_nextAfter_wraps_around_when_the_item_is_last_if_wrap_is_specified(): void
     {
         $collection = collect([1, 2, 3, 4]);
 
@@ -34,7 +34,7 @@ class MacroTest extends TestCase
     }
 
     /** @test */
-    public function Collection_nextAfter_returns_null_if_wrap_is_not_specified()
+    public function Collection_nextAfter_returns_null_if_wrap_is_not_specified(): void
     {
         $collection = collect([1, 2, 3, 4]);
 

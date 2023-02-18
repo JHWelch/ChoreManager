@@ -13,10 +13,8 @@ class ChoreFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'title'        => implode(' ', $this->faker->words(3)),
@@ -28,10 +26,8 @@ class ChoreFactory extends Factory
 
     /**
      * Indicate that the user should have a personal team.
-     *
-     * @return $this
      */
-    public function withFirstInstance($due_date = null, $user_id = null)
+    public function withFirstInstance($due_date = null, $user_id = null): static
     {
         return $this->has(
             ChoreInstance::factory()
@@ -46,10 +42,8 @@ class ChoreFactory extends Factory
 
     /**
      * Creates a chore that is assigned to the team, not an individual user.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function assignedToTeam()
+    public function assignedToTeam(): Factory
     {
         return $this->state(['user_id' => null]);
     }

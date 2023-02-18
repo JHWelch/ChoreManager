@@ -20,7 +20,7 @@ class UpdateTest extends TestCase
     }
 
     /** @test */
-    public function calling_update_with_complete_flag_completes_current_instance()
+    public function calling_update_with_complete_flag_completes_current_instance(): void
     {
         $this->testUser();
         $chore          = Chore::factory()->for($this->user)->create();
@@ -35,7 +35,7 @@ class UpdateTest extends TestCase
     }
 
     /** @test */
-    public function user_can_complete_chore_for_their_team()
+    public function user_can_complete_chore_for_their_team(): void
     {
         $this->testUser();
         $chore          = Chore::factory()->for($this->team)->create();
@@ -50,7 +50,7 @@ class UpdateTest extends TestCase
     }
 
     /** @test */
-    public function user_cannot_complete_chores_they_do_not_own()
+    public function user_cannot_complete_chores_they_do_not_own(): void
     {
         $this->testUser();
         $chore          = Chore::factory()->create();
@@ -65,7 +65,7 @@ class UpdateTest extends TestCase
     }
 
     /** @test */
-    public function chore_is_returned_with_new_information()
+    public function chore_is_returned_with_new_information(): void
     {
         $this->testUser();
         $chore = Chore::factory()

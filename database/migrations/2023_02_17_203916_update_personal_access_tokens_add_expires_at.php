@@ -10,12 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('features', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('title')->nullable();
-            $table->string('feature')->unique();
-            $table->text('description')->nullable();
-            $table->timestamp('active_at')->nullable();
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->timestamp('expires_at')->nullable()->after('last_used_at');
         });
     }
 
@@ -24,6 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('features');
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->dropColumn('expires_at');
+        });
     }
 };

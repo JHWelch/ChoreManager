@@ -13,7 +13,7 @@ class ShowTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function a_user_can_view_their_own_info()
+    public function a_user_can_view_their_own_info(): void
     {
         $this->testUser();
 
@@ -33,7 +33,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_users_from_their_team()
+    public function a_user_can_view_users_from_their_team(): void
     {
         $this->testUser();
         $user = User::factory()
@@ -59,7 +59,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function a_user_cannot_view_users_not_in_their_teams()
+    public function a_user_cannot_view_users_not_in_their_teams(): void
     {
         $this->testUser();
         $user = User::factory()

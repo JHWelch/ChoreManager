@@ -24,7 +24,7 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function daily_digest_has_users_chores_for_the_day()
+    public function daily_digest_has_users_chores_for_the_day(): void
     {
         $chores = Chore::factory()
             ->withFirstInstance(today(), $this->user->id)
@@ -39,7 +39,7 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function daily_digest_has_users_past_due_chores()
+    public function daily_digest_has_users_past_due_chores(): void
     {
         $chores = Chore::factory()
             ->has(ChoreInstance::factory()->for($this->user)->pastDue())
@@ -54,7 +54,7 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function daily_digest_does_not_show_chores_due_in_the_future()
+    public function daily_digest_does_not_show_chores_due_in_the_future(): void
     {
         $chore = Chore::factory()
             ->withFirstInstance(today()->addDay(), $this->user->id)
@@ -66,7 +66,7 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function daily_digest_does_not_show_chores_assigned_to_different_user()
+    public function daily_digest_does_not_show_chores_assigned_to_different_user(): void
     {
         $other_user  = User::factory()->create();
         $chore       = Chore::factory()
@@ -79,7 +79,7 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function daily_digest_does_not_show_chores_that_are_completed()
+    public function daily_digest_does_not_show_chores_that_are_completed(): void
     {
         $chore = Chore::factory()->create();
         ChoreInstance::factory()
@@ -95,7 +95,7 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function if_user_has_no_chores_due_today_display_message()
+    public function if_user_has_no_chores_due_today_display_message(): void
     {
         $mail_digest = new DailyDigest($this->user);
 
@@ -104,7 +104,7 @@ class DailyDigestTest extends TestCase
     }
 
     /** @test */
-    public function chores_have_links_to_web()
+    public function chores_have_links_to_web(): void
     {
         $chore = Chore::factory()
             ->withFirstInstance(today(), $this->user->id)
@@ -113,6 +113,6 @@ class DailyDigestTest extends TestCase
         $mail_digest = new DailyDigest($this->user);
 
         $chore_url = route('chores.show', ['chore' => $chore]);
-        $mail_digest->assertSeeInHtml("href=\"$chore_url");
+        $mail_digest->assertSeeInHtml($chore_url);
     }
 }

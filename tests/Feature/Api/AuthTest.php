@@ -12,7 +12,7 @@ class AuthTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function api_user_can_get_an_api_token()
+    public function api_user_can_get_an_api_token(): void
     {
         $user = User::factory()->create();
 
@@ -30,7 +30,7 @@ class AuthTest extends TestCase
     }
 
     /** @test */
-    public function api_user_will_return_user()
+    public function api_user_will_return_user(): void
     {
         $user = User::factory()->create();
 

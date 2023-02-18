@@ -11,7 +11,6 @@ class TeamsChoreGroupsController extends Controller
     /**
      * Get the chore groups for the team.
      *
-     * @param Team $team
      * @return array<string, array<string, array<string, string>>>
      */
     public function index(Team $team): array
@@ -30,10 +29,9 @@ class TeamsChoreGroupsController extends Controller
     /**
      * Map the chore instance to a group.
      *
-     * @param ChoreInstance $instance
      * @return array<string, array<string, string>>
      */
-    protected function mapToGroups($instance)
+    protected function mapToGroups(ChoreInstance $instance): array
     {
         if ($instance->due_date->startOfDay() < today()) {
             return ['past_due' => $this->mapChoreInstance($instance)];
@@ -45,7 +43,6 @@ class TeamsChoreGroupsController extends Controller
     /**
      * Map the chore instance to an array.
      *
-     * @param ChoreInstance $instance
      * @return array<string, string>
      */
     protected function mapChoreInstance(ChoreInstance $instance): array

@@ -10,10 +10,8 @@ class AdminTeamSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         Team::factory()->create([
             'name'          => 'Admins',

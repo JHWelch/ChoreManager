@@ -12,7 +12,7 @@ class TeamTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function adminTeam_returns_null_if_team_not_seeded()
+    public function adminTeam_returns_null_if_team_not_seeded(): void
     {
         $admin_team = Team::adminTeam();
 
@@ -20,7 +20,7 @@ class TeamTest extends TestCase
     }
 
     /** @test */
-    public function adminTeam_returns_team_named_Admins()
+    public function adminTeam_returns_team_named_Admins(): void
     {
         $this->seed(AdminTeamSeeder::class);
 
@@ -30,7 +30,7 @@ class TeamTest extends TestCase
     }
 
     /** @test */
-    public function adminTeam_cached_for_subsequent_calls()
+    public function adminTeam_cached_for_subsequent_calls(): void
     {
         $this->seed(AdminTeamSeeder::class);
 

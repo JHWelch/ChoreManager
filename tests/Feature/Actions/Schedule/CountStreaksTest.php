@@ -32,7 +32,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_streaks_for_users_who_have_not_started_one()
+    public function it_creates_streaks_for_users_who_have_not_started_one(): void
     {
         $user = User::factory()->create();
 
@@ -47,7 +47,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_create_streak_if_user_has_unfinished_chores()
+    public function it_will_not_create_streak_if_user_has_unfinished_chores(): void
     {
         $user = User::factory()->create();
         $this->uncompletedChoreForUser($user);
@@ -58,7 +58,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_increments_current_streaks_for_users()
+    public function it_increments_current_streaks_for_users(): void
     {
         $user   = User::factory()->create();
         $streak = StreakCount::factory()
@@ -77,7 +77,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_increment_streak_if_user_has_unfinished_chores()
+    public function it_will_not_increment_streak_if_user_has_unfinished_chores(): void
     {
         $user   = User::factory()->create();
         $streak = StreakCount::factory()
@@ -96,7 +96,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_ends_streak_if_user_has_uncompleted_chores()
+    public function it_ends_streak_if_user_has_uncompleted_chores(): void
     {
         $user   = User::factory()->create();
         $streak = StreakCount::factory()
@@ -112,7 +112,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_streaks_for_teams_who_have_not_started_one()
+    public function it_creates_streaks_for_teams_who_have_not_started_one(): void
     {
         $team = Team::factory()->hasUsers()->create();
 
@@ -127,7 +127,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_create_streak_if_team_has_unfinished_chores()
+    public function it_will_not_create_streak_if_team_has_unfinished_chores(): void
     {
         $team = Team::factory()->hasUsers()->create();
         $this->uncompletedChoreForTeam($team);
@@ -140,7 +140,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_increments_current_streaks_for_teams()
+    public function it_increments_current_streaks_for_teams(): void
     {
         $team   = Team::factory()->hasUsers()->create();
         $streak = StreakCount::factory()
@@ -158,7 +158,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_increment_streak_if_team_has_unfinished_chores()
+    public function it_will_not_increment_streak_if_team_has_unfinished_chores(): void
     {
         $team   = Team::factory()->hasUsers()->create();
         $streak = StreakCount::factory()
@@ -176,7 +176,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_ends_streak_if_team_has_uncompleted_chores()
+    public function it_ends_streak_if_team_has_uncompleted_chores(): void
     {
         $team   = Team::factory()->hasUsers()->create();
         $streak = StreakCount::factory()
@@ -192,7 +192,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_sets_time_stamps_correctly_for_user()
+    public function it_sets_time_stamps_correctly_for_user(): void
     {
         $user = User::factory()->create();
 
@@ -206,7 +206,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_sets_time_stamps_correctly_for_team()
+    public function it_sets_time_stamps_correctly_for_team(): void
     {
         $team = Team::factory()->hasUsers()->create();
 
@@ -220,7 +220,7 @@ class CountStreaksTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_timestamp_on_increment()
+    public function it_updates_timestamp_on_increment(): void
     {
         $user   = User::factory()->create();
         $streak = StreakCount::factory()

@@ -12,7 +12,7 @@ class CreateTeamTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    public function test_teams_can_be_created()
+    public function test_teams_can_be_created(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 

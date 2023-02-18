@@ -27,7 +27,7 @@ class DemoModeTest extends TestCase
     }
 
     /** @test */
-    public function when_demo_mode_is_enabled_user_does_not_need_to_log_in()
+    public function when_demo_mode_is_enabled_user_does_not_need_to_log_in(): void
     {
         $response = $this->get(route('dashboard'));
 
@@ -36,7 +36,7 @@ class DemoModeTest extends TestCase
     }
 
     /** @test */
-    public function when_demo_mode_is_enabled_demo_banner_is_shown()
+    public function when_demo_mode_is_enabled_demo_banner_is_shown(): void
     {
         $response = $this->followingRedirects()->get(route('dashboard'));
 
@@ -44,7 +44,7 @@ class DemoModeTest extends TestCase
     }
 
     /** @test */
-    public function when_demo_mode_is_disabled_demo_banner_is_not_shown()
+    public function when_demo_mode_is_disabled_demo_banner_is_not_shown(): void
     {
         Config::set('demo.enabled', false);
 

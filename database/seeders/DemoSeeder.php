@@ -95,10 +95,8 @@ class DemoSeeder extends Seeder
 
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $user = User::create([
             'name'              => 'Demo User',

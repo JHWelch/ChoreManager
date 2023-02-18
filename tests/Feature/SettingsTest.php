@@ -11,7 +11,7 @@ class SettingsTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function new_user_automatically_has_default_settings()
+    public function new_user_automatically_has_default_settings(): void
     {
         $user = User::factory()->create();
 

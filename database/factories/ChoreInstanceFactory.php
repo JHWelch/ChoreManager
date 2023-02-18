@@ -9,10 +9,8 @@ class ChoreInstanceFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'user_id'  => User::factory(),
@@ -22,20 +20,16 @@ class ChoreInstanceFactory extends Factory
 
     /**
      * Creates a chore instance due today.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function dueToday()
+    public function dueToday(): Factory
     {
         return $this->state(['due_date' => today()]);
     }
 
     /**
      * Creates a chore instance due today.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function pastDue()
+    public function pastDue(): Factory
     {
         return $this->state([
             'due_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),
@@ -44,10 +38,8 @@ class ChoreInstanceFactory extends Factory
 
     /**
      * Creates a chore instance already completed.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function completed()
+    public function completed(): Factory
     {
         return $this->state([
             'completed_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),

@@ -15,7 +15,7 @@ abstract class TestCase extends BaseTestCase
     protected User $user;
     protected Team $team;
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
         Team::$admin_team = null;
@@ -28,7 +28,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function testUser($attributes = [])
     {
-        $this->actingAs($user = User::factory($attributes)->withPersonalTeam()->create());
+        $this->actingAs($user   = User::factory($attributes)->withPersonalTeam()->create());
         $user->switchTeam($team = Team::first());
 
         $this->user = $user;

@@ -49,7 +49,6 @@ class DailyDigest extends Mailable
     /**
      * Map a chore instance to an array.
      *
-     * @param ChoreInstance $instance
      * @return array<string, string>
      */
     protected function mapChoreInstance(ChoreInstance $instance) : array

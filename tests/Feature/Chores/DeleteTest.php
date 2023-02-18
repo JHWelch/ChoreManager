@@ -13,7 +13,7 @@ class DeleteTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function user_can_delete_chore_from_show()
+    public function user_can_delete_chore_from_show(): void
     {
         $chore = Chore::factory()->for($this->testUser()['user'])->create();
 

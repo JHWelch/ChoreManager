@@ -14,7 +14,7 @@ class EditTest extends TestCase
     use LazilyRefreshDatabase;
 
     /** @test */
-    public function chore_edit_page_can_be_reached()
+    public function chore_edit_page_can_be_reached(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
@@ -25,7 +25,7 @@ class EditTest extends TestCase
     }
 
     /** @test */
-    public function user_cannot_edit_chores_for_another_user()
+    public function user_cannot_edit_chores_for_another_user(): void
     {
         $this->testUser();
         $chore = Chore::factory()->forUser()->create();
@@ -36,7 +36,7 @@ class EditTest extends TestCase
     }
 
     /** @test */
-    public function existing_chore_screen_shows_its_information()
+    public function existing_chore_screen_shows_its_information(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::create([
@@ -54,7 +54,7 @@ class EditTest extends TestCase
     }
 
     /** @test */
-    public function a_chore_can_be_updated_after_it_is_created()
+    public function a_chore_can_be_updated_after_it_is_created(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
