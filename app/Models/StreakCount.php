@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|StreakCount newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StreakCount newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|StreakCount query()
- * @mixin \Eloquent
  * @property-read \App\Models\Team $team
  * @property int $id
  * @property string|null $ended_at
@@ -32,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereTeamId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereUserId($value)
+ * @mixin \Eloquent
  */
 class StreakCount extends Model
 {

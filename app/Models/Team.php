@@ -38,12 +38,12 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @method static \Illuminate\Database\Eloquent\Builder|Team wherePersonalTeam($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUserId($value)
- * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $choreInstances
  * @property-read int|null $chore_instances_count
  * @property-read \App\Models\StreakCount|null $currentStreak
  * @method static \Illuminate\Database\Eloquent\Builder|Team withUnfinishedChores($on_or_before = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Team withoutUnfinishedChores($on_or_before = null)
+ * @mixin \Eloquent
  */
 class Team extends JetstreamTeam
 {
