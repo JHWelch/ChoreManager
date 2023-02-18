@@ -8,7 +8,6 @@ use App\Models\Chore;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
-use YlsIdeas\FeatureFlags\Facades\Features;
 
 class IndexLineTest extends TestCase
 {
@@ -75,7 +74,7 @@ class IndexLineTest extends TestCase
     /** @test */
     public function index_line_has_assigned_user_image(): void
     {
-        Features::turnOn('index-profile-photos');
+        $this->markTestSkipped('Feature disabled.');
         $user = $this->testUser([
             'profile_photo_path' => 'test_photo_url.jpg',
         ])['user'];

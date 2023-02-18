@@ -21,9 +21,9 @@
           <div class="flex flex-row items-center space-x-3 focus:outline-none">
             {{-- <!-- Extend touch target to entire panel --> --}}
             {{-- <span class="absolute inset-0" aria-hidden="true"></span> --}}
-            @feature('index-profile-photos')
-              <x-users.avatar :user="$chore->user" size="medium" />
-            @endfeature
+
+            {{-- Disabled row profile photos, was causing bug --}}
+            {{-- <x-users.avatar :user="$chore->user" size="medium" /> --}}
 
             <div class="flex flex-col">
               <p class="text-sm font-medium text-gray-900">
