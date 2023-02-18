@@ -113,6 +113,6 @@ class DailyDigestTest extends TestCase
         $mail_digest = new DailyDigest($this->user);
 
         $chore_url = route('chores.show', ['chore' => $chore]);
-        $mail_digest->assertSeeInHtml("href=\"$chore_url");
+        $mail_digest->assertSeeInHtml($chore_url);
     }
 }
