@@ -2,7 +2,7 @@
   x-data="{ show: true }"
   x-show="show"
   x-description="Chore Line. When completed slides out with a transition."
-  x-transition:leave="transform transition ease-in-out duration-500"
+  x-transition:leave="transition ease-in-out duration-500"
   x-transition:leave-start="translate-x-0"
   x-transition:leave-end="translate-x-full"
   x-on:checked="
