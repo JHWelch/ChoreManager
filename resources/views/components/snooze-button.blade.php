@@ -24,7 +24,7 @@
     x-cloak
     @click.away="show = false"
     x-on:choreinstanceupdated.window="show = false"
-    x-transition:enter="transform ease-out duration-200 transition"
+    x-transition:enter="ease-out duration-200 transition"
     x-transition:enter-start="opacity-0"
     x-transition:enter-end="opacity-100"
     x-transition:leave="transition ease-in duration-200"
