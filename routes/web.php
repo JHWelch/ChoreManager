@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/health-check', fn () => response()->json(['status' => 'ok']))->name('health-check');
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', fn () => redirect(route('dashboard')));
     Route::get('/dashboard', ChoreInstancesIndex::class)->name('dashboard');
