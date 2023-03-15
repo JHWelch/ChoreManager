@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Api\Chores;
+namespace Tests\Feature\Api\Chores\Update;
 
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
-class UpdateTest extends TestCase
+class CompleteTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
