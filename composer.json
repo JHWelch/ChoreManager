@@ -81,6 +81,15 @@
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "@php artisan filament:upgrade"
+        ],
+        "test:lint": "php-cs-fixer fix --ansi --diff --dry-run",
+        "test:unit": "vendor/bin/phpunit",
+        "test:types": "phpstan analyse --ansi --memory-limit=-1 --xdebug",
+        "test:fix": "php-cs-fixer fix",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
         ]
     },
     "type": "project"
