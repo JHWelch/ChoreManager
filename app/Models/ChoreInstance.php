@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance completed()
  * @method static \Database\Factories\ChoreInstanceFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance newQuery()
+ * @method static \Illuminate\database\Eloquent\Builder|ChoreInstance newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance query()
  * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereChoreId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereCompletedById($value)
@@ -101,5 +101,11 @@ class ChoreInstance extends Model
     public function scopeDueTodayOrPast(Builder $query) : Builder
     {
         return $query->where('due_date', '<=', today());
+    }
+
+    public function snooze(Carbon $nextDueDate) : void
+    {
+        $this->due_date = $nextDueDate;
+        $this->save();
     }
 }

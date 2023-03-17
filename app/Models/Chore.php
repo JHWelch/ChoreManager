@@ -206,4 +206,9 @@ class Chore extends Model
     {
         $this->nextChoreInstance?->complete($for, $on);
     }
+
+    public function snooze(Carbon $until)
+    {
+        $this->nextChoreInstance?->snooze($until);
+    }
 }
