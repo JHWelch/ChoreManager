@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\Frequency;
-use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Chore.
@@ -92,7 +92,9 @@ class Chore extends Model
 
     public function nextChoreInstance() : HasOne
     {
-        return $this->hasOne(ChoreInstance::class)->where('completed_date', null);
+        return $this
+            ->hasOne(ChoreInstance::class)
+            ->whereNull('completed_date');
     }
 
     public function getFrequencyAttribute() : Frequency
@@ -108,13 +110,13 @@ class Chore extends Model
     {
         return $this->hasMany(ChoreInstance::class)
             ->completed()
-            ->orderBy('completed_date', 'desc');
+            ->orderByDesc('completed_date');
     }
 
     public function choreInstanceScopeJoin(JoinClause $join) : JoinClause
     {
-        return $join->on('chores.id', '=', 'chore_instances.chore_id')
-            ->where('chore_instances.completed_date', null);
+        return $join->on('chores.id', 'chore_instances.chore_id')
+            ->whereNull('chore_instances.completed_date');
     }
 
     public function scopeWithNextInstance(Builder $query) : Builder
@@ -207,7 +209,7 @@ class Chore extends Model
         $this->nextChoreInstance?->complete($for, $on);
     }
 
-    public function snooze(Carbon $until)
+    public function snooze(Carbon $until): void
     {
         $this->nextChoreInstance?->snooze($until);
     }
