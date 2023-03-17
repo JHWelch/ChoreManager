@@ -20,21 +20,23 @@ use Illuminate\Support\Carbon;
  * @property string $title
  * @property string|null $description
  * @property int $frequency_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property int|null $team_id
  * @property int|null $frequency_interval
  * @property int|null $frequency_day_of
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $choreInstances
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $choreInstances
  * @property-read int|null $chore_instances_count
+ * @property-read \Illuminate\Support\Carbon|null $due_date_updated_at
  * @property-read Frequency $frequency
  * @property-read int $next_assigned_id
+ * @property-read \Illuminate\Support\Carbon|null $next_due_date
  * @property-read \App\Models\ChoreInstance|null $nextChoreInstance
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $pastChoreInstances
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $pastChoreInstances
  * @property-read int|null $past_chore_instances_count
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User|null $user
- * @method static \Database\Factories\ChoreFactory factory(...$parameters)
+ * @method static \Database\Factories\ChoreFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore nullDueDatesAtEnd()
@@ -52,8 +54,6 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore withNextInstance()
- * @property-read mixed $due_date_updated_at
- * @property-read mixed $next_due_date
  * @mixin \Eloquent
  */
 class Chore extends Model

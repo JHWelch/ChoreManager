@@ -32,21 +32,25 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string|null $profile_photo_path
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CalendarToken[] $calendarTokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CalendarToken> $calendarTokens
  * @property-read int|null $calendar_tokens_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Chore[] $chores
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $choreInstances
+ * @property-read int|null $chore_instances_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chore> $chores
  * @property-read int|null $chores_count
+ * @property-read \App\Models\StreakCount|null $currentStreak
  * @property-read \App\Models\Team|null $currentTeam
  * @property-read string $profile_photo_url
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Team[] $ownedTeams
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $ownedTeams
  * @property-read int|null $owned_teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Team[] $teams
+ * @property-read \App\Models\UserSetting|null $settings
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $teams
  * @property-read int|null $teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -62,12 +66,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $choreInstances
- * @property-read int|null $chore_instances_count
- * @property-read \App\Models\StreakCount|null $currentStreak
- * @property-read \App\Models\UserSetting|null $settings
- * @method static \Illuminate\Database\Eloquent\Builder|User withUnfinishedChores()
- * @method static \Illuminate\Database\Eloquent\Builder|User withoutUnfinishedChores()
+ * @method static \Illuminate\Database\Eloquent\Builder|User withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|User withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements FilamentUser
