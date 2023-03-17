@@ -158,8 +158,7 @@ class Chore extends Model
             return;
         }
 
-        ChoreInstance::create([
-            'chore_id' => $this->id,
+        $this->choreInstances()->create([
             'due_date' => $due_date,
             'user_id'  => $this->next_assigned_id,
         ]);
@@ -171,7 +170,9 @@ class Chore extends Model
      */
     public function getNextAssignedIdAttribute() : int
     {
-        $last_assigned = $this->choreInstances()->orderBy('created_at', 'desc')->first();
+        $last_assigned = $this->choreInstances()
+            ->orderByDesc('created_at')
+            ->first();
 
         return $this->user_id ?? (
             $last_assigned

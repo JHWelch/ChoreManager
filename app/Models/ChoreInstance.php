@@ -85,12 +85,12 @@ class ChoreInstance extends Model
 
     public function scopeCompleted(Builder $query) : Builder
     {
-        return $query->where('completed_date', '!=', null);
+        return $query->whereNotNull('completed_date');
     }
 
     public function scopeNotCompleted(Builder $query) : Builder
     {
-        return $query->where('completed_date', null);
+        return $query->whereNull('completed_date');
     }
 
     public function scopeDueToday(Builder $query) : Builder
