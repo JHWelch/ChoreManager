@@ -26,12 +26,14 @@
   </x-slot>
 
   <x-slot name="footer">
-    <x-jet-secondary-button wire:click="$set('showCompleteForUserDialog', false)">
-      {{ __('Cancel')}}
-    </x-jet-secondary-button>
+    <div class="flex flex-col space-y-3 sm:space-y-0 sm:space-x-3 sm:space-x-reverse sm:flex-row-reverse">
+      <x-button wire:click="customComplete">
+        {{ __('Complete')}}
+      </x-button>
 
-    <x-jet-button wire:click="customComplete">
-      {{ __('Complete')}}
-    </x-jet-button>
+      <x-secondary-button wire:click="$set('showCompleteForUserDialog', false)">
+        {{ __('Cancel')}}
+      </x-button>
+    </div>
   </x-slot>
 </x-jet-dialog-modal>
