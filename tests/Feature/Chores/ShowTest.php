@@ -214,4 +214,16 @@ class ShowTest extends TestCase
         ]);
         $component->assertRedirect('/');
     }
+
+    /** @test */
+    public function when_complete_session_flag_is_present_show_modal(): void
+    {
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()->for($user)->create();
+        session()->flash('complete', true);
+
+        $component = Livewire::test(Show::class, ['chore' => $chore]);
+
+        $component->assertSee('Custom Chore Completion');
+    }
 }
