@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
@@ -19,7 +19,7 @@ class ChoreFactory extends Factory
         return [
             'title'        => implode(' ', $this->faker->words(3)),
             'description'  => $this->faker->sentence(),
-            'frequency_id' => Arr::random(Frequency::FREQUENCIES),
+            'frequency_id' => Arr::random(FrequencyType::cases()),
             'user_id'      => User::factory(),
         ];
     }
@@ -31,7 +31,7 @@ class ChoreFactory extends Factory
     {
         return $this->has(
             ChoreInstance::factory()
-                ->state(function (array $attributes, Chore $chore) use ($due_date, $user_id) {
+                ->state(function (array $_, Chore $chore) use ($due_date, $user_id) {
                     return array_merge(
                         ['user_id' => $user_id ?? $chore->user->id],
                         $due_date ? ['due_date' => $due_date] : []
@@ -50,6 +50,6 @@ class ChoreFactory extends Factory
 
     public function daily()
     {
-        return $this->state(['frequency_id' => Frequency::DAILY]);
+        return $this->state(['frequency_id' => FrequencyType::daily]);
     }
 }

@@ -83,7 +83,7 @@ class CompleteTest extends TestCase
             'title'               => $chore->title,
             'description'         => $chore->description,
             'team_id'             => $chore->team_id,
-            'frequency_id'        => $chore->frequency_id,
+            'frequency_id'        => $chore->frequency_id->value,
             'frequency_interval'  => $chore->frequency_interval,
             'frequency_day_of'    => $chore->frequency_day_of,
             'created_at'          => $chore->created_at->toIsoString(),

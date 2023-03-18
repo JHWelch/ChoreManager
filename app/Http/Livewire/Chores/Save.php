@@ -3,14 +3,16 @@
 namespace App\Http\Livewire\Chores;
 
 use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use App\Http\Livewire\Concerns\GoesBack;
 use App\Http\Livewire\Concerns\TrimAndNullEmptyStrings;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Rules\FrequencyDayOf;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 
 class Save extends Component
@@ -34,15 +36,20 @@ class Save extends Component
         return  [
             'chore.title'              => 'string|required',
             'chore.description'        => 'string|nullable',
-            'chore.frequency_id'       => Rule::in(Frequency::FREQUENCIES),
+            'chore.frequency_id'       => new Enum(FrequencyType::class),
             'chore.frequency_interval' => 'min:1',
-            'chore.frequency_day_of'   => $this->show_on
-                ? new FrequencyDayOf($this->chore->frequency_id)
-                : 'nullable',
+            'chore.frequency_day_of'   => $this->frequencyDayOfRule(),
             'chore.user_id'            => 'nullable',
             'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
             'chore_instance.user_id'   => 'nullable',
         ];
+    }
+
+    protected function frequencyDayOfRule(): string|ValidationRule
+    {
+        return $this->show_on
+            ? new FrequencyDayOf($this->chore->frequency_id)
+            : 'nullable';
     }
 
     public function mount(Chore $chore): void
@@ -131,9 +138,9 @@ class Save extends Component
     /** @return array<int, array<string, mixed>> */
     public function getFrequenciesProperty(): array
     {
-        return $this->chore->frequency_id == 0
-            ? Frequency::adjectivesAsSelectOptions()
-            : Frequency::nounsAsSelectOptions();
+        return $this->chore->frequency_id == FrequencyType::doesNotRepeat
+            ? FrequencyType::adjectivesAsSelectOptions()
+            : FrequencyType::nounsAsSelectOptions();
     }
 
     /** @return array<array<string, mixed>> */
@@ -144,9 +151,9 @@ class Save extends Component
 
     public function isShowOnButton(): bool
     {
-        return (! $this->show_on)                                     &&
-            $this->chore->frequency_id !== Frequency::DOES_NOT_REPEAT &&
-            $this->chore->frequency_id !== Frequency::DAILY;
+        return (! $this->show_on)                                       &&
+            $this->chore->frequency_id !== FrequencyType::doesNotRepeat &&
+            $this->chore->frequency_id !== FrequencyType::daily;
     }
 
     public function showDayOfSection(): void
@@ -163,18 +170,21 @@ class Save extends Component
 
     public function getMaxDayOfProperty(): string
     {
-        return match (intval($this->chore->frequency_id)) {
-            Frequency::MONTHLY   => '31',
-            Frequency::QUARTERLY => '92',
-            Frequency::YEARLY    => '365',
-            default              => '0',
+        return match ($this->chore->frequency_id) {
+            FrequencyType::monthly   => '31',
+            FrequencyType::quarterly => '92',
+            FrequencyType::yearly    => '365',
+            default                  => '0',
         };
     }
 
-    public function updatedChoreFrequencyId(int $frequency_id): void
+    public function updatedChoreFrequencyId(FrequencyType|string $frequencyType): void
     {
-        if ($frequency_id    === Frequency::DOES_NOT_REPEAT
-            || $frequency_id === Frequency::DAILY
+        if (! $frequencyType instanceof FrequencyType) {
+            $frequencyType = FrequencyType::from(intval($frequencyType));
+        }
+        if ($frequencyType    === FrequencyType::doesNotRepeat
+            || $frequencyType === FrequencyType::daily
         ) {
             $this->hideDayOfSection();
         } else {

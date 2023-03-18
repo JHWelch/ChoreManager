@@ -10,13 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * App\Models\StreakCount.
  *
- * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount current()
- * @method static \Database\Factories\StreakCountFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount query()
- * @property-read \App\Models\Team $team
  * @property int $id
  * @property string|null $ended_at
  * @property int $count
@@ -24,13 +17,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $user_id
  * @property int|null $team_id
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereEndedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereUserId($value)
+ * @property-read \App\Models\Team|null $team
+ * @property-read \App\Models\User|null $user
+ * @method static Builder|StreakCount current()
+ * @method static \Database\Factories\StreakCountFactory factory($count = null, $state = [])
+ * @method static Builder|StreakCount newModelQuery()
+ * @method static Builder|StreakCount newQuery()
+ * @method static Builder|StreakCount query()
+ * @method static Builder|StreakCount whereCount($value)
+ * @method static Builder|StreakCount whereCreatedAt($value)
+ * @method static Builder|StreakCount whereEndedAt($value)
+ * @method static Builder|StreakCount whereId($value)
+ * @method static Builder|StreakCount whereTeamId($value)
+ * @method static Builder|StreakCount whereUpdatedAt($value)
+ * @method static Builder|StreakCount whereUserId($value)
  * @mixin \Eloquent
  */
 class StreakCount extends Model

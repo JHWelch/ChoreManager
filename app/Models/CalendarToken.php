@@ -19,18 +19,18 @@ use Illuminate\Support\Str;
  * @property int|null $team_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $choreInstances
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $choreInstances
  * @property-read int|null $chore_instances_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Chore[] $chores
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chore> $chores
  * @property-read int|null $chores_count
- * @property-read mixed $display_name
- * @property-read mixed $full_type_name
- * @property-read mixed $is_team_calendar
- * @property-read mixed $is_user_calendar
- * @property-read mixed $u_r_l
+ * @property-read string $display_name
+ * @property-read string $full_type_name
+ * @property-read bool $is_team_calendar
+ * @property-read bool $is_user_calendar
+ * @property-read string $u_r_l
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User $user
- * @method static \Database\Factories\CalendarTokenFactory factory(...$parameters)
+ * @method static \Database\Factories\CalendarTokenFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken query()

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
@@ -19,19 +19,19 @@ class DemoSeeder extends Seeder
         return [
             [
                 'title'        => 'Do the dishes',
-                'frequency_id' => Frequency::DAILY,
+                'frequency_id' => FrequencyType::daily,
                 'due_date'     => today(),
                 'description'  => null,
             ],
             [
                 'title'        => 'Take out the trash',
-                'frequency_id' => Frequency::WEEKLY,
+                'frequency_id' => FrequencyType::weekly,
                 'due_date'     => today()->addDays(5),
                 'description'  => null,
             ],
             [
                 'title'        => 'Get groceries',
-                'frequency_id' => Frequency::WEEKLY,
+                'frequency_id' => FrequencyType::weekly,
                 'due_date'     => today()->addDays(3),
                 'description'  => <<<'EOT'
                 ### Grocery List
@@ -44,7 +44,7 @@ class DemoSeeder extends Seeder
             ],
             [
                 'title'        => 'Polish boots',
-                'frequency_id' => Frequency::QUARTERLY,
+                'frequency_id' => FrequencyType::quarterly,
                 'due_date'     => today()->addDays(45),
                 'description'  => <<<'EOT'
                 [How to shine boots](https://www.wikihow.com/Polish-Boots)
@@ -52,13 +52,13 @@ class DemoSeeder extends Seeder
             ],
             [
                 'title'              => 'Take out recycling',
-                'frequency_id'       => Frequency::WEEKLY,
+                'frequency_id'       => FrequencyType::weekly,
                 'frequency_interval' => 2,
                 'due_date'           => today()->addDays(9),
             ],
             [
                 'title'        => 'Renew Car Registration',
-                'frequency_id' => Frequency::YEARLY,
+                'frequency_id' => FrequencyType::yearly,
                 'due_date'     => today()->addDays(125),
             ],
         ];
@@ -69,25 +69,25 @@ class DemoSeeder extends Seeder
         return [
             [
                 'title'        => 'Cook Dinner',
-                'frequency_id' => Frequency::DAILY,
+                'frequency_id' => FrequencyType::daily,
                 'due_date'     => today(),
                 'description'  => null,
             ],
             [
-                'title'              => 'Vaccuum living room',
-                'frequency_id'       => Frequency::WEEKLY,
+                'title'              => 'Vacuum living room',
+                'frequency_id'       => FrequencyType::weekly,
                 'frequency_interval' => 2,
                 'due_date'           => today()->addDays(5),
                 'description'        => null,
             ],
             [
                 'title'        => 'Bike maintenance',
-                'frequency_id' => Frequency::QUARTERLY,
+                'frequency_id' => FrequencyType::quarterly,
                 'due_date'     => today()->addDays(45),
             ],
             [
                 'title'        => 'Pick up dry cleaning',
-                'frequency_id' => Frequency::WEEKLY,
+                'frequency_id' => FrequencyType::weekly,
                 'due_date'     => today()->addDays(9),
             ],
         ];

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,22 +20,24 @@ use Illuminate\Support\Carbon;
  * @property int|null $user_id
  * @property string $title
  * @property string|null $description
- * @property int $frequency_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property FrequencyType $frequency_id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property int|null $team_id
  * @property int|null $frequency_interval
  * @property int|null $frequency_day_of
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $choreInstances
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $choreInstances
  * @property-read int|null $chore_instances_count
+ * @property-read \Illuminate\Support\Carbon|null $due_date_updated_at
  * @property-read Frequency $frequency
  * @property-read int $next_assigned_id
+ * @property-read \Illuminate\Support\Carbon|null $next_due_date
  * @property-read \App\Models\ChoreInstance|null $nextChoreInstance
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ChoreInstance[] $pastChoreInstances
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $pastChoreInstances
  * @property-read int|null $past_chore_instances_count
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User|null $user
- * @method static \Database\Factories\ChoreFactory factory(...$parameters)
+ * @method static \Database\Factories\ChoreFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore nullDueDatesAtEnd()
@@ -52,8 +55,6 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore withNextInstance()
- * @property-read mixed $due_date_updated_at
- * @property-read mixed $next_due_date
  * @mixin \Eloquent
  */
 class Chore extends Model
@@ -73,6 +74,10 @@ class Chore extends Model
     protected $attributes = [
         'frequency_id'       => 0,
         'frequency_interval' => 1,
+    ];
+
+    protected $casts = [
+        'frequency_id' => FrequencyType::class,
     ];
 
     public function user() : BelongsTo
@@ -158,8 +163,7 @@ class Chore extends Model
             return;
         }
 
-        ChoreInstance::create([
-            'chore_id' => $this->id,
+        $this->choreInstances()->create([
             'due_date' => $due_date,
             'user_id'  => $this->next_assigned_id,
         ]);
@@ -171,7 +175,9 @@ class Chore extends Model
      */
     public function getNextAssignedIdAttribute() : int
     {
-        $last_assigned = $this->choreInstances()->orderBy('created_at', 'desc')->first();
+        $last_assigned = $this->choreInstances()
+            ->orderByDesc('created_at')
+            ->first();
 
         return $this->user_id ?? (
             $last_assigned
@@ -212,5 +218,20 @@ class Chore extends Model
     public function snooze(Carbon $until): void
     {
         $this->nextChoreInstance?->snooze($until);
+    }
+
+    public function getIsWeeklyAttribute() : bool
+    {
+        return $this->frequency_id === FrequencyType::weekly;
+    }
+
+    public function getIsYearlyAttribute() : bool
+    {
+        return $this->frequency_id === FrequencyType::yearly;
+    }
+
+    public function getIsDoesNotRepeatAttribute() : bool
+    {
+        return $this->frequency_id === FrequencyType::doesNotRepeat;
     }
 }
