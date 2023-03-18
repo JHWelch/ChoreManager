@@ -43,7 +43,7 @@ class Show extends Component
         $this->fromCompleteRoute() ? $this->loadContent() : $this->back();
     }
 
-    protected function fromCompleteRoute()
+    protected function fromCompleteRoute(): bool
     {
         return $this->previousUrl === route('chores.complete.index', ['chore' => $this->chore]);
     }
