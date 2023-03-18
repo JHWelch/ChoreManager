@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
@@ -23,7 +23,7 @@ class ChoreInstanceCompleteTest extends TestCase
     public function do_not_repeat_chore_creates_no_instance(): void
     {
         $chore = Chore::factory()->create([
-            'frequency_id' => Frequency::DOES_NOT_REPEAT,
+            'frequency_id' => FrequencyType::doesNotRepeat,
         ]);
 
         $chore->createNewInstance();
@@ -38,7 +38,7 @@ class ChoreInstanceCompleteTest extends TestCase
     public function chores_can_be_completed_with_a_frequency(): void
     {
         $chore = Chore::factory()->create([
-            'frequency_id' => Frequency::DAILY,
+            'frequency_id' => FrequencyType::daily,
         ]);
 
         $chore->createNewInstance();
@@ -53,11 +53,11 @@ class ChoreInstanceCompleteTest extends TestCase
     public function chores_can_be_completed_with_a_frequency_plus_interval(): void
     {
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => Frequency::DAILY,
+            'frequency_id'       => FrequencyType::daily,
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => Frequency::WEEKLY,
+            'frequency_id'       => FrequencyType::weekly,
             'frequency_interval' => 3,
         ]);
 
@@ -79,12 +79,12 @@ class ChoreInstanceCompleteTest extends TestCase
     {
         Carbon::setTestNow('2021-07-06');
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => Frequency::WEEKLY,
+            'frequency_id'       => FrequencyType::weekly,
             'frequency_interval' => 1,
             'frequency_day_of'   => Carbon::TUESDAY,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => Frequency::MONTHLY,
+            'frequency_id'       => FrequencyType::monthly,
             'frequency_interval' => 1,
             'frequency_day_of'   => 17,
         ]);
@@ -147,7 +147,7 @@ class ChoreInstanceCompleteTest extends TestCase
             ->create();
         $user2 = $users->first();
         $user3 = $users->last();
-        $chore = Chore::factory(['frequency_id' => Frequency::DAILY])
+        $chore = Chore::factory(['frequency_id' => FrequencyType::daily])
             ->for($team)
             ->assignedToTeam()
             ->has(ChoreInstance::factory()->for($user2))
@@ -177,7 +177,7 @@ class ChoreInstanceCompleteTest extends TestCase
             )
             ->create();
         $user3 = $users->last();
-        $chore = Chore::factory(['frequency_id' => Frequency::DAILY])
+        $chore = Chore::factory(['frequency_id' => FrequencyType::daily])
             ->for($team)
             ->assignedToTeam()
             ->has(ChoreInstance::factory()->for($user3))
@@ -197,7 +197,7 @@ class ChoreInstanceCompleteTest extends TestCase
     {
         $date  = today();
         $chore = Chore::factory()->withFirstInstance()->create([
-            'frequency_id'       => Frequency::DAILY,
+            'frequency_id'       => FrequencyType::daily,
             'frequency_interval' => 4,
         ]);
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Chores;
 
-use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
@@ -43,14 +43,15 @@ class EditTest extends TestCase
             'user_id'      => $user->id,
             'title'        => 'Do dishes',
             'description'  => 'Do dishes every night.',
-            'frequency_id' => Frequency::DAILY,
+            'frequency_id' => FrequencyType::daily,
         ]);
 
         $component = Livewire::test(Save::class, ['chore' => $chore]);
 
-        $component->assertSet('chore.title', 'Do dishes');
-        $component->assertSet('chore.description', 'Do dishes every night.');
-        $component->assertSet('chore.frequency_id', 1);
+        $component
+            ->assertSet('chore.title', 'Do dishes')
+            ->assertSet('chore.description', 'Do dishes every night.')
+            ->assertSet('chore.frequency_id', FrequencyType::daily);
     }
 
     /** @test */
@@ -62,13 +63,13 @@ class EditTest extends TestCase
         Livewire::test(Save::class, ['chore' => $chore])
             ->set('chore.title', 'Do dishes')
             ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', 1)
+            ->set('chore.frequency_id', FrequencyType::daily)
             ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [
             'title'        => 'Do dishes',
             'description'  => 'Do the dishes every night.',
-            'frequency_id' => Frequency::DAILY,
+            'frequency_id' => FrequencyType::daily,
             'user_id'      => $user->id,
         ]);
     }

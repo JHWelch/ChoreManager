@@ -3,6 +3,7 @@
 namespace Tests\Feature\ChoreInstances;
 
 use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
@@ -33,9 +34,8 @@ class IndexLineTest extends TestCase
     {
         $now   = today();
         $user  = $this->testUser()['user'];
-        $chore = Chore::factory(
-            ['frequency_id' => Frequency::DAILY]
-        )
+        $chore = Chore::factory()
+            ->daily()
             ->for($user)
             ->withFirstInstance($now)
             ->create();
@@ -54,10 +54,10 @@ class IndexLineTest extends TestCase
     /** @test */
     public function index_line_shows_chore_information(): void
     {
-        $frequency = new Frequency(Frequency::DAILY, 3);
+        $frequency = new Frequency(FrequencyType::daily, 3);
         $chore     = Chore::factory([
             'title'              => 'Clean the sink',
-            'frequency_id'       => $frequency->id,
+            'frequency_id'       => $frequency->frequencyType,
             'frequency_interval' => $frequency->interval,
         ])
             ->withFirstInstance()

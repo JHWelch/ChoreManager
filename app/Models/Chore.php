@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Frequency;
+use App\Enums\FrequencyType;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ use Illuminate\Support\Carbon;
  * @property int|null $user_id
  * @property string $title
  * @property string|null $description
- * @property int $frequency_id
+ * @property FrequencyType $frequency_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int|null $team_id
@@ -73,6 +74,10 @@ class Chore extends Model
     protected $attributes = [
         'frequency_id'       => 0,
         'frequency_interval' => 1,
+    ];
+
+    protected $casts = [
+        'frequency_id' => FrequencyType::class,
     ];
 
     public function user() : BelongsTo
@@ -213,5 +218,20 @@ class Chore extends Model
     public function snooze(Carbon $until): void
     {
         $this->nextChoreInstance?->snooze($until);
+    }
+
+    public function getIsWeeklyAttribute() : bool
+    {
+        return $this->frequency_id === FrequencyType::weekly;
+    }
+
+    public function getIsYearlyAttribute() : bool
+    {
+        return $this->frequency_id === FrequencyType::yearly;
+    }
+
+    public function getIsDoesNotRepeatAttribute() : bool
+    {
+        return $this->frequency_id === FrequencyType::doesNotRepeat;
     }
 }

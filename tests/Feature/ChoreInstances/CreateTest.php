@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\ChoreInstances;
 
+use App\Enums\FrequencyType;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -24,7 +25,7 @@ class CreateTest extends TestCase
         Livewire::test(Save::class)
             ->set('chore.title', 'Do dishes')
             ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', 1)
+            ->set('chore.frequency_id', FrequencyType::daily)
             ->set('chore_instance.due_date', $date)
             ->call('save');
 
@@ -43,7 +44,7 @@ class CreateTest extends TestCase
         Livewire::test(Save::class)
             ->set('chore.title', 'Do dishes')
             ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', 1)
+            ->set('chore.frequency_id', FrequencyType::daily)
             ->set('chore_instance.due_date', null)
             ->call('save');
 
@@ -60,7 +61,7 @@ class CreateTest extends TestCase
         Livewire::test(Save::class)
             ->set('chore.title', 'Do dishes')
             ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', 1)
+            ->set('chore.frequency_id', FrequencyType::daily)
             ->set('chore_instance.due_date', $date)
             ->set('chore.user_id', $user->id)
             ->call('save');

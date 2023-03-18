@@ -25,7 +25,7 @@
             <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
 
             <div class="flex items-center space-x-3">
-              @if ($chore->frequency_id != 0)
+              @if (! $chore->is_does_not_repeat)
                 <div class="text-sm font-medium">
                   Every
                 </div>
@@ -58,7 +58,7 @@
             @if ($show_on)
               <div class="flex justify-between">
                 <div class="flex items-center mt-2 space-x-3 text-sm">
-                  @if ($chore->frequency_id == constant('App\Enums\Frequency::WEEKLY'))
+                  @if ($chore->is_weekly)
                     <label for="frequency_day_of">On</label>
 
                     <x-form.bare.select
@@ -66,7 +66,7 @@
                       prefix="chore"
                       :options="$this->weekly_day_of"
                     />
-                  @elseif ($chore->frequency_id == constant('App\Enums\Frequency::YEARLY'))
+                  @elseif ($chore->is_yearly)
                     <label for="frequency_day_of">On</label>
 
                     <div
