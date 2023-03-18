@@ -18,7 +18,7 @@ class Frequency
     ];
 
     /**
-     * @param FrequencyType $id One of the frequency constants
+     * @param FrequencyType $frequencyType One of the frequency constants
      * @param int $interval - The interval of the Frequency (every 2 weeks, every 3 months, etc.)
      * @param int $dayOf - The day of the Frequency (day of week, day of month, etc.)
      */

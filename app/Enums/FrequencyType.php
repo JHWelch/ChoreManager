@@ -13,7 +13,7 @@ enum FrequencyType : int
     case quarterly     = 4;
     case yearly        = 5;
 
-    public function adjective()
+    public function adjective(): string
     {
         return match ($this) {
             self::doesNotRepeat => 'Does not repeat',
@@ -25,7 +25,7 @@ enum FrequencyType : int
         };
     }
 
-    public function noun()
+    public function noun(): string
     {
         return match ($this) {
             self::doesNotRepeat => 'Does not repeat',
