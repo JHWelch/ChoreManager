@@ -216,7 +216,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function custom_completing_chore_clears_flashed_flag(): void
+    public function completing_coming_from_complete_endpoint_does_not_redirect(): void
     {
         $user  = $this->testUser()['user'];
         $chore = Chore::factory()
@@ -224,11 +224,14 @@ class ShowTest extends TestCase
             ->withFirstInstance()
             ->create();
         session()->flash('complete', true);
-
         $component = Livewire::test(Show::class, ['chore' => $chore])
-            ->call('customComplete');
+            ->set('previousUrl', route('chores.complete.index', ['chore' => $chore]));
 
-        $component->assertSessionMissing('complete');
+        $component->call('customComplete');
+
+        $component
+            ->assertSessionMissing('complete')
+            ->assertNoRedirect();
     }
 
     /** @test */

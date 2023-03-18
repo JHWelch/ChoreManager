@@ -38,7 +38,13 @@ class Show extends Component
     {
         $this->chore_instance->complete($for, $on);
         session()->remove('complete');
-        $this->back();
+
+        $this->fromCompleteRoute() ? $this->loadContent() : $this->back();
+    }
+
+    protected function fromCompleteRoute()
+    {
+        return $this->previousUrl === route('chores.complete.index', ['chore' => $this->chore]);
     }
 
     public function customComplete() : void
