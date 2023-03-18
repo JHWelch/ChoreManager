@@ -3,67 +3,65 @@
     <div class="max-w-3xl px-4 mx-auto sm:px-6 lg:px-8 xl:max-w-5xl xl:grid xl:grid-cols-3">
       <div class="xl:col-span-2 xl:pr-8 xl:border-r xl:border-gray-200">
         <div>
-          <div>
-            <div class="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
-              <div class="flex justify-between">
-                <div>
-                  <h1 class="text-2xl font-bold text-gray-900">{{ $chore->title }}</h1>
+          <div class="md:flex md:items-center md:justify-between md:space-x-4 xl:border-b xl:pb-6">
+            <div class="flex justify-between">
+              <div>
+                <h1 class="text-2xl font-bold text-gray-900">{{ $chore->title }}</h1>
 
-                  <p class="mt-2 text-sm text-gray-600">
-                    {{ $chore->frequency->toPrefixedString('Repeats') }}
-                  </p>
-                </div>
-
-                <x-chores.show.menu class="md:hidden"/>
+                <p class="mt-2 text-sm text-gray-600">
+                  {{ $chore->frequency->toPrefixedString('Repeats') }}
+                </p>
               </div>
 
-              <div class="flex items-center mt-4 space-x-3 md:mt-0">
-                <a
-                  href="{{ route('chores.edit', $chore) }}"
-                  class="inline-flex justify-center px-4 py-2 text-sm font-medium text-purple-700 bg-white border border-purple-300 rounded-md shadow-sm hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-900"
-                >
-                  <x-icons.pencil class="w-5 h-5 mr-2 -ml-1 text-purple-400"/>
-
-                  <span>Edit</span>
-                </a>
-
-                <button
-                  wire:click="complete"
-                  type="button"
-                  class="inline-flex justify-center px-4 py-2 text-sm font-medium text-purple-700 bg-white border border-purple-300 rounded-md shadow-sm hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-900"
-                >
-                  <x-icons.check-circle class="w-5 h-5 mr-2 -ml-1 text-purple-400" />
-
-                  <span>Complete</span>
-                </button>
-
-                <x-chores.show.menu class="hidden md:block"/>
-              </div>
+              <x-chores.show.menu class="md:hidden"/>
             </div>
 
-            <aside class="mt-6 xl:hidden">
-              <x-chore-instances.next-instance :instance="$chore_instance" class="mb-6" />
+            <div class="flex items-center mt-4 space-x-3 md:mt-0">
+              <a
+                href="{{ route('chores.edit', $chore) }}"
+                class="inline-flex justify-center px-4 py-2 text-sm font-medium text-purple-700 bg-white border border-purple-300 rounded-md shadow-sm hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-900"
+              >
+                <x-icons.pencil class="w-5 h-5 mr-2 -ml-1 text-purple-400"/>
 
-              <div class="{{ $chore_instance ? 'border-t py-6' : 'pb-6' }} space-y-8 border-b border-gray-200">
-                <div>
-                  <h2 class="text-sm font-medium text-gray-500">Owner</h2>
+                <span>Edit</span>
+              </a>
 
-                  <div class="mt-3">
-                    @if ($chore->user)
-                      <x-users.avatar-line :user="$chore->user" />
-                    @else
-                      <x-teams.line :team="$chore->team->name" />
-                    @endif
-                  </div>
+              <button
+                wire:click="complete"
+                type="button"
+                class="inline-flex justify-center px-4 py-2 text-sm font-medium text-purple-700 bg-white border border-purple-300 rounded-md shadow-sm hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-900"
+              >
+                <x-icons.check-circle class="w-5 h-5 mr-2 -ml-1 text-purple-400" />
+
+                <span>Complete</span>
+              </button>
+
+              <x-chores.show.menu class="hidden md:block"/>
+            </div>
+          </div>
+
+          <aside class="mt-6 xl:hidden">
+            <x-chore-instances.next-instance :instance="$chore_instance" class="mb-6" />
+
+            <div class="{{ $chore_instance ? 'border-t py-6' : 'pb-6' }} space-y-8 border-b border-gray-200">
+              <div>
+                <h2 class="text-sm font-medium text-gray-500">Owner</h2>
+
+                <div class="mt-3">
+                  @if ($chore->user)
+                    <x-users.avatar-line :user="$chore->user" />
+                  @else
+                    <x-teams.line :team="$chore->team->name" />
+                  @endif
                 </div>
               </div>
-            </aside>
-            <div class="py-3 xl:pt-6 xl:pb-0">
-              <h2 class="sr-only">Description</h2>
+            </div>
+          </aside>
+          <div class="py-3 xl:pt-6 xl:pb-0">
+            <h2 class="sr-only">Description</h2>
 
-              <div class="prose max-w-none">
-                @markdown($chore->description)
-              </div>
+            <div class="prose max-w-none">
+              @markdown($chore->description)
             </div>
           </div>
         </div>
