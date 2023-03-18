@@ -1,11 +1,12 @@
 <x-jet-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg">
   <x-slot name="title">
-    {{ __('Custom Chore Completion')}}
+    Complete
+    <span class="font-bold">
+      {{ $this->chore->title }}
+    </span>
   </x-slot>
 
   <x-slot name="content">
-    {{ __('Choose another user on your team to mark the chore completed by them and/or pick a date in the past for the chore to be completed.') }}
-
     <div class="mt-4">
       <x-form.select
         name="user_id"

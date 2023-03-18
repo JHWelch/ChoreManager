@@ -224,6 +224,17 @@ class ShowTest extends TestCase
 
         $component = Livewire::test(Show::class, ['chore' => $chore]);
 
-        $component->assertSee('Custom Chore Completion');
+        $component->assertSet('showCompleteForUserDialog', true);
+    }
+
+    /** @test */
+    public function when_complete_session_flag_is_not_present_dont_show_modal(): void
+    {
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()->for($user)->create();
+
+        $component = Livewire::test(Show::class, ['chore' => $chore]);
+
+        $component->assertSet('showCompleteForUserDialog', false);
     }
 }
