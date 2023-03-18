@@ -38,6 +38,7 @@ class Show extends Component
     {
         $this->chore_instance->complete($for, $on);
         session()->remove('complete');
+        $this->showCompleteForUserDialog = false;
 
         $this->fromCompleteRoute() ? $this->loadContent() : $this->back();
     }

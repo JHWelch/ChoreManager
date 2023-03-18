@@ -231,7 +231,8 @@ class ShowTest extends TestCase
 
         $component
             ->assertSessionMissing('complete')
-            ->assertNoRedirect();
+            ->assertNoRedirect()
+            ->assertSet('showCompleteForUserDialog', false);
     }
 
     /** @test */
