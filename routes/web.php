@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChoreCompleteController;
 use App\Http\Livewire\CalendarTokens;
 use App\Http\Livewire\ChoreInstances;
 use App\Http\Livewire\Chores;
@@ -28,6 +29,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/chores/create', Chores\Save::class)->name('chores.create');
     Route::get('/chores/{chore}', Chores\Show::class)->name('chores.show');
     Route::get('/chores/{chore}/edit', Chores\Save::class)->name('chores.edit');
+
+    Route::resource('chores.complete', ChoreCompleteController::class)->only(['index']);
 
     Route::get('/calendar_links', CalendarTokens\Index::class)->name('calendar_tokens.index');
 });
