@@ -20,8 +20,8 @@ class Show extends Component
     public ?ChoreInstance $chore_instance;
     public Collection $past_chore_instances;
 
-    public bool $showDeleteConfirmation    = false;
-    public bool $showCompleteForUserDialog = false;
+    public bool $showDeleteConfirmation = false;
+    public bool $showCompleteForUserDialog;
 
     public ?int $user_id = null;
     public string $completed_date;
@@ -31,6 +31,7 @@ class Show extends Component
         $this->authorize('view', $this->chore);
         $this->completed_date = today()->toDateString();
         $this->loadContent();
+        $this->showCompleteForUserDialog = session()->get('complete') ?? false;
     }
 
     public function complete(?int $for = null, ?Carbon $on = null) : void
