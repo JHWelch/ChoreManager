@@ -216,6 +216,22 @@ class ShowTest extends TestCase
     }
 
     /** @test */
+    public function custom_completing_chore_clears_flashed_flag(): void
+    {
+        $user  = $this->testUser()['user'];
+        $chore = Chore::factory()
+            ->for($user)
+            ->withFirstInstance()
+            ->create();
+        session()->flash('complete', true);
+
+        $component = Livewire::test(Show::class, ['chore' => $chore])
+            ->call('customComplete');
+
+        $component->assertSessionMissing('complete');
+    }
+
+    /** @test */
     public function when_complete_session_flag_is_present_show_modal(): void
     {
         $user  = $this->testUser()['user'];

@@ -37,6 +37,7 @@ class Show extends Component
     public function complete(?int $for = null, ?Carbon $on = null) : void
     {
         $this->chore_instance->complete($for, $on);
+        session()->remove('complete');
         $this->back();
     }
 
