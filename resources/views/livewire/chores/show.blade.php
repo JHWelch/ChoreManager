@@ -14,7 +14,7 @@
                   </p>
                 </div>
 
-                <x-chores.show-menu class="md:hidden"/>
+                <x-chores.show.menu class="md:hidden"/>
               </div>
 
               <div class="flex items-center mt-4 space-x-3 md:mt-0">
@@ -37,7 +37,7 @@
                   <span>Complete</span>
                 </button>
 
-                <x-chores.show-menu class="hidden md:block"/>
+                <x-chores.show.menu class="hidden md:block"/>
               </div>
             </div>
 
