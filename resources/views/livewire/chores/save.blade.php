@@ -17,14 +17,6 @@
                 prefix="chore"
                 blankOption="Assign to Team - {{ $team }}"
               />
-
-              {{-- <x-form.select
-                name="user_id"
-                label="Owner"
-                prefix="chore"
-                :options="$user_options"
-                blankOption="Assign to Team - {{ $team }}"
-              /> --}}
             </div>
           </div>
           <!-- Frequency -->
@@ -150,11 +142,10 @@
 
             @if ($chore_instance->exists)
               <div class="md:w-1/2 lg:w-full">
-                <x-form.select
+                <x-users.avatar-dropdown
                   name="user_id"
                   label="Owner"
                   prefix="chore_instance"
-                  :options="$user_options"
                 />
               </div>
             @endif
