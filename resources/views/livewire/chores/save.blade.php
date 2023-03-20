@@ -11,13 +11,20 @@
             </div>
 
             <div class="md:w-1/2 lg:w-full">
-              <x-form.select
+              <x-users.avatar-dropdown
+                name="user_id"
+                label="Owner"
+                prefix="chore"
+                blankOption="Assign to Team - {{ $team }}"
+              />
+
+              {{-- <x-form.select
                 name="user_id"
                 label="Owner"
                 prefix="chore"
                 :options="$user_options"
                 blankOption="Assign to Team - {{ $team }}"
-              />
+              /> --}}
             </div>
           </div>
           <!-- Frequency -->

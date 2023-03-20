@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Auth;
 
 trait DisplaysUserList
 {
-    public array $user_options = [];
+    public array $users = [];
 
     public function mountDisplaysUserList(): void
     {
-        $this->user_options = array_values(Auth::user()
+        $this->users = array_values(Auth::user()
             ->currentTeam
             ->allUsers()
             ->sortBy(fn ($user) => $user->name)

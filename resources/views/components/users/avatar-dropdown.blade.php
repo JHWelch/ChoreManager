@@ -1,19 +1,20 @@
+@props([
+  'label'  => ucfirst($name),
+  'prefix' => null,
+  'name',
+  'blankOption' => false,
+])
+
 <div x-data="{
-  users: [
-    {
-      'id': 1,
-      'name': 'Tom Cook',
-      'avatar': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-    },
-    {
-      'id': 2,
-      'name': 'Wade Cooper',
-      'avatar': 'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-    }
-  ],
-  selected: 1,
+  users: @js($this->users),
+  selected: @entangle('chore.user_id').defer,
+  open: false,
   selectedUser: function () {
     return this.users.find(user => user.id === this.selected);
+  },
+  setUser: function (userId) {
+    this.selected = userId;
+    this.open = false;
   },
   highlightClass: function (isActive) {
     return isActive ? 'bg-purple-600 text-white' : 'text-gray-900';
@@ -21,18 +22,13 @@
   checkColor: function (isActive) {
     return isActive ? 'text-white' : 'text-gray-900';
   }
-  {{-- users: @entangle('users'),
-  selected: @entangle('selectedUserId'), --}}
+  {{-- selected: @entangle('{{ $prefix ? $prefix . '.' . $name : $name }}') --}}
 }">
-  <label
-    id="listbox-label"
-    class="block text-sm font-medium leading-6 text-gray-900"
-  >
-    Assigned to
-  </label>
+  <x-form.bare.label :name="$name" :label="$label" />
 
   <div
     x-menu
+    x-model="open"
     class="relative mt-2"
   >
     <button
@@ -45,7 +41,7 @@
     >
       <span class="flex items-center">
         <img
-          :src="selectedUser().avatar"
+          :src="selectedUser().profile_photo_url"
           alt=""
           class="flex-shrink-0 w-5 h-5 rounded-full"
         >
@@ -78,35 +74,27 @@
       aria-labelledby="listbox-label"
       aria-activedescendant="listbox-option-3"
     >
-      <!--
-        Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
-
-        Highlighted: "bg-purple-600 text-white", Not Highlighted: "text-gray-900"
-      -->
       <template x-for="user in users">
         <li
           x-menu:item
-          x-on:click="selected = user.id"
+          x-on:click="setUser(user.id)"
           id="listbox-option-0"
           role="option"
           :class="'relative py-2 pl-3 cursor-default select-none pr-9 ' + highlightClass($menuItem.isActive)"
         >
           <div class="flex items-center">
             <img
-              :src="user.avatar"
+              :src="user.profile_photo_url"
               alt=""
               class="flex-shrink-0 w-5 h-5 rounded-full"
             >
-            <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
+
             <span
               :class="'block ml-3 truncate' + (selected === user.id ? ' font-semibold' : ' font-normal')"
               x-text="user.name"
             ></span>
           </div>
-          <!--
-            Checkmark, only display for selected option.
-            Highlighted: "text-white", Not Highlighted: "text-purple-600"
-          -->
+
           <span
             x-show="selected === user.id"
             :class="'absolute inset-y-0 right-0 flex items-center pr-4 ' + checkColor($menuItem.isActive)"

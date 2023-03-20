@@ -309,4 +309,21 @@ class CreateTest extends TestCase
 
         $component->assertDontSee('Every');
     }
+
+    /** @test */
+    public function can_see_assignable_users_info_and_photo(): void
+    {
+        $this->testUser();
+        $users = User::factory()
+            ->count(2)
+            ->hasAttached($this->team)
+            ->create();
+
+        $component = Livewire::test(Save::class);
+
+        $users->push($this->user)->each(function ($user) use ($component) {
+            $component->assertSee($user->name);
+            $component->assertSeeHtml($user->photo_url);
+        });
+    }
 }

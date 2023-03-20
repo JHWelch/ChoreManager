@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chores;
 
 use App\Enums\Frequency;
 use App\Enums\FrequencyType;
+use App\Http\Livewire\Chores\Concerns\DisplaysUserList;
 use App\Http\Livewire\Concerns\GoesBack;
 use App\Http\Livewire\Concerns\TrimAndNullEmptyStrings;
 use App\Models\Chore;
@@ -18,6 +19,7 @@ use Livewire\Component;
 class Save extends Component
 {
     use AuthorizesRequests;
+    use DisplaysUserList;
     use GoesBack;
     use TrimAndNullEmptyStrings;
 
@@ -64,7 +66,6 @@ class Save extends Component
             $this->chore->user_id = Auth::id();
         }
         $this->chore_instance = $chore->nextChoreInstance ?? new ChoreInstance();
-        $this->setupUserOptions();
 
         /** @var \App\Models\Team $team */
         $team       = Auth::user()->currentTeam()->select('name')->first();
@@ -89,17 +90,6 @@ class Save extends Component
         $this->chore->exists
             ? $this->authorize('update', $this->chore)
             : $this->authorize('create', Chore::class);
-    }
-
-    protected function setupUserOptions(): void
-    {
-        $this->user_options = array_values(
-            Auth::user()
-                ->currentTeam
-                ->allUsers()
-                ->sortBy(fn ($user) => $user->name)
-                ->toOptionsArray()
-        );
     }
 
     protected function saveChoreInstance(): void

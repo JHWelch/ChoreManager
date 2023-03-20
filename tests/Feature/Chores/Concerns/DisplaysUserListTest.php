@@ -28,10 +28,10 @@ class DisplaysUserListTest extends TestCase
         $class->mountDisplaysUserList();
 
         $this->assertEquals([
-            ['id' => 1, 'name' => 'Alfred Albertson', 'profile_photo_url' => $this->user->profile_photo_url],
-            ['id' => 2, 'name' => 'Bertie Bertsch', 'profile_photo_url' => $users[0]->profile_photo_url],
-            ['id' => 3, 'name' => 'Cecil Cesar', 'profile_photo_url' => $users[1]->profile_photo_url],
-        ], $class->user_options);
+            ['id' => $this->user->id, 'name' => 'Alfred Albertson', 'profile_photo_url' => $this->user->profile_photo_url],
+            ['id' => $users[0]->id, 'name' => 'Bertie Bertsch', 'profile_photo_url' => $users[0]->profile_photo_url],
+            ['id' => $users[1]->id, 'name' => 'Cecil Cesar', 'profile_photo_url' => $users[1]->profile_photo_url],
+        ], $class->users);
     }
 }
 
