@@ -5,9 +5,11 @@
   'blankOption' => false,
 ])
 
+@php($name = $prefix ? "{$prefix}.{$name}" : $name)
+
 <div x-data="{
   users: @js($this->users),
-  selected: @entangle('chore.user_id').defer,
+  selected: @entangle($name).defer,
   open: false,
   nullUser: {
     id: null,
@@ -29,7 +31,6 @@
   checkColor: function (isActive) {
     return isActive ? 'text-white' : 'text-gray-900';
   }
-  {{-- selected: @entangle('{{ $prefix ? $prefix . '.' . $name : $name }}') --}}
 }">
   <x-form.bare.label :name="$name" :label="$label" />
 
