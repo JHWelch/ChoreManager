@@ -60,7 +60,7 @@ class Show extends Component
             'pastChoreInstances',
             'pastChoreInstances.completedBy'
         );
-        $this->chore_instance       = $this->chore->nextChoreInstance;
+        $this->chore_instance       = $this->chore->nextChoreInstance()->with('user')->first();
         $this->past_chore_instances = $this->chore->pastChoreInstances;
     }
 
