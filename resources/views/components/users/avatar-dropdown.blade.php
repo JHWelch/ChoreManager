@@ -9,8 +9,15 @@
   users: @js($this->users),
   selected: @entangle('chore.user_id').defer,
   open: false,
+  nullUser: {
+    id: null,
+    name: '{{ $blankOption }}',
+    profile_photo_url: '/images/group.png'
+  },
   selectedUser: function () {
-    return this.users.find(user => user.id === this.selected);
+    const user = this.users.find(user => user.id === this.selected);
+
+    return user ?? this.nullUser;
   },
   setUser: function (userId) {
     this.selected = userId;
@@ -74,34 +81,12 @@
       aria-labelledby="listbox-label"
       aria-activedescendant="listbox-option-3"
     >
+      @if ($blankOption)
+        <x-users.avatar-dropdown-item userVar="nullUser" />
+      @endif
+
       <template x-for="user in users">
-        <li
-          x-menu:item
-          x-on:click="setUser(user.id)"
-          id="listbox-option-0"
-          role="option"
-          :class="'relative py-2 pl-3 cursor-default select-none pr-9 ' + highlightClass($menuItem.isActive)"
-        >
-          <div class="flex items-center">
-            <img
-              :src="user.profile_photo_url"
-              alt=""
-              class="flex-shrink-0 w-5 h-5 rounded-full"
-            >
-
-            <span
-              :class="'block ml-3 truncate' + (selected === user.id ? ' font-semibold' : ' font-normal')"
-              x-text="user.name"
-            ></span>
-          </div>
-
-          <span
-            x-show="selected === user.id"
-            :class="'absolute inset-y-0 right-0 flex items-center pr-4 ' + checkColor($menuItem.isActive)"
-          >
-            <x-icons.check />
-          </span>
-        </li>
+        <x-users.avatar-dropdown-item />
       </template>
     </ul>
   </div>
