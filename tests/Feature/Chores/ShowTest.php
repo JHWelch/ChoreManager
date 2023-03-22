@@ -54,7 +54,7 @@ class ShowTest extends TestCase
     }
 
     /** @test */
-    public function can_complete_chore_from_chore_page(): void
+    public function calling_complete_without_specifying_completes_for_defaults(): void
     {
         $this->testUser();
         $chore    = Chore::factory()->for($this->user)->withFirstInstance()->create();
@@ -65,6 +65,8 @@ class ShowTest extends TestCase
 
         $instance->refresh();
         $this->assertEquals(true, $instance->is_completed);
+        $this->assertEquals($this->user->id, $instance->completed_by_id);
+        $this->assertEquals(now()->toDateString(), $instance->completed_date->toDateString());
         $component->assertRedirect('/');
     }
 
@@ -182,7 +184,7 @@ class ShowTest extends TestCase
             'chore' => $chore,
         ])
             ->set('user_id', $other_user->id)
-            ->call('customComplete');
+            ->call('complete');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id'        => $chore->id,
@@ -205,7 +207,7 @@ class ShowTest extends TestCase
             'chore' => $chore,
         ])
             ->set('completed_date', $date)
-            ->call('customComplete');
+            ->call('complete');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id'        => $chore->id,
@@ -227,7 +229,7 @@ class ShowTest extends TestCase
         $component = Livewire::test(Show::class, ['chore' => $chore])
             ->set('previousUrl', route('chores.complete.index', ['chore' => $chore]));
 
-        $component->call('customComplete');
+        $component->call('complete');
 
         $component
             ->assertSessionMissing('complete')

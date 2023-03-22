@@ -37,9 +37,12 @@ class Show extends Component
         $this->user_id                   = Auth::id();
     }
 
-    public function complete(?int $for = null, ?Carbon $on = null) : void
+    public function complete() : void
     {
-        $this->chore_instance->complete($for, $on);
+        $this->chore_instance->complete(
+            $this->user_id,
+            Carbon::parse($this->completed_date)
+        );
         session()->remove('complete');
         $this->showCompleteForUserDialog = false;
 
@@ -49,11 +52,6 @@ class Show extends Component
     protected function fromCompleteRoute(): bool
     {
         return $this->previousUrl === route('chores.complete.index', ['chore' => $this->chore]);
-    }
-
-    public function customComplete() : void
-    {
-        $this->complete($this->user_id, Carbon::parse($this->completed_date));
     }
 
     public function loadContent() : void
