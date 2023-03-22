@@ -79,8 +79,8 @@
       class="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
       tabindex="-1"
       role="listbox"
-      aria-labelledby="listbox-label"
-      aria-activedescendant="listbox-option-3"
+      aria-labelledby="for-{{ $name }}"
+      :aria-activedescendant="'user-' + selected"
     >
       @if ($blankOption)
         <x-users.avatar-dropdown-item userVar="nullUser" />

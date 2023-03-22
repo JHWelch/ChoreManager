@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Chores;
 
+use App\Http\Livewire\Chores\Concerns\DisplaysUserList;
 use App\Http\Livewire\Concerns\GoesBack;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
@@ -13,8 +14,9 @@ use Livewire\Component;
 
 class Show extends Component
 {
-    use GoesBack;
     use AuthorizesRequests;
+    use DisplaysUserList;
+    use GoesBack;
 
     public Chore $chore;
     public ?ChoreInstance $chore_instance;
@@ -23,7 +25,7 @@ class Show extends Component
     public bool $showDeleteConfirmation = false;
     public bool $showCompleteForUserDialog;
 
-    public ?int $user_id = null;
+    public int $user_id;
     public string $completed_date;
 
     public function mount() : void
@@ -32,6 +34,7 @@ class Show extends Component
         $this->completed_date = today()->toDateString();
         $this->loadContent();
         $this->showCompleteForUserDialog = session()->get('complete') ?? false;
+        $this->user_id                   = Auth::id();
     }
 
     public function complete(?int $for = null, ?Carbon $on = null) : void

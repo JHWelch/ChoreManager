@@ -1,4 +1,4 @@
-<x-jet-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg">
+<x-jet-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg" overflow="">
   <x-slot name="title">
     Complete
     <span class="font-bold">
@@ -8,11 +8,9 @@
 
   <x-slot name="content">
     <div class="mt-4">
-      <x-form.select
+      <x-users.avatar-dropdown
         name="user_id"
         label="Complete Chore for User"
-        blankOption="{{ Auth::user()->name }}"
-        :options="$this->user_options"
       />
     </div>
 
