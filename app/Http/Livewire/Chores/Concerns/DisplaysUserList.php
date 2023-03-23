@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 trait DisplaysUserList
 {
+    /** @var array<int, array<string, string>> */
     public array $users = [];
 
     public function mountDisplaysUserList(): void
