@@ -49,7 +49,7 @@ class ShowTest extends TestCase
         $response->assertJson(['data' => [
             'id'                 => $user->id,
             'name'               => $user->name,
-            'profile_photo_path' => $this->user->profile_photo_path,
+            'profile_photo_path' => $user->profile_photo_path,
         ]]);
         $response->assertJson(function (AssertableJson $json) {
             $json->missing('data.email')
