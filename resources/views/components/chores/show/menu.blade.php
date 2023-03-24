@@ -1,5 +1,6 @@
 @props([
-  'class' => ''
+  'class' => '',
+  'chore_id',
 ])
 
 <x-dropdown-menu :class="$class">
@@ -7,7 +8,11 @@
     Custom Complete
   </x-dropdown-option>
 
-  <x-dropdown-option click="$toggle('showDeleteConfirmation')" status="danger">
+  <x-dropdown-option x-clipboard="'{{ route('chores.complete.index', ['chore' => $chore_id]) }}'">
+    Copy Complete URL
+  </x-dropdown-option>
+
+  <x-dropdown-option wire:click="$toggle('showDeleteConfirmation')" status="danger">
     Delete
   </x-dropdown-option>
 </x-dropdown-menu>
