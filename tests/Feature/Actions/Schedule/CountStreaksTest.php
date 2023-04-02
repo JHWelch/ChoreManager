@@ -7,14 +7,11 @@ use App\Models\Chore;
 use App\Models\StreakCount;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class CountStreaksTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     protected function uncompletedChoreForUser($user)
     {
         Chore::factory()

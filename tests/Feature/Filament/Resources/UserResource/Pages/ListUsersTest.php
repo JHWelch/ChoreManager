@@ -5,14 +5,11 @@ namespace Tests\Feature\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource;
 use App\Filament\Resources\UserResource\Pages\ListUsers;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class ListUsersTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function admin_can_see_index_page(): void
     {

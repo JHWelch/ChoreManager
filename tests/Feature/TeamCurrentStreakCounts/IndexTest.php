@@ -4,13 +4,10 @@ namespace Tests\Feature\TeamCurrentStreakCounts;
 
 use App\Models\StreakCount;
 use App\Models\Team;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function user_can_get_current_streak_for_their_team(): void
     {

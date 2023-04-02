@@ -3,14 +3,11 @@
 namespace Jetstream\Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Features;
 use Tests\TestCase;
 
 class PasswordConfirmationTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     public function test_confirm_password_screen_can_be_rendered(): void
     {
         $user = Features::hasTeamFeatures()

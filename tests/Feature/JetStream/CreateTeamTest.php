@@ -3,15 +3,12 @@
 namespace Tests\Feature\Jetstream;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\CreateTeamForm;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class CreateTeamTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     public function test_teams_can_be_created(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());

@@ -6,13 +6,11 @@ use App\Mail\DailyDigest;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class DailyDigestTest extends TestCase
 {
-    use LazilyRefreshDatabase;
     use WithFaker;
 
     protected User $user;

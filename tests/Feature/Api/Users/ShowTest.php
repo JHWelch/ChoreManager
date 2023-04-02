@@ -4,14 +4,11 @@ namespace Tests\Feature\Api\Users;
 
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function a_user_can_view_their_own_info(): void
     {

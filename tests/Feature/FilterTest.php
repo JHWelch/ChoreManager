@@ -8,14 +8,11 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class FilterTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     public function assertAndReemit($component)
     {
         // This is a workaround because the emit does not seem to be working

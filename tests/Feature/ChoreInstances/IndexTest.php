@@ -6,14 +6,11 @@ use App\Http\Livewire\ChoreInstances\Index as ChoreInstancesIndex;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function chore_instance_index_page_can_be_reached(): void
     {

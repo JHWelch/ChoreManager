@@ -5,12 +5,14 @@ namespace Tests;
 use App\Models\Team;
 use App\Models\User;
 use Database\Seeders\AdminTeamSeeder;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Carbon;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
+    use LazilyRefreshDatabase;
 
     protected User $user;
     protected Team $team;

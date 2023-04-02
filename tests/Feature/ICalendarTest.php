@@ -5,13 +5,10 @@ namespace Tests\Feature;
 use App\Models\CalendarToken;
 use App\Models\Chore;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class ICalendarTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function user_calendar_tokens_return_users_next_chore_instances(): void
     {

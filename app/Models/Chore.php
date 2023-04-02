@@ -219,12 +219,13 @@ class Chore extends Model
     public function complete(int $for = null, Carbon $on = null) : void
     {
         if ($this->nextInstance) {
-            $this->nextInstance?->complete($for, $on);
-            return ;
+            $this->nextInstance->complete($for, $on);
+
+            return;
         }
 
         $for ??= auth()->id();
-        $on ??= today();
+        $on  ??= today();
 
         $this->choreInstances()->create([
             'due_date'        => $on,

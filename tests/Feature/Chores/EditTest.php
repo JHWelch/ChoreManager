@@ -5,14 +5,11 @@ namespace Tests\Feature\Chores;
 use App\Enums\FrequencyType;
 use App\Http\Livewire\Chores\Save;
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class EditTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function chore_edit_page_can_be_reached(): void
     {

@@ -3,13 +3,10 @@
 namespace Tests\Feature\Api\ChoreInstances;
 
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function can_get_upcoming_chores_with_their_due_dates(): void
     {

@@ -3,15 +3,12 @@
 namespace Tests\Feature\Jetstream;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\UpdateTeamNameForm;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class UpdateTeamNameTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     public function test_team_names_can_be_updated(): void
     {
         $this->actingAs($user = User::factory()->withPersonalTeam()->create());

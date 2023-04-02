@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Api\AuthUser;
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class ShowTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function a_user_can_view_their_own_info(): void
     {

@@ -3,14 +3,11 @@
 namespace Tests\Feature\Api\Chores\Update;
 
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class SnoozeTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     protected function snoozeEndpoint(Chore $chore, Carbon $nextDueDate)
     {
         return $this->patch(

@@ -4,14 +4,11 @@ namespace Tests\Feature\CalendarTokens;
 
 use App\Http\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class DeleteTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function can_delete_existing_calendar_tokens(): void
     {

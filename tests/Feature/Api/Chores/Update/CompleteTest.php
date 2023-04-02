@@ -4,13 +4,10 @@ namespace Tests\Feature\Api\Chores\Update;
 
 use App\Models\Chore;
 use App\Models\ChoreInstance;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class CompleteTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     protected function callCompleteEndpoint(Chore $chore)
     {
         return $this->patch(
