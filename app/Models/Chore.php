@@ -218,7 +218,20 @@ class Chore extends Model
      */
     public function complete(int $for = null, Carbon $on = null) : void
     {
-        $this->nextChoreInstance?->complete($for, $on);
+        if ($this->nextInstance) {
+            $this->nextInstance?->complete($for, $on);
+            return ;
+        }
+
+        $for ??= auth()->id();
+        $on ??= today();
+
+        $this->choreInstances()->create([
+            'due_date'        => $on,
+            'completed_date'  => $on,
+            'user_id'         => $for,
+            'completed_by_id' => $for,
+        ]);
     }
 
     public function snooze(Carbon $until): void
