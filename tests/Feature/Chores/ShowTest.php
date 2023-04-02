@@ -66,6 +66,27 @@ class ShowTest extends TestCase
     }
 
     /** @test */
+    public function can_complete_chore_without_first_instance(): void
+    {
+        $this->testUser();
+        $chore = Chore::factory()->for($this->user)->create();
+
+        $component = Livewire::test(Show::class, ['chore' => $chore])
+            ->call('complete');
+
+        $component->assertRedirect('/');
+        $now           = now()->toDateString();
+        $choreInstance = ChoreInstance::first();
+        $this->assertNotNull($choreInstance);
+        $this->assertEquals($chore->id, $choreInstance->chore_id);
+        $this->assertTrue($choreInstance->is_completed);
+        $this->assertEquals($now, $choreInstance->due_date->toDateString());
+        $this->assertEquals($now, $choreInstance->completed_date->toDateString());
+        $this->assertEquals($this->user->id, $choreInstance->user_id);
+        $this->assertEquals($this->user->id, $choreInstance->completed_by_id);
+    }
+
+    /** @test */
     public function can_see_chore_history(): void
     {
         $user1 = $this->testUser()['user'];
