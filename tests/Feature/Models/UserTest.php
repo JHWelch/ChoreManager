@@ -4,13 +4,10 @@ namespace Tests\Feature\Models;
 
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     private function adminTeam($user = null)
     {
         return Team::factory([

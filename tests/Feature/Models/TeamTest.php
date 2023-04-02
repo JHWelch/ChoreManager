@@ -4,13 +4,10 @@ namespace Tests\Feature\Models;
 
 use App\Models\Team;
 use Database\Seeders\AdminTeamSeeder;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class TeamTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function adminTeam_returns_null_if_team_not_seeded(): void
     {

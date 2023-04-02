@@ -5,13 +5,10 @@ namespace Tests\Feature\Api\ChoreGroups;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class IndexText extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function returns_chores_grouped_by_today_and_past_due_for_team(): void
     {

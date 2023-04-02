@@ -32,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @property-read Frequency $frequency
  * @property-read int $next_assigned_id
  * @property-read \Illuminate\Support\Carbon|null $next_due_date
+ * @property-read \App\Models\ChoreInstance|null $nextInstance
  * @property-read \App\Models\ChoreInstance|null $nextChoreInstance
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $pastChoreInstances
  * @property-read int|null $past_chore_instances_count
@@ -100,6 +101,11 @@ class Chore extends Model
         return $this
             ->hasOne(ChoreInstance::class)
             ->whereNull('completed_date');
+    }
+
+    public function nextInstance() : HasOne
+    {
+        return $this->nextChoreInstance();
     }
 
     public function getFrequencyAttribute() : Frequency
@@ -212,7 +218,21 @@ class Chore extends Model
      */
     public function complete(int $for = null, Carbon $on = null) : void
     {
-        $this->nextChoreInstance?->complete($for, $on);
+        if ($this->nextInstance) {
+            $this->nextInstance->complete($for, $on);
+
+            return;
+        }
+
+        $for ??= auth()->id();
+        $on  ??= today();
+
+        $this->choreInstances()->create([
+            'due_date'        => $on,
+            'completed_date'  => $on,
+            'user_id'         => $for,
+            'completed_by_id' => $for,
+        ]);
     }
 
     public function snooze(Carbon $until): void

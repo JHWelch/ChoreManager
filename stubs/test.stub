@@ -2,13 +2,11 @@
 
 namespace {{ namespace }};
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class {{ class }} extends TestCase
 {
-    use LazilyRefreshDatabase;
 
 
 }

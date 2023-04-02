@@ -5,13 +5,10 @@ namespace Tests\Feature\Api\Chores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class IndexTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     protected function setUp(): void
     {
         parent::setUp();

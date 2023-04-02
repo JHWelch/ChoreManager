@@ -5,13 +5,10 @@ namespace Tests\Unit;
 use App\Models\CalendarToken;
 use App\Models\Team;
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class CalendarTokenAttributeTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function calendar_token_is_team_calendar(): void
     {

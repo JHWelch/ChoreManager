@@ -6,13 +6,10 @@ use App\Http\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class SnoozeTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     private function arrange(int $count = 1)
     {
         // Create chore for user. Get a carbon instance for today.

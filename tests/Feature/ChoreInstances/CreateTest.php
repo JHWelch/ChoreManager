@@ -8,14 +8,11 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function when_a_user_specifies_a_date_while_creating_a_chore_a_chore_instance_is_created(): void
     {

@@ -3,15 +3,12 @@
 namespace Tests\Feature\Jetstream;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class LeaveTeamTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     public function test_users_can_leave_teams(): void
     {
         $user = User::factory()->withPersonalTeam()->create();

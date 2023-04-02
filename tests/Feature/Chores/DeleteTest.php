@@ -4,14 +4,11 @@ namespace Tests\Feature\Chores;
 
 use App\Http\Livewire\Chores\Show;
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire;
 use Tests\TestCase;
 
 class DeleteTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function user_can_delete_chore_from_show(): void
     {

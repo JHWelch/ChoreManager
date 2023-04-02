@@ -6,14 +6,11 @@ use App\Enums\Frequency;
 use App\Enums\FrequencyType;
 use App\Http\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class IndexLineTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function can_complete_a_chore_instance(): void
     {

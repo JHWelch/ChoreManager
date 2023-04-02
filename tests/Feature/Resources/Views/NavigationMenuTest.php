@@ -2,13 +2,10 @@
 
 namespace Tests\Feature\Resources\Views;
 
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class NavigationMenuTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /** @test */
     public function user_can_see_account_management_links(): void
     {

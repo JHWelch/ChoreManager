@@ -7,13 +7,10 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
 class ChoreInstanceCompleteTest extends TestCase
 {
-    use LazilyRefreshDatabase;
-
     /**
      * More testing of this happens in FrequencyTest directly.
      * Removed the more intensive tests from here in favor of testing there.
