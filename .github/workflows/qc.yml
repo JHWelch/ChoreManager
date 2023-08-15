@@ -1,0 +1,81 @@
+name: QC Check
+run-name: 'QC Check - App (PR #${{ github.event.pull_request.number }})'
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_call:
+  workflow_dispatch:
+
+concurrency:
+  group: qc-check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  phpstan:
+    name: Static Type Analysis (PHPStan)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v2
+
+      - name: run PHPStan
+        run: composer test:types
+
+  phpunit:
+    name: Unit Tests (PHPUnit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v2
+
+      - name: enable mysql
+        run: sudo systemctl start mysql.service
+
+      - name: create empty database
+        run: mysql --user=root --password=root --execute="CREATE DATABASE choremanager"
+
+      - name: run phpunit
+        run: composer test:unit
+        env:
+          APP_KEY: base64:UmeUVSBI8wMTAzYlIWXQOf/SoBR116L3jozOtnnUAyY=
+          DB_DATABASE: choremanager
+          DB_USERNAME: root
+          DB_PASSWORD: root
+
+  standards:
+    name: Code Style (PHP-CS-Fixer)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v2
+
+      - name: Check style
+        run: composer test:lint
