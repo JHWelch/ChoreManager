@@ -17,6 +17,12 @@ abstract class TestCase extends BaseTestCase
     protected User $user;
     protected Team $team;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutVite();
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
