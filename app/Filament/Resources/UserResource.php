@@ -91,7 +91,7 @@ class UserResource extends Resource
             ]);
     }
 
-    /** @return array<string, array<mixed>> */
+    /** @return class-string[] */
     public static function getRelations(): array
     {
         return [
