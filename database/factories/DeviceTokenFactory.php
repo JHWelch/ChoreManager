@@ -18,7 +18,7 @@ class DeviceTokenFactory extends Factory
     public function definition(): array
     {
         return [
-            'token' => $this->faker->uuid,
+            'token'   => $this->faker->uuid,
             'user_id' => User::factory(),
         ];
     }

@@ -135,7 +135,7 @@ class User extends Authenticatable implements FilamentUser
     }
 
     /**
-     * Specifies the user's FCM tokens
+     * Specifies the user's FCM tokens.
      *
      * @return string|string[]
      */
