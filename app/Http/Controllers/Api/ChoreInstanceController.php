@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ChoreInstanceController extends Controller
 {
-    public function index() : Collection
+    public function index(): Collection
     {
         return Auth::user()
             ->chores()

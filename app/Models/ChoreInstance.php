@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
  * @property-read \App\Models\User|null $completedBy
  * @property-read bool $is_completed
  * @property-read \App\Models\User $user
+ *
  * @method static Builder|ChoreInstance completed()
  * @method static Builder|ChoreInstance dueToday()
  * @method static Builder|ChoreInstance dueTodayOrPast()
@@ -40,6 +41,7 @@ use Illuminate\Support\Facades\Auth;
  * @method static Builder|ChoreInstance whereId($value)
  * @method static Builder|ChoreInstance whereUpdatedAt($value)
  * @method static Builder|ChoreInstance whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class ChoreInstance extends Model
@@ -50,60 +52,60 @@ class ChoreInstance extends Model
 
     /** @var array<string, string> */
     protected $casts = [
-        'due_date'       => 'date:Y-m-d',
+        'due_date' => 'date:Y-m-d',
         'completed_date' => 'date:Y-m-d',
     ];
 
-    public function complete(?int $for = null, ?Carbon $on = null) : void
+    public function complete(int $for = null, Carbon $on = null): void
     {
-        $this->completed_date  = $on  ?? today();
+        $this->completed_date = $on ?? today();
         $this->completed_by_id = $for ?? Auth::id();
         $this->save();
 
         $this->chore->createNewInstance($this->completed_date);
     }
 
-    public function chore() : BelongsTo
+    public function chore(): BelongsTo
     {
         return $this->belongsTo(Chore::class);
     }
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function completedBy() : BelongsTo
+    public function completedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'completed_by_id');
     }
 
-    public function getIsCompletedAttribute() : bool
+    public function getIsCompletedAttribute(): bool
     {
         return ! is_null($this->completed_date);
     }
 
-    public function scopeCompleted(Builder $query) : Builder
+    public function scopeCompleted(Builder $query): Builder
     {
         return $query->whereNotNull('completed_date');
     }
 
-    public function scopeNotCompleted(Builder $query) : Builder
+    public function scopeNotCompleted(Builder $query): Builder
     {
         return $query->whereNull('completed_date');
     }
 
-    public function scopeDueToday(Builder $query) : Builder
+    public function scopeDueToday(Builder $query): Builder
     {
         return $query->where('due_date', today());
     }
 
-    public function scopeDueTodayOrPast(Builder $query) : Builder
+    public function scopeDueTodayOrPast(Builder $query): Builder
     {
         return $query->where('due_date', '<=', today());
     }
 
-    public function snooze(Carbon $nextDueDate) : void
+    public function snooze(Carbon $nextDueDate): void
     {
         $this->due_date = $nextDueDate;
         $this->save();

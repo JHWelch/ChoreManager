@@ -13,8 +13,8 @@ class ResetUserPassword implements ResetsUserPasswords
     /**
      * Validate and reset the user's forgotten password.
      *
-     * @param  mixed $user
-     * @param  array<string, mixed> $input
+     * @param  mixed  $user
+     * @param  array<string, mixed>  $input
      */
     public function reset($user, array $input): void
     {

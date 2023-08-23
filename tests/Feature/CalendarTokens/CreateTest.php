@@ -92,7 +92,7 @@ class CreateTest extends TestCase
             ->call('addCalendarLink');
 
         $this->assertDatabaseHas((new CalendarToken)->getTable(), [
-            'name'    => 'Chore Calendar',
+            'name' => 'Chore Calendar',
             'user_id' => $user->id,
             'team_id' => null,
         ]);

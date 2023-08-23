@@ -11,7 +11,7 @@ class ChoreCompleteControllerTest extends TestCase
     public function chore_complete_redirects_user_to_chore_show_with_flag(): void
     {
         $this->testUser();
-        $chore    = Chore::factory()->create();
+        $chore = Chore::factory()->create();
         $response = $this->get(route('chores.complete.index', ['chore' => $chore]));
 
         $response

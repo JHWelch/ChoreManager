@@ -12,7 +12,7 @@ class DeleteTest extends TestCase
     /** @test */
     public function can_delete_existing_calendar_tokens(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $token = CalendarToken::factory()
             ->for($user)
             ->create();

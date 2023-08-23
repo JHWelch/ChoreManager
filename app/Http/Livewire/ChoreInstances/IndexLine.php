@@ -15,16 +15,17 @@ class IndexLine extends Component
     }
 
     public Chore $chore;
+
     public ChoreInstance $chore_instance;
 
     public function mount(Chore $chore): void
     {
         $chore->load('nextChoreInstance');
-        $this->chore          = $chore;
+        $this->chore = $chore;
         $this->chore_instance = $chore->nextChoreInstance;
     }
 
-    public function complete(?int $for = null): void
+    public function complete(int $for = null): void
     {
         $this->chore_instance->complete($for);
         $this->chore_instance->refresh();

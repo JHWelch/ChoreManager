@@ -16,4 +16,3 @@ npm-debug.log
 yarn-error.log
 .env.testing
 /.vscode
-.php-cs-fixer.cache

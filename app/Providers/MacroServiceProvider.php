@@ -17,6 +17,7 @@ class MacroServiceProvider extends ServiceProvider
     {
         /**
          * Convert a collection to an array of options that can be used in an HTML select.
+         *
          * @return array<array<string, mixed>>
          */
         EloquentCollection::macro('toOptionsArray', function () {
@@ -26,9 +27,10 @@ class MacroServiceProvider extends ServiceProvider
 
         /**
          * The next item in a collection after a given value.
-         * @param mixed $needle - The item to search for
-         * @param bool $strict - Whether to use strict comparison in the collection search
-         * @param bool $wrap - if $needle specifies last item in collection, return the first.
+         *
+         * @param  mixed  $needle - The item to search for
+         * @param  bool  $strict - Whether to use strict comparison in the collection search
+         * @param  bool  $wrap - if $needle specifies last item in collection, return the first.
          * @return mixed
          */
         EloquentCollection::macro('nextAfter', function ($needle, $strict = false, $wrap = false) {
@@ -42,7 +44,8 @@ class MacroServiceProvider extends ServiceProvider
 
         /**
          * Convert a snake_cased string to Title Case, e.g. field_name => Field Name.
-         * @param string $string
+         *
+         * @param  string  $string
          * @return string
          */
         Str::macro('snakeToTitle', fn ($string) => Str::of($string)->snake()->replace('_', ' ')->title()->__toString());
@@ -50,7 +53,7 @@ class MacroServiceProvider extends ServiceProvider
         /**
          * Convert a snake_cased string to Sentence case, e.g. field_name => Field name.
          *
-         * @param string $string
+         * @param  string  $string
          * @return string
          */
         Str::macro('snakeToLabel', fn ($string) => ucfirst(str_replace('_', ' ', $string)));
@@ -62,8 +65,8 @@ class MacroServiceProvider extends ServiceProvider
                 : $this->diffForHumans(
                     today(),
                     [
-                    'options' => \Carbon\CarbonInterface::ONE_DAY_WORDS,
-                    'syntax'  => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW,
+                        'options' => \Carbon\CarbonInterface::ONE_DAY_WORDS,
+                        'syntax' => \Carbon\CarbonInterface::DIFF_RELATIVE_TO_NOW,
                     ]
                 );
         });

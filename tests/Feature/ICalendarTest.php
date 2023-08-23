@@ -15,7 +15,7 @@ class ICalendarTest extends TestCase
         $this->testUser();
         CalendarToken::create([
             'user_id' => $this->user->id,
-            'token'   => 'fake_uuid',
+            'token' => 'fake_uuid',
         ]);
         Chore::factory()
             ->count(3)
@@ -43,7 +43,7 @@ class ICalendarTest extends TestCase
         CalendarToken::create([
             'user_id' => $this->user->id,
             'team_id' => $this->team->id,
-            'token'   => 'fake_uuid',
+            'token' => 'fake_uuid',
         ]);
         Chore::factory()
             ->count(3)
@@ -75,7 +75,7 @@ class ICalendarTest extends TestCase
         $this->testUser();
         CalendarToken::create([
             'user_id' => $this->user->id,
-            'token'   => 'fake_uuid',
+            'token' => 'fake_uuid',
         ]);
         Chore::factory(
             ['title' => 'Clean the dishes']

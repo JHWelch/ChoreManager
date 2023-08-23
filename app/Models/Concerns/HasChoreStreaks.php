@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 trait HasChoreStreaks
 {
-    public function currentStreak() : HasOne
+    public function currentStreak(): HasOne
     {
         return $this->hasOne(StreakCount::class)->whereNull('ended_at');
     }

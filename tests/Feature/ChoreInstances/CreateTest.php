@@ -27,8 +27,8 @@ class CreateTest extends TestCase
             ->call('save');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'chore_id'       => Chore::first()->id,
-            'due_date'       => $date->format('Y-m-d 00:00:00'),
+            'chore_id' => Chore::first()->id,
+            'due_date' => $date->format('Y-m-d 00:00:00'),
             'completed_date' => null,
         ]);
     }
@@ -65,7 +65,7 @@ class CreateTest extends TestCase
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'due_date' => $date->toDateString(),
-            'user_id'  => $user->id,
+            'user_id' => $user->id,
         ]);
     }
 }

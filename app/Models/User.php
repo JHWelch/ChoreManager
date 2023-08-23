@@ -50,6 +50,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
+ *
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -68,6 +69,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
  * @method static \Illuminate\Database\Eloquent\Builder|User withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements FilamentUser
@@ -109,7 +111,7 @@ class User extends Authenticatable implements FilamentUser
         return $this->isAdmin();
     }
 
-    protected static function booted() : void
+    protected static function booted(): void
     {
         static::addGlobalScope(new OrderByNameScope);
         static::created(function ($user) {
@@ -126,7 +128,7 @@ class User extends Authenticatable implements FilamentUser
         string $setting,
         bool $value,
         string $operator = '='
-    ) : Collection {
+    ): Collection {
         return self::with('settings')
             ->whereHas('settings', function ($query) use ($setting, $operator, $value) {
                 $query->where($setting, $operator, $value);
@@ -144,27 +146,27 @@ class User extends Authenticatable implements FilamentUser
         return $this->deviceTokens->pluck('token')->toArray();
     }
 
-    public function chores() : HasMany
+    public function chores(): HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
-    public function choreInstances() : HasMany
+    public function choreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class);
     }
 
-    public function calendarTokens() : HasMany
+    public function calendarTokens(): HasMany
     {
         return $this->hasMany(CalendarToken::class);
     }
 
-    public function settings() : HasOne
+    public function settings(): HasOne
     {
         return $this->hasOne(UserSetting::class);
     }
 
-    public function deviceTokens() : HasMany
+    public function deviceTokens(): HasMany
     {
         return $this->hasMany(DeviceToken::class);
     }
@@ -172,7 +174,7 @@ class User extends Authenticatable implements FilamentUser
     public function isAdmin(): bool
     {
         if (! $this->is_admin) {
-            $admin_team     = Team::adminTeam();
+            $admin_team = Team::adminTeam();
             $this->is_admin = $this->ownsAdminTeam($admin_team)
                 || $this->onAdminTeam($admin_team);
         }
@@ -180,12 +182,12 @@ class User extends Authenticatable implements FilamentUser
         return $this->is_admin;
     }
 
-    private function ownsAdminTeam(?Team $admin_team) : bool
+    private function ownsAdminTeam(?Team $admin_team): bool
     {
         return $admin_team && $admin_team->user_id === $this->id;
     }
 
-    private function onAdminTeam(?Team $admin_team) : bool
+    private function onAdminTeam(?Team $admin_team): bool
     {
         return $admin_team && $admin_team
             ->users()

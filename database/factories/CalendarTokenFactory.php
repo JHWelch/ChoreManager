@@ -15,7 +15,7 @@ class CalendarTokenFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'token'   => Str::uuid(),
+            'token' => Str::uuid(),
         ];
     }
 }

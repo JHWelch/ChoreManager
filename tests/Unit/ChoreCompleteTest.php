@@ -16,7 +16,7 @@ class ChoreCompleteTest extends TestCase
     public function when_there_is_a_next_instance_completes_instance(): void
     {
         $this->testUser();
-        $chore         = Chore::factory()->withFirstInstance()->daily()->create();
+        $chore = Chore::factory()->withFirstInstance()->daily()->create();
         $firstInstance = $chore->nextInstance;
 
         $chore->complete();
@@ -34,7 +34,7 @@ class ChoreCompleteTest extends TestCase
 
         $chore->complete();
 
-        $now           = now()->toDateString();
+        $now = now()->toDateString();
         $choreInstance = ChoreInstance::first();
         $this->assertNotNull($choreInstance);
         $this->assertEquals($chore->id, $choreInstance->chore_id);
@@ -50,7 +50,7 @@ class ChoreCompleteTest extends TestCase
     {
         $this->testUser();
         $chore = Chore::factory()->for($this->user)->daily()->create();
-        $date  = now()->subDays(3);
+        $date = now()->subDays(3);
 
         $chore->complete(on: $date);
 
@@ -64,7 +64,7 @@ class ChoreCompleteTest extends TestCase
     public function chore_can_be_completed_for_another_user(): void
     {
         $this->testUser();
-        $user  = User::factory()->hasAttached($this->team)->create();
+        $user = User::factory()->hasAttached($this->team)->create();
         $chore = Chore::factory()->for($this->user)->daily()->create();
 
         $chore->complete(for: $user->id);

@@ -14,8 +14,8 @@ class IndexLineTest extends TestCase
     /** @test */
     public function can_complete_a_chore_instance(): void
     {
-        $user           = $this->testUser()['user'];
-        $chore          = Chore::factory()->for($user)->withFirstInstance()->create();
+        $user = $this->testUser()['user'];
+        $chore = Chore::factory()->for($user)->withFirstInstance()->create();
         $chore_instance = $chore->nextChoreInstance;
 
         Livewire::test(IndexLine::class, [
@@ -29,8 +29,8 @@ class IndexLineTest extends TestCase
     /** @test */
     public function when_a_chore_instance_is_completed_a_new_one_is_created_daily(): void
     {
-        $now   = today();
-        $user  = $this->testUser()['user'];
+        $now = today();
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()
             ->daily()
             ->for($user)
@@ -52,9 +52,9 @@ class IndexLineTest extends TestCase
     public function index_line_shows_chore_information(): void
     {
         $frequency = new Frequency(FrequencyType::daily, 3);
-        $chore     = Chore::factory([
-            'title'              => 'Clean the sink',
-            'frequency_id'       => $frequency->frequencyType,
+        $chore = Chore::factory([
+            'title' => 'Clean the sink',
+            'frequency_id' => $frequency->frequencyType,
             'frequency_interval' => $frequency->interval,
         ])
             ->withFirstInstance()

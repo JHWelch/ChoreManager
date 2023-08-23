@@ -65,7 +65,7 @@ class UserResource extends Resource
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Email Verified')
                     ->options([
-                        'heroicon-o-x'     => fn ($state): bool => ! is_null($state),
+                        'heroicon-o-x' => fn ($state): bool => ! is_null($state),
                         'heroicon-o-check' => fn ($state): bool => is_null($state),
                     ]),
 
@@ -103,10 +103,10 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListUsers::route('/'),
+            'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'view'   => Pages\ViewUser::route('/{record}'),
-            'edit'   => Pages\EditUser::route('/{record}/edit'),
+            'view' => Pages\ViewUser::route('/{record}'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

@@ -48,9 +48,9 @@ class TeamsChoreGroupsController extends Controller
     protected function mapChoreInstance(ChoreInstance $instance): array
     {
         return [
-            'title'    => $instance->chore->title,
+            'title' => $instance->chore->title,
             'due_date' => $instance->due_date->toDateString(),
-            'owner'    => $instance->user->name,
+            'owner' => $instance->user->name,
         ];
     }
 }

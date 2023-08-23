@@ -31,8 +31,8 @@ class DatabaseSeeder extends Seeder
                 relationship: 'ownedTeams'
             )
             ->create([
-                'name'     => 'John Smith',
-                'email'    => 'jsmith@example.com',
+                'name' => 'John Smith',
+                'email' => 'jsmith@example.com',
                 'password' => bcrypt('password'),
             ]);
 

@@ -4,24 +4,24 @@ namespace App\Enums;
 
 use Illuminate\Support\Arr;
 
-enum FrequencyType : int
+enum FrequencyType: int
 {
     case doesNotRepeat = 0;
-    case daily         = 1;
-    case weekly        = 2;
-    case monthly       = 3;
-    case quarterly     = 4;
-    case yearly        = 5;
+    case daily = 1;
+    case weekly = 2;
+    case monthly = 3;
+    case quarterly = 4;
+    case yearly = 5;
 
     public function adjective(): string
     {
         return match ($this) {
             self::doesNotRepeat => 'Does not repeat',
-            self::daily         => 'Daily',
-            self::weekly        => 'Weekly',
-            self::monthly       => 'Monthly',
-            self::quarterly     => 'Quarterly',
-            self::yearly        => 'Yearly',
+            self::daily => 'Daily',
+            self::weekly => 'Weekly',
+            self::monthly => 'Monthly',
+            self::quarterly => 'Quarterly',
+            self::yearly => 'Yearly',
         };
     }
 
@@ -29,11 +29,11 @@ enum FrequencyType : int
     {
         return match ($this) {
             self::doesNotRepeat => 'Does not repeat',
-            self::daily         => 'Days',
-            self::weekly        => 'Weeks',
-            self::monthly       => 'Months',
-            self::quarterly     => 'Quarters',
-            self::yearly        => 'Years',
+            self::daily => 'Days',
+            self::weekly => 'Weeks',
+            self::monthly => 'Months',
+            self::quarterly => 'Quarters',
+            self::yearly => 'Years',
         };
     }
 

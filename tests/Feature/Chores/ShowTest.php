@@ -36,11 +36,11 @@ class ShowTest extends TestCase
     public function can_see_chore_info_on_chores_show(): void
     {
         $chore = Chore::factory([
-            'title'              => 'Walk the dog.',
-            'description'        => 'Do not forget the poop bags.',
-            'frequency_id'       => 1,
+            'title' => 'Walk the dog.',
+            'description' => 'Do not forget the poop bags.',
+            'frequency_id' => 1,
             'frequency_interval' => 2,
-            'user_id'            => $this->testUser()['user']->id,
+            'user_id' => $this->testUser()['user']->id,
         ])->create();
 
         $component = Livewire::test(Show::class, ['chore' => $chore]);
@@ -54,7 +54,7 @@ class ShowTest extends TestCase
     public function can_complete_chore_from_chore_page(): void
     {
         $this->testUser();
-        $chore    = Chore::factory()->for($this->user)->withFirstInstance()->create();
+        $chore = Chore::factory()->for($this->user)->withFirstInstance()->create();
         $instance = $chore->nextChoreInstance;
 
         $component = Livewire::test(Show::class, ['chore' => $chore])
@@ -75,7 +75,7 @@ class ShowTest extends TestCase
             ->call('complete');
 
         $component->assertRedirect('/');
-        $now           = now()->toDateString();
+        $now = now()->toDateString();
         $choreInstance = ChoreInstance::first();
         $this->assertNotNull($choreInstance);
         $this->assertEquals($chore->id, $choreInstance->chore_id);
@@ -96,18 +96,18 @@ class ShowTest extends TestCase
             ->has(
                 ChoreInstance::factory()->count(3)->sequence(
                     [
-                        'completed_date'  => today()->subDays(1),
-                        'user_id'         => $user1->id,
+                        'completed_date' => today()->subDays(1),
+                        'user_id' => $user1->id,
                         'completed_by_id' => $user1->id,
                     ],
                     [
-                        'completed_date'  => today()->subDays(2),
-                        'user_id'         => $user2->id,
+                        'completed_date' => today()->subDays(2),
+                        'user_id' => $user2->id,
                         'completed_by_id' => $user2->id,
                     ],
                     [
-                        'completed_date'  => today()->subDays(3),
-                        'user_id'         => $user1->id,
+                        'completed_date' => today()->subDays(3),
+                        'user_id' => $user1->id,
                         'completed_by_id' => $user1->id,
                     ],
                 )
@@ -139,18 +139,18 @@ class ShowTest extends TestCase
             ->has(
                 ChoreInstance::factory()->count(3)->sequence(
                     [
-                        'completed_date'  => $date1 = today()->subDays(1),
-                        'user_id'         => $user1->id,
+                        'completed_date' => $date1 = today()->subDays(1),
+                        'user_id' => $user1->id,
                         'completed_by_id' => $user1->id,
                     ],
                     [
-                        'completed_date'  => $date2 = today()->subDays(2),
-                        'user_id'         => $user2->id,
+                        'completed_date' => $date2 = today()->subDays(2),
+                        'user_id' => $user2->id,
                         'completed_by_id' => $user2->id,
                     ],
                     [
-                        'completed_date'  => $date3 = today()->subDays(3),
-                        'user_id'         => $user1->id,
+                        'completed_date' => $date3 = today()->subDays(3),
+                        'user_id' => $user1->id,
                         'completed_by_id' => $user1->id,
                     ],
                 )
@@ -169,7 +169,7 @@ class ShowTest extends TestCase
     /** @test */
     public function chores_assigned_to_team_display_team_as_owner(): void
     {
-        $team  = $this->testUser()['team'];
+        $team = $this->testUser()['team'];
         $chore = Chore::factory([
             'title' => 'Walk the dog',
         ])
@@ -190,7 +190,7 @@ class ShowTest extends TestCase
     {
         $this->testUser();
         $other_user = User::factory()->hasAttached($this->team)->create();
-        $chore      = Chore::factory()
+        $chore = Chore::factory()
             ->for($this->team)
             ->for($other_user)
             ->withFirstInstance()
@@ -203,8 +203,8 @@ class ShowTest extends TestCase
             ->call('customComplete');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'chore_id'        => $chore->id,
-            'completed_date'  => today(),
+            'chore_id' => $chore->id,
+            'completed_date' => today(),
             'completed_by_id' => $other_user->id,
         ]);
     }
@@ -212,8 +212,8 @@ class ShowTest extends TestCase
     /** @test */
     public function can_complete_chore_on_a_past_date(): void
     {
-        $user  = $this->testUser()['user'];
-        $date  = today()->subDays(2);
+        $user = $this->testUser()['user'];
+        $date = today()->subDays(2);
         $chore = Chore::factory()
             ->for($user)
             ->withFirstInstance()
@@ -226,8 +226,8 @@ class ShowTest extends TestCase
             ->call('customComplete');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'chore_id'        => $chore->id,
-            'completed_date'  => $date,
+            'chore_id' => $chore->id,
+            'completed_date' => $date,
             'completed_by_id' => $user->id,
         ]);
         $component->assertRedirect('/');
@@ -236,7 +236,7 @@ class ShowTest extends TestCase
     /** @test */
     public function completing_coming_from_complete_endpoint_does_not_redirect(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()
             ->for($user)
             ->withFirstInstance()
@@ -256,7 +256,7 @@ class ShowTest extends TestCase
     /** @test */
     public function when_complete_session_flag_is_present_show_modal(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
         session()->flash('complete', true);
 
@@ -268,7 +268,7 @@ class ShowTest extends TestCase
     /** @test */
     public function when_complete_session_flag_is_not_present_dont_show_modal(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
 
         $component = Livewire::test(Show::class, ['chore' => $chore]);

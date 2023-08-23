@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $user_id
  * @property bool $has_daily_digest
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting query()
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class UserSetting extends Model

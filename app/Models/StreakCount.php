@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int|null $team_id
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User|null $user
+ *
  * @method static Builder|StreakCount current()
  * @method static \Database\Factories\StreakCountFactory factory($count = null, $state = [])
  * @method static Builder|StreakCount newModelQuery()
@@ -31,6 +32,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|StreakCount whereTeamId($value)
  * @method static Builder|StreakCount whereUpdatedAt($value)
  * @method static Builder|StreakCount whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class StreakCount extends Model
@@ -39,17 +41,17 @@ class StreakCount extends Model
 
     protected $guarded;
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function team() : BelongsTo
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function scopeCurrent(Builder $query) : Builder
+    public function scopeCurrent(Builder $query): Builder
     {
         return $query->whereNull('ended_at');
     }

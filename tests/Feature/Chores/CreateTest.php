@@ -38,37 +38,37 @@ class CreateTest extends TestCase
             ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [
-            'title'        => 'Do dishes',
-            'description'  => 'Do the dishes every night.',
+            'title' => 'Do dishes',
+            'description' => 'Do the dishes every night.',
             'frequency_id' => FrequencyType::daily,
-            'user_id'      => $user->id,
+            'user_id' => $user->id,
         ]);
     }
 
     /** @test */
     public function a_user_can_assign_a_chore_to_another_team_member(): void
     {
-        $users         = User::factory()->count(2)->hasTeams()->create();
-        $team          = Team::first();
+        $users = User::factory()->count(2)->hasTeams()->create();
+        $team = Team::first();
         $assigned_user = $users->pop();
-        $chore         = Chore::factory()->raw();
+        $chore = Chore::factory()->raw();
         $this->actingAs($users->first());
         $users->first()->switchTeam($team);
 
         Livewire::test(Save::class)
-             ->set('chore.title', $chore['title'])
-             ->set('chore.description', $chore['description'])
-             ->set('chore.frequency_id', $chore['frequency_id'])
-             ->set('chore.user_id', $assigned_user->id)
-             ->set('chore_instance.due_date', null)
-             ->call('save');
+            ->set('chore.title', $chore['title'])
+            ->set('chore.description', $chore['description'])
+            ->set('chore.frequency_id', $chore['frequency_id'])
+            ->set('chore.user_id', $assigned_user->id)
+            ->set('chore_instance.due_date', null)
+            ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [
-             'user_id'      => $assigned_user->id,
-             'title'        => $chore['title'],
-             'description'  => $chore['description'],
-             'frequency_id' => $chore['frequency_id'],
-         ]);
+            'user_id' => $assigned_user->id,
+            'title' => $chore['title'],
+            'description' => $chore['description'],
+            'frequency_id' => $chore['frequency_id'],
+        ]);
     }
 
     /** @test */
@@ -86,18 +86,18 @@ class CreateTest extends TestCase
 
         $component->assertHasNoErrors();
         $this->assertDatabaseHas((new Chore)->getTable(), [
-            'title'        => $chore['title'],
-            'description'  => $chore['description'],
+            'title' => $chore['title'],
+            'description' => $chore['description'],
             'frequency_id' => $chore['frequency_id'],
-            'user_id'      => null,
+            'user_id' => null,
         ]);
     }
 
     /** @test */
     public function chores_assigned_to_team_with_due_date_create_instance_assigned_to_team_member(): void
     {
-        $user     = $this->testUser()['user'];
-        $chore    = Chore::factory()->raw();
+        $user = $this->testUser()['user'];
+        $chore = Chore::factory()->raw();
         $due_date = today()->addDay(1);
 
         Livewire::test(Save::class)
@@ -109,7 +109,7 @@ class CreateTest extends TestCase
             ->call('save');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'user_id'  => $user->id,
+            'user_id' => $user->id,
             'due_date' => $due_date,
         ]);
     }
@@ -117,7 +117,7 @@ class CreateTest extends TestCase
     /** @test */
     public function chores_can_be_created_with_advanced_frequency(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()->raw();
 
         Livewire::test(Save::class)
@@ -130,10 +130,10 @@ class CreateTest extends TestCase
             ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [
-            'user_id'            => $user->id,
-            'frequency_id'       => FrequencyType::weekly,
+            'user_id' => $user->id,
+            'frequency_id' => FrequencyType::weekly,
             'frequency_interval' => 2,
-            'frequency_day_of'   => Carbon::WEDNESDAY,
+            'frequency_day_of' => Carbon::WEDNESDAY,
         ]);
     }
 
@@ -247,7 +247,7 @@ class CreateTest extends TestCase
     public function when_you_change_to_daily_frequency_day_of_is_disabled(): void
     {
         $this->testUser();
-        $chore     = Chore::factory()->raw();
+        $chore = Chore::factory()->raw();
         $component = Livewire::test(Save::class)
             ->set('chore.title', $chore['title'])
             ->set('chore.description', $chore['description'])
@@ -265,7 +265,7 @@ class CreateTest extends TestCase
     public function when_you_change_to_does_not_repeat_frequency_day_of_is_disabled(): void
     {
         $this->testUser();
-        $chore     = Chore::factory()->raw();
+        $chore = Chore::factory()->raw();
         $component = Livewire::test(Save::class)
             ->set('chore.title', $chore['title'])
             ->set('chore.description', $chore['description'])
@@ -283,7 +283,7 @@ class CreateTest extends TestCase
     public function when_updating_to_another_frequency_id_frequency_day_of_changes_to_1(): void
     {
         $this->testUser();
-        $chore     = Chore::factory()->raw();
+        $chore = Chore::factory()->raw();
         $component = Livewire::test(Save::class)
             ->set('chore.title', $chore['title'])
             ->set('chore.description', $chore['description'])

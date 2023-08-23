@@ -22,10 +22,12 @@ class Save extends Component
     use TrimAndNullEmptyStrings;
 
     public Chore $chore;
+
     public ChoreInstance $chore_instance;
 
     /** @var array<string> */
     public array $user_options;
+
     public string $team;
 
     public bool $show_on = false;
@@ -33,15 +35,15 @@ class Save extends Component
     /** @return array<string, mixed>  */
     protected function rules(): array
     {
-        return  [
-            'chore.title'              => 'string|required',
-            'chore.description'        => 'string|nullable',
-            'chore.frequency_id'       => new Enum(FrequencyType::class),
+        return [
+            'chore.title' => 'string|required',
+            'chore.description' => 'string|nullable',
+            'chore.frequency_id' => new Enum(FrequencyType::class),
             'chore.frequency_interval' => 'min:1',
-            'chore.frequency_day_of'   => $this->frequencyDayOfRule(),
-            'chore.user_id'            => 'nullable',
-            'chore_instance.due_date'  => 'date|nullable|date|after_or_equal:today',
-            'chore_instance.user_id'   => 'nullable',
+            'chore.frequency_day_of' => $this->frequencyDayOfRule(),
+            'chore.user_id' => 'nullable',
+            'chore_instance.due_date' => 'date|nullable|date|after_or_equal:today',
+            'chore_instance.user_id' => 'nullable',
         ];
     }
 
@@ -67,13 +69,13 @@ class Save extends Component
         $this->setupUserOptions();
 
         /** @var \App\Models\Team $team */
-        $team       = Auth::user()->currentTeam()->select('name')->first();
+        $team = Auth::user()->currentTeam()->select('name')->first();
         $this->team = $team->name;
 
         $this->show_on = $this->chore->frequency_day_of !== null;
     }
 
-    public function save() : \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+    public function save(): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $this->validate();
         $this->chore->team_id = Auth::user()->currentTeam->id;
@@ -118,7 +120,7 @@ class Save extends Component
         }
 
         $this->chore_instance->chore_id = $this->chore->id;
-        $this->chore_instance->user_id  = $this->chore->next_assigned_id;
+        $this->chore_instance->user_id = $this->chore->next_assigned_id;
         $this->chore_instance->save();
     }
 
@@ -151,7 +153,7 @@ class Save extends Component
 
     public function isShowOnButton(): bool
     {
-        return (! $this->show_on)                                       &&
+        return (! $this->show_on) &&
             $this->chore->frequency_id !== FrequencyType::doesNotRepeat &&
             $this->chore->frequency_id !== FrequencyType::daily;
     }
@@ -159,22 +161,22 @@ class Save extends Component
     public function showDayOfSection(): void
     {
         $this->chore->frequency_day_of = 1;
-        $this->show_on                 = true;
+        $this->show_on = true;
     }
 
     public function hideDayOfSection(): void
     {
         $this->chore->frequency_day_of = null;
-        $this->show_on                 = false;
+        $this->show_on = false;
     }
 
     public function getMaxDayOfProperty(): string
     {
         return match ($this->chore->frequency_id) {
-            FrequencyType::monthly   => '31',
+            FrequencyType::monthly => '31',
             FrequencyType::quarterly => '92',
-            FrequencyType::yearly    => '365',
-            default                  => '0',
+            FrequencyType::yearly => '365',
+            default => '0',
         };
     }
 
@@ -183,7 +185,7 @@ class Save extends Component
         if (! $frequencyType instanceof FrequencyType) {
             $frequencyType = FrequencyType::from(intval($frequencyType));
         }
-        if ($frequencyType    === FrequencyType::doesNotRepeat
+        if ($frequencyType === FrequencyType::doesNotRepeat
             || $frequencyType === FrequencyType::daily
         ) {
             $this->hideDayOfSection();

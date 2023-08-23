@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthUserController extends Controller
 {
-    public function show() : AuthUserResource
+    public function show(): AuthUserResource
     {
         return AuthUserResource::make(Auth::user());
     }

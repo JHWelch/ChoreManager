@@ -10,13 +10,15 @@ trait GoesBack
      * Default back url. Can be overridden in the component.
      */
     public string $defaultBackUrl = '/';
+
     public string $previousUrl;
+
     public string $currentUrl;
 
     public function mountGoesBack(): void
     {
         $this->previousUrl = URL::previous();
-        $this->currentUrl  = URL::current();
+        $this->currentUrl = URL::current();
     }
 
     /**

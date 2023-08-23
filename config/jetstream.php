@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'stack'      => 'livewire',
+    'stack' => 'livewire',
 
     /*
      |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'features'   => [
+    'features' => [
         // Features::termsAndPrivacyPolicy(),
         Features::api(),
         Features::profilePhotos(),

@@ -1,31 +1,38 @@
 #!/usr/bin/env php
 <?php
 
-function checkOutput($output, $returnCode)
+use Symfony\Component\Process\Process;
+
+require_once 'vendor/autoload.php';
+
+function checkOutput($returnCode)
 {
     if ($returnCode === 0) {
         return;
     }
 
-    // Show full output
-    echo PHP_EOL . implode(PHP_EOL, $output) . PHP_EOL;
     echo 'Aborting commit...' . PHP_EOL;
     exit(1);
 }
 
 function runCheck($command, $title)
 {
-    echo "Checking $title... ";
-    exec($command, $output, $returnCode);
+    echo "Checking $title... " . PHP_EOL;
+    $process = new Process($command, timeout: 300);
 
-    checkOutput($output, $returnCode);
+    $process->start();
 
-    // Show summary (last line)
-    echo array_pop($output) . PHP_EOL;
+    foreach ($process as $type => $data) {
+        echo $data;
+    }
+
+    $process->wait();
+
+    checkOutput($process->getExitCode());
 }
 
-runCheck('vendor/bin/phpunit', 'tests');
-runCheck('vendor/bin/php-cs-fixer fix --dry-run --diff', 'code style');
-runCheck('vendor/bin/phpstan analyse', 'types');
+runCheck(['vendor/bin/phpstan', 'analyse'], 'types');
+runCheck(['vendor/bin/pint', '--test'], 'code style');
+runCheck(['vendor/bin/phpunit'], 'tests');
 
 exit(0);

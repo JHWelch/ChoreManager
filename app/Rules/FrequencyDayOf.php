@@ -20,11 +20,11 @@ class FrequencyDayOf implements ValidationRule
     {
         match ($this->frequencyType) {
             FrequencyType::doesNotRepeat => $this->nullCheck($value, $fail),
-            FrequencyType::daily         => $this->nullCheck($value, $fail),
-            FrequencyType::weekly        => $this->rangeCheck($value, 1, 7, $fail),
-            FrequencyType::monthly       => $this->rangeCheck($value, 1, 31, $fail),
-            FrequencyType::quarterly     => $this->rangeCheck($value, 1, 92, $fail),
-            FrequencyType::yearly        => $this->rangeCheck($value, 1, 365, $fail),
+            FrequencyType::daily => $this->nullCheck($value, $fail),
+            FrequencyType::weekly => $this->rangeCheck($value, 1, 7, $fail),
+            FrequencyType::monthly => $this->rangeCheck($value, 1, 31, $fail),
+            FrequencyType::quarterly => $this->rangeCheck($value, 1, 92, $fail),
+            FrequencyType::yearly => $this->rangeCheck($value, 1, 365, $fail),
         };
     }
 

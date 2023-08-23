@@ -4,12 +4,12 @@ namespace App\Http\Livewire\Concerns;
 
 trait SnoozesChores
 {
-    public function snoozeUntilTomorrow(mixed $chore_instances) : void
+    public function snoozeUntilTomorrow(mixed $chore_instances): void
     {
         $chore_instances->update(['due_date' => today()->addDay()]);
     }
 
-    public function snoozeUntilWeekend(mixed $chore_instances) : void
+    public function snoozeUntilWeekend(mixed $chore_instances): void
     {
         $today = today();
 

@@ -36,10 +36,10 @@ class CalendarTokenAttributeTest extends TestCase
     /** @test */
     public function display_name_with_defined_name_is_name(): void
     {
-        $user           = User::factory()->create();
+        $user = User::factory()->create();
         $calendar_token = CalendarToken::make([
             'user_id' => $user->id,
-            'name'    => 'Special Calendar',
+            'name' => 'Special Calendar',
         ]);
 
         $this->assertEquals('Special Calendar', $calendar_token->display_name);

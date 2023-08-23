@@ -18,9 +18,9 @@ class Frequency
     ];
 
     /**
-     * @param FrequencyType $frequencyType One of the frequency constants
-     * @param int $interval - The interval of the Frequency (every 2 weeks, every 3 months, etc.)
-     * @param int $dayOf - The day of the Frequency (day of week, day of month, etc.)
+     * @param  FrequencyType  $frequencyType One of the frequency constants
+     * @param  int  $interval - The interval of the Frequency (every 2 weeks, every 3 months, etc.)
+     * @param  int  $dayOf - The day of the Frequency (day of week, day of month, etc.)
      */
     public function __construct(
         public FrequencyType $frequencyType,
@@ -64,7 +64,8 @@ class Frequency
     /**
      * Get the next date after a given date based on Frequency.
      *
-     * @param Carbon $after optional
+     * @param  Carbon  $after optional
+     *
      * @throws InvalidArgumentException if the frequency is invalid
      */
     public function getNextDate(Carbon $after = null): ?Carbon
@@ -76,21 +77,21 @@ class Frequency
         if (! $this->dayOf) {
             return match ($this->frequencyType) {
                 FrequencyType::doesNotRepeat => null,
-                FrequencyType::daily         => $after->addDays($i),
-                FrequencyType::weekly        => $after->addWeeks($i),
-                FrequencyType::monthly       => $after->addMonthsNoOverflow($i),
-                FrequencyType::quarterly     => $after->addQuartersNoOverflow($i),
-                FrequencyType::yearly        => $after->addYearsNoOverflow($i),
+                FrequencyType::daily => $after->addDays($i),
+                FrequencyType::weekly => $after->addWeeks($i),
+                FrequencyType::monthly => $after->addMonthsNoOverflow($i),
+                FrequencyType::quarterly => $after->addQuartersNoOverflow($i),
+                FrequencyType::yearly => $after->addYearsNoOverflow($i),
             };
         }
 
         return match ($this->frequencyType) {
             FrequencyType::doesNotRepeat => null,
-            FrequencyType::daily         => $after->addDays($i),
-            FrequencyType::weekly        => $after->startOfWeek()->addDays($this->dayOf    - 1)->addWeeks($i),
-            FrequencyType::monthly       => $after->startOfMonth()->addDays($this->dayOf   - 1)->addMonthsNoOverflow($i),
-            FrequencyType::quarterly     => $after->startOfQuarter()->addDays($this->dayOf - 1)->addQuartersNoOverflow($i),
-            FrequencyType::yearly        => $after->startOfYear()->addDays($this->dayOf    - 1)->addYearsNoOverflow($i),
+            FrequencyType::daily => $after->addDays($i),
+            FrequencyType::weekly => $after->startOfWeek()->addDays($this->dayOf - 1)->addWeeks($i),
+            FrequencyType::monthly => $after->startOfMonth()->addDays($this->dayOf - 1)->addMonthsNoOverflow($i),
+            FrequencyType::quarterly => $after->startOfQuarter()->addDays($this->dayOf - 1)->addQuartersNoOverflow($i),
+            FrequencyType::yearly => $after->startOfYear()->addDays($this->dayOf - 1)->addYearsNoOverflow($i),
         };
     }
 }

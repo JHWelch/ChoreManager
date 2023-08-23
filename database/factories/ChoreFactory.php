@@ -17,10 +17,10 @@ class ChoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'title'        => implode(' ', $this->faker->words(3)),
-            'description'  => $this->faker->sentence(),
+            'title' => implode(' ', $this->faker->words(3)),
+            'description' => $this->faker->sentence(),
             'frequency_id' => Arr::random(FrequencyType::cases()),
-            'user_id'      => User::factory(),
+            'user_id' => User::factory(),
         ];
     }
 

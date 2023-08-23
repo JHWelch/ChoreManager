@@ -24,7 +24,7 @@ class DailyDigest extends Mailable
         $this->user = $user;
     }
 
-    public function build() : self
+    public function build(): self
     {
         $chore_instance_groups = $this->user
             ->choreInstances()
@@ -51,11 +51,11 @@ class DailyDigest extends Mailable
      *
      * @return array<string, string>
      */
-    protected function mapChoreInstance(ChoreInstance $instance) : array
+    protected function mapChoreInstance(ChoreInstance $instance): array
     {
         return [
             'title' => $instance->chore->title,
-            'url'   => route('chores.show', ['chore' => $instance->chore]),
+            'url' => route('chores.show', ['chore' => $instance->chore]),
         ];
     }
 }
