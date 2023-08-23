@@ -60,7 +60,7 @@
         "barryvdh/laravel-ide-helper": "^2.13",
         "brianium/paratest": "^6.4",
         "fakerphp/faker": "^1.9.1",
-        "friendsofphp/php-cs-fixer": "^3.6",
+        "laravel/pint": "^1.11",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
@@ -83,10 +83,10 @@
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "@php artisan filament:upgrade"
         ],
-        "test:lint": "php-cs-fixer fix --ansi --diff --dry-run",
+        "test:lint": "pint --test",
         "test:unit": "vendor/bin/phpunit",
         "test:types": "phpstan analyse --ansi --memory-limit=-1",
-        "test:fix": "php-cs-fixer fix",
+        "test:fix": "pint",
         "test": [
             "@test:lint",
             "@test:types",
