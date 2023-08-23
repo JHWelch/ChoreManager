@@ -18,7 +18,7 @@ class DeviceTokenController extends Controller
         $existingToken = DeviceToken::where('token', $fields['token'])->first();
 
         if ($existingToken) {
-            $existingToken->touch();
+            $request->user()->deviceTokens()->save($existingToken);
 
             return response()->json();
         }

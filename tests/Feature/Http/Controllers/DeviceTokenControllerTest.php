@@ -38,4 +38,21 @@ class DeviceTokenControllerTest extends TestCase
             'updated_at' => now(),
         ]);
     }
+
+    /** @test */
+    public function user_can_reassign_existing_token(): void
+    {
+        $this->testUser();
+        $token = DeviceToken::factory()->create();
+
+        $response = $this->postJson(route('api.device_tokens.store'), [
+            'token' => $token->token,
+        ]);
+
+        $response->assertOk();
+        $this->assertDatabaseHas('device_tokens', [
+            'token' => $token->token,
+            'user_id' => $this->user->id,
+        ]);
+    }
 }
