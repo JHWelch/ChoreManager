@@ -83,10 +83,11 @@
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
             "@php artisan filament:upgrade"
         ],
-        "test:lint": "pint --test",
-        "test:unit": "phpunit",
-        "test:types": "phpstan analyse --ansi --memory-limit=-1",
         "test:fix": "pint",
+        "test:lint": "pint --test",
+        "test:psr4": "composer dump-autoload --no-scripts --no-interaction 2>&1 | grep 'does not comply with psr-4' || exit 0; exit 1",
+        "test:types": "phpstan analyse --ansi --memory-limit=-1",
+        "test:unit": "phpunit",
         "test": [
             "@test:lint",
             "@test:types",
