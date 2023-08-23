@@ -12,4 +12,9 @@ class DeviceToken extends Model
     protected $fillable = [
         'token',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -32,7 +32,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Create a new user and act as them for the tests.
      *
-     * @return
+     * @return array
      */
     protected function testUser($attributes = [])
     {

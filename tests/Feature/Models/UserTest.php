@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\DeviceToken;
 use App\Models\Team;
 use App\Models\User;
 use Tests\TestCase;
@@ -54,5 +55,29 @@ class UserTest extends TestCase
         $admin_team->users()->detach($user);
 
         $this->assertTrue($user->isAdmin());
+    }
+
+    /** @test */
+    public function routeNotificationForFcm_returns_array_of_device_tokens(): void
+    {
+        $this->testUser();
+        DeviceToken::factory()
+            ->for($this->user)
+            ->count(3)
+            ->sequence([
+                'token' => 'token1',
+            ], [
+                'token' => 'token2',
+            ], [
+                'token' => 'token3',
+            ])
+            ->create();
+
+        $this->user->refresh();
+
+        $this->assertEquals(
+            ['token1', 'token2', 'token3'],
+            $this->user->routeNotificationForFcm()
+        );
     }
 }

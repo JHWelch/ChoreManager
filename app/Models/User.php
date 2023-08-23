@@ -134,6 +134,16 @@ class User extends Authenticatable implements FilamentUser
             ->get();
     }
 
+    /**
+     * Specifies the user's FCM tokens
+     *
+     * @return string|string[]
+     */
+    public function routeNotificationForFcm(): string|array
+    {
+        return $this->deviceTokens->pluck('token')->toArray();
+    }
+
     public function chores() : HasMany
     {
         return $this->hasMany(Chore::class);
