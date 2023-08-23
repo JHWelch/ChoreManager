@@ -84,7 +84,7 @@
             "@php artisan filament:upgrade"
         ],
         "test:lint": "pint --test",
-        "test:unit": "vendor/bin/phpunit",
+        "test:unit": "phpunit",
         "test:types": "phpstan analyse --ansi --memory-limit=-1",
         "test:fix": "pint",
         "test": [
