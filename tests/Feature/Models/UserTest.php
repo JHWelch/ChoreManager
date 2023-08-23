@@ -72,7 +72,6 @@ class UserTest extends TestCase
                 'token' => 'token3',
             ])
             ->create();
-
         $this->user->refresh();
 
         $this->assertEquals(
