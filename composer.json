@@ -44,6 +44,7 @@
         "doctrine/dbal": "^3.5",
         "filament/filament": "^2.16",
         "guzzlehttp/guzzle": "^7.2",
+        "laravel-notification-channels/fcm": "^3.2",
         "laravel/framework": "^10.0",
         "laravel/jetstream": "^2.15",
         "laravel/sanctum": "^3.2",

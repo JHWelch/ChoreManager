@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthUserController;
 use App\Http\Controllers\Api\ChoreController;
 use App\Http\Controllers\Api\ChoreInstanceController;
+use App\Http\Controllers\Api\DeviceTokenController;
 use App\Http\Controllers\Api\ICalendarController;
 use App\Http\Controllers\Api\TeamCurrentStreakCountController;
 use App\Http\Controllers\Api\TeamsChoreGroupsController;
@@ -49,4 +50,6 @@ Route::middleware('auth:sanctum')
         Route::get('/teams/{team}/current_streak', [TeamCurrentStreakCountController::class, 'index'])
             ->name('team_current_streak.index')
             ->can('view', 'team');
+
+        Route::resource('device_tokens', DeviceTokenController::class)->only(['store']);
     });
