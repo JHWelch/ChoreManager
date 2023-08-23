@@ -103,7 +103,11 @@ class ChoreInstanceCompleteTest extends TestCase
     public function completing_a_chore_instance_creates_a_new_instance_with_same_owner(): void
     {
         $user = User::factory()->create();
-        $chore = Chore::factory()->for($user)->withFirstInstance()->create();
+        $chore = Chore::factory()
+            ->repeatable()
+            ->for($user)
+            ->withFirstInstance()
+            ->create();
 
         $chore->complete();
 
