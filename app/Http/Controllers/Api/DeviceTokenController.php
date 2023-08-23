@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\DeviceToken;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,16 @@ class DeviceTokenController extends Controller
             'token' => ['required', 'string'],
         ]);
 
+        $existingToken = DeviceToken::where('token', $fields['token'])->first();
+
+        if ($existingToken) {
+            $existingToken->touch();
+
+            return response()->json();
+        }
+
         $request->user()->deviceTokens()->create($fields);
 
-        return response()->json(null, 201);
+        return response()->json(status: 201);
     }
 }
