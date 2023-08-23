@@ -39,7 +39,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "composer/composer": "^2.2",
         "doctrine/dbal": "^3.5",
         "filament/filament": "^2.16",
