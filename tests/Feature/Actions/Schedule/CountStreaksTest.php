@@ -36,9 +36,9 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseHas((new StreakCount)->getTable(), [
-            'team_id'  => null,
-            'user_id'  => $user->id,
-            'count'    => 1,
+            'team_id' => null,
+            'user_id' => $user->id,
+            'count' => 1,
             'ended_at' => null,
         ]);
     }
@@ -57,7 +57,7 @@ class CountStreaksTest extends TestCase
     /** @test */
     public function it_increments_current_streaks_for_users(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $streak = StreakCount::factory()
             ->for($user)
             ->create(['count' => 5]);
@@ -65,10 +65,10 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseHas((new StreakCount)->getTable(), [
-            'id'       => $streak->id,
-            'team_id'  => null,
-            'user_id'  => $user->id,
-            'count'    => 6,
+            'id' => $streak->id,
+            'team_id' => null,
+            'user_id' => $user->id,
+            'count' => 6,
             'ended_at' => null,
         ]);
     }
@@ -76,7 +76,7 @@ class CountStreaksTest extends TestCase
     /** @test */
     public function it_will_not_increment_streak_if_user_has_unfinished_chores(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $streak = StreakCount::factory()
             ->for($user)
             ->create(['count' => 5]);
@@ -85,17 +85,17 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseHas((new StreakCount)->getTable(), [
-            'id'       => $streak->id,
-            'team_id'  => null,
-            'user_id'  => $user->id,
-            'count'    => 5,
+            'id' => $streak->id,
+            'team_id' => null,
+            'user_id' => $user->id,
+            'count' => 5,
         ]);
     }
 
     /** @test */
     public function it_ends_streak_if_user_has_uncompleted_chores(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $streak = StreakCount::factory()
             ->for($user)
             ->create(['count' => 5]);
@@ -116,9 +116,9 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseHas((new StreakCount)->getTable(), [
-            'user_id'  => null,
-            'team_id'  => $team->id,
-            'count'    => 1,
+            'user_id' => null,
+            'team_id' => $team->id,
+            'count' => 1,
             'ended_at' => null,
         ]);
     }
@@ -139,7 +139,7 @@ class CountStreaksTest extends TestCase
     /** @test */
     public function it_increments_current_streaks_for_teams(): void
     {
-        $team   = Team::factory()->hasUsers()->create();
+        $team = Team::factory()->hasUsers()->create();
         $streak = StreakCount::factory()
             ->for($team)
             ->create(['count' => 5]);
@@ -147,9 +147,9 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseHas((new StreakCount)->getTable(), [
-            'id'       => $streak->id,
-            'team_id'  => $team->id,
-            'count'    => 6,
+            'id' => $streak->id,
+            'team_id' => $team->id,
+            'count' => 6,
             'ended_at' => null,
         ]);
     }
@@ -157,7 +157,7 @@ class CountStreaksTest extends TestCase
     /** @test */
     public function it_will_not_increment_streak_if_team_has_unfinished_chores(): void
     {
-        $team   = Team::factory()->hasUsers()->create();
+        $team = Team::factory()->hasUsers()->create();
         $streak = StreakCount::factory()
             ->for($team)
             ->create(['count' => 5]);
@@ -166,16 +166,16 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseHas((new StreakCount)->getTable(), [
-            'id'       => $streak->id,
-            'team_id'  => $team->id,
-            'count'    => 5,
+            'id' => $streak->id,
+            'team_id' => $team->id,
+            'count' => 5,
         ]);
     }
 
     /** @test */
     public function it_ends_streak_if_team_has_uncompleted_chores(): void
     {
-        $team   = Team::factory()->hasUsers()->create();
+        $team = Team::factory()->hasUsers()->create();
         $streak = StreakCount::factory()
             ->for($team)
             ->create(['count' => 5]);
@@ -196,7 +196,7 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseMissing((new StreakCount)->getTable(), [
-            'user_id'    => $user->id,
+            'user_id' => $user->id,
             'created_at' => null,
             'updated_at' => null,
         ]);
@@ -210,7 +210,7 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseMissing((new StreakCount)->getTable(), [
-            'team_id'    => $team->id,
+            'team_id' => $team->id,
             'created_at' => null,
             'updated_at' => null,
         ]);
@@ -219,7 +219,7 @@ class CountStreaksTest extends TestCase
     /** @test */
     public function it_updates_timestamp_on_increment(): void
     {
-        $user   = User::factory()->create();
+        $user = User::factory()->create();
         $streak = StreakCount::factory()
             ->for($user)
             ->create(['count' => 5]);
@@ -228,7 +228,7 @@ class CountStreaksTest extends TestCase
         (new CountStreaks)();
 
         $this->assertDatabaseMissing((new StreakCount)->getTable(), [
-            'id'         => $streak->id,
+            'id' => $streak->id,
             'updated_at' => $streak->updated_at,
         ]);
     }

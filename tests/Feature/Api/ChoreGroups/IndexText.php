@@ -35,20 +35,20 @@ class IndexText extends TestCase
             'past_due' => [
                 [
                     'due_date' => $chores[0]->due_date->toDateString(),
-                    'title'    => $chores[0]->chore->title,
-                    'owner'    => $chores[0]->user->name,
+                    'title' => $chores[0]->chore->title,
+                    'owner' => $chores[0]->user->name,
                 ],
                 [
                     'due_date' => $chores[1]->due_date->toDateString(),
-                    'title'    => $chores[1]->chore->title,
-                    'owner'    => $chores[1]->user->name,
+                    'title' => $chores[1]->chore->title,
+                    'owner' => $chores[1]->user->name,
                 ],
             ],
-            'today'    => [
+            'today' => [
                 [
                     'due_date' => $chores[2]->due_date->toDateString(),
-                    'title'    => $chores[2]->chore->title,
-                    'owner'    => $chores[2]->user->name,
+                    'title' => $chores[2]->chore->title,
+                    'owner' => $chores[2]->user->name,
                 ],
             ],
         ]]);

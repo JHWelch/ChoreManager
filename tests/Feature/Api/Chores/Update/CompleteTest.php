@@ -20,7 +20,7 @@ class CompleteTest extends TestCase
     public function calling_update_with_complete_flag_completes_current_instance(): void
     {
         $this->testUser();
-        $chore          = Chore::factory()->for($this->user)->create();
+        $chore = Chore::factory()->for($this->user)->create();
         $chore_instance = ChoreInstance::factory()
             ->for($chore)
             ->create();
@@ -35,7 +35,7 @@ class CompleteTest extends TestCase
     public function user_can_complete_chore_for_their_team(): void
     {
         $this->testUser();
-        $chore          = Chore::factory()->for($this->team)->create();
+        $chore = Chore::factory()->for($this->team)->create();
         $chore_instance = ChoreInstance::factory()
             ->for($chore)
             ->create();
@@ -50,7 +50,7 @@ class CompleteTest extends TestCase
     public function user_cannot_complete_chores_they_do_not_own(): void
     {
         $this->testUser();
-        $chore          = Chore::factory()->create();
+        $chore = Chore::factory()->create();
         $chore_instance = ChoreInstance::factory()
             ->for($chore)
             ->create();
@@ -75,18 +75,18 @@ class CompleteTest extends TestCase
         $chore->refresh();
 
         $response->assertJson(['data' => [
-            'id'                  => $chore->id,
-            'user_id'             => $chore->user_id,
-            'title'               => $chore->title,
-            'description'         => $chore->description,
-            'team_id'             => $chore->team_id,
-            'frequency_id'        => $chore->frequency_id->value,
-            'frequency_interval'  => $chore->frequency_interval,
-            'frequency_day_of'    => $chore->frequency_day_of,
-            'created_at'          => $chore->created_at->toIsoString(),
-            'updated_at'          => $chore->updated_at->toIsoString(),
-            'next_due_user_id'    => $chore->nextChoreInstance?->user_id,
-            'next_due_date'       => $chore->next_due_date->toDateString(),
+            'id' => $chore->id,
+            'user_id' => $chore->user_id,
+            'title' => $chore->title,
+            'description' => $chore->description,
+            'team_id' => $chore->team_id,
+            'frequency_id' => $chore->frequency_id->value,
+            'frequency_interval' => $chore->frequency_interval,
+            'frequency_day_of' => $chore->frequency_day_of,
+            'created_at' => $chore->created_at->toIsoString(),
+            'updated_at' => $chore->updated_at->toIsoString(),
+            'next_due_user_id' => $chore->nextChoreInstance?->user_id,
+            'next_due_date' => $chore->next_due_date->toDateString(),
             'due_date_updated_at' => $chore->due_date_updated_at->toIsoString(),
         ]]);
     }

@@ -30,6 +30,7 @@ use Illuminate\Support\Str;
  * @property-read string $u_r_l
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User $user
+ *
  * @method static \Database\Factories\CalendarTokenFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newQuery()
@@ -41,6 +42,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class CalendarToken extends Model
@@ -49,20 +51,20 @@ class CalendarToken extends Model
 
     const CALENDAR_TYPES = [
         [
-            'label'       => 'User Calendar',
-            'value'       => 'user',
+            'label' => 'User Calendar',
+            'value' => 'user',
             'description' => 'This calendar will include upcoming chores assigned to you, across Teams.',
         ],
         [
-            'label'       => 'Team Calendar',
-            'value'       => 'team',
+            'label' => 'Team Calendar',
+            'value' => 'team',
             'description' => 'This calendar will include upcoming chores for everyone in a given Team.',
         ],
     ];
 
     protected $guarded = [];
 
-    protected static function boot() : void
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -73,12 +75,12 @@ class CalendarToken extends Model
         });
     }
 
-    public static function getToken(string $token) : ?self
+    public static function getToken(string $token): ?self
     {
         return self::firstWhere('token', $token);
     }
 
-    public function chores() : HasManyThrough
+    public function chores(): HasManyThrough
     {
         return $this->is_user_calendar
             ? $this->hasManyThrough(
@@ -99,7 +101,7 @@ class CalendarToken extends Model
             );
     }
 
-    public function choreInstances() : Builder
+    public function choreInstances(): Builder
     {
         return $this->is_user_calendar
             ? $this->hasManyThrough(
@@ -120,27 +122,27 @@ class CalendarToken extends Model
                 ->orderBy('chore_instances.due_date');
     }
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function team() : BelongsTo
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function getIsTeamCalendarAttribute() : bool
+    public function getIsTeamCalendarAttribute(): bool
     {
         return $this->team_id !== null;
     }
 
-    public function getIsUserCalendarAttribute() : bool
+    public function getIsUserCalendarAttribute(): bool
     {
         return ! $this->is_team_calendar;
     }
 
-    public function getDisplayNameAttribute() : string
+    public function getDisplayNameAttribute(): string
     {
         return $this->name ?? (
             $this->is_team_calendar
@@ -149,14 +151,14 @@ class CalendarToken extends Model
         );
     }
 
-    public function getFullTypeNameAttribute() : string
+    public function getFullTypeNameAttribute(): string
     {
         return $this->is_team_calendar
             ? "Team: {$this->team->name}"
             : "User: {$this->user->name}";
     }
 
-    public function getURLAttribute() : string
+    public function getURLAttribute(): string
     {
         return route('icalendar.show', ['token' => $this->token]);
     }

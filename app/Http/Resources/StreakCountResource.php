@@ -18,8 +18,8 @@ class StreakCountResource extends JsonResource
     public function toArray(Request $request): array|Arrayable|JsonSerializable
     {
         return [
-            'id'      => $this->id,
-            'count'   => $this->count,
+            'id' => $this->id,
+            'count' => $this->count,
             'team_id' => $this->team_id,
         ];
     }

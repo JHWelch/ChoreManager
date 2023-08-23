@@ -25,7 +25,7 @@ class FilterTest extends TestCase
     /** @test */
     public function when_filter_is_set_to_user_see_only_users_chores(): void
     {
-        $team  = Team::factory()->create();
+        $team = Team::factory()->create();
         $users = User::factory()->count(2)->hasAttached($team)->create();
         Chore::factory([
             'title' => 'Walk the dog.',
@@ -52,7 +52,7 @@ class FilterTest extends TestCase
     public function when_filter_is_set_to_team_see_all_users_in_that_teams_chores(): void
     {
         $users = User::factory()->count(2)->hasTeams()->create();
-        $team  = Team::first();
+        $team = Team::first();
         Chore::factory([
             'title' => 'Walk the dog.',
         ])
@@ -84,12 +84,12 @@ class FilterTest extends TestCase
         $this->testUser();
         $other_user = User::factory()->hasAttached($this->team)->create();
         Chore::factory([
-            'title'   => 'Walk the dog.',
+            'title' => 'Walk the dog.',
         ])
             ->for($this->team)
             ->for($this->user)
             ->has(ChoreInstance::factory([
-                'user_id'  => $other_user->id,
+                'user_id' => $other_user->id,
                 'due_date' => today(),
             ]))
             ->create();

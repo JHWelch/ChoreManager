@@ -13,7 +13,7 @@ class ChoreInstanceFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'  => User::factory(),
+            'user_id' => User::factory(),
             'due_date' => $this->faker->dateTimeBetween('+0 days', '+1 year'),
         ];
     }

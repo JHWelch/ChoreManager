@@ -16,7 +16,7 @@ class UserController extends Controller
         $this->authorizeResource(User::class, 'user');
     }
 
-    public function show(User $user) : JsonResource
+    public function show(User $user): JsonResource
     {
         AuthUserResource::wrap('data');
 

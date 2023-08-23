@@ -14,8 +14,8 @@ class AuthController extends Controller
     public function store(Request $request): AuthUserResource
     {
         $request->validate([
-            'email'       => 'required|email',
-            'password'    => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
             'device_name' => 'required',
         ]);
 

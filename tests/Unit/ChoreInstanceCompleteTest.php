@@ -50,11 +50,11 @@ class ChoreInstanceCompleteTest extends TestCase
     public function chores_can_be_completed_with_a_frequency_plus_interval(): void
     {
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => FrequencyType::daily,
+            'frequency_id' => FrequencyType::daily,
             'frequency_interval' => 2,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => FrequencyType::weekly,
+            'frequency_id' => FrequencyType::weekly,
             'frequency_interval' => 3,
         ]);
 
@@ -76,14 +76,14 @@ class ChoreInstanceCompleteTest extends TestCase
     {
         Carbon::setTestNow('2021-07-06');
         $chore1 = Chore::factory()->create([
-            'frequency_id'       => FrequencyType::weekly,
+            'frequency_id' => FrequencyType::weekly,
             'frequency_interval' => 1,
-            'frequency_day_of'   => Carbon::TUESDAY,
+            'frequency_day_of' => Carbon::TUESDAY,
         ]);
         $chore2 = Chore::factory()->create([
-            'frequency_id'       => FrequencyType::monthly,
+            'frequency_id' => FrequencyType::monthly,
             'frequency_interval' => 1,
-            'frequency_day_of'   => 17,
+            'frequency_day_of' => 17,
         ]);
 
         $chore1->createNewInstance();
@@ -102,7 +102,7 @@ class ChoreInstanceCompleteTest extends TestCase
     /** @test */
     public function completing_a_chore_instance_creates_a_new_instance_with_same_owner(): void
     {
-        $user  = User::factory()->create();
+        $user = User::factory()->create();
         $chore = Chore::factory()->for($user)->withFirstInstance()->create();
 
         $chore->complete();
@@ -117,15 +117,15 @@ class ChoreInstanceCompleteTest extends TestCase
     public function when_a_chore_is_completed_the_completed_by_id_is_set_to_the_user_completing_it(): void
     {
         $acting_as_user = $this->testUser()['user'];
-        $assigned_user  = User::factory()->create();
-        $chore          = Chore::factory()->for($assigned_user)->withFirstInstance()->create();
+        $assigned_user = User::factory()->create();
+        $chore = Chore::factory()->for($assigned_user)->withFirstInstance()->create();
 
         $chore->complete();
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'user_id'         => $assigned_user->id,
+            'user_id' => $assigned_user->id,
             'completed_by_id' => $acting_as_user->id,
-            'chore_id'        => $chore->id,
+            'chore_id' => $chore->id,
         ]);
     }
 
@@ -133,8 +133,8 @@ class ChoreInstanceCompleteTest extends TestCase
     public function when_a_chore_assigned_to_a_team_is_completed_the_next_instance_is_assigned_to_the_next_person_alphabetically(): void
     {
         $user_and_team = $this->testUser(['name' => 'Albert Albany']);
-        $team          = $user_and_team['team'];
-        $users         = User::factory()
+        $team = $user_and_team['team'];
+        $users = User::factory()
             ->hasAttached($team)
             ->count(2)
             ->sequence(
@@ -153,8 +153,8 @@ class ChoreInstanceCompleteTest extends TestCase
         $chore->complete();
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'user_id'        => $user3->id,
-            'chore_id'       => $chore->id,
+            'user_id' => $user3->id,
+            'chore_id' => $chore->id,
             'completed_date' => null,
         ]);
     }
@@ -163,9 +163,9 @@ class ChoreInstanceCompleteTest extends TestCase
     public function when_an_instance_is_assigned_to_the_last_person_alphabetically_it_will_wrap_around(): void
     {
         $user_and_team = $this->testUser(['name' => 'Albert Albany']);
-        $user1         = $user_and_team['user'];
-        $team          = $user_and_team['team'];
-        $users         = User::factory()
+        $user1 = $user_and_team['user'];
+        $team = $user_and_team['team'];
+        $users = User::factory()
             ->hasAttached($team)
             ->count(2)
             ->sequence(
@@ -183,8 +183,8 @@ class ChoreInstanceCompleteTest extends TestCase
         $chore->complete();
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'user_id'        => $user1->id,
-            'chore_id'       => $chore->id,
+            'user_id' => $user1->id,
+            'chore_id' => $chore->id,
             'completed_date' => null,
         ]);
     }
@@ -192,9 +192,9 @@ class ChoreInstanceCompleteTest extends TestCase
     /** @test */
     public function when_chore_is_completed_in_the_past_the_next_instance_date_is_based_on_that_date(): void
     {
-        $date  = today();
+        $date = today();
         $chore = Chore::factory()->withFirstInstance()->create([
-            'frequency_id'       => FrequencyType::daily,
+            'frequency_id' => FrequencyType::daily,
             'frequency_interval' => 4,
         ]);
 

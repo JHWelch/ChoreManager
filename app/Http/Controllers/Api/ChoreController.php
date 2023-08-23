@@ -18,11 +18,11 @@ class ChoreController extends Controller
         $this->authorizeResource(Chore::class, 'chore');
     }
 
-    public function index() : AnonymousResourceCollection
+    public function index(): AnonymousResourceCollection
     {
         $user = Auth::user();
 
-        return  ChoreResource::collection(
+        return ChoreResource::collection(
             Chore::where('user_id', $user->id)
                 ->orWhere('team_id', $user->currentTeam->id)
                 ->with('nextChoreInstance')
@@ -30,11 +30,11 @@ class ChoreController extends Controller
         );
     }
 
-    public function update(Request $request, Chore $chore) : ChoreResource
+    public function update(Request $request, Chore $chore): ChoreResource
     {
         $input = $request->validate([
             'next_due_date' => 'date|nullable',
-            'completed'     => 'boolean|nullable',
+            'completed' => 'boolean|nullable',
         ]);
 
         if (Arr::get($input, 'completed')) {

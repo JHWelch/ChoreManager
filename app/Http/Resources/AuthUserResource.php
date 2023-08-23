@@ -20,11 +20,11 @@ class AuthUserResource extends JsonResource
     public function toArray(Request $request): array|Arrayable|JsonSerializable
     {
         return [
-            'id'                 => $this->id,
-            'name'               => $this->name,
-            'email'              => $this->email,
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
             'profile_photo_path' => $this->profile_photo_path,
-            'current_team_id'    => $this->current_team_id,
+            'current_team_id' => $this->current_team_id,
         ];
     }
 }

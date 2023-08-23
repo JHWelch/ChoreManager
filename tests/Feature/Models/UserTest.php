@@ -12,9 +12,9 @@ class UserTest extends TestCase
     private function adminTeam($user = null)
     {
         return Team::factory([
-            'name'          => 'Admins',
+            'name' => 'Admins',
             'personal_team' => false,
-            'user_id'       => $user?->id ?? User::factory(),
+            'user_id' => $user?->id ?? User::factory(),
         ]);
     }
 
@@ -47,7 +47,7 @@ class UserTest extends TestCase
     /** @test */
     public function isAdmin_caches_value(): void
     {
-        $user       = User::factory()->create();
+        $user = User::factory()->create();
         $admin_team = $this->adminTeam()->hasAttached($user)->create();
 
         $this->assertTrue($user->isAdmin());

@@ -38,6 +38,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $past_chore_instances_count
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User|null $user
+ *
  * @method static \Database\Factories\ChoreFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newQuery()
@@ -56,6 +57,7 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore withNextInstance()
+ *
  * @mixin \Eloquent
  */
 class Chore extends Model
@@ -73,7 +75,7 @@ class Chore extends Model
 
     /** @var array<string, mixed> */
     protected $attributes = [
-        'frequency_id'       => 0,
+        'frequency_id' => 0,
         'frequency_interval' => 1,
     ];
 
@@ -81,34 +83,34 @@ class Chore extends Model
         'frequency_id' => FrequencyType::class,
     ];
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function team() : BelongsTo
+    public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function choreInstances() : HasMany
+    public function choreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class);
     }
 
-    public function nextChoreInstance() : HasOne
+    public function nextChoreInstance(): HasOne
     {
         return $this
             ->hasOne(ChoreInstance::class)
             ->whereNull('completed_date');
     }
 
-    public function nextInstance() : HasOne
+    public function nextInstance(): HasOne
     {
         return $this->nextChoreInstance();
     }
 
-    public function getFrequencyAttribute() : Frequency
+    public function getFrequencyAttribute(): Frequency
     {
         return new Frequency(
             $this->frequency_id,
@@ -117,20 +119,20 @@ class Chore extends Model
         );
     }
 
-    public function pastChoreInstances() : HasMany
+    public function pastChoreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class)
             ->completed()
             ->orderByDesc('completed_date');
     }
 
-    public function choreInstanceScopeJoin(JoinClause $join) : JoinClause
+    public function choreInstanceScopeJoin(JoinClause $join): JoinClause
     {
         return $join->on('chores.id', 'chore_instances.chore_id')
             ->whereNull('chore_instances.completed_date');
     }
 
-    public function scopeWithNextInstance(Builder $query) : Builder
+    public function scopeWithNextInstance(Builder $query): Builder
     {
         return $query->select(
             ...self::SCOPE_COLUMNS
@@ -139,7 +141,7 @@ class Chore extends Model
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeOnlyWithNextInstance(Builder $query) : Builder
+    public function scopeOnlyWithNextInstance(Builder $query): Builder
     {
         return $query->select(
             ...self::SCOPE_COLUMNS
@@ -148,7 +150,7 @@ class Chore extends Model
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeOnlyWithDueNextInstance(Builder $query) : Builder
+    public function scopeOnlyWithDueNextInstance(Builder $query): Builder
     {
         return $query->select(
             ...self::SCOPE_COLUMNS
@@ -158,12 +160,12 @@ class Chore extends Model
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeNullDueDatesAtEnd(Builder $query) : Builder
+    public function scopeNullDueDatesAtEnd(Builder $query): Builder
     {
         return $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
     }
 
-    public function createNewInstance(?Carbon $after = null) : void
+    public function createNewInstance(Carbon $after = null): void
     {
         if (! ($due_date = $this->frequency->getNextDate($after))) {
             return;
@@ -171,7 +173,7 @@ class Chore extends Model
 
         $this->choreInstances()->create([
             'due_date' => $due_date,
-            'user_id'  => $this->next_assigned_id,
+            'user_id' => $this->next_assigned_id,
         ]);
     }
 
@@ -179,7 +181,7 @@ class Chore extends Model
      * Get the id of the next user who should be assigned to an instance of this chore.
      * Either the owner of the chore, or a member of the team if no owner is specified.
      */
-    public function getNextAssignedIdAttribute() : int
+    public function getNextAssignedIdAttribute(): int
     {
         $last_assigned = $this->choreInstances()
             ->orderByDesc('created_at')
@@ -203,12 +205,12 @@ class Chore extends Model
         );
     }
 
-    public function getNextDueDateAttribute() : ?Carbon
+    public function getNextDueDateAttribute(): ?Carbon
     {
         return $this->nextChoreInstance?->due_date;
     }
 
-    public function getDueDateUpdatedAtAttribute() : ?Carbon
+    public function getDueDateUpdatedAtAttribute(): ?Carbon
     {
         return $this->nextChoreInstance?->updated_at;
     }
@@ -216,7 +218,7 @@ class Chore extends Model
     /**
      * Complete the next chore instance.
      */
-    public function complete(int $for = null, Carbon $on = null) : void
+    public function complete(int $for = null, Carbon $on = null): void
     {
         if ($this->nextInstance) {
             $this->nextInstance->complete($for, $on);
@@ -225,12 +227,12 @@ class Chore extends Model
         }
 
         $for ??= auth()->id();
-        $on  ??= today();
+        $on ??= today();
 
         $this->choreInstances()->create([
-            'due_date'        => $on,
-            'completed_date'  => $on,
-            'user_id'         => $for,
+            'due_date' => $on,
+            'completed_date' => $on,
+            'user_id' => $for,
             'completed_by_id' => $for,
         ]);
     }
@@ -240,17 +242,17 @@ class Chore extends Model
         $this->nextChoreInstance?->snooze($until);
     }
 
-    public function getIsWeeklyAttribute() : bool
+    public function getIsWeeklyAttribute(): bool
     {
         return $this->frequency_id === FrequencyType::weekly;
     }
 
-    public function getIsYearlyAttribute() : bool
+    public function getIsYearlyAttribute(): bool
     {
         return $this->frequency_id === FrequencyType::yearly;
     }
 
-    public function getIsDoesNotRepeatAttribute() : bool
+    public function getIsDoesNotRepeatAttribute(): bool
     {
         return $this->frequency_id === FrequencyType::doesNotRepeat;
     }

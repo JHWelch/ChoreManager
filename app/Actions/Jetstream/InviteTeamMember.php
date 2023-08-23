@@ -31,7 +31,7 @@ class InviteTeamMember implements InvitesTeamMembers
 
         $invitation = $team->teamInvitations()->create([
             'email' => $email,
-            'role'  => $role,
+            'role' => $role,
         ]);
 
         Mail::to($email)->send(new TeamInvitation($invitation));
@@ -46,7 +46,7 @@ class InviteTeamMember implements InvitesTeamMembers
     {
         Validator::make([
             'email' => $email,
-            'role'  => $role,
+            'role' => $role,
         ], $this->rules($team), [
             'email.unique' => __('This user has already been invited to the team.'),
         ])->after(
@@ -66,7 +66,7 @@ class InviteTeamMember implements InvitesTeamMembers
             'email' => ['required', 'email', Rule::unique('team_invitations')->where(function ($query) use ($team) {
                 $query->where('team_id', $team->id);
             })],
-            'role'  => Jetstream::hasRoles()
+            'role' => Jetstream::hasRoles()
                             ? ['required', 'string', new Role]
                             : null,
         ]);

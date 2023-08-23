@@ -20,8 +20,8 @@ class Index extends Component
     /** @var array<string, string> */
     public $listeners = [
         'chore_instance.completed' => 'choreInstanceUpdated',
-        'chore_instance.updated'   => 'choreInstanceUpdated',
-        'filterUpdated'            => 'updateChoreInstanceList',
+        'chore_instance.updated' => 'choreInstanceUpdated',
+        'filterUpdated' => 'updateChoreInstanceList',
     ];
 
     public function mount(): void
@@ -51,9 +51,9 @@ class Index extends Component
                 $due_date = $chore_instance->due_date->startOfDay();
 
                 return match (true) {
-                    $due_date < today()  => ['past_due' => $chore_instance],
+                    $due_date < today() => ['past_due' => $chore_instance],
                     $due_date == today() => ['today' => $chore_instance],
-                    default              => ['future' => $chore_instance],
+                    default => ['future' => $chore_instance],
                 };
             })
             ->map(function ($date_group) {

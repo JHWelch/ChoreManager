@@ -31,6 +31,7 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @property-read int|null $team_invitations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
+ *
  * @method static \Database\Factories\TeamFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Team newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Team newQuery()
@@ -43,6 +44,7 @@ use Laravel\Jetstream\Team as JetstreamTeam;
  * @method static \Illuminate\Database\Eloquent\Builder|Team whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Team withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Team withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
+ *
  * @mixin \Eloquent
  */
 class Team extends JetstreamTeam
@@ -67,7 +69,7 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    public static function adminTeam() : ?self
+    public static function adminTeam(): ?self
     {
         if (! self::$admin_team) {
             self::$admin_team = self::firstWhere('name', 'Admins');
@@ -76,12 +78,12 @@ class Team extends JetstreamTeam
         return self::$admin_team;
     }
 
-    public function chores() : HasMany
+    public function chores(): HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
-    public function choreInstances() : HasManyThrough
+    public function choreInstances(): HasManyThrough
     {
         return $this->hasManyThrough(ChoreInstance::class, Chore::class);
     }

@@ -18,22 +18,22 @@ class DemoSeeder extends Seeder
     {
         return [
             [
-                'title'        => 'Do the dishes',
+                'title' => 'Do the dishes',
                 'frequency_id' => FrequencyType::daily,
-                'due_date'     => today(),
-                'description'  => null,
+                'due_date' => today(),
+                'description' => null,
             ],
             [
-                'title'        => 'Take out the trash',
+                'title' => 'Take out the trash',
                 'frequency_id' => FrequencyType::weekly,
-                'due_date'     => today()->addDays(5),
-                'description'  => null,
+                'due_date' => today()->addDays(5),
+                'description' => null,
             ],
             [
-                'title'        => 'Get groceries',
+                'title' => 'Get groceries',
                 'frequency_id' => FrequencyType::weekly,
-                'due_date'     => today()->addDays(3),
-                'description'  => <<<'EOT'
+                'due_date' => today()->addDays(3),
+                'description' => <<<'EOT'
                 ### Grocery List
                 * Bread
                 * Milk
@@ -43,23 +43,23 @@ class DemoSeeder extends Seeder
                 EOT,
             ],
             [
-                'title'        => 'Polish boots',
+                'title' => 'Polish boots',
                 'frequency_id' => FrequencyType::quarterly,
-                'due_date'     => today()->addDays(45),
-                'description'  => <<<'EOT'
+                'due_date' => today()->addDays(45),
+                'description' => <<<'EOT'
                 [How to shine boots](https://www.wikihow.com/Polish-Boots)
                 EOT,
             ],
             [
-                'title'              => 'Take out recycling',
-                'frequency_id'       => FrequencyType::weekly,
+                'title' => 'Take out recycling',
+                'frequency_id' => FrequencyType::weekly,
                 'frequency_interval' => 2,
-                'due_date'           => today()->addDays(9),
+                'due_date' => today()->addDays(9),
             ],
             [
-                'title'        => 'Renew Car Registration',
+                'title' => 'Renew Car Registration',
                 'frequency_id' => FrequencyType::yearly,
-                'due_date'     => today()->addDays(125),
+                'due_date' => today()->addDays(125),
             ],
         ];
     }
@@ -68,27 +68,27 @@ class DemoSeeder extends Seeder
     {
         return [
             [
-                'title'        => 'Cook Dinner',
+                'title' => 'Cook Dinner',
                 'frequency_id' => FrequencyType::daily,
-                'due_date'     => today(),
-                'description'  => null,
+                'due_date' => today(),
+                'description' => null,
             ],
             [
-                'title'              => 'Vacuum living room',
-                'frequency_id'       => FrequencyType::weekly,
-                'frequency_interval' => 2,
-                'due_date'           => today()->addDays(5),
-                'description'        => null,
-            ],
-            [
-                'title'        => 'Bike maintenance',
-                'frequency_id' => FrequencyType::quarterly,
-                'due_date'     => today()->addDays(45),
-            ],
-            [
-                'title'        => 'Pick up dry cleaning',
+                'title' => 'Vacuum living room',
                 'frequency_id' => FrequencyType::weekly,
-                'due_date'     => today()->addDays(9),
+                'frequency_interval' => 2,
+                'due_date' => today()->addDays(5),
+                'description' => null,
+            ],
+            [
+                'title' => 'Bike maintenance',
+                'frequency_id' => FrequencyType::quarterly,
+                'due_date' => today()->addDays(45),
+            ],
+            [
+                'title' => 'Pick up dry cleaning',
+                'frequency_id' => FrequencyType::weekly,
+                'due_date' => today()->addDays(9),
             ],
         ];
     }
@@ -99,34 +99,34 @@ class DemoSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'name'              => 'Demo User',
-            'email'             => 'demo@example.com',
+            'name' => 'Demo User',
+            'email' => 'demo@example.com',
             'email_verified_at' => now(),
-            'password'          => Hash::make(Str::random()),
+            'password' => Hash::make(Str::random()),
         ]);
 
         $team = Team::create([
-            'name'          => 'Demo User\'s Team',
+            'name' => 'Demo User\'s Team',
             'personal_team' => true,
-            'user_id'       => $user->id,
+            'user_id' => $user->id,
         ]);
 
         $second_user = User::create([
-            'name'              => 'Steve Smith',
-            'email'             => 'ssmith@example.com',
+            'name' => 'Steve Smith',
+            'email' => 'ssmith@example.com',
             'email_verified_at' => now(),
-            'password'          => Hash::make(Str::random()),
+            'password' => Hash::make(Str::random()),
         ]);
 
         $second_user->teams()->attach($team, ['role' => 'editor']);
 
         collect([
             [
-                'user'   => $user,
+                'user' => $user,
                 'chores' => $this->chores(),
             ],
             [
-                'user'   => $second_user,
+                'user' => $second_user,
                 'chores' => $this->other_chores(),
             ],
         ])->each(function ($item) use ($team) {
@@ -141,7 +141,7 @@ class DemoSeeder extends Seeder
 
                 ChoreInstance::create([
                     'chore_id' => $chore->id,
-                    'user_id'  => $user->id,
+                    'user_id' => $user->id,
                     'due_date' => $due_date,
                 ]);
             });

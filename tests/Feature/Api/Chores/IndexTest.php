@@ -63,7 +63,7 @@ class IndexTest extends TestCase
         $response = $this->get(route('api.chores.index'));
 
         $response->assertJson(['data' => [[
-            'next_due_date'       => $chore_instance->due_date->toDateString(),
+            'next_due_date' => $chore_instance->due_date->toDateString(),
             'due_date_updated_at' => $chore_instance->updated_at->toJSON(),
         ]]]);
     }

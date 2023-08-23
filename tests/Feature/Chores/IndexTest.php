@@ -77,7 +77,7 @@ class IndexTest extends TestCase
             ->count(3)
             ->sequence(
                 ['title' => 'Do dishes', 'frequency_id' => FrequencyType::monthly],
-                ['title' => 'Walk dog', 'frequency_id'  => FrequencyType::daily],
+                ['title' => 'Walk dog', 'frequency_id' => FrequencyType::daily],
                 ['title' => 'Clean car', 'frequency_id' => FrequencyType::weekly],
             )
             ->for($user)
@@ -92,15 +92,15 @@ class IndexTest extends TestCase
     /** @test */
     public function chores_can_be_sorted_by_next_due_date(): void
     {
-        $date1  = today()->addDays(1);
-        $date2  = today()->addDays(2);
-        $date3  = today()->addDays(3);
-        $user   = $this->testUser()['user'];
+        $date1 = today()->addDays(1);
+        $date2 = today()->addDays(2);
+        $date3 = today()->addDays(3);
+        $user = $this->testUser()['user'];
         $chores = Chore::factory()
             ->count(3)
             ->sequence(
                 ['title' => 'Do dishes', 'frequency_id' => FrequencyType::daily],
-                ['title' => 'Walk dog', 'frequency_id'  => FrequencyType::daily],
+                ['title' => 'Walk dog', 'frequency_id' => FrequencyType::daily],
                 ['title' => 'Clean car', 'frequency_id' => FrequencyType::daily],
             )
             ->for($user)

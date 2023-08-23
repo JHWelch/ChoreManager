@@ -14,8 +14,8 @@ class SnoozeTest extends TestCase
     {
         // Create chore for user. Get a carbon instance for today.
         return [
-            'today'  => $today = today(),
-            'user'   => $user  = $this->testUser()['user'],
+            'today' => $today = today(),
+            'user' => $user = $this->testUser()['user'],
             'chores' => Chore::factory()
                 ->count($count)
                 ->for($user)

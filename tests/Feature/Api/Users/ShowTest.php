@@ -21,11 +21,11 @@ class ShowTest extends TestCase
 
         $response->assertOk();
         $response->assertJson(['data' => [
-            'id'                 => $this->user->id,
-            'name'               => $this->user->name,
-            'email'              => $this->user->email,
+            'id' => $this->user->id,
+            'name' => $this->user->name,
+            'email' => $this->user->email,
             'profile_photo_path' => $this->user->profile_photo_path,
-            'current_team_id'    => $this->user->current_team_id,
+            'current_team_id' => $this->user->current_team_id,
         ]]);
     }
 
@@ -44,8 +44,8 @@ class ShowTest extends TestCase
 
         $response->assertOk();
         $response->assertJson(['data' => [
-            'id'                 => $user->id,
-            'name'               => $user->name,
+            'id' => $user->id,
+            'name' => $user->name,
             'profile_photo_path' => $this->user->profile_photo_path,
         ]]);
         $response->assertJson(function (AssertableJson $json) {

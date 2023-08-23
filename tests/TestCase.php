@@ -15,6 +15,7 @@ abstract class TestCase extends BaseTestCase
     use LazilyRefreshDatabase;
 
     protected User $user;
+
     protected Team $team;
 
     protected function setUp(): void
@@ -36,7 +37,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function testUser($attributes = [])
     {
-        $this->actingAs($user   = User::factory($attributes)->withPersonalTeam()->create());
+        $this->actingAs($user = User::factory($attributes)->withPersonalTeam()->create());
         $user->switchTeam($team = Team::first());
 
         $this->user = $user;

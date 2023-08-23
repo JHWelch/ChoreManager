@@ -66,8 +66,8 @@ class DailyDigestTest extends TestCase
     /** @test */
     public function daily_digest_does_not_show_chores_assigned_to_different_user(): void
     {
-        $other_user  = User::factory()->create();
-        $chore       = Chore::factory()
+        $other_user = User::factory()->create();
+        $chore = Chore::factory()
             ->withFirstInstance(today(), $other_user->id)
             ->create();
 

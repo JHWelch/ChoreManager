@@ -24,7 +24,7 @@ class IndexTest extends TestCase
     /** @test */
     public function chores_with_chore_instances_show_on_index(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->withFirstInstance(today())->create();
 
         $component = Livewire::test(ChoreInstancesIndex::class);
@@ -35,7 +35,7 @@ class IndexTest extends TestCase
     /** @test */
     public function chores_without_chore_instances_do_not_show_on_index(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->create();
 
         $component = Livewire::test(ChoreInstancesIndex::class);
@@ -56,7 +56,7 @@ class IndexTest extends TestCase
     /** @test */
     public function future_chores_do_not_show_by_default(): void
     {
-        $user   = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore1 = Chore::factory()
             ->for($user)
             ->withFirstInstance(today())
@@ -75,11 +75,11 @@ class IndexTest extends TestCase
     /** @test */
     public function user_can_show_future_chores(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()
             ->for($user)
             ->withFirstInstance(today()
-            ->addDays(4))->create();
+                ->addDays(4))->create();
 
         $component = Livewire::test(ChoreInstancesIndex::class)
             ->call('toggleShowFutureChores');
@@ -90,11 +90,11 @@ class IndexTest extends TestCase
     /** @test */
     public function show_future_chores_is_remembered_when_revisiting_page(): void
     {
-        $user  = $this->testUser()['user'];
+        $user = $this->testUser()['user'];
         $chore = Chore::factory()
             ->for($user)
             ->withFirstInstance(today()
-            ->addDays(4))->create();
+                ->addDays(4))->create();
 
         Livewire::test(ChoreInstancesIndex::class)
             ->call('toggleShowFutureChores');
@@ -139,30 +139,30 @@ class IndexTest extends TestCase
     {
         $this->testUser();
         $chores = Chore::factory()
-               ->count(3)
-               ->withFirstInstance(today())
-               ->for($this->user)
-               ->create();
+            ->count(3)
+            ->withFirstInstance(today())
+            ->for($this->user)
+            ->create();
         $other_chore = Chore::factory()
-               ->withFirstInstance(today()->subDays(3))
-               ->for($this->user)
-               ->create();
+            ->withFirstInstance(today()->subDays(3))
+            ->for($this->user)
+            ->create();
         $tomorrow = today()->addDay();
 
         Livewire::test(ChoreInstancesIndex::class)
-               ->call('snoozeGroupUntilTomorrow', 'today');
+            ->call('snoozeGroupUntilTomorrow', 'today');
 
         foreach ($chores as $chore) {
             $this->assertDatabaseHas(ChoreInstance::class, [
-                   'chore_id' => $chore->id,
-                   'due_date' => $tomorrow,
-               ]);
+                'chore_id' => $chore->id,
+                'due_date' => $tomorrow,
+            ]);
         }
 
         $this->assertDatabaseMissing(ChoreInstance::class, [
-               'chore_id' => $other_chore->id,
-               'due_date' => $tomorrow,
-           ]);
+            'chore_id' => $other_chore->id,
+            'due_date' => $tomorrow,
+        ]);
     }
 
     /** @test */
@@ -234,12 +234,12 @@ class IndexTest extends TestCase
         $this->testUser();
 
         $chore = Chore::factory()
-             ->withFirstInstance(today())
-             ->for(User::factory()->hasAttached($this->team))
-             ->create();
+            ->withFirstInstance(today())
+            ->for(User::factory()->hasAttached($this->team))
+            ->create();
 
         Livewire::test(ChoreInstancesIndex::class)
-             ->call('snoozeGroupUntilWeekend', 'today');
+            ->call('snoozeGroupUntilWeekend', 'today');
 
         $this->assertDatabaseMissing(ChoreInstance::class, [
             'chore_id' => $chore->id,
@@ -254,12 +254,12 @@ class IndexTest extends TestCase
         $this->testUser();
 
         $chore = Chore::factory()
-             ->withFirstInstance(today()->subDay())
-             ->for(User::factory()->hasAttached($this->team))
-             ->create();
+            ->withFirstInstance(today()->subDay())
+            ->for(User::factory()->hasAttached($this->team))
+            ->create();
 
         Livewire::test(ChoreInstancesIndex::class)
-             ->call('snoozeGroupUntilWeekend', 'past_due');
+            ->call('snoozeGroupUntilWeekend', 'past_due');
 
         $this->assertDatabaseMissing(ChoreInstance::class, [
             'chore_id' => $chore->id,

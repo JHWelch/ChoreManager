@@ -24,8 +24,8 @@ class IndexTest extends TestCase
         $response->assertOk();
         $response->assertJson([
             'data' => [
-                'id'      => $streak->id,
-                'count'   => $streak->count,
+                'id' => $streak->id,
+                'count' => $streak->count,
                 'team_id' => $streak->team_id,
             ],
         ]);
