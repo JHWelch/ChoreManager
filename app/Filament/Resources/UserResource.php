@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\DeviceTokensRelationManagerResource\RelationManagers\DeviceTokensRelationManager;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
@@ -94,7 +95,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DeviceTokensRelationManager::class,
         ];
     }
 
