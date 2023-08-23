@@ -1,5 +1,5 @@
-name: QC Check
-run-name: 'QC Check - App (PR #${{ github.event.pull_request.number }})'
+name: QC
+run-name: 'QC (PR #${{ github.event.pull_request.number }})'
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: qc-check-${{ github.event.pull_request.number }}
+  group: qc-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -79,3 +79,22 @@ jobs:
 
       - name: Check style
         run: composer test:lint
+
+  autoloader:
+    name: PSR-4 Autoloader
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v2
+
+      - name: Check compliance with PSR-4
+        run: composer test:psr4
