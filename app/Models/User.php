@@ -154,6 +154,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOne(UserSetting::class);
     }
 
+    public function deviceTokens() : HasMany
+    {
+        return $this->hasMany(DeviceToken::class);
+    }
+
     public function isAdmin(): bool
     {
         if (! $this->is_admin) {
