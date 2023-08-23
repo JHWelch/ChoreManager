@@ -24,6 +24,14 @@ class ChoreFactory extends Factory
         ];
     }
 
+    public function repeatable(): Factory
+    {
+        return $this->state(['frequency_id' => Arr::random(array_filter(
+            FrequencyType::cases(),
+            fn ($id) => $id !== FrequencyType::doesNotRepeat
+        ))]);
+    }
+
     /**
      * Indicate that the user should have a personal team.
      */
