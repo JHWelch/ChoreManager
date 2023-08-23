@@ -62,7 +62,7 @@ jobs:
           DB_PASSWORD: root
 
   standards:
-    name: Code Style (PHP-CS-Fixer)
+    name: Code Style (Pint)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

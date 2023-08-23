@@ -25,7 +25,7 @@ function runCheck($command, $title)
 }
 
 runCheck('vendor/bin/phpunit', 'tests');
-runCheck('vendor/bin/php-cs-fixer fix --dry-run --diff', 'code style');
+runCheck('vendor/bin/pint --test', 'code style');
 runCheck('vendor/bin/phpstan analyse', 'types');
 
 exit(0);

@@ -32,26 +32,26 @@ This application is built with a comprehensive test suite using [PHPUnit](https:
 
 To Run tests
 ```sh
-php artisan test
+composer test:unit
 ```
 
 ## Linting/Static Analysis
 
-This application is standardized and protected using [PHP CS Fixer](https://cs.symfony.com/) for linting/fixing and [PHPStan](https://phpstan.org/)/[Larastan](https://github.com/nunomaduro/larastan) for static code analysis.
+This application is standardized and protected using [Laravel Pint](https://laravel.com/docs/10.x/pint) for linting/fixing and [PHPStan](https://phpstan.org/)/[Larastan](https://github.com/nunomaduro/larastan) for static code analysis.
 
 To run linter
 ```sh
-vendor/bin/php-cs-fixer fix --dry-run --diff
+composer test:lint
 ```
 
 To run linter & fix errors automatically
 ```sh
-vendor/bin/php-cs-fixer fix
+composer test:fix
 ```
 
 To run static analysis
 ```sh
-vendor/bin/phpstan
+composer test:types
 ```
 
 ## Related Projects
