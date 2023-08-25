@@ -55,4 +55,25 @@ class DeviceTokenControllerTest extends TestCase
             'user_id' => $this->user->id,
         ]);
     }
+
+    /** @test */
+    public function user_can_save_two_tokens(): void
+    {
+        $this->testUser();
+        $token = DeviceToken::factory()->for($this->user)->create();
+
+        $response = $this->postJson(route('api.device_tokens.store'), [
+            'token' => $secondToken = 'second_token',
+        ]);
+
+        $response->assertCreated();
+        $this->assertDatabaseHas('device_tokens', [
+            'token' => $token->token,
+            'user_id' => $this->user->id,
+        ]);
+        $this->assertDatabaseHas('device_tokens', [
+            'token' => $secondToken,
+            'user_id' => $this->user->id,
+        ]);
+    }
 }
