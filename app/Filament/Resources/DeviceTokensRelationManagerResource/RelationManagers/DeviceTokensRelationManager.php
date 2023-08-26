@@ -28,7 +28,11 @@ class DeviceTokensRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('token'),
+                Tables\Columns\TextColumn::make('token')
+                    ->copyable()
+                    ->copyMessage('Copied Token to Clipboard!')
+                    ->color('primary')
+                    ->limit(25),
                 Tables\Columns\TextColumn::make('updated_at'),
                 Tables\Columns\TextColumn::make('created_at'),
             ])
