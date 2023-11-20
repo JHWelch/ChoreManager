@@ -63,9 +63,6 @@ ENV SSL_MODE=off
 COPY --from=build-node /var/www/html/public/build /var/www/html/public/build
 
 COPY --chown=webuser:webgroup .env /var/www/html/.env
-COPY --chown=webuser:webgroup server-ca.pem /var/www/html/server-ca.pem
-COPY --chown=webuser:webgroup client-key.pem /var/www/html/client-key.pem
-COPY --chown=webuser:webgroup client-cert.pem /var/www/html/client-cert.pem
 
 COPY --chmod=0755 ./docker/entrypoint.sh /etc/entrypoint.sh
 ENTRYPOINT ["/etc/entrypoint.sh"]
