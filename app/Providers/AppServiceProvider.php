@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Blade;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::preventLazyLoading(! app()->isProduction());
+
+        if (app()->isProduction()) {
+            URL::forceScheme('https');
+        }
 
         /**
          * Blade directive that will display any Markdown text as formatted HTML.
