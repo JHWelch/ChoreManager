@@ -53,6 +53,7 @@
         "league/commonmark": "^2.2",
         "livewire/livewire": "^2.11",
         "spatie/icalendar-generator": "^2.3",
+        "spatie/laravel-google-cloud-storage": "^2.2",
         "spatie/laravel-ray": "^1.32"
     },
     "require-dev": {
