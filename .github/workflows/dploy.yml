@@ -1,0 +1,53 @@
+name: Deploy to Production
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment: Production
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - id: auth
+      name: 'Authenticate to Google Cloud'
+      uses: google-github-actions/auth@v1
+      with:
+        create_credentials_file: true
+        export_environment_variables: true
+        service_account: ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT }}
+        workload_identity_provider: ${{ secrets.GOOGLE_CLOUD_WORKLOAD_IDENTITY_PROVIDER }}
+
+    - name: Place .env
+      run: echo ${{ secrets.ENV }} | base64 -d > .env
+
+    - name: Build Docker image
+      run: |
+        docker build --platform linux/amd64 \
+          -t ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/$GCP_PROJECT/chore-manager/chore-manager:${{ github.sha }} \
+          --file=php.dockerfile .
+
+    - name: Push Docker image
+      run: |
+        gcloud config set account ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT }}
+        gcloud auth configure-docker ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev
+        docker push ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/$GCP_PROJECT/chore-manager/chore-manager:${{ github.sha }}
+
+    - name: Deploy to Cloud Run
+      run: |
+        gcloud run deploy chore-manager \
+          --image ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/$GCP_PROJECT/chore-manager/chore-manager:${{ github.sha }} \
+          --region ${{ vars.GOOGLE_CLOUD_REGION }} \
+          --project $GCP_PROJECT

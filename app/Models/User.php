@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -77,7 +78,9 @@ class User extends Authenticatable implements FilamentUser
     use HasApiTokens;
     use HasChoreStreaks;
     use HasFactory;
-    use HasProfilePhoto;
+    use HasProfilePhoto {
+        getProfilePhotoUrlAttribute as parentGetProfilePhotoUrlAttribute;
+    }
     use HasTeams;
     use HasUnfinishedChoreScopes;
     use Notifiable;
@@ -113,10 +116,27 @@ class User extends Authenticatable implements FilamentUser
 
     protected static function booted(): void
     {
-        static::addGlobalScope(new OrderByNameScope);
+        static::addGlobalScope(new OrderByNameScope());
         static::created(function ($user) {
             UserSetting::create(['user_id' => $user->id]);
         });
+    }
+
+    /**
+     * Get the URL to the user's profile photo.
+     *
+     * @return string
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        if (config('jetstream.profile_photo_disk') !== 'gcs') {
+            return $this->parentGetProfilePhotoUrlAttribute();
+        }
+
+        return $this->profile_photo_path
+                    ? Storage::disk($this->profilePhotoDisk())
+                        ->temporaryUrl($this->profile_photo_path, now()->addMinutes(30))
+                    : $this->defaultProfilePhotoUrl();
     }
 
     /**

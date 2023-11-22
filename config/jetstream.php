@@ -17,6 +17,8 @@ return [
 
     'stack' => 'livewire',
 
+    'profile_photo_disk' => env('PROFILE_FILESYSTEM_DISK', 'public'),
+
     /*
      |--------------------------------------------------------------------------
      | Jetstream Route Middleware
