@@ -11,6 +11,7 @@ concurrency:
 
 jobs:
   deploy:
+    environment: Production
     name: Deploy to Production
     runs-on: ubuntu-latest
     permissions:
