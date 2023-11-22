@@ -1,9 +1,8 @@
 name: Deploy to Production
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 concurrency:
   group: deploy-production
@@ -29,6 +28,9 @@ jobs:
         workload_identity_provider: ${{ secrets.GOOGLE_CLOUD_WORKLOAD_IDENTITY_PROVIDER }}
         service_account: ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT }}
 
+    - name: Place .env
+      run: echo ${{ secrets.ENV }} | base64 -d > .env
+
     - name: Build Docker image
       run: |
         docker build --platform linux/amd64 \
@@ -36,7 +38,9 @@ jobs:
         --file=php.dockerfile .
 
     - name: Push Docker image
-      run: docker push ${{ secrets.ARTIFACT_REPOSITORY }}/chore-manager:${{ github.sha }}
+      run: |
+        gcloud auth configure-docker ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev
+        docker push ${{ secrets.ARTIFACT_REPOSITORY }}/chore-manager:${{ github.sha }}
 
     - name: Deploy to Cloud Run
       run: |
