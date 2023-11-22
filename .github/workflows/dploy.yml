@@ -25,8 +25,10 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: google-github-actions/auth@v1
       with:
-        workload_identity_provider: ${{ secrets.GOOGLE_CLOUD_WORKLOAD_IDENTITY_PROVIDER }}
+        create_credentials_file: true
+        export_environment_variables: true
         service_account: ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT }}
+        workload_identity_provider: ${{ secrets.GOOGLE_CLOUD_WORKLOAD_IDENTITY_PROVIDER }}
 
     - name: Place .env
       run: echo ${{ secrets.ENV }} | base64 -d > .env
@@ -34,17 +36,17 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --platform linux/amd64 \
-          -t ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}/chore-manager/chore-manager:${{ github.sha }} \
+          -t ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/$GCP_PROJECT/chore-manager/chore-manager:${{ github.sha }} \
           --file=php.dockerfile .
 
     - name: Push Docker image
       run: |
         gcloud auth configure-docker ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev
-        docker push ${{ secrets.ARTIFACT_REPOSITORY }}/chore-manager:${{ github.sha }}
+        docker push ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/$GCP_PROJECT/chore-manager/chore-manager:${{ github.sha }}
 
     - name: Deploy to Cloud Run
       run: |
         gcloud run deploy chore-manager \
-          --image ${{ secrets.ARTIFACT_REPOSITORY }}/chore-manager:${{ github.sha }} \
+          --image ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/$GCP_PROJECT/chore-manager/chore-manager:${{ github.sha }} \
           --region ${{ vars.GOOGLE_CLOUD_REGION }} \
-          --project ${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}
+          --project $GCP_PROJECT
