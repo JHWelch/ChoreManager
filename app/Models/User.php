@@ -78,7 +78,9 @@ class User extends Authenticatable implements FilamentUser
     use HasApiTokens;
     use HasChoreStreaks;
     use HasFactory;
-    use HasProfilePhoto;
+    use HasProfilePhoto {
+        getProfilePhotoUrlAttribute as parentGetProfilePhotoUrlAttribute;
+    }
     use HasTeams;
     use HasUnfinishedChoreScopes;
     use Notifiable;
@@ -128,7 +130,7 @@ class User extends Authenticatable implements FilamentUser
     public function getProfilePhotoUrlAttribute()
     {
         if (config('jetstream.profile_photo_disk') !== 'gcs') {
-            return parent::getProfilePhotoUrlAttribute();
+            return $this->parentGetProfilePhotoUrlAttribute();
         }
 
         return $this->profile_photo_path

@@ -34,8 +34,8 @@ jobs:
     - name: Build Docker image
       run: |
         docker build --platform linux/amd64 \
-        -t ${{ secrets.ARTIFACT_REPOSITORY }}/chore-manager:${{ github.sha }} \
-        --file=php.dockerfile .
+          -t ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/${{ secrets.GOOGLE_CLOUD_PROJECT_ID }}/chore-manager/chore-manager:${{ github.sha }} \
+          --file=php.dockerfile .
 
     - name: Push Docker image
       run: |
