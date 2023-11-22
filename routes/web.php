@@ -34,3 +34,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/calendar_links', CalendarTokens\Index::class)->name('calendar_tokens.index');
 });
+
+Route::get('/ping', fn () => 'pong')->name('ping');
