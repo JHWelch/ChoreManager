@@ -127,6 +127,10 @@ class User extends Authenticatable implements FilamentUser
      */
     public function getProfilePhotoUrlAttribute()
     {
+        if (config('jetstream.profile_photo_disk') !== 'gcs') {
+            return parent::getProfilePhotoUrlAttribute();
+        }
+
         return $this->profile_photo_path
                     ? Storage::disk($this->profilePhotoDisk())
                         ->temporaryUrl($this->profile_photo_path, now()->addMinutes(30))
