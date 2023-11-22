@@ -41,6 +41,7 @@ jobs:
 
     - name: Push Docker image
       run: |
+        gcloud config set account ${{ secrets.GOOGLE_CLOUD_SERVICE_ACCOUNT }}
         gcloud auth configure-docker ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev
         docker push ${{ vars.GOOGLE_CLOUD_REGION }}-docker.pkg.dev/$GCP_PROJECT/chore-manager/chore-manager:${{ github.sha }}
 
