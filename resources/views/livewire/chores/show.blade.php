@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <x-jet-confirmation-modal wire:model.live="showDeleteConfirmation">
+  <x-confirmation-modal wire:model.live="showDeleteConfirmation">
     <x-slot name="title">
         Delete "{{ $chore->title }}"
     </x-slot>
@@ -180,15 +180,15 @@
       </x-slot>
 
     <x-slot name="footer">
-        <x-jet-secondary-button wire:click="$toggle('showDeleteConfirmation')" wire:loading.attr="disabled">
+        <x-secondary-button wire:click="$toggle('showDeleteConfirmation')" wire:loading.attr="disabled">
             Nevermind
-        </x-jet-secondary-button>
+        </x-secondary-button>
 
-        <x-jet-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
+        <x-danger-button class="ml-2" wire:click="delete" wire:loading.attr="disabled">
             Delete
-        </x-jet-danger-button>
+        </x-danger-button>
     </x-slot>
-  </x-jet-confirmation-modal>
+  </x-confirmation-modal>
 
   <x-chores.show.complete-modal />
 

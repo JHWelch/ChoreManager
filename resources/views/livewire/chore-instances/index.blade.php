@@ -37,7 +37,7 @@
     </button>
   </div>
 
-  <x-jet-confirmation-modal
+  <x-confirmation-modal
     wire:model.live="showSnoozeConfirmation"
     style="info"
   >
@@ -50,20 +50,20 @@
     </x-slot>
 
     <x-slot name="footer">
-        <x-jet-secondary-button
+        <x-secondary-button
           wire:click="$toggle('showSnoozeConfirmation')"
           wire:loading.attr="disabled"
         >
             Nevermind
-        </x-jet-secondary-button>
+        </x-secondary-button>
 
-        <x-jet-button
+        <x-button
           class="ml-2"
           wire:click="snoozeGroup"
           wire:loading.attr="disabled"
         >
             Snooze
-        </x-jet-button>
+        </x-button>
     </x-slot>
-  </x-jet-confirmation-modal>
+  </x-confirmation-modal>
 </div>

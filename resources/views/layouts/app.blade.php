@@ -15,8 +15,6 @@
     <!-- Styles -->
     @vite('resources/css/app.css')
 
-    @livewireStyles
-
     <!-- Scripts -->
     @vite('resources/js/app.js')
 
@@ -26,7 +24,7 @@
   <body class="font-sans antialiased bg-gray-100">
     @livewire('demo-banner')
 
-    <x-jet-banner />
+    <x-banner />
 
     <div class="h-full min-h-screen">
       @livewire('navigation-menu')

@@ -99,7 +99,7 @@
     </div>
   </div>
 
-  <x-jet-dialog-modal wire:model.live="showDescriptionModal" maxWidth="lg">
+  <x-dialog-modal wire:model.live="showDescriptionModal" maxWidth="lg">
     <x-slot name="title">
       {{ $showDescriptionModalChore?->title }}
     </x-slot>
@@ -111,9 +111,9 @@
     </x-slot>
 
     <x-slot name="footer">
-      <x-jet-button wire:click="$set('showDescriptionModal', false)">
+      <x-button wire:click="$set('showDescriptionModal', false)">
         Done
-      </x-jet-button>
+      </x-button>
     </x-slot>
-  </x-jet-dialog-modal>
+  </x-dialog-modal>
 </div>

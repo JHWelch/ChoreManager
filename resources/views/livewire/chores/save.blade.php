@@ -178,9 +178,9 @@
         </div>
       </div>
 
-      <x-jet-button>
+      <x-button>
         {{ __('Save') }}
-      </x-jet-button>
+      </x-button>
     </form>
   </div>
 </div>

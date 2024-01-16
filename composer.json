@@ -46,7 +46,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel-notification-channels/fcm": "^3.2",
         "laravel/framework": "^10.0",
-        "laravel/jetstream": "^2.15",
+        "laravel/jetstream": "^4.0",
         "laravel/sanctum": "^3.2",
         "laravel/telescope": "^4.12",
         "laravel/tinker": "^2.8",
