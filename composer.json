@@ -42,7 +42,7 @@
         "php": "^8.2",
         "composer/composer": "^2.2",
         "doctrine/dbal": "^3.5",
-        "filament/filament": "^2.16",
+        "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel-notification-channels/fcm": "^3.2",
         "laravel/framework": "^10.0",
@@ -51,7 +51,7 @@
         "laravel/telescope": "^4.12",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.2",
-        "livewire/livewire": "^2.11",
+        "livewire/livewire": "^3.0",
         "spatie/icalendar-generator": "^2.3",
         "spatie/laravel-ray": "^1.32"
     },
@@ -71,7 +71,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
