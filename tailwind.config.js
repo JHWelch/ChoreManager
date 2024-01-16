@@ -1,6 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+    darkMode: 'class',
     content: [
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',

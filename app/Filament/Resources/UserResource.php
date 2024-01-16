@@ -6,9 +6,9 @@ use App\Filament\Resources\DeviceTokensRelationManagerResource\RelationManagers\
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 
 class UserResource extends Resource
@@ -65,7 +65,7 @@ class UserResource extends Resource
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Email Verified')
                     ->options([
-                        'heroicon-o-x' => fn ($state): bool => ! is_null($state),
+                        'heroicon-o-x-mark' => fn ($state): bool => ! is_null($state),
                         'heroicon-o-check' => fn ($state): bool => is_null($state),
                     ]),
 
