@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\ChoreInstances;
+namespace App\Livewire\ChoreInstances;
 
-use App\Http\Livewire\Concerns\SnoozesChores;
+use App\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Livewire\Component;
@@ -29,18 +29,18 @@ class IndexLine extends Component
     {
         $this->chore_instance->complete($for);
         $this->chore_instance->refresh();
-        $this->emit('chore_instance.completed', $this->chore_instance->id);
+        $this->dispatch('chore_instance.completed');
     }
 
     public function snoozeUntilTomorrow(): void
     {
         $this->snoozeUntilTomorrowTrait($this->chore_instance);
-        $this->emit('chore_instance.updated');
+        $this->dispatch('chore_instance.updated');
     }
 
     public function snoozeUntilWeekend(): void
     {
         $this->snoozeUntilWeekendTrait($this->chore_instance);
-        $this->emit('chore_instance.updated');
+        $this->dispatch('chore_instance.updated');
     }
 }

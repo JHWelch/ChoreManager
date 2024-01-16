@@ -99,7 +99,7 @@
     </div>
   </div>
 
-  <x-jet-dialog-modal wire:model="showDescriptionModal" maxWidth="lg">
+  <x-jet-dialog-modal wire:model.live="showDescriptionModal" maxWidth="lg">
     <x-slot name="title">
       {{ $showDescriptionModalChore?->title }}
     </x-slot>

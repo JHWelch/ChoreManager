@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\ChoreInstances;
 
-use App\Http\Livewire\ChoreInstances\Index as ChoreInstancesIndex;
+use App\Livewire\ChoreInstances\Index as ChoreInstancesIndex;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;

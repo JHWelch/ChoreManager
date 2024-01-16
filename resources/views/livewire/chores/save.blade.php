@@ -1,6 +1,6 @@
 <div class="flex justify-center">
   <div class="w-full p-8 bg-white rounded-lg shadow-md xl:w-10/12">
-    <form wire:submit.prevent="save" class="space-y-4">
+    <form wire:submit="save" class="space-y-4">
       <h2 class="text-lg font-medium">Chore</h2>
 
       <div class="space-y-4 lg:flex lg:space-x-4 lg:space-y-0">
@@ -35,7 +35,7 @@
                   min="1"
                   prefix="chore"
                   name="frequency_interval"
-                  wire:model="chore.frequency_interval"
+                  wire:model.live="chore.frequency_interval"
                 />
               @endif
 
@@ -73,7 +73,7 @@
                       x-data="
                         {
                           date: null,
-                          number: @entangle('chore.frequency_day_of'),
+                          number: @entangle('chore.frequency_day_of').live,
                           convertDateToNumber() {
                             const d = new Date(this.date);
                             const startOfYear = new Date(new Date().getFullYear(), 0, 1);
@@ -112,7 +112,7 @@
                       max="{{ $this->max_day_of }}"
                       prefix="chore"
                       name="frequency_day_of"
-                      wire:model="chore.frequency_day_of"
+                      wire:model.live="chore.frequency_day_of"
                       class="w-8"
                     />
 

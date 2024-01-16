@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Chores;
+namespace App\Livewire\Chores;
 
 use App\Enums\Frequency;
 use App\Enums\FrequencyType;
-use App\Http\Livewire\Concerns\GoesBack;
-use App\Http\Livewire\Concerns\TrimAndNullEmptyStrings;
+use App\Livewire\Concerns\GoesBack;
+use App\Livewire\Concerns\TrimAndNullEmptyStrings;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Rules\FrequencyDayOf;

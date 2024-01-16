@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\ChoreInstances;
+namespace App\Livewire\ChoreInstances;
 
-use App\Http\Livewire\ChoreInstances\Concerns\SnoozesGroups;
-use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
+use App\Livewire\ChoreInstances\Concerns\SnoozesGroups;
+use App\Livewire\Concerns\FiltersByTeamOrUser;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -34,7 +34,7 @@ class Index extends Component
     public function choreInstanceUpdated(): void
     {
         $this->updateChoreInstanceList();
-        $this->dispatchBrowserEvent('choreinstanceupdated');
+        $this->dispatch('choreinstanceupdated');
     }
 
     public function updateChoreInstanceList(): void

@@ -1,6 +1,6 @@
 @if (config('demo.enabled'))
   <div
-    x-data="{'show': @entangle('show')}"
+    x-data="{'show': @entangle('show').live}"
     class="bg-purple-500"
     x-show="show"
     x-cloak

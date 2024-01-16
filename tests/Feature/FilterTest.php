@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\ChoreInstances\Index as ChoreInstanceIndex;
-use App\Http\Livewire\Chores\Index as ChoreIndex;
+use App\Livewire\ChoreInstances\Index as ChoreInstanceIndex;
+use App\Livewire\Chores\Index as ChoreIndex;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
@@ -18,7 +18,7 @@ class FilterTest extends TestCase
         // This is a workaround because the emit does not seem to be working
         // Correctly in this test, but does in the running code.
         // Make sure emit was triggered, but re-emit
-        $component->assertEmitted('filterUpdated');
+        $component->assertDispatched('filterUpdated');
         $component->emit('filterUpdated');
     }
 

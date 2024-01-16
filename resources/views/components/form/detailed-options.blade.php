@@ -4,7 +4,7 @@
   'value'
 ])
 
-<fieldset x-data="{ selectedOption: @entangle($value) }">
+<fieldset x-data="{ selectedOption: @entangle($value).live }">
   <legend class="sr-only">
     {{ __($title) }}
   </legend>

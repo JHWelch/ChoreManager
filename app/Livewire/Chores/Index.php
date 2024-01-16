@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Chores;
+namespace App\Livewire\Chores;
 
-use App\Http\Livewire\Concerns\FiltersByTeamOrUser;
+use App\Livewire\Concerns\FiltersByTeamOrUser;
 use App\Models\Chore;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;

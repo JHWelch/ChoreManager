@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Concerns;
+namespace App\Livewire\Concerns;
 
 use App\Models\Chore;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,7 +15,7 @@ trait FiltersByTeamOrUser
     {
         $this->team_or_user = $filter;
         session(['filter_team_or_user' => $filter]);
-        $this->emitSelf('filterUpdated');
+        $this->dispatch('filterUpdated')->self();
     }
 
     public function setupFiltersByTeamOrUser(): void

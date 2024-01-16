@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\ChoreInstances;
 
-use App\Http\Livewire\Chores\Save;
+use App\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;

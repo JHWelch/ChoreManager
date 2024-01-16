@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Chores;
 
-use App\Http\Livewire\Chores\Show;
+use App\Livewire\Chores\Show;
 use App\Models\Chore;
 use Livewire;
 use Tests\TestCase;

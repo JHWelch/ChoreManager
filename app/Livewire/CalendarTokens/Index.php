@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\CalendarTokens;
+namespace App\Livewire\CalendarTokens;
 
 use App\Models\CalendarToken;
 use Illuminate\Database\Eloquent\Collection;
@@ -51,7 +51,7 @@ class Index extends Component
         $this->calendar_token->user_id = Auth::id();
 
         $this->calendar_token->save();
-        $this->emit('calendar-token.created');
+        $this->dispatch('calendar-token.created');
         $this->loadCalendarTokens();
 
         $this->calendar_token = new CalendarToken();

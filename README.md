@@ -61,6 +61,6 @@ composer test:types
 ## Technologies
 Chore Manager is built using a **TALL** stack.
 * [Tailwind CSS](https://tailwindcss.com/)
-* [Alpine.js](https://github.com/alpinejs/alpine)
+* [Alpine.js](https://alpinejs.dev/)
 * [Laravel](https://laravel.com/)
-* [Laravel Livewire](https://laravel-livewire.com/)
+* [Laravel Livewire](https://livewire.laravel.com/)

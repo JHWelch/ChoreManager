@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\ChoreInstances\Concerns;
+namespace App\Livewire\ChoreInstances\Concerns;
 
-use App\Http\Livewire\Concerns\SnoozesChores;
+use App\Livewire\Concerns\SnoozesChores;
 
 trait SnoozesGroups
 {
@@ -39,7 +39,7 @@ trait SnoozesGroups
                 );
         }
 
-        $this->emit('chore_instance.updated');
+        $this->dispatch('chore_instance.updated');
     }
 
     public function snoozeGroupUntilWeekend(string $group): void
@@ -68,7 +68,7 @@ trait SnoozesGroups
                 break;
         }
 
-        $this->emit('chore_instance.updated');
+        $this->dispatch('chore_instance.updated');
     }
 
     public function showSnoozeConfirmation(string $group, string $until): void

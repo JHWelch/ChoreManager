@@ -3,7 +3,7 @@
 namespace Tests\Feature\Chores;
 
 use App\Enums\FrequencyType;
-use App\Http\Livewire\Chores\Save;
+use App\Livewire\Chores\Save;
 use App\Models\Chore;
 use Livewire\Livewire;
 use Tests\TestCase;

@@ -38,7 +38,7 @@
   </div>
 
   <x-jet-confirmation-modal
-    wire:model="showSnoozeConfirmation"
+    wire:model.live="showSnoozeConfirmation"
     style="info"
   >
     <x-slot name="title">

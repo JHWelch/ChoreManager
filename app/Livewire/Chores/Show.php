@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Chores;
+namespace App\Livewire\Chores;
 
-use App\Http\Livewire\Concerns\GoesBack;
+use App\Livewire\Concerns\GoesBack;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Database\Eloquent\Collection;

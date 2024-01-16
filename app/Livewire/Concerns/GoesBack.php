@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Concerns;
+namespace App\Livewire\Concerns;
 
 use Illuminate\Support\Facades\URL;
 
