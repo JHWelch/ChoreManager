@@ -28,9 +28,9 @@ class MacroServiceProvider extends ServiceProvider
         /**
          * The next item in a collection after a given value.
          *
-         * @param  mixed  $needle - The item to search for
-         * @param  bool  $strict - Whether to use strict comparison in the collection search
-         * @param  bool  $wrap - if $needle specifies last item in collection, return the first.
+         * @param  mixed  $needle  - The item to search for
+         * @param  bool  $strict  - Whether to use strict comparison in the collection search
+         * @param  bool  $wrap  - if $needle specifies last item in collection, return the first.
          * @return mixed
          */
         EloquentCollection::macro('nextAfter', function ($needle, $strict = false, $wrap = false) {

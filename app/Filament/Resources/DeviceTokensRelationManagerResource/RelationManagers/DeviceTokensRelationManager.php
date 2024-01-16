@@ -5,8 +5,8 @@ namespace App\Filament\Resources\DeviceTokensRelationManagerResource\RelationMan
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Tables\Table;
 
 class DeviceTokensRelationManager extends RelationManager
 {

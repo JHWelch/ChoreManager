@@ -165,7 +165,7 @@ class Chore extends Model
         return $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
     }
 
-    public function createNewInstance(Carbon $after = null): void
+    public function createNewInstance(?Carbon $after = null): void
     {
         if (! ($due_date = $this->frequency->getNextDate($after))) {
             return;
@@ -218,7 +218,7 @@ class Chore extends Model
     /**
      * Complete the next chore instance.
      */
-    public function complete(int $for = null, Carbon $on = null): void
+    public function complete(?int $for = null, ?Carbon $on = null): void
     {
         if ($this->nextInstance) {
             $this->nextInstance->complete($for, $on);

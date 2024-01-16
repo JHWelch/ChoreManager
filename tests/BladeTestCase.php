@@ -21,10 +21,10 @@ class BladeTestCase extends TestCase
     /**
      * Evaluate a Blade expression with the given $variables in scope equals a given string.
      *
-     * @param  string  $expected   The expected output.
-     * @param  string  $expression The Blade directive, as it would be written in a view.
+     * @param  string  $expected  The expected output.
+     * @param  string  $expression  The Blade directive, as it would be written in a view.
      * @param  array  $variables  Variables to extract() into the scope of the eval() statement.
-     * @param  string  $message    A message to display if the output does not match $expected.
+     * @param  string  $message  A message to display if the output does not match $expected.
      */
     protected function assertDirectiveOutputEquals(
         string $expected,
@@ -38,10 +38,10 @@ class BladeTestCase extends TestCase
     /**
      * Evaluate a Blade expression with the given $variables in scope does not equal a given string.
      *
-     * @param  string  $expected   The expected output.
-     * @param  string  $expression The Blade directive, as it would be written in a view.
+     * @param  string  $expected  The expected output.
+     * @param  string  $expression  The Blade directive, as it would be written in a view.
      * @param  array  $variables  Variables to extract() into the scope of the eval() statement.
-     * @param  string  $message    A message to display if the output does not match $expected.
+     * @param  string  $message  A message to display if the output does not match $expected.
      */
     protected function assertDirectiveOutputNotEquals(
         string $expected,
@@ -55,10 +55,10 @@ class BladeTestCase extends TestCase
     /**
      * Evaluate a Blade expression with the given $variables in scope.
      *
-     * @param  string  $expected   The expected output.
-     * @param  string  $expression The Blade directive, as it would be written in a view.
+     * @param  string  $expected  The expected output.
+     * @param  string  $expression  The Blade directive, as it would be written in a view.
      * @param  array  $variables  Variables to extract() into the scope of the eval() statement.
-     * @param  string  $message    A message to display if the output does not match $expected.
+     * @param  string  $message  A message to display if the output does not match $expected.
      */
     private function assertDirectiveOutput(
         bool $equals,

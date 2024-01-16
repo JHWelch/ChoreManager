@@ -18,9 +18,9 @@ class Frequency
     ];
 
     /**
-     * @param  FrequencyType  $frequencyType One of the frequency constants
-     * @param  int  $interval - The interval of the Frequency (every 2 weeks, every 3 months, etc.)
-     * @param  int  $dayOf - The day of the Frequency (day of week, day of month, etc.)
+     * @param  FrequencyType  $frequencyType  One of the frequency constants
+     * @param  int  $interval  - The interval of the Frequency (every 2 weeks, every 3 months, etc.)
+     * @param  int  $dayOf  - The day of the Frequency (day of week, day of month, etc.)
      */
     public function __construct(
         public FrequencyType $frequencyType,
@@ -64,11 +64,11 @@ class Frequency
     /**
      * Get the next date after a given date based on Frequency.
      *
-     * @param  Carbon  $after optional
+     * @param  Carbon  $after  optional
      *
      * @throws InvalidArgumentException if the frequency is invalid
      */
-    public function getNextDate(Carbon $after = null): ?Carbon
+    public function getNextDate(?Carbon $after = null): ?Carbon
     {
         $after = $after ?? today();
 

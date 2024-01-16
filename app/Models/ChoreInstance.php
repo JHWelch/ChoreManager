@@ -56,7 +56,7 @@ class ChoreInstance extends Model
         'completed_date' => 'date:Y-m-d',
     ];
 
-    public function complete(int $for = null, Carbon $on = null): void
+    public function complete(?int $for = null, ?Carbon $on = null): void
     {
         $this->completed_date = $on ?? today();
         $this->completed_by_id = $for ?? Auth::id();

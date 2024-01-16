@@ -13,8 +13,8 @@ use Livewire\Component;
 
 class Show extends Component
 {
-    use GoesBack;
     use AuthorizesRequests;
+    use GoesBack;
 
     public Chore $chore;
 
@@ -38,7 +38,7 @@ class Show extends Component
         $this->showCompleteForUserDialog = session()->get('complete') ?? false;
     }
 
-    public function complete(int $for = null, Carbon $on = null): void
+    public function complete(?int $for = null, ?Carbon $on = null): void
     {
         $this->chore->complete($for, $on);
         session()->remove('complete');

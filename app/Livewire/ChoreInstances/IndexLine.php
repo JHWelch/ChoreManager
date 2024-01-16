@@ -25,7 +25,7 @@ class IndexLine extends Component
         $this->chore_instance = $chore->nextChoreInstance;
     }
 
-    public function complete(int $for = null): void
+    public function complete(?int $for = null): void
     {
         $this->chore_instance->complete($for);
         $this->chore_instance->refresh();
