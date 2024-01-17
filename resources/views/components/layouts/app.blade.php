@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html> --}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
     <meta charset="utf-8">
@@ -21,6 +21,7 @@
     <!-- Page specific head -->
     @stack('head')
   </head>
+
   <body class="font-sans antialiased bg-gray-100">
     @livewire('demo-banner')
 
@@ -45,7 +46,5 @@
     </div>
 
     @stack('modals')
-
-    @livewireScripts
   </body>
 </html>
