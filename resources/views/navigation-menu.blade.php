@@ -102,7 +102,7 @@
                   {{ __('Admin Features') }}
                 </div>
 
-                <x-dropdown-link href="{{ route('filament.pages.dashboard') }}">
+                <x-dropdown-link href="{{ route('filament.admin.pages.dashboard') }}">
                   {{ __('Admin Dashboard') }}
                 </x-dropdown-link>
               @endif
@@ -237,7 +237,7 @@
           </div>
 
           @foreach (Auth::user()->allTeams() as $team)
-            <x-switchable-team :team="$team" component="jet-responsive-nav-link" />
+            <x-switchable-team :team="$team" component="responsive-nav-link" />
           @endforeach
         @endif
       </div>
