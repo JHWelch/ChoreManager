@@ -1,0 +1,51 @@
+name: Build and Deploy
+# on:
+#   push:
+#     branches:
+#       - main
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        coverage: none
+
+    - name: Install dependencies
+      uses: ramsey/composer-install@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.13.0'
+        cache: 'yarn'
+
+    - name: Install npm dependencies
+      run: yarn install
+
+    - name: Build assets
+      run: yarn run build
+
+    - name: Zip up the application
+      run: zip -r application.zip . -x "*.git*" -x "*.github*"
+
+    - name: Upload Application Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: application
+        path: application.zip
