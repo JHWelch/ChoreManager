@@ -39,7 +39,7 @@ jobs:
       run: yarn install
 
     - name: Build assets
-      run: npm run production
+      run: yarn run build
 
     - name: Zip up the application
       run: zip -r application.zip . -x "*.git*" -x "*.github*"
