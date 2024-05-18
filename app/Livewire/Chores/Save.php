@@ -6,13 +6,10 @@ use App\Enums\Frequency;
 use App\Enums\FrequencyType;
 use App\Livewire\Concerns\GoesBack;
 use App\Livewire\Concerns\TrimAndNullEmptyStrings;
+use App\Livewire\Forms\Chore as FormsChore;
 use App\Models\Chore;
-use App\Models\ChoreInstance;
-use App\Rules\FrequencyDayOf;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 
 class Save extends Component
@@ -21,9 +18,7 @@ class Save extends Component
     use GoesBack;
     use TrimAndNullEmptyStrings;
 
-    public Chore $chore;
-
-    public ChoreInstance $chore_instance;
+    public FormsChore $chore;
 
     /** @var array<string> */
     public array $user_options;
@@ -32,63 +27,34 @@ class Save extends Component
 
     public bool $show_on = false;
 
-    /** @return array<string, mixed>  */
-    protected function rules(): array
-    {
-        return [
-            'chore.title' => 'string|required',
-            'chore.description' => 'string|nullable',
-            'chore.frequency_id' => new Enum(FrequencyType::class),
-            'chore.frequency_interval' => 'min:1',
-            'chore.frequency_day_of' => $this->frequencyDayOfRule(),
-            'chore.user_id' => 'nullable',
-            'chore_instance.due_date' => 'date|nullable|date|after_or_equal:today',
-            'chore_instance.user_id' => 'nullable',
-        ];
-    }
-
-    protected function frequencyDayOfRule(): string|ValidationRule
-    {
-        return $this->show_on
-            ? new FrequencyDayOf($this->chore->frequency_id)
-            : 'nullable';
-    }
-
     public function mount(Chore $chore): void
     {
         $this->defaultBackUrl = route('chores.index');
 
-        $this->chore = $chore;
+        $this->authorizePage($chore);
 
-        $this->authorizePage();
+        $this->chore->fillFromChore($chore);
 
-        if ($this->chore->id === null) {
-            $this->chore->user_id = Auth::id();
-        }
-        $this->chore_instance = $chore->nextChoreInstance ?? new ChoreInstance();
         $this->setupUserOptions();
 
         /** @var \App\Models\Team $team */
         $team = Auth::user()->currentTeam()->select('name')->first();
         $this->team = $team->name;
 
+        $this->chore->show_on = $this->chore->frequency_day_of !== null;
         $this->show_on = $this->chore->frequency_day_of !== null;
     }
 
     public function save(): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
-        $this->validate();
-        $this->chore->team_id = Auth::user()->currentTeam->id;
         $this->chore->save();
-
-        $this->saveChoreInstance();
 
         return $this->back();
     }
 
-    protected function authorizePage(): void
+    protected function authorizePage(Chore $chore): void
     {
-        $this->chore->exists
+        $chore->exists
             ? $this->authorize('update', $this->chore)
             : $this->authorize('create', Chore::class);
     }
@@ -102,39 +68,6 @@ class Save extends Component
                 ->sortBy(fn ($user) => $user->name)
                 ->toOptionsArray()
         );
-    }
-
-    protected function saveChoreInstance(): void
-    {
-        if ($this->chore_instance->exists) {
-            $this->saveExistingChoreInstance();
-        } else {
-            $this->saveNewChoreInstance();
-        }
-    }
-
-    protected function saveNewChoreInstance(): void
-    {
-        if ($this->chore_instance->due_date === null) {
-            return;
-        }
-
-        $this->chore_instance->chore_id = $this->chore->id;
-        $this->chore_instance->user_id = $this->chore->next_assigned_id;
-        $this->chore_instance->save();
-    }
-
-    protected function saveExistingChoreInstance(): void
-    {
-        if (! $this->chore_instance->isDirty()) {
-            return;
-        }
-
-        if ($this->chore_instance->due_date !== null) {
-            $this->chore_instance->save();
-        } else {
-            $this->chore_instance->delete();
-        }
     }
 
     /** @return array<int, array<string, mixed>> */
@@ -161,6 +94,7 @@ class Save extends Component
     public function showDayOfSection(): void
     {
         $this->chore->frequency_day_of = 1;
+        $this->chore->show_on = true;
         $this->show_on = true;
     }
 
