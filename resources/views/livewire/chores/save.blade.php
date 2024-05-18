@@ -25,7 +25,7 @@
             <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
 
             <div class="flex items-center space-x-3">
-              @if (! $chore->isDoesNotRepeat())
+              @if (! $form->isDoesNotRepeat())
                 <div class="text-sm font-medium">
                   Every
                 </div>
@@ -58,7 +58,7 @@
             @if ($show_on)
               <div class="flex justify-between">
                 <div class="flex items-center mt-2 space-x-3 text-sm">
-                  @if ($chore->isWeekly())
+                  @if ($form->isWeekly())
                     <label for="frequency_day_of">On</label>
 
                     <x-form.bare.select
@@ -66,7 +66,7 @@
                       prefix="chore"
                       :options="$this->weekly_day_of"
                     />
-                  @elseif ($chore->isYearly())
+                  @elseif ($form->isYearly())
                     <label for="frequency_day_of">On</label>
 
                     <div
@@ -116,7 +116,7 @@
                       class="w-8"
                     />
 
-                    <span> of the {{ rtrim(lcfirst($this->chore->frequency()->noun()), 's') }}</span>
+                    <span> of the {{ rtrim(lcfirst($form->frequency()->noun()), 's') }}</span>
                   @endif
                 </div>
 
@@ -132,16 +132,16 @@
             @endif
           </div>
 
-          @if ($chore->instance_id)
+          @if ($form->instance_id)
             <h2 class="text-lg font-medium">Next Instance</h2>
           @endif
 
           <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 lg:flex-col lg:space-y-4 lg:space-x-0">
-            <div class="{{ $chore->instance_id ? 'md:w-1/2 lg:w-full' : 'md:w-full' }}">
+            <div class="{{ $form->instance_id ? 'md:w-1/2 lg:w-full' : 'md:w-full' }}">
               <x-form.input type="date" prefix="chore" name="due_date" label="Due Date" />
             </div>
 
-            @if ($chore->instance_id)
+            @if ($form->instance_id)
               <div class="md:w-1/2 lg:w-full">
                 <x-form.select
                   name="instance_user_id"

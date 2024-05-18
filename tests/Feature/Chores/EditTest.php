@@ -46,9 +46,9 @@ class EditTest extends TestCase
         $component = Livewire::test(Save::class, ['chore' => $chore]);
 
         $component
-            ->assertSet('chore.title', 'Do dishes')
-            ->assertSet('chore.description', 'Do dishes every night.')
-            ->assertSet('chore.frequency_id', FrequencyType::daily);
+            ->assertSet('form.title', 'Do dishes')
+            ->assertSet('form.description', 'Do dishes every night.')
+            ->assertSet('form.frequency_id', FrequencyType::daily);
     }
 
     /** @test */
@@ -58,9 +58,9 @@ class EditTest extends TestCase
         $chore = Chore::factory()->for($user)->create();
 
         Livewire::test(Save::class, ['chore' => $chore])
-            ->set('chore.title', 'Do dishes')
-            ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', FrequencyType::daily)
+            ->set('form.title', 'Do dishes')
+            ->set('form.description', 'Do the dishes every night.')
+            ->set('form.frequency_id', FrequencyType::daily->value)
             ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [

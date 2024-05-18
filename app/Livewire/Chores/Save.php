@@ -18,7 +18,7 @@ class Save extends Component
     use GoesBack;
     use TrimAndNullEmptyStrings;
 
-    public FormsChore $chore;
+    public FormsChore $form;
 
     /** @var array<string> */
     public array $user_options;
@@ -33,7 +33,7 @@ class Save extends Component
 
         $this->authorizePage($chore);
 
-        $this->chore->fillFromChore($chore);
+        $this->form->fillFromChore($chore);
 
         $this->setupUserOptions();
 
@@ -41,13 +41,13 @@ class Save extends Component
         $team = Auth::user()->currentTeam()->select('name')->first();
         $this->team = $team->name;
 
-        $this->chore->show_on = $this->chore->frequency_day_of !== null;
-        $this->show_on = $this->chore->frequency_day_of !== null;
+        $this->form->show_on = $this->form->frequency_day_of !== null;
+        $this->show_on = $this->form->frequency_day_of !== null;
     }
 
     public function save(): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
-        $this->chore->save();
+        $this->form->save();
 
         return $this->back();
     }
@@ -55,7 +55,7 @@ class Save extends Component
     protected function authorizePage(Chore $chore): void
     {
         $chore->exists
-            ? $this->authorize('update', $this->chore)
+            ? $this->authorize('update', $chore)
             : $this->authorize('create', Chore::class);
     }
 
@@ -73,7 +73,7 @@ class Save extends Component
     /** @return array<int, array<string, mixed>> */
     public function getFrequenciesProperty(): array
     {
-        return $this->chore->frequency_id == FrequencyType::doesNotRepeat
+        return $this->form->frequency_id == FrequencyType::doesNotRepeat
             ? FrequencyType::adjectivesAsSelectOptions()
             : FrequencyType::nounsAsSelectOptions();
     }
@@ -87,26 +87,26 @@ class Save extends Component
     public function isShowOnButton(): bool
     {
         return (! $this->show_on) &&
-            $this->chore->frequency_id !== FrequencyType::doesNotRepeat &&
-            $this->chore->frequency_id !== FrequencyType::daily;
+            $this->form->frequency_id !== FrequencyType::doesNotRepeat &&
+            $this->form->frequency_id !== FrequencyType::daily;
     }
 
     public function showDayOfSection(): void
     {
-        $this->chore->frequency_day_of = 1;
-        $this->chore->show_on = true;
+        $this->form->frequency_day_of = 1;
+        $this->form->show_on = true;
         $this->show_on = true;
     }
 
     public function hideDayOfSection(): void
     {
-        $this->chore->frequency_day_of = null;
+        $this->form->frequency_day_of = null;
         $this->show_on = false;
     }
 
     public function getMaxDayOfProperty(): string
     {
-        return match ($this->chore->frequency_id) {
+        return match ($this->form->frequency_id) {
             FrequencyType::monthly => '31',
             FrequencyType::quarterly => '92',
             FrequencyType::yearly => '365',
@@ -114,7 +114,7 @@ class Save extends Component
         };
     }
 
-    public function updatedChoreFrequencyId(FrequencyType|string $frequencyType): void
+    public function updatedFormFrequencyId(FrequencyType|string $frequencyType): void
     {
         if (! $frequencyType instanceof FrequencyType) {
             $frequencyType = FrequencyType::from(intval($frequencyType));
@@ -124,7 +124,7 @@ class Save extends Component
         ) {
             $this->hideDayOfSection();
         } else {
-            $this->chore->frequency_day_of = 1;
+            $this->form->frequency_day_of = 1;
         }
     }
 }
