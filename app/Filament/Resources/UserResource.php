@@ -7,6 +7,7 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Pages\PageRegistration;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -99,7 +100,7 @@ class UserResource extends Resource
         ];
     }
 
-    /** @return array<string, array<mixed>> */
+    /** @return array<string, PageRegistration> */
     public static function getPages(): array
     {
         return [

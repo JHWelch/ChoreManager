@@ -100,7 +100,7 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $appends = [
         'profile_photo_url',
     ];
