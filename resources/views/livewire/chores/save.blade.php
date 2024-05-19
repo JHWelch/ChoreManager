@@ -7,14 +7,14 @@
         <div class="w-full space-y-4 lg:w-1/2">
           <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 lg:flex-col lg:space-y-4 lg:space-x-0">
             <div class="md:w-1/2 lg:w-full">
-              <x-form.input prefix="chore" name="title" />
+              <x-form.input prefix="form" name="title" />
             </div>
 
             <div class="md:w-1/2 lg:w-full">
               <x-form.select
                 name="chore_user_id"
                 label="Owner"
-                prefix="chore"
+                prefix="form"
                 :options="$user_options"
                 blankOption="Assign to Team - {{ $team }}"
               />
@@ -22,7 +22,7 @@
           </div>
           <!-- Frequency -->
           <div class="flex flex-col">
-            <x-form.bare.label prefix="chore" name="frequency_id" label="Frequency" />
+            <x-form.bare.label prefix="form" name="frequency_id" label="Frequency" />
 
             <div class="flex items-center space-x-3">
               @if (! $form->isDoesNotRepeat())
@@ -33,7 +33,7 @@
                 <x-form.bare.input
                   type="number"
                   min="1"
-                  prefix="chore"
+                  prefix="form"
                   name="frequency_interval"
                   wire:model.live="chore.frequency_interval"
                 />
@@ -41,7 +41,7 @@
 
               <x-form.bare.select
                 name="frequency_id"
-                prefix="chore"
+                prefix="form"
                 :options="$this->frequencies"
               />
 
@@ -63,7 +63,7 @@
 
                     <x-form.bare.select
                       name="frequency_day_of"
-                      prefix="chore"
+                      prefix="form"
                       :options="$this->weekly_day_of"
                     />
                   @elseif ($form->isYearly())
@@ -110,7 +110,7 @@
                       type="number"
                       min="1"
                       max="{{ $this->max_day_of }}"
-                      prefix="chore"
+                      prefix="form"
                       name="frequency_day_of"
                       wire:model.live="chore.frequency_day_of"
                       class="w-8"
@@ -138,7 +138,7 @@
 
           <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 lg:flex-col lg:space-y-4 lg:space-x-0">
             <div class="{{ $form->instance_id ? 'md:w-1/2 lg:w-full' : 'md:w-full' }}">
-              <x-form.input type="date" prefix="chore" name="due_date" label="Due Date" />
+              <x-form.input type="date" prefix="form" name="due_date" label="Due Date" />
             </div>
 
             @if ($form->instance_id)
@@ -146,7 +146,7 @@
                 <x-form.select
                   name="instance_user_id"
                   label="Owner"
-                  prefix="chore"
+                  prefix="form"
                   :options="$user_options"
                 />
               </div>
@@ -159,7 +159,7 @@
             <x-form.bare.label name="description" />
 
             <x-form.bare.textarea
-              prefix="chore"
+              prefix="form"
               name="description"
               class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y lg:h-96 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             />
@@ -173,7 +173,7 @@
               <x-icons.markdown class="h-3" />
             </a>
 
-            <x-form.bare.error prefix="chore" name="description" />
+            <x-form.bare.error prefix="form" name="description" />
           </div>
         </div>
       </div>
