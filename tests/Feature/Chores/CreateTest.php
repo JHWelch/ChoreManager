@@ -8,7 +8,6 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
-use App\Rules\FrequencyDayOf;
 use Carbon\Carbon;
 use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
@@ -185,7 +184,7 @@ class CreateTest extends TestCase
             ->call('save');
 
         $component->assertHasErrors([
-            'form.frequency_day_of' => 'Day of the Months must be between 1 and 31.'
+            'form.frequency_day_of' => 'Day of the Months must be between 1 and 31.',
         ]);
     }
 
@@ -199,7 +198,7 @@ class CreateTest extends TestCase
             ->call('save');
 
         $component->assertHasErrors([
-            'form.frequency_day_of' => 'Day of the Months must be between 1 and 31.'
+            'form.frequency_day_of' => 'Day of the Months must be between 1 and 31.',
         ]);
     }
 
@@ -213,7 +212,7 @@ class CreateTest extends TestCase
             ->call('save');
 
         $component->assertHasErrors([
-            'form.frequency_day_of' => 'Day of the Quarters must be between 1 and 92.'
+            'form.frequency_day_of' => 'Day of the Quarters must be between 1 and 92.',
         ]);
     }
 
@@ -227,7 +226,7 @@ class CreateTest extends TestCase
             ->call('save');
 
         $component->assertHasErrors([
-            'form.frequency_day_of' => 'Day of the Quarters must be between 1 and 92.'
+            'form.frequency_day_of' => 'Day of the Quarters must be between 1 and 92.',
         ]);
     }
 
@@ -241,7 +240,7 @@ class CreateTest extends TestCase
             ->call('save');
 
         $component->assertHasErrors([
-            'form.frequency_day_of' => 'Day of the Years must be between 1 and 365.'
+            'form.frequency_day_of' => 'Day of the Years must be between 1 and 365.',
         ]);
     }
 
@@ -255,7 +254,7 @@ class CreateTest extends TestCase
             ->call('save');
 
         $component->assertHasErrors([
-            'form.frequency_day_of' => 'Day of the Years must be between 1 and 365.'
+            'form.frequency_day_of' => 'Day of the Years must be between 1 and 365.',
         ]);
     }
 
