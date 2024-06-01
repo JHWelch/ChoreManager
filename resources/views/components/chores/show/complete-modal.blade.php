@@ -1,4 +1,4 @@
-<x-dialog-modal wire:model.live="showCompleteForUserDialog" maxWidth="lg">
+<x-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg">
   <x-slot name="title">
     Complete
     <span class="font-bold">

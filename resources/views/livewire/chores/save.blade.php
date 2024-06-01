@@ -35,7 +35,7 @@
                   min="1"
                   prefix="form"
                   name="frequency_interval"
-                  wire:model.live="chore.frequency_interval"
+                  wire:model.live="form.frequency_interval"
                 />
               @endif
 

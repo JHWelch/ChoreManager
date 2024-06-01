@@ -170,7 +170,7 @@
     </div>
   </div>
 
-  <x-confirmation-modal wire:model.live="showDeleteConfirmation">
+  <x-confirmation-modal wire:model="showDeleteConfirmation">
     <x-slot name="title">
         Delete "{{ $chore->title }}"
     </x-slot>
