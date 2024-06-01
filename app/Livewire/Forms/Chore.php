@@ -23,7 +23,7 @@ class Chore extends Form
 
     public ?string $description = null;
 
-    public $frequency_id = FrequencyType::daily->value;
+    public FrequencyType|int $frequency_id = FrequencyType::daily;
 
     public int $frequency_interval = 1;
 
@@ -56,14 +56,14 @@ class Chore extends Form
 
     public function fillFromChore(ChoreModel $chore): void
     {
-        $instance = $chore->nextChoreInstance ?? new ChoreInstance();
+        $instance = $chore->nextChoreInstance;
 
         $this->fill([
             'chore_id' => $chore->id,
             'chore_user_id' => $chore->id ? $chore->user_id : auth()->id(),
-            'instance_id' => $instance->id,
-            'instance_user_id' => $instance->user_id,
-            'due_date' => $instance->due_date?->format('Y-m-d'),
+            'instance_id' => $instance?->id,
+            'instance_user_id' => $instance?->user_id,
+            'due_date' => $instance?->due_date->format('Y-m-d'),
             ...$chore->only([
                 'title',
                 'description',

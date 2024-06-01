@@ -6,6 +6,7 @@ use App\Livewire\Forms\CalendarToken;
 use App\Models\CalendarToken as ModelsCalendarToken;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Index extends Component
@@ -46,7 +47,7 @@ class Index extends Component
         $this->loadCalendarTokens();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.calendar-tokens.index');
     }

@@ -5,6 +5,7 @@ namespace App\Livewire\Chores;
 use App\Livewire\Concerns\FiltersByTeamOrUser;
 use App\Models\Chore;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Index extends Component
@@ -65,7 +66,7 @@ class Index extends Component
         $this->showDescriptionModalChore = Chore::find($chore);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.chores');
     }

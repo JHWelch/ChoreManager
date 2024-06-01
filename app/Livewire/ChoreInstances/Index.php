@@ -5,6 +5,7 @@ namespace App\Livewire\ChoreInstances;
 use App\Livewire\ChoreInstances\Concerns\SnoozesGroups;
 use App\Livewire\Concerns\FiltersByTeamOrUser;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Index extends Component
@@ -68,7 +69,7 @@ class Index extends Component
         session(['show_future_chores' => $this->showFutureChores]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.chore-instances');
     }
