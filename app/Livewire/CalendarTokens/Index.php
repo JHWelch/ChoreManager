@@ -62,4 +62,9 @@ class Index extends Component
         $token->delete();
         $this->loadCalendarTokens();
     }
+
+    public function render()
+    {
+        return view('livewire.calendar-tokens.index');
+    }
 }

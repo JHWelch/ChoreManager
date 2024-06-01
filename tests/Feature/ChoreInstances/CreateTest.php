@@ -7,7 +7,7 @@ use App\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Livewire\Livewire;
 use Tests\TestCase;
 

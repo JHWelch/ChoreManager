@@ -13,13 +13,13 @@ use Tests\TestCase;
 
 class FilterTest extends TestCase
 {
-    public function assertAndReemit($component)
+    public function assertAndReDispatch($component)
     {
         // This is a workaround because the emit does not seem to be working
         // Correctly in this test, but does in the running code.
         // Make sure emit was triggered, but re-emit
         $component->assertDispatched('filterUpdated');
-        $component->emit('filterUpdated');
+        $component->dispatch('filterUpdated');
     }
 
     /** @test */
@@ -73,7 +73,7 @@ class FilterTest extends TestCase
         $component = Livewire::test(ChoreIndex::class)
             ->call('setTeamFilter', 'team');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertSee('Walk the dog.');
         $component->assertSee('Wash the dishes.');
     }
@@ -97,12 +97,12 @@ class FilterTest extends TestCase
         $component = Livewire::test(ChoreInstanceIndex::class)
             ->call('setTeamFilter', 'user');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertDontSee('Walk the dog.');
 
         $component->call('setTeamFilter', 'team');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertSee('Walk the dog.');
     }
 
@@ -120,12 +120,12 @@ class FilterTest extends TestCase
         $component = Livewire::test(ChoreIndex::class)
             ->call('setTeamFilter', 'team');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertSee('Walk the dog');
 
         $component->call('setTeamFilter', 'user');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertDontSee('Walk the dog');
     }
 

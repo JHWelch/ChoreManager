@@ -67,4 +67,9 @@ class Index extends Component
         $this->updateChoreInstanceList();
         session(['show_future_chores' => $this->showFutureChores]);
     }
+
+    public function render()
+    {
+        return view('livewire.chore-instances');
+    }
 }

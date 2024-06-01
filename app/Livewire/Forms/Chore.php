@@ -63,19 +63,15 @@ class Chore extends Form
             'chore_user_id' => $chore->id ? $chore->user_id : auth()->id(),
             'instance_id' => $instance->id,
             'instance_user_id' => $instance->user_id,
+            'due_date' => $instance->due_date?->format('Y-m-d'),
             ...$chore->only([
                 'title',
                 'description',
                 'frequency_id',
                 'frequency_interval',
                 'frequency_day_of',
-                'due_date',
-                'instance_user_id',
-                'team_id'
+                'team_id',
             ]),
-            ...$instance->only([
-                'user_id',
-            ])
         ]);
     }
 
@@ -95,8 +91,6 @@ class Chore extends Form
             ]),
             'user_id' => $this->chore_user_id,
         ]);
-
-        ray($chore)->red();
 
         $this->saveChoreInstance($chore);
     }
@@ -129,7 +123,7 @@ class Chore extends Form
         if ($this->due_date === null) {
             $instance->delete();
 
-           return;
+            return;
         }
 
         $instance->update([

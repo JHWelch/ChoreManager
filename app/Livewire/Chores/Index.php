@@ -64,4 +64,9 @@ class Index extends Component
         $this->showDescriptionModal = true;
         $this->showDescriptionModalChore = Chore::find($chore);
     }
+
+    public function render()
+    {
+        return view('livewire.chores');
+    }
 }
