@@ -15,7 +15,7 @@
     <x-slot name="form">
       <div class="col-span-8 space-y-4 lg:col-span-4">
         <x-form.input
-          prefix="calendar_token"
+          prefix="form"
           name="name"
           placeholder="Optional"
         />
@@ -24,12 +24,12 @@
         <x-form.detailed-options
           title="Calendar Type"
           :options="$calendar_types"
-          value="calendar_type"
+          value="form.type"
         />
 
-        @if ($calendar_type === 'team')
+        @if ($form->type === 'team')
           <x-form.select
-            prefix="calendar_token"
+            prefix="form"
             name="team_id"
             label="Team"
             blankOption="Select Team"
