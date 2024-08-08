@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\ChoreInstances;
 
-use App\Http\Livewire\Chores\Save;
+use App\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -25,7 +25,7 @@ class EditTest extends TestCase
         $date = $this->faker->dateTimeBetween('+0 days', '+1 year');
 
         Livewire::test(Save::class, ['chore' => $chore])
-            ->set('chore_instance.due_date', $date)
+            ->set('form.due_date', Carbon::parse($date))
             ->call('save');
 
         $this->assertDatabaseHas((new ChoreInstance())->getTable(), [
@@ -40,11 +40,12 @@ class EditTest extends TestCase
         $user = $this->testUser()['user'];
         $chore = Chore::factory()->for($user)->withFirstInstance()->create();
 
-        Livewire::test(Save::class, ['chore' => $chore])
-            ->set('chore_instance.due_date', null)
+        $livewire = Livewire::test(Save::class, ['chore' => $chore])
+            ->set('form.due_date', null)
+            ->assertSet('form.due_date', null)
             ->call('save');
 
-        $this->assertDatabaseCount((new ChoreInstance)->getTable(), 0);
+        $this->assertDatabaseEmpty((new ChoreInstance)->getTable());
     }
 
     /** @test */
@@ -56,7 +57,7 @@ class EditTest extends TestCase
 
         $component = Livewire::test(Save::class, ['chore' => $chore]);
 
-        $component->assertSet('chore_instance.due_date', $date->startOfDay());
+        $component->assertSet('form.due_date', $date->startOfDay()->format('Y-m-d'));
     }
 
     /** @test */
@@ -74,7 +75,7 @@ class EditTest extends TestCase
 
         $component = Livewire::test(Save::class, ['chore' => $chore]);
 
-        $component->assertSet('chore_instance.due_date', $date->addDay()->startOfDay());
+        $component->assertSet('form.due_date', $date->addDay()->startOfDay()->format('Y-m-d'));
     }
 
     /** @test */
@@ -89,7 +90,7 @@ class EditTest extends TestCase
             ->create();
 
         Livewire::test(Save::class, ['chore' => $chore])
-            ->set('chore_instance.user_id', $user->id)
+            ->set('form.instance_user_id', $user->id)
             ->call('save');
 
         $this->assertDatabaseHas((new ChoreInstance())->getTable(), [

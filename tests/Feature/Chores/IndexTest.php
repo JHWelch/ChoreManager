@@ -3,7 +3,7 @@
 namespace Tests\Feature\Chores;
 
 use App\Enums\FrequencyType;
-use App\Http\Livewire\Chores\Index;
+use App\Livewire\Chores\Index;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Database\Eloquent\Factories\Sequence;

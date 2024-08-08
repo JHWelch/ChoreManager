@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Concerns;
 
-use App\Http\Livewire\Concerns\SnoozesChores;
+use App\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;

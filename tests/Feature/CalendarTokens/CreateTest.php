@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\CalendarTokens;
 
-use App\Http\Livewire\CalendarTokens\Index;
+use App\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -15,7 +15,7 @@ class CreateTest extends TestCase
         $user = $this->testUser()['user'];
 
         Livewire::test(Index::class)
-            ->set('calendar_type', 'user')
+            ->set('form.type', 'user')
             ->call('addCalendarLink');
 
         $this->assertDatabaseHas((new CalendarToken)->getTable(), [
@@ -30,7 +30,7 @@ class CreateTest extends TestCase
         $this->testUser();
 
         Livewire::test(Index::class)
-            ->set('calendar_type', 'user')
+            ->set('form.type', 'user')
             ->call('addCalendarLink');
 
         $this->assertEquals(36, strlen(CalendarToken::first()->token));
@@ -42,8 +42,8 @@ class CreateTest extends TestCase
         $userAndTeam = $this->testUser();
 
         Livewire::test(Index::class)
-            ->set('calendar_type', 'team')
-            ->set('calendar_token.team_id', $userAndTeam['team']->id)
+            ->set('form.type', 'team')
+            ->set('form.team_id', $userAndTeam['team']->id)
             ->call('addCalendarLink');
 
         $this->assertDatabaseHas((new CalendarToken)->getTable(), [
@@ -58,10 +58,10 @@ class CreateTest extends TestCase
         $this->testUser();
 
         $component = Livewire::test(Index::class)
-            ->set('calendar_type', 'team')
+            ->set('form.type', 'team')
             ->call('addCalendarLink');
 
-        $component->assertHasErrors(['calendar_token.team_id' => 'required_if']);
+        $component->assertHasErrors(['team_id' => 'required_if']);
         $this->assertDatabaseCount((new CalendarToken)->getTable(), 0);
     }
 
@@ -71,8 +71,8 @@ class CreateTest extends TestCase
         $userAndTeam = $this->testUser();
 
         Livewire::test(Index::class)
-            ->set('calendar_type', 'user')
-            ->set('calendar_token.team_id', $userAndTeam['team']->id)
+            ->set('form.type', 'user')
+            ->set('form.team_id', $userAndTeam['team']->id)
             ->call('addCalendarLink');
 
         $this->assertDatabaseHas((new CalendarToken)->getTable(), [
@@ -87,8 +87,8 @@ class CreateTest extends TestCase
         $user = $this->testUser()['user'];
 
         Livewire::test(Index::class)
-            ->set('calendar_type', 'user')
-            ->set('calendar_token.name', 'Chore Calendar')
+            ->set('form.type', 'user')
+            ->set('form.name', 'Chore Calendar')
             ->call('addCalendarLink');
 
         $this->assertDatabaseHas((new CalendarToken)->getTable(), [

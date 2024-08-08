@@ -3,15 +3,14 @@
 namespace Tests\Feature\Chores;
 
 use App\Enums\FrequencyType;
-use App\Http\Livewire\Chores\Save;
+use App\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
-use App\Rules\FrequencyDayOf;
 use Carbon\Carbon;
+use Livewire\Features\SupportTesting\Testable;
 use Livewire\Livewire;
-use Livewire\Testing\TestableLivewire;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
@@ -32,9 +31,9 @@ class CreateTest extends TestCase
         $user = $this->testUser()['user'];
 
         Livewire::test(Save::class)
-            ->set('chore.title', 'Do dishes')
-            ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', FrequencyType::daily)
+            ->set('form.title', 'Do dishes')
+            ->set('form.description', 'Do the dishes every night.')
+            ->set('form.frequency_id', FrequencyType::daily->value)
             ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [
@@ -56,11 +55,11 @@ class CreateTest extends TestCase
         $users->first()->switchTeam($team);
 
         Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', $chore['frequency_id'])
-            ->set('chore.user_id', $assigned_user->id)
-            ->set('chore_instance.due_date', null)
+            ->set('form.title', $chore['title'])
+            ->set('form.description', $chore['description'])
+            ->set('form.frequency_id', $chore['frequency_id']->value)
+            ->set('form.chore_user_id', $assigned_user->id)
+            ->set('form.due_date', null)
             ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [
@@ -78,10 +77,10 @@ class CreateTest extends TestCase
         $chore = Chore::factory()->raw();
 
         $component = Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', $chore['frequency_id'])
-            ->set('chore.user_id', null)
+            ->set('form.title', $chore['title'])
+            ->set('form.description', $chore['description'])
+            ->set('form.frequency_id', $chore['frequency_id']->value)
+            ->set('form.chore_user_id', null)
             ->call('save');
 
         $component->assertHasNoErrors();
@@ -101,11 +100,11 @@ class CreateTest extends TestCase
         $due_date = today()->addDay(1);
 
         Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', $chore['frequency_id'])
-            ->set('chore.user_id', null)
-            ->set('chore_instance.due_date', $due_date)
+            ->set('form.title', $chore['title'])
+            ->set('form.description', $chore['description'])
+            ->set('form.frequency_id', $chore['frequency_id']->value)
+            ->set('form.chore_user_id', null)
+            ->set('form.due_date', $due_date)
             ->call('save');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
@@ -121,17 +120,17 @@ class CreateTest extends TestCase
         $chore = Chore::factory()->raw();
 
         Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', FrequencyType::weekly)
-            ->set('chore.frequency_interval', 2)
-            ->set('chore.frequency_day_of', Carbon::WEDNESDAY)
-            ->set('chore.user_id', $user->id)
+            ->set('form.title', $chore['title'])
+            ->set('form.description', $chore['description'])
+            ->set('form.frequency_id', FrequencyType::weekly->value)
+            ->set('form.frequency_interval', 2)
+            ->set('form.frequency_day_of', Carbon::WEDNESDAY)
+            ->set('form.chore_user_id', $user->id)
             ->call('save');
 
         $this->assertDatabaseHas((new Chore)->getTable(), [
             'user_id' => $user->id,
-            'frequency_id' => FrequencyType::weekly,
+            'frequency_id' => FrequencyType::weekly->value,
             'frequency_interval' => 2,
             'frequency_day_of' => Carbon::WEDNESDAY,
         ]);
@@ -140,7 +139,7 @@ class CreateTest extends TestCase
     /**
      * Return a livewire testable already filled with most fields for validating frequency.
      */
-    protected function getFrequencyValidationComponent(): TestableLivewire
+    protected function getFrequencyValidationComponent(): Testable
     {
         $this->testUser();
 
@@ -151,96 +150,112 @@ class CreateTest extends TestCase
     public function chores_with_day_of_week_cannot_be_under_1(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::weekly)
+            ->set('form.frequency_id', FrequencyType::weekly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', 0)
+            ->set('form.frequency_day_of', 0)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Weeks must be between 1 and 7.',
+        ]);
     }
 
     /** @test */
     public function chores_with_day_of_week_cannot_be_over_7(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::weekly)
+            ->set('form.frequency_id', FrequencyType::weekly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', 8)
+            ->set('form.frequency_day_of', 8)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Weeks must be between 1 and 7.',
+        ]);
     }
 
     /** @test */
     public function chores_with_day_of_month_cannot_be_under_1(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::monthly)
+            ->set('form.frequency_id', FrequencyType::monthly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', -1)
+            ->set('form.frequency_day_of', -1)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Months must be between 1 and 31.',
+        ]);
     }
 
     /** @test */
     public function chores_with_day_of_month_cannot_be_over_31(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::monthly)
+            ->set('form.frequency_id', FrequencyType::monthly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', 32)
+            ->set('form.frequency_day_of', 32)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Months must be between 1 and 31.',
+        ]);
     }
 
     /** @test */
     public function chores_with_day_of_quarter_cannot_be_under_1(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::quarterly)
+            ->set('form.frequency_id', FrequencyType::quarterly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', -1)
+            ->set('form.frequency_day_of', -1)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Quarters must be between 1 and 92.',
+        ]);
     }
 
     /** @test */
     public function chores_with_day_of_quarter_cannot_be_over_92(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::quarterly)
+            ->set('form.frequency_id', FrequencyType::quarterly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', 93)
+            ->set('form.frequency_day_of', 93)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Quarters must be between 1 and 92.',
+        ]);
     }
 
     /** @test */
     public function chores_with_day_of_year_cannot_be_under_1(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::yearly)
+            ->set('form.frequency_id', FrequencyType::yearly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', -1)
+            ->set('form.frequency_day_of', -1)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Years must be between 1 and 365.',
+        ]);
     }
 
     /** @test */
     public function chores_with_day_of_year_cannot_be_over_365(): void
     {
         $component = $this->getFrequencyValidationComponent()
-            ->set('chore.frequency_id', FrequencyType::yearly)
+            ->set('form.frequency_id', FrequencyType::yearly->value)
             ->call('showDayOfSection')
-            ->set('chore.frequency_day_of', 366)
+            ->set('form.frequency_day_of', 366)
             ->call('save');
 
-        $component->assertHasErrors(['chore.frequency_day_of' => FrequencyDayOf::class]);
+        $component->assertHasErrors([
+            'form.frequency_day_of' => 'Day of the Years must be between 1 and 365.',
+        ]);
     }
 
     /** @test */
@@ -249,16 +264,16 @@ class CreateTest extends TestCase
         $this->testUser();
         $chore = Chore::factory()->raw();
         $component = Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', FrequencyType::monthly)
-            ->set('chore.frequency_day_of', 5)
+            ->set('form.title', $chore['title'])
+            ->set('form.description', $chore['description'])
+            ->set('form.frequency_id', FrequencyType::monthly->value)
+            ->set('form.frequency_day_of', 5)
             ->set('show_on', true);
 
-        $component->set('chore.frequency_id', FrequencyType::daily);
+        $component->set('form.frequency_id', FrequencyType::daily->value);
 
         $component->assertSet('show_on', false);
-        $component->assertSet('chore.frequency_day_of', null);
+        $component->assertSet('form.frequency_day_of', null);
     }
 
     /** @test */
@@ -267,16 +282,16 @@ class CreateTest extends TestCase
         $this->testUser();
         $chore = Chore::factory()->raw();
         $component = Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', FrequencyType::monthly)
-            ->set('chore.frequency_day_of', 5)
+            ->set('form.title', $chore['title'])
+            ->set('form.description', $chore['description'])
+            ->set('form.frequency_id', FrequencyType::monthly->value)
+            ->set('form.frequency_day_of', 5)
             ->set('show_on', true);
 
-        $component->set('chore.frequency_id', FrequencyType::doesNotRepeat);
+        $component->set('form.frequency_id', FrequencyType::doesNotRepeat->value);
 
         $component->assertSet('show_on', false);
-        $component->assertSet('chore.frequency_day_of', null);
+        $component->assertSet('form.frequency_day_of', null);
     }
 
     /** @test */
@@ -285,16 +300,16 @@ class CreateTest extends TestCase
         $this->testUser();
         $chore = Chore::factory()->raw();
         $component = Livewire::test(Save::class)
-            ->set('chore.title', $chore['title'])
-            ->set('chore.description', $chore['description'])
-            ->set('chore.frequency_id', FrequencyType::yearly)
-            ->set('chore.frequency_day_of', 130)
+            ->set('form.title', $chore['title'])
+            ->set('form.description', $chore['description'])
+            ->set('form.frequency_id', FrequencyType::yearly->value)
+            ->set('form.frequency_day_of', 130)
             ->set('show_on', true);
 
-        $component->set('chore.frequency_id', FrequencyType::monthly);
+        $component->set('form.frequency_id', FrequencyType::monthly->value);
 
         $component->assertSet('show_on', true);
-        $component->assertSet('chore.frequency_day_of', 1);
+        $component->assertSet('form.frequency_day_of', 1);
     }
 
     /** @test */
@@ -302,7 +317,7 @@ class CreateTest extends TestCase
     {
         $this->testUser();
         $component = Livewire::test(Save::class)
-            ->set('chore.frequency_id', FrequencyType::doesNotRepeat);
+            ->set('form.frequency_id', FrequencyType::doesNotRepeat->value);
 
         $component->assertDontSee('Every');
     }

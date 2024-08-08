@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Http\Livewire\ChoreInstances\Index as ChoreInstanceIndex;
-use App\Http\Livewire\Chores\Index as ChoreIndex;
+use App\Livewire\ChoreInstances\Index as ChoreInstanceIndex;
+use App\Livewire\Chores\Index as ChoreIndex;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
@@ -13,13 +13,13 @@ use Tests\TestCase;
 
 class FilterTest extends TestCase
 {
-    public function assertAndReemit($component)
+    public function assertAndReDispatch($component)
     {
         // This is a workaround because the emit does not seem to be working
         // Correctly in this test, but does in the running code.
         // Make sure emit was triggered, but re-emit
-        $component->assertEmitted('filterUpdated');
-        $component->emit('filterUpdated');
+        $component->assertDispatched('filterUpdated');
+        $component->dispatch('filterUpdated');
     }
 
     /** @test */
@@ -73,7 +73,7 @@ class FilterTest extends TestCase
         $component = Livewire::test(ChoreIndex::class)
             ->call('setTeamFilter', 'team');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertSee('Walk the dog.');
         $component->assertSee('Wash the dishes.');
     }
@@ -97,12 +97,12 @@ class FilterTest extends TestCase
         $component = Livewire::test(ChoreInstanceIndex::class)
             ->call('setTeamFilter', 'user');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertDontSee('Walk the dog.');
 
         $component->call('setTeamFilter', 'team');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertSee('Walk the dog.');
     }
 
@@ -120,12 +120,12 @@ class FilterTest extends TestCase
         $component = Livewire::test(ChoreIndex::class)
             ->call('setTeamFilter', 'team');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertSee('Walk the dog');
 
         $component->call('setTeamFilter', 'user');
 
-        $this->assertAndReemit($component);
+        $this->assertAndReDispatch($component);
         $component->assertDontSee('Walk the dog');
     }
 

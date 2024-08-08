@@ -3,11 +3,11 @@
 namespace Tests\Feature\ChoreInstances;
 
 use App\Enums\FrequencyType;
-use App\Http\Livewire\Chores\Save;
+use App\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -20,10 +20,10 @@ class CreateTest extends TestCase
         $date = Carbon::now()->addDays(6);
 
         Livewire::test(Save::class)
-            ->set('chore.title', 'Do dishes')
-            ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', FrequencyType::daily)
-            ->set('chore_instance.due_date', $date)
+            ->set('form.title', 'Do dishes')
+            ->set('form.description', 'Do the dishes every night.')
+            ->set('form.frequency_id', FrequencyType::daily->value)
+            ->set('form.due_date', $date)
             ->call('save');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
@@ -39,10 +39,10 @@ class CreateTest extends TestCase
         $this->testUser();
 
         Livewire::test(Save::class)
-            ->set('chore.title', 'Do dishes')
-            ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', FrequencyType::daily)
-            ->set('chore_instance.due_date', null)
+            ->set('form.title', 'Do dishes')
+            ->set('form.description', 'Do the dishes every night.')
+            ->set('form.frequency_id', FrequencyType::daily->value)
+            ->set('form.due_date', null)
             ->call('save');
 
         $this->assertDatabaseCount((new ChoreInstance)->getTable(), 0);
@@ -56,11 +56,11 @@ class CreateTest extends TestCase
         $user = User::factory()->create();
 
         Livewire::test(Save::class)
-            ->set('chore.title', 'Do dishes')
-            ->set('chore.description', 'Do the dishes every night.')
-            ->set('chore.frequency_id', FrequencyType::daily)
-            ->set('chore_instance.due_date', $date)
-            ->set('chore.user_id', $user->id)
+            ->set('form.title', 'Do dishes')
+            ->set('form.description', 'Do the dishes every night.')
+            ->set('form.frequency_id', FrequencyType::daily->value)
+            ->set('form.due_date', $date)
+            ->set('form.chore_user_id', $user->id)
             ->call('save');
 
         $this->assertDatabaseHas((new ChoreInstance)->getTable(), [

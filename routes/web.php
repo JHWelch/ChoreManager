@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\ChoreCompleteController;
-use App\Http\Livewire\CalendarTokens;
-use App\Http\Livewire\ChoreInstances;
-use App\Http\Livewire\Chores;
+use App\Livewire\CalendarTokens;
+use App\Livewire\ChoreInstances;
+use App\Livewire\Chores;
 use Illuminate\Support\Facades\Route;
 
 /*

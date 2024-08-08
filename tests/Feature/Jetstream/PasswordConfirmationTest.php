@@ -1,6 +1,6 @@
 <?php
 
-namespace Jetstream\Tests\Feature;
+namespace Tests\Feature\Jetstream;
 
 use App\Models\User;
 use Laravel\Jetstream\Features;

@@ -4,7 +4,7 @@
   'value'
 ])
 
-<fieldset x-data="{ selectedOption: @entangle($value) }">
+<fieldset x-data="{ selectedOption: @entangle($value).live }">
   <legend class="sr-only">
     {{ __($title) }}
   </legend>
@@ -16,13 +16,11 @@
         :value="$option['value']"
         :description="$option['description']"
         :category="Str::snake($title)"
-        position="{{
-          match ($index) {
-            0                   => 'top',
-            count($options) - 1 => 'bottom',
-            default             => 'center',
-          }
-        }}"
+        :position="match ($index) {
+          0                   => 'top',
+          count($options) - 1 => 'bottom',
+          default             => 'center',
+        }"
       />
     @endforeach
   </div>

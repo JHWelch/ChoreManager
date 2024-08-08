@@ -3,7 +3,7 @@
 @endpush
 
 <div>
-  <x-jet-form-section submit="addCalendarLink">
+  <x-form-section submit="addCalendarLink">
     <x-slot name="title">
       {{ __('Create iCalendar Link') }}
     </x-slot>
@@ -15,21 +15,20 @@
     <x-slot name="form">
       <div class="col-span-8 space-y-4 lg:col-span-4">
         <x-form.input
-          prefix="calendar_token"
+          prefix="form"
           name="name"
           placeholder="Optional"
         />
 
-
         <x-form.detailed-options
           title="Calendar Type"
           :options="$calendar_types"
-          value="calendar_type"
+          value="form.type"
         />
 
-        @if ($calendar_type === 'team')
+        @if ($form->type === 'team')
           <x-form.select
-            prefix="calendar_token"
+            prefix="form"
             name="team_id"
             label="Team"
             blankOption="Select Team"
@@ -40,21 +39,21 @@
     </x-slot>
 
     <x-slot name="actions">
-      <x-jet-action-message class="mr-3" on="calendar-token.created">
+      <x-action-message class="mr-3" on="calendar-token.created">
         {{ __('Created.') }}
-      </x-jet-action-message>
+      </x-action-message>
 
-      <x-jet-button>
+      <x-button>
         {{ __('Create') }}
-      </x-jet-button>
+      </x-button>
     </x-slot>
-  </x-jet-form-section>
+  </x-form-section>
 
   @if ($calendar_tokens->isNotEmpty())
-    <x-jet-section-border />
+    <x-section-border />
 
     <div class="mt-10 sm:mt-0">
-      <x-jet-action-section>
+      <x-action-section>
         <x-slot name="title">
           {{ __('Manage Calendar Links') }}
         </x-slot>
@@ -92,7 +91,7 @@
             @endforeach
           </div>
         </x-slot>
-      </x-jet-action-section>
+      </x-action-section>
     </div>
   @endif
 

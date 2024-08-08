@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\CalendarTokens;
 
-use App\Http\Livewire\CalendarTokens\Index;
+use App\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
 use Livewire\Livewire;
 use Tests\TestCase;

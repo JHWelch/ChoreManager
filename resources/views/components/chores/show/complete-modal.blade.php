@@ -1,4 +1,4 @@
-<x-jet-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg">
+<x-dialog-modal wire:model="showCompleteForUserDialog" maxWidth="lg">
   <x-slot name="title">
     Complete
     <span class="font-bold">
@@ -37,4 +37,4 @@
       </x-button>
     </div>
   </x-slot>
-</x-jet-dialog-modal>
+</x-dialog-modal>

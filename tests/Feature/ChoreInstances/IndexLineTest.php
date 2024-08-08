@@ -4,7 +4,7 @@ namespace Tests\Feature\ChoreInstances;
 
 use App\Enums\Frequency;
 use App\Enums\FrequencyType;
-use App\Http\Livewire\ChoreInstances\IndexLine;
+use App\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -100,7 +100,7 @@ class IndexLineTest extends TestCase
             'chore' => $chore,
         ])->call('snoozeUntilTomorrow');
 
-        $component->assertEmitted('chore_instance.updated');
+        $component->assertDispatched('chore_instance.updated');
     }
 
     /** @test */
@@ -116,6 +116,6 @@ class IndexLineTest extends TestCase
             'chore' => $chore,
         ])->call('snoozeUntilWeekend');
 
-        $component->assertEmitted('chore_instance.updated');
+        $component->assertDispatched('chore_instance.updated');
     }
 }

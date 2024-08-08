@@ -9,7 +9,7 @@ trait HasUnfinishedChoreScopes
 {
     public function scopeWithUnfinishedChores(
         Builder $query,
-        Carbon $on_or_before = null
+        ?Carbon $on_or_before = null
     ): Builder {
         return $query->whereHas(
             'choreInstances',
@@ -19,7 +19,7 @@ trait HasUnfinishedChoreScopes
 
     public function scopeWithoutUnfinishedChores(
         Builder $query,
-        Carbon $on_or_before = null
+        ?Carbon $on_or_before = null
     ): Builder {
         return $query->whereDoesntHave(
             'choreInstances',
@@ -29,7 +29,7 @@ trait HasUnfinishedChoreScopes
 
     protected function uncompletedChores(
         Builder $query,
-        Carbon $on_or_before = null
+        ?Carbon $on_or_before = null
     ): void {
         $query
             ->where('due_date', '<=', $on_or_before ?? new Carbon)
