@@ -83,21 +83,25 @@ class Chore extends Model
         'frequency_id' => FrequencyType::class,
     ];
 
+    /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<Team, self> */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
+    /** @return HasMany<ChoreInstance> */
     public function choreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class);
     }
 
+    /** @return HasOne<ChoreInstance> */
     public function nextChoreInstance(): HasOne
     {
         return $this
@@ -105,6 +109,7 @@ class Chore extends Model
             ->whereNull('completed_date');
     }
 
+    /** @return HasOne<ChoreInstance> */
     public function nextInstance(): HasOne
     {
         return $this->nextChoreInstance();
@@ -119,6 +124,7 @@ class Chore extends Model
         );
     }
 
+    /** @return HasMany<ChoreInstance> */
     public function pastChoreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class)

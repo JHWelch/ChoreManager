@@ -5,28 +5,34 @@ namespace App\Models\Concerns;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 
+/**
+ * @template TModel of \Illuminate\Database\Eloquent\Model
+ */
 trait HasUnfinishedChoreScopes
 {
+    /** @param Builder<TModel> $query */
     public function scopeWithUnfinishedChores(
         Builder $query,
         ?Carbon $on_or_before = null
-    ): Builder {
-        return $query->whereHas(
+    ): void {
+        $query->whereHas(
             'choreInstances',
             fn ($q) => $this->uncompletedChores($q, $on_or_before)
         );
     }
 
+    /** @param Builder<TModel> $query */
     public function scopeWithoutUnfinishedChores(
         Builder $query,
         ?Carbon $on_or_before = null
-    ): Builder {
-        return $query->whereDoesntHave(
+    ): void {
+        $query->whereDoesntHave(
             'choreInstances',
             fn ($q) => $this->uncompletedChores($q, $on_or_before)
         );
     }
 
+    /** @param Builder<TModel> $query */
     protected function uncompletedChores(
         Builder $query,
         ?Carbon $on_or_before = null

@@ -51,6 +51,8 @@ class Team extends JetstreamTeam
 {
     use HasChoreStreaks;
     use HasFactory;
+
+    /** @use HasUnfinishedChoreScopes<self> */
     use HasUnfinishedChoreScopes;
 
     public static ?Team $admin_team = null;
@@ -78,11 +80,13 @@ class Team extends JetstreamTeam
         return self::$admin_team;
     }
 
+    /** @return HasMany<Chore> */
     public function chores(): HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
+    /** @return HasManyThrough<ChoreInstance> */
     public function choreInstances(): HasManyThrough
     {
         return $this->hasManyThrough(ChoreInstance::class, Chore::class);

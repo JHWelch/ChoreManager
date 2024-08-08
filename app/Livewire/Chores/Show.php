@@ -20,6 +20,7 @@ class Show extends Component
 
     public ?ChoreInstance $chore_instance;
 
+    /** @var Collection<int, ChoreInstance> */
     public Collection $past_chore_instances;
 
     public bool $showDeleteConfirmation = false;

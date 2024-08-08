@@ -80,7 +80,10 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory;
     use HasProfilePhoto;
     use HasTeams;
+
+    /** @use HasUnfinishedChoreScopes<self> */
     use HasUnfinishedChoreScopes;
+
     use Notifiable;
     use TwoFactorAuthenticatable;
 
@@ -147,26 +150,31 @@ class User extends Authenticatable implements FilamentUser
         return $this->deviceTokens->pluck('token')->toArray();
     }
 
+    /** @return HasMany<Chore> */
     public function chores(): HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
+    /** @return HasMany<ChoreInstance> */
     public function choreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class);
     }
 
+    /** @return HasMany<CalendarToken> */
     public function calendarTokens(): HasMany
     {
         return $this->hasMany(CalendarToken::class);
     }
 
+    /** @return HasOne<UserSetting> */
     public function settings(): HasOne
     {
         return $this->hasOne(UserSetting::class);
     }
 
+    /** @return HasMany<DeviceToken> */
     public function deviceTokens(): HasMany
     {
         return $this->hasMany(DeviceToken::class);

@@ -41,18 +41,21 @@ class StreakCount extends Model
 
     protected $guarded;
 
+    /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<Team, self> */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    public function scopeCurrent(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeCurrent(Builder $query): void
     {
-        return $query->whereNull('ended_at');
+        $query->whereNull('ended_at');
     }
 }
