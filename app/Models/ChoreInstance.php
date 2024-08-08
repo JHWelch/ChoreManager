@@ -65,16 +65,19 @@ class ChoreInstance extends Model
         $this->chore->createNewInstance($this->completed_date);
     }
 
+    /** @return BelongsTo<Chore, self> */
     public function chore(): BelongsTo
     {
         return $this->belongsTo(Chore::class);
     }
 
+    /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<User, self> */
     public function completedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'completed_by_id');
@@ -85,24 +88,28 @@ class ChoreInstance extends Model
         return ! is_null($this->completed_date);
     }
 
-    public function scopeCompleted(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeCompleted(Builder $query): void
     {
-        return $query->whereNotNull('completed_date');
+        $query->whereNotNull('completed_date');
     }
 
-    public function scopeNotCompleted(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeNotCompleted(Builder $query): void
     {
-        return $query->whereNull('completed_date');
+        $query->whereNull('completed_date');
     }
 
-    public function scopeDueToday(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeDueToday(Builder $query): void
     {
-        return $query->where('due_date', today());
+        $query->where('due_date', today());
     }
 
-    public function scopeDueTodayOrPast(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeDueTodayOrPast(Builder $query): void
     {
-        return $query->where('due_date', '<=', today());
+        $query->where('due_date', '<=', today());
     }
 
     public function snooze(Carbon $nextDueDate): void

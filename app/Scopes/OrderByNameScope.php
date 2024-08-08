@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Scope;
 
 class OrderByNameScope implements Scope
 {
-    /**
-     * Apply the scope to a given Eloquent query builder.
-     */
+    /** @param  Builder<Model>  $builder */
     public function apply(Builder $builder, Model $model): void
     {
         $builder->orderBy('name');

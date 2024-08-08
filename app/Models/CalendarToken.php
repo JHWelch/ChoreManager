@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -80,6 +80,7 @@ class CalendarToken extends Model
         return self::firstWhere('token', $token);
     }
 
+    /** @return HasManyThrough<Chore> */
     public function chores(): HasManyThrough
     {
         return $this->is_user_calendar
@@ -101,7 +102,8 @@ class CalendarToken extends Model
             );
     }
 
-    public function choreInstances(): Builder
+    /** @return Builder<ChoreInstance>|HasManyThrough<ChoreInstance> */
+    public function choreInstances(): Builder|HasManyThrough
     {
         return $this->is_user_calendar
             ? $this->hasManyThrough(
@@ -122,11 +124,13 @@ class CalendarToken extends Model
                 ->orderBy('chore_instances.due_date');
     }
 
+    /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /** @return BelongsTo<Team, self> */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);

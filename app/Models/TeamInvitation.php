@@ -37,9 +37,7 @@ class TeamInvitation extends JetstreamTeamInvitation
         'role',
     ];
 
-    /**
-     * Get the team that the invitation belongs to.
-     */
+    /** @return BelongsTo<Team, self> */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Jetstream::teamModel());

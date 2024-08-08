@@ -19,6 +19,7 @@ class DeviceToken extends Model
         'updated_at' => 'datetime',
     ];
 
+    /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

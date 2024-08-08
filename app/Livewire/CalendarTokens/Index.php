@@ -13,6 +13,7 @@ class Index extends Component
 {
     public CalendarToken $form;
 
+    /** @var Collection<int, ModelsCalendarToken> */
     public Collection $calendar_tokens;
 
     /** @var array<array<string, mixed>> */

@@ -12,6 +12,7 @@ class Index extends Component
 {
     use FiltersByTeamOrUser;
 
+    /** @var Collection<int, Chore> */
     public Collection $chores;
 
     public string $sort = 'chore_instances.due_date';

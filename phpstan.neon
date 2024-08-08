@@ -1,5 +1,5 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
     paths:
@@ -8,11 +8,7 @@ parameters:
     level: 6
 
     ignoreErrors:
-        # - '#Unsafe usage of new static#'
+        - '#PHPDoc tag @var for variable \$this contains generic class Illuminate\\Support\\Collection but does not specify its types: TKey, TValue#'
 
     excludePaths:
         # - ./*/*/FileToBeExcluded.php
-
-    # checkMissingIterableValueType: false
-
-    checkGenericClassInNonGenericObjectType: false
