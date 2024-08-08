@@ -20,7 +20,6 @@
           placeholder="Optional"
         />
 
-
         <x-form.detailed-options
           title="Calendar Type"
           :options="$calendar_types"
