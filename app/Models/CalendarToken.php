@@ -102,8 +102,8 @@ class CalendarToken extends Model
             );
     }
 
-    /** @return Builder<ChoreInstance> */
-    public function choreInstances(): Builder
+    /** @return Builder<ChoreInstance>|HasManyThrough<ChoreInstance> */
+    public function choreInstances(): Builder|HasManyThrough
     {
         return $this->is_user_calendar
             ? $this->hasManyThrough(
