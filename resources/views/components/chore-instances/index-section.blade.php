@@ -42,7 +42,7 @@
       <ul class="relative divide-y divide-gray-200">
         @foreach ($chore_instances as $chore_instance)
           <livewire:chore-instances.index-line
-            :key="'index-line-'.$chore_instance['chore_instance_id']"
+            :key="$date_group.'-index-line-'.$chore_instance['chore_instance_id']"
             :chore="$chore_instance"
           />
         @endforeach
