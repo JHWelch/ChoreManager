@@ -26,8 +26,7 @@ class Frequency
         public FrequencyType $frequencyType,
         public int $interval = 1,
         public ?int $dayOf = null
-    ) {
-    }
+    ) {}
 
     public function adjective(): string
     {

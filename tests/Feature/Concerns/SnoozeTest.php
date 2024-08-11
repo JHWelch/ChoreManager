@@ -29,7 +29,7 @@ class SnoozeTest extends TestCase
     {
         $values = $this->arrange();
 
-        (new SnoozeClass())
+        (new SnoozeClass)
             ->snoozeUntilTomorrow(
                 $values['chores']->first()->nextChoreInstance
             );
@@ -46,7 +46,7 @@ class SnoozeTest extends TestCase
         $this->travelToKnownMonday();
         $values = $this->arrange();
 
-        (new SnoozeClass())
+        (new SnoozeClass)
             ->snoozeUntilWeekend(
                 $values['chores']->first()->nextChoreInstance
             );
@@ -63,7 +63,7 @@ class SnoozeTest extends TestCase
         $this->travelTo(Carbon::parse('2021-02-28'));
         $values = $this->arrange();
 
-        (new SnoozeClass())
+        (new SnoozeClass)
             ->snoozeUntilWeekend(
                 $values['chores']->first()->nextChoreInstance
             );
@@ -81,7 +81,7 @@ class SnoozeTest extends TestCase
 
         $later_date = $values['today']->copy()->addDays(3);
 
-        (new SnoozeClass())->snoozeUntilTomorrow(
+        (new SnoozeClass)->snoozeUntilTomorrow(
             ChoreInstance::where('due_date', $values['today']),
         );
 
@@ -102,7 +102,7 @@ class SnoozeTest extends TestCase
         $this->travelToKnownMonday();
         $values = $this->arrange(3);
 
-        (new SnoozeClass())->snoozeUntilWeekend(
+        (new SnoozeClass)->snoozeUntilWeekend(
             ChoreInstance::where('due_date', $values['today']),
         );
 
