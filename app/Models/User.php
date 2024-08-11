@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\HasChoreStreaks;
 use App\Models\Concerns\HasUnfinishedChoreScopes;
 use App\Scopes\OrderByNameScope;
+use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +27,10 @@ class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasChoreStreaks;
+
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     use HasProfilePhoto;
     use HasTeams;
 
@@ -54,11 +58,7 @@ class User extends Authenticatable implements FilamentUser
 
     protected ?bool $is_admin = null;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function casts(): array
     {
         return [

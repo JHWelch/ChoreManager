@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\ChoreInstanceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,15 +16,12 @@ use Illuminate\Support\Facades\Auth;
  */
 class ChoreInstance extends Model
 {
+    /** @use HasFactory<ChoreInstanceFactory> */
     use HasFactory;
 
     protected $guarded = [];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function casts(): array
     {
         return [

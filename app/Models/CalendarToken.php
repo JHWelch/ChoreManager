@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\CalendarTokenFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,7 @@ use Illuminate\Support\Str;
  */
 class CalendarToken extends Model
 {
+    /** @use HasFactory<CalendarTokenFactory> */
     use HasFactory;
 
     const CALENDAR_TYPES = [

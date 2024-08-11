@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Frequency;
 use App\Enums\FrequencyType;
+use Database\Factories\ChoreFactory;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ use Illuminate\Support\Carbon;
  */
 class Chore extends Model
 {
+    /** @use HasFactory<ChoreFactory> */
     use HasFactory;
 
     const SCOPE_COLUMNS = [
@@ -36,6 +38,7 @@ class Chore extends Model
         'frequency_interval' => 1,
     ];
 
+    /** @return array<string, string> */
     protected function casts(): array
     {
         return [

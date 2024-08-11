@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasChoreStreaks;
 use App\Models\Concerns\HasUnfinishedChoreScopes;
+use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -19,6 +20,8 @@ use Laravel\Jetstream\Team as JetstreamTeam;
 class Team extends JetstreamTeam
 {
     use HasChoreStreaks;
+
+    /** @use HasFactory<TeamFactory> */
     use HasFactory;
 
     /** @use HasUnfinishedChoreScopes<self> */
@@ -35,11 +38,7 @@ class Team extends JetstreamTeam
         'deleted' => TeamDeleted::class,
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    /** @return array<string, string> */
     protected function casts(): array
     {
         return [
