@@ -10,39 +10,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * App\Models\ChoreInstance.
- *
- * @property int $id
- * @property int $chore_id
- * @property Carbon $due_date
- * @property Carbon|null $completed_date
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property int $user_id
- * @property int|null $completed_by_id
- * @property-read \App\Models\Chore $chore
- * @property-read \App\Models\User|null $completedBy
- * @property-read bool $is_completed
- * @property-read \App\Models\User $user
- *
- * @method static Builder|ChoreInstance completed()
- * @method static Builder|ChoreInstance dueToday()
- * @method static Builder|ChoreInstance dueTodayOrPast()
- * @method static \Database\Factories\ChoreInstanceFactory factory($count = null, $state = [])
- * @method static Builder|ChoreInstance newModelQuery()
- * @method static Builder|ChoreInstance newQuery()
- * @method static Builder|ChoreInstance notCompleted()
- * @method static Builder|ChoreInstance query()
- * @method static Builder|ChoreInstance whereChoreId($value)
- * @method static Builder|ChoreInstance whereCompletedById($value)
- * @method static Builder|ChoreInstance whereCompletedDate($value)
- * @method static Builder|ChoreInstance whereCreatedAt($value)
- * @method static Builder|ChoreInstance whereDueDate($value)
- * @method static Builder|ChoreInstance whereId($value)
- * @method static Builder|ChoreInstance whereUpdatedAt($value)
- * @method static Builder|ChoreInstance whereUserId($value)
- *
  * @mixin \Eloquent
+ * @mixin IdeHelperChoreInstance
  */
 class ChoreInstance extends Model
 {

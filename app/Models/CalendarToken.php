@@ -10,40 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Str;
 
 /**
- * App\Models\CalendarToken.
- *
- * @property int $id
- * @property string|null $name
- * @property string $token
- * @property int $user_id
- * @property int|null $team_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $choreInstances
- * @property-read int|null $chore_instances_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chore> $chores
- * @property-read int|null $chores_count
- * @property-read string $display_name
- * @property-read string $full_type_name
- * @property-read bool $is_team_calendar
- * @property-read bool $is_user_calendar
- * @property-read string $u_r_l
- * @property-read \App\Models\Team|null $team
- * @property-read \App\Models\User $user
- *
- * @method static \Database\Factories\CalendarTokenFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken query()
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereUserId($value)
- *
  * @mixin \Eloquent
+ * @mixin IdeHelperCalendarToken
  */
 class CalendarToken extends Model
 {
