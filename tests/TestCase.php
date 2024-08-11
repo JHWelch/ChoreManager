@@ -11,7 +11,6 @@ use Illuminate\Support\Carbon;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
     use LazilyRefreshDatabase;
 
     protected User $user;
