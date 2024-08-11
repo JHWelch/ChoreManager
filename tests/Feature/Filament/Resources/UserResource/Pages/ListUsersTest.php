@@ -38,8 +38,8 @@ class ListUsersTest extends TestCase
 
         Livewire::test(ListUsers::class)
             ->assertSee($user->name)
-            ->assertSee($user->created_at->format(config('tables.date_time_format')))
-            ->assertSee($user->updated_at->format(config('tables.date_time_format')))
+            ->assertSee($user->created_at->format('M j, Y H:i:s'))
+            ->assertSee($user->updated_at->format('M j, Y H:i:s'))
             ->assertSee($user->email);
     }
 }
