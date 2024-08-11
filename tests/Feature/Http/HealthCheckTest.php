@@ -7,7 +7,7 @@ use Tests\TestCase;
 class HealthCheckTest extends TestCase
 {
     /** @test */
-    public function health_check_returns_an_ok()
+    public function health_check_returns_an_ok(): void
     {
         $response = $this->get(route('health-check'));
 

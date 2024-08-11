@@ -17,7 +17,7 @@ class SnoozeTest extends TestCase
     }
 
     /** @test */
-    public function user_can_snooze_chore()
+    public function user_can_snooze_chore(): void
     {
         $this->testUser();
         $chore = Chore::factory()
