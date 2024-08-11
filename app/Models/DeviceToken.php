@@ -14,10 +14,13 @@ class DeviceToken extends Model
         'token',
     ];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 
     /** @return BelongsTo<User, self> */
     public function user(): BelongsTo

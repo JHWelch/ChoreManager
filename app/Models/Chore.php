@@ -79,9 +79,12 @@ class Chore extends Model
         'frequency_interval' => 1,
     ];
 
-    protected $casts = [
-        'frequency_id' => FrequencyType::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'frequency_id' => FrequencyType::class,
+        ];
+    }
 
     /** @return BelongsTo<User, self> */
     public function user(): BelongsTo

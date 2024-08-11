@@ -50,11 +50,18 @@ class ChoreInstance extends Model
 
     protected $guarded = [];
 
-    /** @var array<string, string> */
-    protected $casts = [
-        'due_date' => 'date:Y-m-d',
-        'completed_date' => 'date:Y-m-d',
-    ];
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'due_date' => 'date:Y-m-d',
+            'completed_date' => 'date:Y-m-d',
+        ];
+    }
 
     public function complete(?int $for = null, ?Carbon $on = null): void
     {

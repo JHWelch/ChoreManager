@@ -98,17 +98,24 @@ class User extends Authenticatable implements FilamentUser
         'two_factor_secret',
     ];
 
-    /** @var array<string, string> */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     /** @var array<int, string> */
     protected $appends = [
         'profile_photo_url',
     ];
 
     protected ?bool $is_admin = null;
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+        ];
+    }
 
     public function canAccessPanel(Panel $panel): bool
     {

@@ -57,11 +57,6 @@ class Team extends JetstreamTeam
 
     public static ?Team $admin_team = null;
 
-    /** @var array<string, string> */
-    protected $casts = [
-        'personal_team' => 'boolean',
-    ];
-
     protected $guarded = [];
 
     /** @var array<string, string> */
@@ -70,6 +65,18 @@ class Team extends JetstreamTeam
         'updated' => TeamUpdated::class,
         'deleted' => TeamDeleted::class,
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'personal_team' => 'boolean',
+        ];
+    }
 
     public static function adminTeam(): ?self
     {

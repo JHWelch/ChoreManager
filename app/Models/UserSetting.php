@@ -36,8 +36,15 @@ class UserSetting extends Model
         'has_daily_digest' => false,
     ];
 
-    /** @var array<string, string> */
-    public $casts = [
-        'has_daily_digest' => 'boolean',
-    ];
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'has_daily_digest' => 'boolean',
+        ];
+    }
 }
