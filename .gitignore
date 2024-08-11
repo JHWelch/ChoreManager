@@ -16,3 +16,4 @@ npm-debug.log
 yarn-error.log
 .env.testing
 /.vscode
+.phpunit.cache/test-results
