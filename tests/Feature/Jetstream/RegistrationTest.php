@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Jetstream;
 
+use App\Providers\AppServiceProvider;
 use App\Providers\RouteServiceProvider;
 use Laravel\Jetstream\Jetstream;
 use Tests\TestCase;
@@ -26,6 +27,6 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(AppServiceProvider::HOME);
     }
 }
