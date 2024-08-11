@@ -61,7 +61,7 @@ class CreateTest extends TestCase
             ->set('form.type', 'team')
             ->call('addCalendarLink');
 
-        $component->assertHasErrors(['team_id' => 'required_if']);
+        $component->assertHasErrors(['form.team_id' => 'required_if']);
         $this->assertDatabaseCount((new CalendarToken)->getTable(), 0);
     }
 
