@@ -44,7 +44,6 @@
     "require": {
         "php": "^8.2",
         "composer/composer": "^2.2",
-        "doctrine/dbal": "^3.5",
         "filament/filament": "^3.2",
         "laravel-notification-channels/fcm": "^4.2",
         "laravel/framework": "^11.20",
@@ -86,6 +85,7 @@
             "@php artisan filament:upgrade"
         ],
         "fix": "pint",
+        "ide-helper": "@php artisan ide-helper:models --reset --write --write-mixin",
         "test:lint": "pint --test",
         "test:psr4": "composer dump-autoload --no-scripts --no-interaction 2>&1 | grep 'does not comply with psr-4' || exit 0; exit 1",
         "test:types": "phpstan analyse --ansi --memory-limit=-1",
