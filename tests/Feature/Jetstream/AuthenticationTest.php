@@ -2,9 +2,8 @@
 
 namespace Tests\Feature\Jetstream;
 
-use App\Providers\AppServiceProvider;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase

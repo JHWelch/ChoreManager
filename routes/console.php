@@ -10,7 +10,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-
 // If Demo is enabled reseed database daily.
 Schedule::command('migrate:fresh --force')
     ->daily()
