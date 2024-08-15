@@ -101,27 +101,30 @@ class Chore extends Model
             ->whereNull('chore_instances.completed_date');
     }
 
-    public function scopeWithNextInstance(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeWithNextInstance(Builder $query): void
     {
-        return $query->select(
+        $query->select(
             ...self::SCOPE_COLUMNS
         )
             ->leftJoin('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeOnlyWithNextInstance(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeOnlyWithNextInstance(Builder $query): void
     {
-        return $query->select(
+        $query->select(
             ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeOnlyWithDueNextInstance(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeOnlyWithDueNextInstance(Builder $query): void
     {
-        return $query->select(
+        $query->select(
             ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join)
@@ -129,9 +132,10 @@ class Chore extends Model
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeNullDueDatesAtEnd(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeNullDueDatesAtEnd(Builder $query): void
     {
-        return $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
+        $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
     }
 
     public function createNewInstance(?Carbon $after = null): void
