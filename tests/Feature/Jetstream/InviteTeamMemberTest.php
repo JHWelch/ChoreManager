@@ -16,7 +16,7 @@ class InviteTeamMemberTest extends TestCase
     {
         parent::setUp();
         Config::set([
-            'mail.from.address' => 'fake@example.com'
+            'mail.from.address' => 'fake@example.com',
         ]);
     }
 
