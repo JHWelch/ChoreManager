@@ -8,6 +8,10 @@ use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
     $this->user = $this->testUser()['user'];
+    $this->snoozeClass = new class
+    {
+        use \App\Livewire\Concerns\SnoozesChores;
+    };
 });
 
 describe('one chore', function () {
@@ -19,7 +23,7 @@ describe('one chore', function () {
     });
 
     it('can snooze a chore until tomorrow', function () {
-        (new SnoozeClass)
+        $this->snoozeClass
             ->snoozeUntilTomorrow(
                 $this->chore->nextChoreInstance
             );
@@ -33,7 +37,7 @@ describe('one chore', function () {
     it('can snooze a chore until the weekend', function () {
         $this->travelToKnownMonday();
 
-        (new SnoozeClass)
+        $this->snoozeClass
             ->snoozeUntilWeekend(
                 $this->chore->nextChoreInstance
             );
@@ -47,7 +51,7 @@ describe('one chore', function () {
     test('snoozing until weekend on a weekend pushes to next weekend', function () {
         $this->travelTo(Carbon::parse('2021-02-28'));
 
-        (new SnoozeClass)
+        $this->snoozeClass
             ->snoozeUntilWeekend(
                 $this->chore->nextChoreInstance
             );
@@ -72,7 +76,7 @@ describe('several chores', function () {
     });
 
     test('user can snooze a group of chores until tomorrow at the same time', function () {
-        (new SnoozeClass)->snoozeUntilTomorrow(
+        $this->snoozeClass->snoozeUntilTomorrow(
             ChoreInstance::where('due_date', today()),
         );
 
@@ -87,7 +91,7 @@ describe('several chores', function () {
     });
 
     test('user can snooze a group of chores until the weekend', function () {
-        (new SnoozeClass)->snoozeUntilWeekend(
+        $this->snoozeClass->snoozeUntilWeekend(
             ChoreInstance::where('due_date', today()),
         );
 
@@ -99,8 +103,3 @@ describe('several chores', function () {
         });
     });
 });
-
-class SnoozeClass
-{
-    use \App\Livewire\Concerns\SnoozesChores;
-}
