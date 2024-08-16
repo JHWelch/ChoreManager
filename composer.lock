@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1593308e9b740eab0b9f01a49e75f8f7",
+    "content-hash": "91e6104bdb438aed1d01b17c45b94d5f",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -13396,6 +13396,76 @@
                 }
             ],
             "time": "2024-01-26T09:46:42+00:00"
+        },
+        {
+            "name": "pestphp/pest-plugin-drift",
+            "version": "v2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pestphp/pest-plugin-drift.git",
+                "reference": "ed78e637a7f7b77c9b33b02ffba40555e74001ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pestphp/pest-plugin-drift/zipball/ed78e637a7f7b77c9b33b02ffba40555e74001ef",
+                "reference": "ed78e637a7f7b77c9b33b02ffba40555e74001ef",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^5.0.2",
+                "pestphp/pest": "^2.34.4",
+                "php": "^8.2.0",
+                "symfony/finder": "^7.0.0"
+            },
+            "require-dev": {
+                "pestphp/pest-dev-tools": "^2.16.0"
+            },
+            "type": "library",
+            "extra": {
+                "pest": {
+                    "plugins": [
+                        "Pest\\Drift\\Plugin"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Pest\\Drift\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Pest Drift Plugin",
+            "keywords": [
+                "framework",
+                "laravel",
+                "pest",
+                "php",
+                "test",
+                "testing",
+                "unit"
+            ],
+            "support": {
+                "issues": "https://github.com/pestphp/pest-plugin-drift/issues",
+                "source": "https://github.com/pestphp/pest-plugin-drift/tree/v2.6.1"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/mandisma",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-05-05T07:36:43+00:00"
         },
         {
             "name": "phar-io/manifest",

@@ -66,7 +66,8 @@
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
-        "pestphp/pest": "^2.35"
+        "pestphp/pest": "^2.35",
+        "pestphp/pest-plugin-drift": "^2.6"
     },
     "scripts": {
         "post-autoload-dump": [
