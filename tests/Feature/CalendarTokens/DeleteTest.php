@@ -4,7 +4,7 @@ use App\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
 use Livewire\Livewire;
 
-test('can delete existing calendar tokens', function () {
+it('can delete existing calendar tokens', function () {
     $user = $this->testUser()['user'];
     $token = CalendarToken::factory()
         ->for($user)

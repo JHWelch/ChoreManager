@@ -6,7 +6,7 @@ use App\Models\ChoreInstance;
 use App\Models\User;
 use Livewire\Livewire;
 
-test('can reach show page', function () {
+it('can reach show page', function () {
     $chore = Chore::factory()->for($this->testUser()['user'])->create();
 
     $response = $this->get(route('chores.show', $chore));
@@ -23,7 +23,7 @@ test('user cannot view chores for another user', function () {
     $response->assertForbidden();
 });
 
-test('can see chore info on chores show', function () {
+it('can see chore info on chores show', function () {
     $chore = Chore::factory([
         'title' => 'Walk the dog.',
         'description' => 'Do not forget the poop bags.',
@@ -39,7 +39,7 @@ test('can see chore info on chores show', function () {
     $component->assertSee('Repeats every 2 days');
 });
 
-test('can complete chore from chore page', function () {
+it('can complete chore from chore page', function () {
     $this->testUser();
     $chore = Chore::factory()->for($this->user)->withFirstInstance()->create();
     $instance = $chore->nextChoreInstance;
@@ -52,7 +52,7 @@ test('can complete chore from chore page', function () {
     $component->assertRedirect('/');
 });
 
-test('can complete chore without first instance', function () {
+it('can complete chore without first instance', function () {
     $this->testUser();
     $chore = Chore::factory()->for($this->user)->create();
 
@@ -71,7 +71,7 @@ test('can complete chore without first instance', function () {
     expect($choreInstance->completed_by_id)->toEqual($this->user->id);
 });
 
-test('can see chore history', function () {
+it('can see chore history', function () {
     $user1 = $this->testUser()['user'];
     $user2 = User::factory()->create();
     $chore = Chore::factory()
@@ -112,7 +112,7 @@ test('can see chore history', function () {
     ]);
 });
 
-test('can see tooltip of exact date', function () {
+it('can see tooltip of exact date', function () {
     $user1 = $this->testUser()['user'];
     $user2 = User::factory()->create();
     $chore = Chore::factory()
@@ -164,7 +164,7 @@ test('chores assigned to team display team as owner', function () {
     ]);
 });
 
-test('can complete chore for another another team user', function () {
+it('can complete chore for another another team user', function () {
     $this->testUser();
     $other_user = User::factory()->hasAttached($this->team)->create();
     $chore = Chore::factory()
@@ -186,7 +186,7 @@ test('can complete chore for another another team user', function () {
     ]);
 });
 
-test('can complete chore on a past date', function () {
+it('can complete chore on a past date', function () {
     $user = $this->testUser()['user'];
     $date = today()->subDays(2);
     $chore = Chore::factory()

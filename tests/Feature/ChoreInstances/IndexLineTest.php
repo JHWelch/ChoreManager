@@ -6,7 +6,7 @@ use App\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
 use Livewire\Livewire;
 
-test('can complete a chore instance', function () {
+it('can complete a chore instance', function () {
     $user = $this->testUser()['user'];
     $chore = Chore::factory()->for($user)->withFirstInstance()->create();
     $chore_instance = $chore->nextChoreInstance;

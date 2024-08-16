@@ -4,7 +4,7 @@ use App\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
 use Livewire\Livewire;
 
-test('can create a calendar token to display only their chores', function () {
+it('can create a calendar token to display only their chores', function () {
     $user = $this->testUser()['user'];
 
     Livewire::test(Index::class)
@@ -27,7 +27,7 @@ test('calendar token has generated uuid', function () {
     expect(strlen(CalendarToken::first()->token))->toEqual(36);
 });
 
-test('can create a calendar token to display their teams chores', function () {
+it('can create a calendar token to display their teams chores', function () {
     $userAndTeam = $this->testUser();
 
     Livewire::test(Index::class)

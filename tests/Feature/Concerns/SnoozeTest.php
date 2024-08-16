@@ -16,7 +16,7 @@ describe('one chore', function () {
             ->create();
     });
 
-    test('can snooze a chore until tomorrow', function () {
+    it('can snooze a chore until tomorrow', function () {
         (new SnoozeClass)
             ->snoozeUntilTomorrow(
                 $this->chore->nextChoreInstance
@@ -28,7 +28,7 @@ describe('one chore', function () {
         ]);
     });
 
-    test('can snooze a chore until the weekend', function () {
+    it('can snooze a chore until the weekend', function () {
         $this->travelToKnownMonday();
 
         (new SnoozeClass)

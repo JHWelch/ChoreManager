@@ -18,7 +18,7 @@ test('when there is a next instance completes instance', function () {
     $this->assertDatabaseCount((new ChoreInstance)->getTable(), 2);
 });
 
-test('can complete a chore without a chore instance', function () {
+it('can complete a chore without a chore instance', function () {
     $this->testUser();
     $chore = Chore::factory()->for($this->user)->daily()->create();
 

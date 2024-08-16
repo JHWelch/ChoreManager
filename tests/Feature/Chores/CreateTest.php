@@ -17,7 +17,7 @@ test('chore edit page can be reached', function () {
     $response->assertOk();
 });
 
-test('can create chore', function () {
+it('can create chore', function () {
     $user = $this->testUser()['user'];
 
     Livewire::test(Save::class)

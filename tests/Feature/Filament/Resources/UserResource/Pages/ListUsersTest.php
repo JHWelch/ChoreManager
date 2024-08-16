@@ -21,7 +21,7 @@ test('standard user cannot see index page', function () {
     $response->assertForbidden();
 });
 
-test('can see user fields', function () {
+it('can see user fields', function () {
     $this->adminTestUser();
     $user = User::factory()->create();
 
