@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
 use Laravel\Jetstream\Mail\TeamInvitation;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 beforeEach(function () {
     Config::set([
@@ -18,7 +19,7 @@ test('team members can be invited to team', function () {
 
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->set('addTeamMemberForm', [
             'email' => 'test@example.com',
             'role' => 'admin',
@@ -33,7 +34,7 @@ test('team member invitations can be cancelled', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
     // Add the team member...
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    $component = livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->set('addTeamMemberForm', [
             'email' => 'test@example.com',
             'role' => 'admin',

@@ -3,7 +3,8 @@
 use App\Models\User;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('api tokens can be created', function () {
     if (! Features::hasApiFeatures()) {
@@ -12,7 +13,7 @@ test('api tokens can be created', function () {
 
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-    Livewire::test(ApiTokenManager::class)
+    livewire(ApiTokenManager::class)
         ->set(['createApiTokenForm' => [
             'name' => 'Test Token',
             'permissions' => [

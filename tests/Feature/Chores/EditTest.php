@@ -3,7 +3,9 @@
 use App\Enums\FrequencyType;
 use App\Livewire\Chores\Save;
 use App\Models\Chore;
-use Livewire\Livewire;
+
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Livewire\livewire;
 
 test('chore edit page can be reached', function () {
     $user = $this->testUser()['user'];
@@ -32,7 +34,7 @@ test('existing chore screen shows its information', function () {
         'frequency_id' => FrequencyType::daily,
     ]);
 
-    $component = Livewire::test(Save::class, ['chore' => $chore]);
+    $component = livewire(Save::class, ['chore' => $chore]);
 
     $component
         ->assertSet('form.title', 'Do dishes')
@@ -44,13 +46,13 @@ test('a chore can be updated after it is created', function () {
     $user = $this->testUser()['user'];
     $chore = Chore::factory()->for($user)->create();
 
-    Livewire::test(Save::class, ['chore' => $chore])
+    livewire(Save::class, ['chore' => $chore])
         ->set('form.title', 'Do dishes')
         ->set('form.description', 'Do the dishes every night.')
         ->set('form.frequency_id', FrequencyType::daily->value)
         ->call('save');
 
-    $this->assertDatabaseHas((new Chore)->getTable(), [
+    assertDatabaseHas((new Chore)->getTable(), [
         'title' => 'Do dishes',
         'description' => 'Do the dishes every night.',
         'frequency_id' => FrequencyType::daily,

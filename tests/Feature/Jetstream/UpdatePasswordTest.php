@@ -3,12 +3,13 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Jetstream\Http\Livewire\UpdatePasswordForm;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('password can be updated', function () {
     $this->actingAs($user = User::factory()->create());
 
-    Livewire::test(UpdatePasswordForm::class)
+    livewire(UpdatePasswordForm::class)
         ->set('state', [
             'current_password' => 'password',
             'password' => 'new-password',
@@ -22,7 +23,7 @@ test('password can be updated', function () {
 test('current password must be correct', function () {
     $this->actingAs($user = User::factory()->create());
 
-    Livewire::test(UpdatePasswordForm::class)
+    livewire(UpdatePasswordForm::class)
         ->set('state', [
             'current_password' => 'wrong-password',
             'password' => 'new-password',
@@ -37,7 +38,7 @@ test('current password must be correct', function () {
 test('new passwords must match', function () {
     $this->actingAs($user = User::factory()->create());
 
-    Livewire::test(UpdatePasswordForm::class)
+    livewire(UpdatePasswordForm::class)
         ->set('state', [
             'current_password' => 'password',
             'password' => 'new-password',

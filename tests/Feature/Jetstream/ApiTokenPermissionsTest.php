@@ -4,7 +4,8 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('api token permissions can be updated', function () {
     if (! Features::hasApiFeatures()) {
@@ -19,7 +20,7 @@ test('api token permissions can be updated', function () {
         'abilities' => ['create', 'read'],
     ]);
 
-    Livewire::test(ApiTokenManager::class)
+    livewire(ApiTokenManager::class)
         ->set(['managingPermissionsFor' => $token])
         ->set(['updateApiTokenForm' => [
             'permissions' => [
@@ -29,7 +30,8 @@ test('api token permissions can be updated', function () {
         ]])
         ->call('updateApiToken');
 
-    expect($user->fresh()->tokens->first()->can('delete'))->toBeTrue();
-    expect($user->fresh()->tokens->first()->can('read'))->toBeFalse();
-    expect($user->fresh()->tokens->first()->can('missing-permission'))->toBeFalse();
+    expect($user->fresh()->tokens->first())
+        ->can('delete')->toBeTrue()
+        ->can('read')->toBeFalse()
+        ->can('missing-permission')->toBeFalse();
 });

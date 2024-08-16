@@ -2,14 +2,15 @@
 
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\TwoFactorAuthenticationForm;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('two factor authentication can be enabled', function () {
     $this->actingAs($user = User::factory()->create());
 
     $this->withSession(['auth.password_confirmed_at' => time()]);
 
-    Livewire::test(TwoFactorAuthenticationForm::class)
+    livewire(TwoFactorAuthenticationForm::class)
         ->call('enableTwoFactorAuthentication');
 
     $user = $user->fresh();
@@ -23,7 +24,7 @@ test('recovery codes can be regenerated', function () {
 
     $this->withSession(['auth.password_confirmed_at' => time()]);
 
-    $component = Livewire::test(TwoFactorAuthenticationForm::class)
+    $component = livewire(TwoFactorAuthenticationForm::class)
         ->call('enableTwoFactorAuthentication')
         ->call('regenerateRecoveryCodes');
 
@@ -40,7 +41,7 @@ test('two factor authentication can be disabled', function () {
 
     $this->withSession(['auth.password_confirmed_at' => time()]);
 
-    $component = Livewire::test(TwoFactorAuthenticationForm::class)
+    $component = livewire(TwoFactorAuthenticationForm::class)
         ->call('enableTwoFactorAuthentication');
 
     expect($user->fresh()->two_factor_secret)->not->toBeNull();

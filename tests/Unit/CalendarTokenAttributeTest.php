@@ -9,9 +9,9 @@ test('calendar token is team calendar', function () {
         'user_id' => 1,
         'team_id' => 1,
     ]);
-
-    expect($calendar_token->is_team_calendar)->toEqual(true);
-    expect($calendar_token->is_user_calendar)->toEqual(false);
+    expect($calendar_token)
+        ->is_team_calendar->toEqual(true)
+        ->is_user_calendar->toEqual(false);
 });
 
 test('is team calendar attribute false', function () {
@@ -20,8 +20,9 @@ test('is team calendar attribute false', function () {
         'team_id' => null,
     ]);
 
-    expect($calendar_token->is_team_calendar)->toEqual(false);
-    expect($calendar_token->is_user_calendar)->toEqual(true);
+    expect($calendar_token)
+        ->is_team_calendar->toEqual(false)
+        ->is_user_calendar->toEqual(true);
 });
 
 test('display name with defined name is name', function () {

@@ -2,7 +2,8 @@
 
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('users can leave teams', function () {
     $user = User::factory()->withPersonalTeam()->create();
@@ -14,7 +15,7 @@ test('users can leave teams', function () {
 
     $this->actingAs($otherUser);
 
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->call('leaveTeam');
 
     expect($user->currentTeam->fresh()->users)->toHaveCount(0);
@@ -23,7 +24,7 @@ test('users can leave teams', function () {
 test('team owners cant leave their own team', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->call('leaveTeam')
         ->assertHasErrors(['team']);
 

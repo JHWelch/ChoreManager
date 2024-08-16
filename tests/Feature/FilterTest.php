@@ -6,7 +6,8 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\Team;
 use App\Models\User;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 function assertAndReDispatch($component)
 {
@@ -34,11 +35,11 @@ test('when filter is set to user see only users chores', function () {
         ->create();
     $this->actingAs($users->first());
 
-    $component = Livewire::test(ChoreIndex::class)
-        ->call('setTeamFilter', 'user');
+    livewire(ChoreIndex::class)
+        ->call('setTeamFilter', 'user')
 
-    $component->assertSee('Walk the dog.');
-    $component->assertDontSee('Wash the dishes.');
+        ->assertSee('Walk the dog.')
+        ->assertDontSee('Wash the dishes.');
 });
 
 test('when filter is set to team see all users in that teams chores', function () {
@@ -61,7 +62,7 @@ test('when filter is set to team see all users in that teams chores', function (
     $this->actingAs($users->first());
     $users->first()->switchTeam($team);
 
-    $component = Livewire::test(ChoreIndex::class)
+    $component = livewire(ChoreIndex::class)
         ->call('setTeamFilter', 'team');
 
     assertAndReDispatch($component);
@@ -83,7 +84,7 @@ test('chores with instances assigned to others do not show on chore owners filte
         ]))
         ->create();
 
-    $component = Livewire::test(ChoreInstanceIndex::class)
+    $component = livewire(ChoreInstanceIndex::class)
         ->call('setTeamFilter', 'user');
 
     assertAndReDispatch($component);
@@ -104,7 +105,7 @@ test('chores assigned to team show on team page but not user page', function () 
         ->for($this->team)
         ->create();
 
-    $component = Livewire::test(ChoreIndex::class)
+    $component = livewire(ChoreIndex::class)
         ->call('setTeamFilter', 'team');
 
     assertAndReDispatch($component);
@@ -119,10 +120,10 @@ test('chores assigned to team show on team page but not user page', function () 
 test('filter persists between component loads', function () {
     $this->testUser();
 
-    Livewire::test(ChoreInstanceIndex::class)
+    livewire(ChoreInstanceIndex::class)
         ->call('setTeamFilter', 'team');
 
-    $component = Livewire::test(ChoreInstanceIndex::class);
+    $component = livewire(ChoreInstanceIndex::class);
 
     $component->assertSet('team_or_user', 'team');
 });

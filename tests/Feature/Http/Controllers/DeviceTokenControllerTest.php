@@ -2,6 +2,8 @@
 
 use App\Models\DeviceToken;
 
+use function Pest\Laravel\assertDatabaseHas;
+
 test('user can register a device token', function () {
     $this->testUser();
     $payload = ['token' => 'test-device-token'];
@@ -9,7 +11,7 @@ test('user can register a device token', function () {
     $response = $this->postJson(route('api.device_tokens.store'), $payload);
 
     $response->assertCreated();
-    $this->assertDatabaseHas('device_tokens', $payload);
+    assertDatabaseHas('device_tokens', $payload);
 });
 
 test('user can update an existing token', function () {
@@ -23,7 +25,7 @@ test('user can update an existing token', function () {
     ]);
 
     $response->assertOk();
-    $this->assertDatabaseHas('device_tokens', [
+    assertDatabaseHas('device_tokens', [
         'token' => $token->token,
         'user_id' => $this->user->id,
         'updated_at' => now(),
@@ -39,7 +41,7 @@ test('user can reassign existing token', function () {
     ]);
 
     $response->assertOk();
-    $this->assertDatabaseHas('device_tokens', [
+    assertDatabaseHas('device_tokens', [
         'token' => $token->token,
         'user_id' => $this->user->id,
     ]);
@@ -54,11 +56,11 @@ test('user can save two tokens', function () {
     ]);
 
     $response->assertCreated();
-    $this->assertDatabaseHas('device_tokens', [
+    assertDatabaseHas('device_tokens', [
         'token' => $token->token,
         'user_id' => $this->user->id,
     ]);
-    $this->assertDatabaseHas('device_tokens', [
+    assertDatabaseHas('device_tokens', [
         'token' => $secondToken,
         'user_id' => $this->user->id,
     ]);

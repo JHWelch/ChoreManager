@@ -4,6 +4,8 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;
 
+use function Pest\Laravel\assertDatabaseHas;
+
 beforeEach(function () {
     $this->user = $this->testUser()['user'];
 });
@@ -22,7 +24,7 @@ describe('one chore', function () {
                 $this->chore->nextChoreInstance
             );
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+        assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id' => $this->chore->id,
             'due_date' => today()->addDay()->startOfDay(),
         ]);
@@ -36,7 +38,7 @@ describe('one chore', function () {
                 $this->chore->nextChoreInstance
             );
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+        assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id' => $this->chore->id,
             'due_date' => $this->knownSaturday(),
         ]);
@@ -50,7 +52,7 @@ describe('one chore', function () {
                 $this->chore->nextChoreInstance
             );
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+        assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id' => $this->chore->id,
             'due_date' => Carbon::parse('2021-03-06'),
         ]);
@@ -77,7 +79,7 @@ describe('several chores', function () {
         $tomorrow = today()->addDay()->startOfDay();
 
         $this->chores->each(function ($chore) use ($tomorrow) {
-            $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            assertDatabaseHas((new ChoreInstance)->getTable(), [
                 'chore_id' => $chore->id,
                 'due_date' => $tomorrow,
             ]);
@@ -90,7 +92,7 @@ describe('several chores', function () {
         );
 
         $this->chores->each(function ($chore) {
-            $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+            assertDatabaseHas((new ChoreInstance)->getTable(), [
                 'chore_id' => $chore->id,
                 'due_date' => $this->knownSaturday(),
             ]);

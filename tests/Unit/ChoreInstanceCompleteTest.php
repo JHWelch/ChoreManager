@@ -6,6 +6,8 @@ use App\Models\ChoreInstance;
 use App\Models\User;
 use Carbon\Carbon;
 
+use function Pest\Laravel\assertDatabaseHas;
+
 test('do not repeat chore creates no instance', function () {
     $chore = Chore::factory()->create([
         'frequency_id' => FrequencyType::doesNotRepeat,
@@ -83,7 +85,7 @@ test('when a chore is completed the completed by id is set to the user completin
 
     $chore->complete();
 
-    $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+    assertDatabaseHas((new ChoreInstance)->getTable(), [
         'user_id' => $assigned_user->id,
         'completed_by_id' => $acting_as_user->id,
         'chore_id' => $chore->id,
@@ -111,7 +113,7 @@ test('when a chore assigned to a team is completed the next instance is assigned
 
     $chore->complete();
 
-    $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+    assertDatabaseHas((new ChoreInstance)->getTable(), [
         'user_id' => $user3->id,
         'chore_id' => $chore->id,
         'completed_date' => null,
@@ -139,7 +141,7 @@ test('when an instance is assigned to the last person alphabetically it will wra
 
     $chore->complete();
 
-    $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+    assertDatabaseHas((new ChoreInstance)->getTable(), [
         'user_id' => $user1->id,
         'chore_id' => $chore->id,
         'completed_date' => null,

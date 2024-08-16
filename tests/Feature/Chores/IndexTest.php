@@ -5,7 +5,8 @@ use App\Livewire\Chores\Index;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('a user can navigate to chores index', function () {
     $this->testUser();
@@ -27,7 +28,7 @@ test('chores display on index page', function () {
         ->for($user)
         ->create();
 
-    $component = Livewire::test(Index::class);
+    $component = livewire(Index::class);
 
     // Assert
     // Assert we can see all the chore titles
@@ -48,7 +49,7 @@ test('chores can be sorted by title', function () {
         ->for($user)
         ->create();
 
-    $component = Livewire::test(Index::class)
+    $component = livewire(Index::class)
         ->call('sortBy', 'chores.title');
 
     $component->assertSeeInOrder(['Clean car', 'Do dishes', 'Walk dog']);
@@ -66,7 +67,7 @@ test('chores can be sorted by frequency', function () {
         ->for($user)
         ->create();
 
-    $component = Livewire::test(Index::class)
+    $component = livewire(Index::class)
         ->call('sortBy', 'chores.frequency_id');
 
     $component->assertSeeInOrder(['Walk dog', 'Clean car', 'Do dishes']);
@@ -90,7 +91,7 @@ test('chores can be sorted by next due date', function () {
     ChoreInstance::factory(['due_date' => $date1])->for($user)->for($chores[1])->create();
     ChoreInstance::factory(['due_date' => $date2])->for($user)->for($chores[2])->create();
 
-    $component = Livewire::test(Index::class)
+    $component = livewire(Index::class)
         ->set('sort', 'chores.title') // Default is due date.
         ->call('sortBy', 'chore_instances.due_date');
 
@@ -109,7 +110,7 @@ test('chores can be sorted by descending title', function () {
         ->for($user)
         ->create();
 
-    $component = Livewire::test(Index::class)
+    $component = livewire(Index::class)
         ->call('sortBy', 'chores.title')
         ->call('sortBy', 'chores.title');
 

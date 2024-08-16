@@ -2,24 +2,26 @@
 
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\UpdateProfileInformationForm;
-use Livewire\Livewire;
+
+use function Pest\Laravel\actingAs;
+use function Pest\Livewire\livewire;
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    actingAs($this->user);
+});
 
 test('current profile information is available', function () {
-    $this->actingAs($user = User::factory()->create());
-
-    $component = Livewire::test(UpdateProfileInformationForm::class);
-
-    expect($component->state['name'])->toEqual($user->name);
-    expect($component->state['email'])->toEqual($user->email);
+    livewire(UpdateProfileInformationForm::class)
+        ->assertSet('state.name', $this->user->name)
+        ->assertSet('state.email', $this->user->email);
 });
 
 test('profile information can be updated', function () {
-    $this->actingAs($user = User::factory()->create());
-
-    Livewire::test(UpdateProfileInformationForm::class)
+    livewire(UpdateProfileInformationForm::class)
         ->set('state', ['name' => 'Test Name', 'email' => 'test@example.com'])
         ->call('updateProfileInformation');
-
-    expect($user->fresh()->name)->toEqual('Test Name');
-    expect($user->fresh()->email)->toEqual('test@example.com');
+    expect($this->user->fresh())
+        ->name->toEqual('Test Name')
+        ->email->toEqual('test@example.com');
 });

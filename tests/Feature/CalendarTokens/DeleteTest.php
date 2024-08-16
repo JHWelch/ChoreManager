@@ -2,7 +2,9 @@
 
 use App\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
-use Livewire\Livewire;
+
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Livewire\livewire;
 
 it('can delete existing calendar tokens', function () {
     $user = $this->testUser()['user'];
@@ -10,8 +12,8 @@ it('can delete existing calendar tokens', function () {
         ->for($user)
         ->create();
 
-    Livewire::test(Index::class)
+    livewire(Index::class)
         ->call('deleteToken', ['token' => $token->id]);
 
-    $this->assertDatabaseCount((new CalendarToken)->getTable(), 0);
+    assertDatabaseCount((new CalendarToken)->getTable(), 0);
 });

@@ -4,7 +4,9 @@ use App\Livewire\Chores\Show;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Livewire\Livewire;
+
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Livewire\livewire;
 
 it('can reach show page', function () {
     $chore = Chore::factory()->for($this->testUser()['user'])->create();
@@ -32,7 +34,7 @@ it('can see chore info on chores show', function () {
         'user_id' => $this->testUser()['user']->id,
     ])->create();
 
-    $component = Livewire::test(Show::class, ['chore' => $chore]);
+    $component = livewire(Show::class, ['chore' => $chore]);
 
     $component->assertSee('Walk the dog.');
     $component->assertSee('Do not forget the poop bags.');
@@ -44,7 +46,7 @@ it('can complete chore from chore page', function () {
     $chore = Chore::factory()->for($this->user)->withFirstInstance()->create();
     $instance = $chore->nextChoreInstance;
 
-    $component = Livewire::test(Show::class, ['chore' => $chore])
+    $component = livewire(Show::class, ['chore' => $chore])
         ->call('complete');
 
     $instance->refresh();
@@ -56,7 +58,7 @@ it('can complete chore without first instance', function () {
     $this->testUser();
     $chore = Chore::factory()->for($this->user)->create();
 
-    $component = Livewire::test(Show::class, ['chore' => $chore])
+    $component = livewire(Show::class, ['chore' => $chore])
         ->call('complete');
 
     $component->assertRedirect('/');
@@ -97,7 +99,7 @@ it('can see chore history', function () {
         )
         ->create();
 
-    $component = Livewire::test(Show::class, ['chore' => $chore]);
+    $component = livewire(Show::class, ['chore' => $chore]);
 
     $component->assertSeeInOrder([
         $user1->name,
@@ -138,7 +140,7 @@ it('can see tooltip of exact date', function () {
         )
         ->create();
 
-    $component = Livewire::test(Show::class, ['chore' => $chore]);
+    $component = livewire(Show::class, ['chore' => $chore]);
 
     $component->assertSeeInOrder([
         $date1->format('m/d/Y'),
@@ -156,7 +158,7 @@ test('chores assigned to team display team as owner', function () {
         ->for($team)
         ->create();
 
-    $component = Livewire::test(Show::class, ['chore' => $chore]);
+    $component = livewire(Show::class, ['chore' => $chore]);
 
     $component->assertSeeInOrder([
         'Owner',
@@ -173,13 +175,13 @@ it('can complete chore for another another team user', function () {
         ->withFirstInstance()
         ->create();
 
-    Livewire::test(Show::class, [
+    livewire(Show::class, [
         'chore' => $chore,
     ])
         ->set('user_id', $other_user->id)
         ->call('customComplete');
 
-    $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+    assertDatabaseHas((new ChoreInstance)->getTable(), [
         'chore_id' => $chore->id,
         'completed_date' => today(),
         'completed_by_id' => $other_user->id,
@@ -194,13 +196,13 @@ it('can complete chore on a past date', function () {
         ->withFirstInstance()
         ->create();
 
-    $component = Livewire::test(Show::class, [
+    $component = livewire(Show::class, [
         'chore' => $chore,
     ])
         ->set('completed_date', $date)
         ->call('customComplete');
 
-    $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+    assertDatabaseHas((new ChoreInstance)->getTable(), [
         'chore_id' => $chore->id,
         'completed_date' => $date,
         'completed_by_id' => $user->id,
@@ -215,7 +217,7 @@ test('completing coming from complete endpoint does not redirect', function () {
         ->withFirstInstance()
         ->create();
     session()->flash('complete', true);
-    $component = Livewire::test(Show::class, ['chore' => $chore])
+    $component = livewire(Show::class, ['chore' => $chore])
         ->set('previousUrl', route('chores.complete.index', ['chore' => $chore]));
 
     $component->call('customComplete');
@@ -231,7 +233,7 @@ test('when complete session flag is present show modal', function () {
     $chore = Chore::factory()->for($user)->create();
     session()->flash('complete', true);
 
-    $component = Livewire::test(Show::class, ['chore' => $chore]);
+    $component = livewire(Show::class, ['chore' => $chore]);
 
     $component->assertSet('showCompleteForUserDialog', true);
 });
@@ -240,7 +242,7 @@ test('when complete session flag is not present dont show modal', function () {
     $user = $this->testUser()['user'];
     $chore = Chore::factory()->for($user)->create();
 
-    $component = Livewire::test(Show::class, ['chore' => $chore]);
+    $component = livewire(Show::class, ['chore' => $chore]);
 
     $component->assertSet('showCompleteForUserDialog', false);
 });

@@ -7,6 +7,10 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
+
 function uncompletedChoreForUser($user)
 {
     Chore::factory()
@@ -28,7 +32,7 @@ it('creates streaks for users who have not started one', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseHas((new StreakCount)->getTable(), [
+    assertDatabaseHas((new StreakCount)->getTable(), [
         'team_id' => null,
         'user_id' => $user->id,
         'count' => 1,
@@ -42,7 +46,7 @@ it('will not create streak if user has unfinished chores', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseCount((new StreakCount)->getTable(), 0);
+    assertDatabaseCount((new StreakCount)->getTable(), 0);
 });
 
 it('increments current streaks for users', function () {
@@ -53,7 +57,7 @@ it('increments current streaks for users', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseHas((new StreakCount)->getTable(), [
+    assertDatabaseHas((new StreakCount)->getTable(), [
         'id' => $streak->id,
         'team_id' => null,
         'user_id' => $user->id,
@@ -71,7 +75,7 @@ it('will not increment streak if user has unfinished chores', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseHas((new StreakCount)->getTable(), [
+    assertDatabaseHas((new StreakCount)->getTable(), [
         'id' => $streak->id,
         'team_id' => null,
         'user_id' => $user->id,
@@ -98,7 +102,7 @@ it('creates streaks for teams who have not started one', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseHas((new StreakCount)->getTable(), [
+    assertDatabaseHas((new StreakCount)->getTable(), [
         'user_id' => null,
         'team_id' => $team->id,
         'count' => 1,
@@ -112,7 +116,7 @@ it('will not create streak if team has unfinished chores', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseMissing((new StreakCount)->getTable(), [
+    assertDatabaseMissing((new StreakCount)->getTable(), [
         'team_id' => $team->id,
     ]);
 });
@@ -125,7 +129,7 @@ it('increments current streaks for teams', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseHas((new StreakCount)->getTable(), [
+    assertDatabaseHas((new StreakCount)->getTable(), [
         'id' => $streak->id,
         'team_id' => $team->id,
         'count' => 6,
@@ -142,7 +146,7 @@ it('will not increment streak if team has unfinished chores', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseHas((new StreakCount)->getTable(), [
+    assertDatabaseHas((new StreakCount)->getTable(), [
         'id' => $streak->id,
         'team_id' => $team->id,
         'count' => 5,
@@ -168,7 +172,7 @@ it('sets time stamps correctly for user', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseMissing((new StreakCount)->getTable(), [
+    assertDatabaseMissing((new StreakCount)->getTable(), [
         'user_id' => $user->id,
         'created_at' => null,
         'updated_at' => null,
@@ -180,7 +184,7 @@ it('sets time stamps correctly for team', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseMissing((new StreakCount)->getTable(), [
+    assertDatabaseMissing((new StreakCount)->getTable(), [
         'team_id' => $team->id,
         'created_at' => null,
         'updated_at' => null,
@@ -196,7 +200,7 @@ it('updates timestamp on increment', function () {
 
     (new CountStreaks)();
 
-    $this->assertDatabaseMissing((new StreakCount)->getTable(), [
+    assertDatabaseMissing((new StreakCount)->getTable(), [
         'id' => $streak->id,
         'updated_at' => $streak->updated_at,
     ]);

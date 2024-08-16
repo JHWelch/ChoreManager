@@ -2,7 +2,8 @@
 
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('team members can be removed from teams', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
@@ -12,7 +13,7 @@ test('team members can be removed from teams', function () {
         ['role' => 'admin']
     );
 
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->set('teamMemberIdBeingRemoved', $otherUser->id)
         ->call('removeTeamMember');
 
@@ -29,7 +30,7 @@ test('only team owner can remove team members', function () {
 
     $this->actingAs($otherUser);
 
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->set('teamMemberIdBeingRemoved', $user->id)
         ->call('removeTeamMember')
         ->assertForbidden();

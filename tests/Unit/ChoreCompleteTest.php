@@ -4,6 +4,8 @@ use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
 
+use function Pest\Laravel\assertDatabaseCount;
+
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('when there is a next instance completes instance', function () {
@@ -15,7 +17,7 @@ test('when there is a next instance completes instance', function () {
 
     $firstInstance->refresh();
     expect($firstInstance->is_completed)->toBeTrue();
-    $this->assertDatabaseCount((new ChoreInstance)->getTable(), 2);
+    assertDatabaseCount((new ChoreInstance)->getTable(), 2);
 });
 
 it('can complete a chore without a chore instance', function () {

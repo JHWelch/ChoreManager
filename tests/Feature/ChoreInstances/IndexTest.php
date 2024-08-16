@@ -4,7 +4,10 @@ use App\Livewire\ChoreInstances\Index as ChoreInstancesIndex;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Livewire\Livewire;
+
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
+use function Pest\Livewire\livewire;
 
 test('chore instance index page can be reached', function () {
     $this->testUser()['user'];
@@ -18,7 +21,7 @@ test('chores with chore instances show on index', function () {
     $user = $this->testUser()['user'];
     $chore = Chore::factory()->for($user)->withFirstInstance(today())->create();
 
-    $component = Livewire::test(ChoreInstancesIndex::class);
+    $component = livewire(ChoreInstancesIndex::class);
 
     $component->assertSee($chore->title);
 });
@@ -27,7 +30,7 @@ test('chores without chore instances do not show on index', function () {
     $user = $this->testUser()['user'];
     $chore = Chore::factory()->for($user)->create();
 
-    $component = Livewire::test(ChoreInstancesIndex::class);
+    $component = livewire(ChoreInstancesIndex::class);
 
     $component->assertDontSee($chore->title);
 });
@@ -35,7 +38,7 @@ test('chores without chore instances do not show on index', function () {
 test('when there are no chore instances see empty state', function () {
     $this->testUser();
 
-    $component = Livewire::test(ChoreInstancesIndex::class);
+    $component = livewire(ChoreInstancesIndex::class);
 
     $component->assertSee('All done for today');
 });
@@ -51,7 +54,7 @@ test('future chores do not show by default', function () {
         ->withFirstInstance(today()->addDays(4))
         ->create();
 
-    $component = Livewire::test(ChoreInstancesIndex::class);
+    $component = livewire(ChoreInstancesIndex::class);
 
     $component->assertSee($chore1->title);
     $component->assertDontSee($chore2->title);
@@ -64,7 +67,7 @@ test('user can show future chores', function () {
         ->withFirstInstance(today()
             ->addDays(4))->create();
 
-    $component = Livewire::test(ChoreInstancesIndex::class)
+    $component = livewire(ChoreInstancesIndex::class)
         ->call('toggleShowFutureChores');
 
     $component->assertSeeInOrder(['Future', $chore->title]);
@@ -77,9 +80,9 @@ test('show future chores is remembered when revisiting page', function () {
         ->withFirstInstance(today()
             ->addDays(4))->create();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('toggleShowFutureChores');
-    $component = Livewire::test(ChoreInstancesIndex::class);
+    $component = livewire(ChoreInstancesIndex::class);
 
     $component->assertSee($chore->title);
 });
@@ -97,17 +100,17 @@ it('can snooze chores due today for a user until tomorrow', function () {
         ->create();
     $tomorrow = today()->addDay();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('snoozeGroupUntilTomorrow', 'today');
 
     foreach ($chores as $chore) {
-        $this->assertDatabaseHas(ChoreInstance::class, [
+        assertDatabaseHas(ChoreInstance::class, [
             'chore_id' => $chore->id,
             'due_date' => $tomorrow,
         ]);
     }
 
-    $this->assertDatabaseMissing(ChoreInstance::class, [
+    assertDatabaseMissing(ChoreInstance::class, [
         'chore_id' => $other_chore->id,
         'due_date' => $tomorrow,
     ]);
@@ -126,17 +129,17 @@ it('can snooze chores due today for a user unti l the weekend', function () {
         ->create();
     $tomorrow = today()->addDay();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('snoozeGroupUntilTomorrow', 'today');
 
     foreach ($chores as $chore) {
-        $this->assertDatabaseHas(ChoreInstance::class, [
+        assertDatabaseHas(ChoreInstance::class, [
             'chore_id' => $chore->id,
             'due_date' => $tomorrow,
         ]);
     }
 
-    $this->assertDatabaseMissing(ChoreInstance::class, [
+    assertDatabaseMissing(ChoreInstance::class, [
         'chore_id' => $other_chore->id,
         'due_date' => $tomorrow,
     ]);
@@ -155,17 +158,17 @@ it('can snooze chores due in the past for a user until tomorrow', function () {
         ->create();
     $tomorrow = today()->addDay();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('snoozeGroupUntilTomorrow', 'past_due');
 
     foreach ($chores as $chore) {
-        $this->assertDatabaseHas(ChoreInstance::class, [
+        assertDatabaseHas(ChoreInstance::class, [
             'chore_id' => $chore->id,
             'due_date' => $tomorrow,
         ]);
     }
 
-    $this->assertDatabaseMissing(ChoreInstance::class, [
+    assertDatabaseMissing(ChoreInstance::class, [
         'chore_id' => $other_chore->id,
         'due_date' => $tomorrow,
     ]);
@@ -184,17 +187,17 @@ it('can snooze chores due in the past for a user unti l the weekend', function (
         ->for($this->user)
         ->create();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('snoozeGroupUntilWeekend', 'past_due');
 
     foreach ($chores as $chore) {
-        $this->assertDatabaseHas(ChoreInstance::class, [
+        assertDatabaseHas(ChoreInstance::class, [
             'chore_id' => $chore->id,
             'due_date' => $this->knownSaturday(),
         ]);
     }
 
-    $this->assertDatabaseMissing(ChoreInstance::class, [
+    assertDatabaseMissing(ChoreInstance::class, [
         'chore_id' => $other_chore->id,
         'due_date' => $this->knownSaturday(),
     ]);
@@ -209,10 +212,10 @@ it('wont snooze chores due today for a team unti l the weekend if filter is user
         ->for(User::factory()->hasAttached($this->team))
         ->create();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('snoozeGroupUntilWeekend', 'today');
 
-    $this->assertDatabaseMissing(ChoreInstance::class, [
+    assertDatabaseMissing(ChoreInstance::class, [
         'chore_id' => $chore->id,
         'due_date' => $this->knownSaturday(),
     ]);
@@ -227,10 +230,10 @@ it('wont snooze chores due in the past for a team unti l the weekend if filter i
         ->for(User::factory()->hasAttached($this->team))
         ->create();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('snoozeGroupUntilWeekend', 'past_due');
 
-    $this->assertDatabaseMissing(ChoreInstance::class, [
+    assertDatabaseMissing(ChoreInstance::class, [
         'chore_id' => $chore->id,
         'due_date' => $this->knownSaturday(),
     ]);
@@ -244,10 +247,10 @@ test('snoozes chores owned by team but assigned to user', function () {
         ->create();
     $tomorrow = today()->addDay();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->call('snoozeGroupUntilTomorrow', 'past_due');
 
-    $this->assertDatabaseHas(ChoreInstance::class, [
+    assertDatabaseHas(ChoreInstance::class, [
         'chore_id' => $chore->id,
         'due_date' => $tomorrow,
     ]);
@@ -268,7 +271,7 @@ test('chore instances are split into groups based on date', function () {
         ->withFirstInstance(today(), $this->user)
         ->create();
 
-    Livewire::test(ChoreInstancesIndex::class)
+    livewire(ChoreInstancesIndex::class)
         ->assertSeeInOrder([
             'Past due',
             'do laundry',

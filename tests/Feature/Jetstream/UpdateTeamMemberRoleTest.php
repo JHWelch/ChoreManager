@@ -2,7 +2,8 @@
 
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('team member roles can be updated', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
@@ -12,7 +13,7 @@ test('team member roles can be updated', function () {
         ['role' => 'admin']
     );
 
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->set('managingRoleFor', $otherUser)
         ->set('currentRole', 'editor')
         ->call('updateRole');
@@ -33,7 +34,7 @@ test('only team owner can update team member roles', function () {
 
     $this->actingAs($otherUser);
 
-    $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
         ->set('managingRoleFor', $otherUser)
         ->set('currentRole', 'editor')
         ->call('updateRole')

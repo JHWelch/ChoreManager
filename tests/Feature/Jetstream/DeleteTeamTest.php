@@ -3,7 +3,8 @@
 use App\Models\Team;
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\DeleteTeamForm;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('teams can be deleted', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
@@ -17,7 +18,7 @@ test('teams can be deleted', function () {
         ['role' => 'test-role']
     );
 
-    $component = Livewire::test(DeleteTeamForm::class, ['team' => $team->fresh()])
+    $component = livewire(DeleteTeamForm::class, ['team' => $team->fresh()])
         ->call('deleteTeam');
 
     expect($team->fresh())->toBeNull();
@@ -27,7 +28,7 @@ test('teams can be deleted', function () {
 test('personal teams cant be deleted', function () {
     $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-    $component = Livewire::test(DeleteTeamForm::class, ['team' => $user->currentTeam])
+    $component = livewire(DeleteTeamForm::class, ['team' => $user->currentTeam])
         ->call('deleteTeam')
         ->assertHasErrors(['team']);
 

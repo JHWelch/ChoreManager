@@ -3,7 +3,8 @@
 use App\Filament\Resources\UserResource;
 use App\Filament\Resources\UserResource\Pages\ListUsers;
 use App\Models\User;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 test('admin can see index page', function () {
     $this->adminTestUser();
@@ -25,7 +26,7 @@ it('can see user fields', function () {
     $this->adminTestUser();
     $user = User::factory()->create();
 
-    Livewire::test(ListUsers::class)
+    livewire(ListUsers::class)
         ->assertSee($user->name)
         ->assertSee($user->created_at->format('M j, Y H:i:s'))
         ->assertSee($user->updated_at->format('M j, Y H:i:s'))

@@ -4,14 +4,15 @@ use App\Enums\Frequency;
 use App\Enums\FrequencyType;
 use App\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
-use Livewire\Livewire;
+
+use function Pest\Livewire\livewire;
 
 it('can complete a chore instance', function () {
     $user = $this->testUser()['user'];
     $chore = Chore::factory()->for($user)->withFirstInstance()->create();
     $chore_instance = $chore->nextChoreInstance;
 
-    Livewire::test(IndexLine::class, [
+    livewire(IndexLine::class, [
         'chore' => $chore,
     ])->call('complete');
 
@@ -28,7 +29,7 @@ test('when a chore instance is completed a new one is created daily', function (
         ->withFirstInstance($now)
         ->create();
 
-    Livewire::test(IndexLine::class, [
+    livewire(IndexLine::class, [
         'chore' => $chore,
     ])->call('complete');
 
@@ -46,7 +47,7 @@ test('index line shows chore information', function () {
         ->withFirstInstance()
         ->create();
 
-    $component = Livewire::test(IndexLine::class, [
+    $component = livewire(IndexLine::class, [
         'chore' => $chore,
     ]);
 
@@ -64,7 +65,7 @@ test('index line has assigned user image', function () {
         ->withFirstInstance()
         ->create();
 
-    $component = Livewire::test(IndexLine::class, [
+    $component = livewire(IndexLine::class, [
         'chore' => $chore,
     ]);
 
@@ -78,7 +79,7 @@ test('snooze until tomorrow emits event', function () {
         ->for($this->user)
         ->create();
 
-    $component = Livewire::test(IndexLine::class, [
+    $component = livewire(IndexLine::class, [
         'chore' => $chore,
     ])->call('snoozeUntilTomorrow');
 
@@ -92,7 +93,7 @@ test('snooze until weekend emits event', function () {
         ->for($this->user)
         ->create();
 
-    $component = Livewire::test(IndexLine::class, [
+    $component = livewire(IndexLine::class, [
         'chore' => $chore,
     ])->call('snoozeUntilWeekend');
 
