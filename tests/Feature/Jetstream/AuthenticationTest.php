@@ -3,7 +3,7 @@
 namespace Tests\Feature\Jetstream;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Providers\AppServiceProvider;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -25,7 +25,7 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(AppServiceProvider::HOME);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void

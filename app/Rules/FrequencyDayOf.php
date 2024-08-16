@@ -10,8 +10,7 @@ class FrequencyDayOf implements ValidationRule
 {
     public function __construct(
         protected FrequencyType $frequencyType
-    ) {
-    }
+    ) {}
 
     /**
      * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail

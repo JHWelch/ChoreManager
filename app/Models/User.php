@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\HasChoreStreaks;
 use App\Models\Concerns\HasUnfinishedChoreScopes;
 use App\Scopes\OrderByNameScope;
+use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,65 +20,17 @@ use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * App\Models\User.
- *
- * @property int $id
- * @property string $name
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password
- * @property string|null $two_factor_secret
- * @property string|null $two_factor_recovery_codes
- * @property string|null $remember_token
- * @property int|null $current_team_id
- * @property string|null $profile_photo_path
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\CalendarToken> $calendarTokens
- * @property-read int|null $calendar_tokens_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $choreInstances
- * @property-read int|null $chore_instances_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chore> $chores
- * @property-read int|null $chores_count
- * @property-read \App\Models\StreakCount|null $currentStreak
- * @property-read \App\Models\Team|null $currentTeam
- * @property-read string $profile_photo_url
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $ownedTeams
- * @property-read int|null $owned_teams_count
- * @property-read \App\Models\UserSetting|null $settings
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $teams
- * @property-read int|null $teams_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
- * @property-read int|null $tokens_count
- *
- * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
- * @method static \Illuminate\Database\Eloquent\Builder|User withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
- *
  * @mixin \Eloquent
+ * @mixin IdeHelperUser
  */
 class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasChoreStreaks;
+
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     use HasProfilePhoto;
     use HasTeams;
 
@@ -98,17 +51,20 @@ class User extends Authenticatable implements FilamentUser
         'two_factor_secret',
     ];
 
-    /** @var array<string, string> */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     /** @var array<int, string> */
     protected $appends = [
         'profile_photo_url',
     ];
 
     protected ?bool $is_admin = null;
+
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+        ];
+    }
 
     public function canAccessPanel(Panel $panel): bool
     {

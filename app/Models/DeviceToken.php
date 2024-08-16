@@ -2,22 +2,31 @@
 
 namespace App\Models;
 
+use Database\Factories\DeviceTokenFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @mixin IdeHelperDeviceToken
+ */
 class DeviceToken extends Model
 {
+    /** @use HasFactory<DeviceTokenFactory> */
     use HasFactory;
 
     protected $fillable = [
         'token',
     ];
 
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-    ];
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 
     /** @return BelongsTo<User, self> */
     public function user(): BelongsTo

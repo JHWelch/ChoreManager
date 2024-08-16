@@ -14,7 +14,7 @@ class DemoModeTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        (new DatabaseSeeder())->call(DemoSeeder::class);
+        (new DatabaseSeeder)->call(DemoSeeder::class);
         Config::set('demo.enabled', true);
     }
 

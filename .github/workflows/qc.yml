@@ -22,11 +22,11 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v2
+        uses: ramsey/composer-install@v3
 
       - name: run PHPStan
         run: composer test:types
@@ -34,6 +34,15 @@ jobs:
   phpunit:
     name: Unit Tests (PHPUnit)
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: choremanager
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -41,22 +50,17 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v2
-
-      - name: enable mysql
-        run: sudo systemctl start mysql.service
-
-      - name: create empty database
-        run: mysql --user=root --password=root --execute="CREATE DATABASE choremanager"
+        uses: ramsey/composer-install@v3
 
       - name: run phpunit
         run: composer test:unit
         env:
           APP_KEY: base64:UmeUVSBI8wMTAzYlIWXQOf/SoBR116L3jozOtnnUAyY=
+          DB_CONNECTION: mysql
           DB_DATABASE: choremanager
           DB_USERNAME: root
           DB_PASSWORD: root
@@ -71,11 +75,11 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v2
+        uses: ramsey/composer-install@v3
 
       - name: Check style
         run: composer test:lint
@@ -90,11 +94,11 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           coverage: none
 
       - name: Install dependencies
-        uses: ramsey/composer-install@v2
+        uses: ramsey/composer-install@v3
 
       - name: Check compliance with PSR-4
         run: composer test:psr4

@@ -28,7 +28,7 @@ class EditTest extends TestCase
             ->set('form.due_date', Carbon::parse($date))
             ->call('save');
 
-        $this->assertDatabaseHas((new ChoreInstance())->getTable(), [
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id' => $chore->id,
             'due_date' => $date->format('Y-m-d 00:00:00'),
         ]);
@@ -93,7 +93,7 @@ class EditTest extends TestCase
             ->set('form.instance_user_id', $user->id)
             ->call('save');
 
-        $this->assertDatabaseHas((new ChoreInstance())->getTable(), [
+        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
             'chore_id' => $chore->id,
             'user_id' => $user->id,
         ]);

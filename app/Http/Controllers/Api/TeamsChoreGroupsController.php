@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ChoreInstance;
 use App\Models\Team;
+use Illuminate\Database\Eloquent\Collection;
 
 class TeamsChoreGroupsController extends Controller
 {
@@ -15,6 +16,7 @@ class TeamsChoreGroupsController extends Controller
      */
     public function index(Team $team): array
     {
+        /** @var Collection<int, ChoreInstance> */
         $groups = $team
             ->choreInstances()
             ->notCompleted()

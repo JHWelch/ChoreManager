@@ -4,7 +4,8 @@ namespace App\Models;
 
 use App\Enums\Frequency;
 use App\Enums\FrequencyType;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Database\Factories\ChoreFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,54 +15,12 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Carbon;
 
 /**
- * App\Models\Chore.
- *
- * @property int $id
- * @property int|null $user_id
- * @property string $title
- * @property string|null $description
- * @property FrequencyType $frequency_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property int|null $team_id
- * @property int|null $frequency_interval
- * @property int|null $frequency_day_of
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $choreInstances
- * @property-read int|null $chore_instances_count
- * @property-read \Illuminate\Support\Carbon|null $due_date_updated_at
- * @property-read Frequency $frequency
- * @property-read int $next_assigned_id
- * @property-read \Illuminate\Support\Carbon|null $next_due_date
- * @property-read \App\Models\ChoreInstance|null $nextInstance
- * @property-read \App\Models\ChoreInstance|null $nextChoreInstance
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $pastChoreInstances
- * @property-read int|null $past_chore_instances_count
- * @property-read \App\Models\Team|null $team
- * @property-read \App\Models\User|null $user
- *
- * @method static \Database\Factories\ChoreFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Chore newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore nullDueDatesAtEnd()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore onlyWithDueNextInstance()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore onlyWithNextInstance()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore query()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereFrequencyDayOf($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereFrequencyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereFrequencyInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore withNextInstance()
- *
  * @mixin \Eloquent
+ * @mixin IdeHelperChore
  */
 class Chore extends Model
 {
+    /** @use HasFactory<ChoreFactory> */
     use HasFactory;
 
     const SCOPE_COLUMNS = [
@@ -79,9 +38,13 @@ class Chore extends Model
         'frequency_interval' => 1,
     ];
 
-    protected $casts = [
-        'frequency_id' => FrequencyType::class,
-    ];
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'frequency_id' => FrequencyType::class,
+        ];
+    }
 
     /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
@@ -138,27 +101,30 @@ class Chore extends Model
             ->whereNull('chore_instances.completed_date');
     }
 
-    public function scopeWithNextInstance(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeWithNextInstance(Builder $query): void
     {
-        return $query->select(
+        $query->select(
             ...self::SCOPE_COLUMNS
         )
             ->leftJoin('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeOnlyWithNextInstance(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeOnlyWithNextInstance(Builder $query): void
     {
-        return $query->select(
+        $query->select(
             ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join))
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeOnlyWithDueNextInstance(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeOnlyWithDueNextInstance(Builder $query): void
     {
-        return $query->select(
+        $query->select(
             ...self::SCOPE_COLUMNS
         )
             ->join('chore_instances', fn ($join) => $this->choreInstanceScopeJoin($join)
@@ -166,9 +132,10 @@ class Chore extends Model
             ->withCasts(['due_date' => 'date:Y-m-d']);
     }
 
-    public function scopeNullDueDatesAtEnd(Builder $query): Builder
+    /** @param Builder<self> $query */
+    public function scopeNullDueDatesAtEnd(Builder $query): void
     {
-        return $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
+        $query->orderByRaw('ISNULL(chore_instances.due_date), chore_instances.due_date ASC');
     }
 
     public function createNewInstance(?Carbon $after = null): void
