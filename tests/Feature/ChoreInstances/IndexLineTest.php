@@ -1,121 +1,101 @@
 <?php
 
-namespace Tests\Feature\ChoreInstances;
-
 use App\Enums\Frequency;
 use App\Enums\FrequencyType;
 use App\Livewire\ChoreInstances\IndexLine;
 use App\Models\Chore;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class IndexLineTest extends TestCase
-{
-    /** @test */
-    public function can_complete_a_chore_instance(): void
-    {
-        $user = $this->testUser()['user'];
-        $chore = Chore::factory()->for($user)->withFirstInstance()->create();
-        $chore_instance = $chore->nextChoreInstance;
+use function Pest\Livewire\livewire;
 
-        Livewire::test(IndexLine::class, [
-            'chore' => $chore,
-        ])->call('complete');
+it('can complete a chore instance', function () {
+    $user = $this->testUser()['user'];
+    $chore = Chore::factory()->for($user)->withFirstInstance()->create();
+    $chore_instance = $chore->nextChoreInstance;
 
-        $chore_instance->refresh();
-        $this->assertTrue($chore_instance->is_completed);
-    }
+    livewire(IndexLine::class, [
+        'chore' => $chore,
+    ])->call('complete');
 
-    /** @test */
-    public function when_a_chore_instance_is_completed_a_new_one_is_created_daily(): void
-    {
-        $now = today();
-        $user = $this->testUser()['user'];
-        $chore = Chore::factory()
-            ->daily()
-            ->for($user)
-            ->withFirstInstance($now)
-            ->create();
+    $chore_instance->refresh();
+    expect($chore_instance->is_completed)->toBeTrue();
+});
 
-        Livewire::test(IndexLine::class, [
-            'chore' => $chore,
-        ])->call('complete');
+test('when a chore instance is completed a new one is created daily', function () {
+    $now = today();
+    $user = $this->testUser()['user'];
+    $chore = Chore::factory()
+        ->daily()
+        ->for($user)
+        ->withFirstInstance($now)
+        ->create();
 
-        $chore->refresh();
-        $this->assertEquals(
-            $now->addDay()->toDateString(),
-            $chore->nextChoreInstance->due_date->toDateString(),
-        );
-    }
+    livewire(IndexLine::class, [
+        'chore' => $chore,
+    ])->call('complete');
 
-    /** @test */
-    public function index_line_shows_chore_information(): void
-    {
-        $frequency = new Frequency(FrequencyType::daily, 3);
-        $chore = Chore::factory([
-            'title' => 'Clean the sink',
-            'frequency_id' => $frequency->frequencyType,
-            'frequency_interval' => $frequency->interval,
-        ])
-            ->withFirstInstance()
-            ->create();
+    $chore->refresh();
+    expect($chore->nextChoreInstance->due_date->toDateString())->toEqual($now->addDay()->toDateString());
+});
 
-        $component = Livewire::test(IndexLine::class, [
-            'chore' => $chore,
-        ]);
+test('index line shows chore information', function () {
+    $frequency = new Frequency(FrequencyType::daily, 3);
+    $chore = Chore::factory([
+        'title' => 'Clean the sink',
+        'frequency_id' => $frequency->frequencyType,
+        'frequency_interval' => $frequency->interval,
+    ])
+        ->withFirstInstance()
+        ->create();
 
-        $component->assertSee($frequency->__toString());
-        $component->assertSee('Clean the sink');
-    }
+    $component = livewire(IndexLine::class, [
+        'chore' => $chore,
+    ]);
 
-    /** @test */
-    public function index_line_has_assigned_user_image(): void
-    {
-        $this->markTestSkipped('Feature disabled.');
-        $user = $this->testUser([
-            'profile_photo_path' => 'test_photo_url.jpg',
-        ])['user'];
-        $chore = Chore::factory()
-            ->for($user)
-            ->withFirstInstance()
-            ->create();
+    $component->assertSee($frequency->__toString());
+    $component->assertSee('Clean the sink');
+});
 
-        $component = Livewire::test(IndexLine::class, [
-            'chore' => $chore,
-        ]);
+test('index line has assigned user image', function () {
+    $this->markTestSkipped('Feature disabled.');
+    $user = $this->testUser([
+        'profile_photo_path' => 'test_photo_url.jpg',
+    ])['user'];
+    $chore = Chore::factory()
+        ->for($user)
+        ->withFirstInstance()
+        ->create();
 
-        $component->assertSeeHtml("src=\"$user->profile_photo_url\"");
-    }
+    $component = livewire(IndexLine::class, [
+        'chore' => $chore,
+    ]);
 
-    /** @test */
-    public function snooze_until_tomorrow_emits_event(): void
-    {
-        $this->testUser();
-        $chore = Chore::factory()
-            ->withFirstInstance()
-            ->for($this->user)
-            ->create();
+    $component->assertSeeHtml("src=\"$user->profile_photo_url\"");
+});
 
-        $component = Livewire::test(IndexLine::class, [
-            'chore' => $chore,
-        ])->call('snoozeUntilTomorrow');
+test('snooze until tomorrow emits event', function () {
+    $this->testUser();
+    $chore = Chore::factory()
+        ->withFirstInstance()
+        ->for($this->user)
+        ->create();
 
-        $component->assertDispatched('chore_instance.updated');
-    }
+    $component = livewire(IndexLine::class, [
+        'chore' => $chore,
+    ])->call('snoozeUntilTomorrow');
 
-    /** @test */
-    public function snooze_until_weekend_emits_event(): void
-    {
-        $this->testUser();
-        $chore = Chore::factory()
-            ->withFirstInstance()
-            ->for($this->user)
-            ->create();
+    $component->assertDispatched('chore_instance.updated');
+});
 
-        $component = Livewire::test(IndexLine::class, [
-            'chore' => $chore,
-        ])->call('snoozeUntilWeekend');
+test('snooze until weekend emits event', function () {
+    $this->testUser();
+    $chore = Chore::factory()
+        ->withFirstInstance()
+        ->for($this->user)
+        ->create();
 
-        $component->assertDispatched('chore_instance.updated');
-    }
-}
+    $component = livewire(IndexLine::class, [
+        'chore' => $chore,
+    ])->call('snoozeUntilWeekend');
+
+    $component->assertDispatched('chore_instance.updated');
+});

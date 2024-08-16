@@ -1,44 +1,37 @@
 <?php
 
-namespace Tests\Feature\Jetstream;
-
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class RemoveTeamMemberTest extends TestCase
-{
-    public function test_team_members_can_be_removed_from_teams(): void
-    {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+use function Pest\Livewire\livewire;
 
-        $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(),
-            ['role' => 'admin']
-        );
+test('team members can be removed from teams', function () {
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-            ->set('teamMemberIdBeingRemoved', $otherUser->id)
-            ->call('removeTeamMember');
+    $user->currentTeam->users()->attach(
+        $otherUser = User::factory()->create(),
+        ['role' => 'admin']
+    );
 
-        $this->assertCount(0, $user->currentTeam->fresh()->users);
-    }
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
+        ->set('teamMemberIdBeingRemoved', $otherUser->id)
+        ->call('removeTeamMember');
 
-    public function test_only_team_owner_can_remove_team_members(): void
-    {
-        $user = User::factory()->withPersonalTeam()->create();
+    expect($user->currentTeam->fresh()->users)->toHaveCount(0);
+});
 
-        $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(),
-            ['role' => 'admin']
-        );
+test('only team owner can remove team members', function () {
+    $user = User::factory()->withPersonalTeam()->create();
 
-        $this->actingAs($otherUser);
+    $user->currentTeam->users()->attach(
+        $otherUser = User::factory()->create(),
+        ['role' => 'admin']
+    );
 
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-            ->set('teamMemberIdBeingRemoved', $user->id)
-            ->call('removeTeamMember')
-            ->assertForbidden();
-    }
-}
+    $this->actingAs($otherUser);
+
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
+        ->set('teamMemberIdBeingRemoved', $user->id)
+        ->call('removeTeamMember')
+        ->assertForbidden();
+});

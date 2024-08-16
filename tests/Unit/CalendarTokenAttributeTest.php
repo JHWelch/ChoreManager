@@ -1,74 +1,59 @@
 <?php
 
-namespace Tests\Unit;
-
 use App\Models\CalendarToken;
 use App\Models\Team;
 use App\Models\User;
-use Tests\TestCase;
 
-class CalendarTokenAttributeTest extends TestCase
-{
-    /** @test */
-    public function calendar_token_is_team_calendar(): void
-    {
-        $calendar_token = CalendarToken::make([
-            'user_id' => 1,
-            'team_id' => 1,
-        ]);
+test('calendar token is team calendar', function () {
+    $calendar_token = CalendarToken::make([
+        'user_id' => 1,
+        'team_id' => 1,
+    ]);
+    expect($calendar_token)
+        ->is_team_calendar->toEqual(true)
+        ->is_user_calendar->toEqual(false);
+});
 
-        $this->assertEquals(true, $calendar_token->is_team_calendar);
-        $this->assertEquals(false, $calendar_token->is_user_calendar);
-    }
+test('is team calendar attribute false', function () {
+    $calendar_token = CalendarToken::make([
+        'user_id' => 1,
+        'team_id' => null,
+    ]);
 
-    /** @test */
-    public function is_team_calendar_attribute_false(): void
-    {
-        $calendar_token = CalendarToken::make([
-            'user_id' => 1,
-            'team_id' => null,
-        ]);
+    expect($calendar_token)
+        ->is_team_calendar->toEqual(false)
+        ->is_user_calendar->toEqual(true);
+});
 
-        $this->assertEquals(false, $calendar_token->is_team_calendar);
-        $this->assertEquals(true, $calendar_token->is_user_calendar);
-    }
+test('display name with defined name is name', function () {
+    $user = User::factory()->create();
+    $calendar_token = CalendarToken::make([
+        'user_id' => $user->id,
+        'name' => 'Special Calendar',
+    ]);
 
-    /** @test */
-    public function display_name_with_defined_name_is_name(): void
-    {
-        $user = User::factory()->create();
-        $calendar_token = CalendarToken::make([
-            'user_id' => $user->id,
-            'name' => 'Special Calendar',
-        ]);
+    expect($calendar_token->display_name)->toEqual('Special Calendar');
+});
 
-        $this->assertEquals('Special Calendar', $calendar_token->display_name);
-    }
+test('user calendar without defined name named after user', function () {
+    $user = User::factory([
+        'name' => 'Steve Smith',
+    ])->create();
 
-    /** @test */
-    public function user_calendar_without_defined_name_named_after_user(): void
-    {
-        $user = User::factory([
-            'name' => 'Steve Smith',
-        ])->create();
+    $calendar_token = CalendarToken::make([
+        'user_id' => $user->id,
+    ]);
 
-        $calendar_token = CalendarToken::make([
-            'user_id' => $user->id,
-        ]);
+    expect($calendar_token->display_name)->toEqual('Steve Smith\'s Chores');
+});
 
-        $this->assertEquals('Steve Smith\'s Chores', $calendar_token->display_name);
-    }
+test('team calendar without defined name named after team', function () {
+    $team = Team::factory([
+        'name' => 'Smith Family',
+    ])->create();
+    $calendar_token = CalendarToken::make([
+        'team_id' => $team->id,
+    ]);
 
-    /** @test */
-    public function team_calendar_without_defined_name_named_after_team(): void
-    {
-        $team = Team::factory([
-            'name' => 'Smith Family',
-        ])->create();
-        $calendar_token = CalendarToken::make([
-            'team_id' => $team->id,
-        ]);
-
-        $this->assertEquals('Smith Family Chores', $calendar_token->display_name);
-    }
-}
+    expect($calendar_token->display_name)->toEqual('Smith Family Chores');
+});

@@ -1,79 +1,67 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
-
 use App\Models\DeviceToken;
-use Tests\TestCase;
 
-class DeviceTokenControllerTest extends TestCase
-{
-    /** @test */
-    public function user_can_register_a_device_token(): void
-    {
-        $this->testUser();
-        $payload = ['token' => 'test-device-token'];
+use function Pest\Laravel\assertDatabaseHas;
 
-        $response = $this->postJson(route('api.device_tokens.store'), $payload);
+test('user can register a device token', function () {
+    $this->testUser();
+    $payload = ['token' => 'test-device-token'];
 
-        $response->assertCreated();
-        $this->assertDatabaseHas('device_tokens', $payload);
-    }
+    $response = $this->postJson(route('api.device_tokens.store'), $payload);
 
-    /** @test */
-    public function user_can_update_an_existing_token(): void
-    {
-        $this->testUser();
-        $token = DeviceToken::factory([
-            'updated_at' => '2021-01-01 00:00:00',
-        ])->for($this->user)->create();
+    $response->assertCreated();
+    assertDatabaseHas('device_tokens', $payload);
+});
 
-        $response = $this->postJson(route('api.device_tokens.store'), [
-            'token' => $token->token,
-        ]);
+test('user can update an existing token', function () {
+    $this->testUser();
+    $token = DeviceToken::factory([
+        'updated_at' => '2021-01-01 00:00:00',
+    ])->for($this->user)->create();
 
-        $response->assertOk();
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $token->token,
-            'user_id' => $this->user->id,
-            'updated_at' => now(),
-        ]);
-    }
+    $response = $this->postJson(route('api.device_tokens.store'), [
+        'token' => $token->token,
+    ]);
 
-    /** @test */
-    public function user_can_reassign_existing_token(): void
-    {
-        $this->testUser();
-        $token = DeviceToken::factory()->create();
+    $response->assertOk();
+    assertDatabaseHas('device_tokens', [
+        'token' => $token->token,
+        'user_id' => $this->user->id,
+        'updated_at' => now(),
+    ]);
+});
 
-        $response = $this->postJson(route('api.device_tokens.store'), [
-            'token' => $token->token,
-        ]);
+test('user can reassign existing token', function () {
+    $this->testUser();
+    $token = DeviceToken::factory()->create();
 
-        $response->assertOk();
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $token->token,
-            'user_id' => $this->user->id,
-        ]);
-    }
+    $response = $this->postJson(route('api.device_tokens.store'), [
+        'token' => $token->token,
+    ]);
 
-    /** @test */
-    public function user_can_save_two_tokens(): void
-    {
-        $this->testUser();
-        $token = DeviceToken::factory()->for($this->user)->create();
+    $response->assertOk();
+    assertDatabaseHas('device_tokens', [
+        'token' => $token->token,
+        'user_id' => $this->user->id,
+    ]);
+});
 
-        $response = $this->postJson(route('api.device_tokens.store'), [
-            'token' => $secondToken = 'second_token',
-        ]);
+test('user can save two tokens', function () {
+    $this->testUser();
+    $token = DeviceToken::factory()->for($this->user)->create();
 
-        $response->assertCreated();
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $token->token,
-            'user_id' => $this->user->id,
-        ]);
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $secondToken,
-            'user_id' => $this->user->id,
-        ]);
-    }
-}
+    $response = $this->postJson(route('api.device_tokens.store'), [
+        'token' => $secondToken = 'second_token',
+    ]);
+
+    $response->assertCreated();
+    assertDatabaseHas('device_tokens', [
+        'token' => $token->token,
+        'user_id' => $this->user->id,
+    ]);
+    assertDatabaseHas('device_tokens', [
+        'token' => $secondToken,
+        'user_id' => $this->user->id,
+    ]);
+});

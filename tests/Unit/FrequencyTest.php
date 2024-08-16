@@ -1,190 +1,110 @@
 <?php
 
-namespace Tests\Unit;
-
 use App\Enums\Frequency;
 use App\Enums\FrequencyType;
 use Carbon\Carbon;
-use Tests\TestCase;
 
-class FrequencyTest extends TestCase
-{
-    protected Carbon $today;
+test('does not repeat frequency returns null', function () {
+    $frequency = new Frequency(FrequencyType::doesNotRepeat);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function does_not_repeat_frequency_returns_null(): void
-    {
-        $frequency = new Frequency(FrequencyType::doesNotRepeat);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date))->toBeNull();
+});
 
-        $this->assertNull($frequency->getNextDate($date));
-    }
+test('daily', function () {
+    $frequency = new Frequency(FrequencyType::daily);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function daily(): void
-    {
-        $frequency = new Frequency(FrequencyType::daily);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-05-02');
+});
 
-        $this->assertEquals(
-            '2021-05-02',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('weekly', function () {
+    $frequency = new Frequency(FrequencyType::weekly);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function weekly(): void
-    {
-        $frequency = new Frequency(FrequencyType::weekly);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-05-08');
+});
 
-        $this->assertEquals(
-            '2021-05-08',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('monthly', function () {
+    $frequency = new Frequency(FrequencyType::monthly);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function monthly(): void
-    {
-        $frequency = new Frequency(FrequencyType::monthly);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-06-01');
+});
 
-        $this->assertEquals(
-            '2021-06-01',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('quarterly', function () {
+    $frequency = new Frequency(FrequencyType::quarterly);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function quarterly(): void
-    {
-        $frequency = new Frequency(FrequencyType::quarterly);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-08-01');
+});
 
-        $this->assertEquals(
-            '2021-08-01',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('yearly', function () {
+    $frequency = new Frequency(FrequencyType::yearly);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function yearly(): void
-    {
-        $frequency = new Frequency(FrequencyType::yearly);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2022-05-01');
+});
 
-        $this->assertEquals(
-            '2022-05-01',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('daily plus interval', function () {
+    $frequency = new Frequency(FrequencyType::daily, 5);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function daily_plus_interval(): void
-    {
-        $frequency = new Frequency(FrequencyType::daily, 5);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-05-06');
+});
 
-        $this->assertEquals(
-            '2021-05-06',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('weekly plus interval', function () {
+    $frequency = new Frequency(FrequencyType::weekly, 5);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function weekly_plus_interval(): void
-    {
-        $frequency = new Frequency(FrequencyType::weekly, 5);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-06-05');
+});
 
-        $this->assertEquals(
-            '2021-06-05',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('monthly plus interval', function () {
+    $frequency = new Frequency(FrequencyType::monthly, 5);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function monthly_plus_interval(): void
-    {
-        $frequency = new Frequency(FrequencyType::monthly, 5);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-10-01');
+});
 
-        $this->assertEquals(
-            '2021-10-01',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('quarterly plus interval', function () {
+    $frequency = new Frequency(FrequencyType::quarterly, 5);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function quarterly_plus_interval(): void
-    {
-        $frequency = new Frequency(FrequencyType::quarterly, 5);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2022-08-01');
+});
 
-        $this->assertEquals(
-            '2022-08-01',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('yearly plus interval', function () {
+    $frequency = new Frequency(FrequencyType::yearly, 5);
+    $date = Carbon::parse('2021-05-01');
 
-    /** @test */
-    public function yearly_plus_interval(): void
-    {
-        $frequency = new Frequency(FrequencyType::yearly, 5);
-        $date = Carbon::parse('2021-05-01');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2026-05-01');
+});
 
-        $this->assertEquals(
-            '2026-05-01',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('weekly on tuesdays', function () {
+    $frequency = new Frequency(FrequencyType::weekly, 1, Carbon::TUESDAY);
+    $date = Carbon::parse('2021-07-15');
 
-    /** @test */
-    public function weekly_on_tuesdays(): void
-    {
-        $frequency = new Frequency(FrequencyType::weekly, 1, Carbon::TUESDAY);
-        $date = Carbon::parse('2021-07-15');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-07-20');
+});
 
-        $this->assertEquals(
-            '2021-07-20',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('monthly on the 12th', function () {
+    $frequency = new Frequency(FrequencyType::monthly, 1, 12);
+    $date = Carbon::parse('2021-07-12');
 
-    /** @test */
-    public function monthly_on_the_12th(): void
-    {
-        $frequency = new Frequency(FrequencyType::monthly, 1, 12);
-        $date = Carbon::parse('2021-07-12');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-08-12');
+});
 
-        $this->assertEquals(
-            '2021-08-12',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('quarterly on the third day', function () {
+    $frequency = new Frequency(FrequencyType::quarterly, 1, 3);
+    $date = Carbon::parse('2021-07-12');
 
-    /** @test */
-    public function quarterly_on_the_third_day(): void
-    {
-        $frequency = new Frequency(FrequencyType::quarterly, 1, 3);
-        $date = Carbon::parse('2021-07-12');
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2021-10-03');
+});
 
-        $this->assertEquals(
-            '2021-10-03',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
+test('yearly on the 100th day', function () {
+    $frequency = new Frequency(FrequencyType::yearly, 1, 100);
+    $date = Carbon::parse('2021-07-12');
 
-    /** @test */
-    public function yearly_on_the_100th_day(): void
-    {
-        $frequency = new Frequency(FrequencyType::yearly, 1, 100);
-        $date = Carbon::parse('2021-07-12');
-
-        $this->assertEquals(
-            '2022-04-10',
-            $frequency->getNextDate($date)?->toDateString()
-        );
-    }
-}
+    expect($frequency->getNextDate($date)?->toDateString())->toEqual('2022-04-10');
+});

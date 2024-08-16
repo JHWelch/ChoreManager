@@ -1,71 +1,62 @@
 <?php
 
-namespace Tests\Feature\ChoreInstances;
-
 use App\Enums\FrequencyType;
 use App\Livewire\Chores\Save;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Support\Carbon;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class CreateTest extends TestCase
-{
-    /** @test */
-    public function when_a_user_specifies_a_date_while_creating_a_chore_a_chore_instance_is_created(): void
-    {
-        $this->testUser();
-        $date = Carbon::now()->addDays(6);
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Livewire\livewire;
 
-        Livewire::test(Save::class)
-            ->set('form.title', 'Do dishes')
-            ->set('form.description', 'Do the dishes every night.')
-            ->set('form.frequency_id', FrequencyType::daily->value)
-            ->set('form.due_date', $date)
-            ->call('save');
+test('when a user specifies a date while creating a chore a chore instance is created', function () {
+    $this->testUser();
+    $date = Carbon::now()->addDays(6);
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'chore_id' => Chore::first()->id,
-            'due_date' => $date->format('Y-m-d 00:00:00'),
-            'completed_date' => null,
-        ]);
-    }
+    livewire(Save::class)
+        ->set('form.title', 'Do dishes')
+        ->set('form.description', 'Do the dishes every night.')
+        ->set('form.frequency_id', FrequencyType::daily->value)
+        ->set('form.due_date', $date)
+        ->call('save');
 
-    /** @test */
-    public function a_chore_can_be_created_without_a_date_and_chore_instance(): void
-    {
-        $this->testUser();
+    assertDatabaseHas((new ChoreInstance)->getTable(), [
+        'chore_id' => Chore::first()->id,
+        'due_date' => $date->format('Y-m-d 00:00:00'),
+        'completed_date' => null,
+    ]);
+});
 
-        Livewire::test(Save::class)
-            ->set('form.title', 'Do dishes')
-            ->set('form.description', 'Do the dishes every night.')
-            ->set('form.frequency_id', FrequencyType::daily->value)
-            ->set('form.due_date', null)
-            ->call('save');
+test('a chore can be created without a date and chore instance', function () {
+    $this->testUser();
 
-        $this->assertDatabaseCount((new ChoreInstance)->getTable(), 0);
-    }
+    livewire(Save::class)
+        ->set('form.title', 'Do dishes')
+        ->set('form.description', 'Do the dishes every night.')
+        ->set('form.frequency_id', FrequencyType::daily->value)
+        ->set('form.due_date', null)
+        ->call('save');
 
-    /** @test */
-    public function when_creating_a_chore_with_an_owner_the_chore_instance_has_the_same_owner(): void
-    {
-        $this->testUser();
-        $date = Carbon::now()->addDays(6);
-        $user = User::factory()->create();
+    assertDatabaseCount((new ChoreInstance)->getTable(), 0);
+});
 
-        Livewire::test(Save::class)
-            ->set('form.title', 'Do dishes')
-            ->set('form.description', 'Do the dishes every night.')
-            ->set('form.frequency_id', FrequencyType::daily->value)
-            ->set('form.due_date', $date)
-            ->set('form.chore_user_id', $user->id)
-            ->call('save');
+test('when creating a chore with an owner the chore instance has the same owner', function () {
+    $this->testUser();
+    $date = Carbon::now()->addDays(6);
+    $user = User::factory()->create();
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'due_date' => $date->toDateString(),
-            'user_id' => $user->id,
-        ]);
-    }
-}
+    livewire(Save::class)
+        ->set('form.title', 'Do dishes')
+        ->set('form.description', 'Do the dishes every night.')
+        ->set('form.frequency_id', FrequencyType::daily->value)
+        ->set('form.due_date', $date)
+        ->set('form.chore_user_id', $user->id)
+        ->call('save');
+
+    assertDatabaseHas((new ChoreInstance)->getTable(), [
+        'due_date' => $date->toDateString(),
+        'user_id' => $user->id,
+    ]);
+});

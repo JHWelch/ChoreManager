@@ -1,48 +1,38 @@
 <?php
 
-namespace Tests\Feature\Api;
-
 use App\Models\User;
 use Laravel\Sanctum\PersonalAccessToken;
-use Tests\TestCase;
 
-class AuthTest extends TestCase
-{
-    /** @test */
-    public function api_user_can_get_an_api_token(): void
-    {
-        $user = User::factory()->create();
+test('api user can get an api token', function () {
+    $user = User::factory()->create();
 
-        $response = $this->post(route('api.token'), [
-            'email' => $user->email,
-            'password' => 'password',
-            'device_name' => 'Phone X 10',
-        ]);
+    $response = $this->post(route('api.token'), [
+        'email' => $user->email,
+        'password' => 'password',
+        'device_name' => 'Phone X 10',
+    ]);
 
-        $token = PersonalAccessToken::first();
-        $this->assertEquals($user->id, $token->tokenable_id);
-        [$id, $response_token] = explode('|', $response->json('token'), 2);
-        $this->assertEquals(hash('sha256', $response_token), $token->token);
-        $this->assertEquals('Phone X 10', $token->name);
-    }
+    $token = PersonalAccessToken::first();
+    expect($token->tokenable_id)->toEqual($user->id);
+    [$id, $response_token] = explode('|', $response->json('token'), 2);
+    expect($token->token)->toEqual(hash('sha256', $response_token));
+    expect($token->name)->toEqual('Phone X 10');
+});
 
-    /** @test */
-    public function api_user_will_return_user(): void
-    {
-        $user = User::factory()->create();
+test('api user will return user', function () {
+    $user = User::factory()->create();
 
-        $response = $this->post(route('api.token'), [
-            'email' => $user->email,
-            'password' => 'password',
-            'device_name' => 'Phone X 10',
-        ]);
+    $response = $this->post(route('api.token'), [
+        'email' => $user->email,
+        'password' => 'password',
+        'device_name' => 'Phone X 10',
+    ]);
 
-        $response->assertJson(['user' => [
-            'id' => $user->id,
-            'name' => $user->name,
-            'email' => $user->email,
-            'profile_photo_path' => $user->profile_photo_path,
-            'current_team_id' => $user->current_team_id,
-        ]]);
-    }
-}
+    $response->assertJson(['user' => [
+        'id' => $user->id,
+        'name' => $user->name,
+        'email' => $user->email,
+        'profile_photo_path' => $user->profile_photo_path,
+        'current_team_id' => $user->current_team_id,
+    ]]);
+});

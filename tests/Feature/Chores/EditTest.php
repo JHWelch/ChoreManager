@@ -1,73 +1,61 @@
 <?php
 
-namespace Tests\Feature\Chores;
-
 use App\Enums\FrequencyType;
 use App\Livewire\Chores\Save;
 use App\Models\Chore;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class EditTest extends TestCase
-{
-    /** @test */
-    public function chore_edit_page_can_be_reached(): void
-    {
-        $user = $this->testUser()['user'];
-        $chore = Chore::factory()->for($user)->create();
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Livewire\livewire;
 
-        $response = $this->get(route('chores.edit', ['chore' => $chore->id]));
+test('chore edit page can be reached', function () {
+    $user = $this->testUser()['user'];
+    $chore = Chore::factory()->for($user)->create();
 
-        $response->assertOk();
-    }
+    $response = $this->get(route('chores.edit', ['chore' => $chore->id]));
 
-    /** @test */
-    public function user_cannot_edit_chores_for_another_user(): void
-    {
-        $this->testUser();
-        $chore = Chore::factory()->forUser()->create();
+    $response->assertOk();
+});
 
-        $response = $this->get(route('chores.edit', ['chore' => $chore]));
+test('user cannot edit chores for another user', function () {
+    $this->testUser();
+    $chore = Chore::factory()->forUser()->create();
 
-        $response->assertForbidden();
-    }
+    $response = $this->get(route('chores.edit', ['chore' => $chore]));
 
-    /** @test */
-    public function existing_chore_screen_shows_its_information(): void
-    {
-        $user = $this->testUser()['user'];
-        $chore = Chore::create([
-            'user_id' => $user->id,
-            'title' => 'Do dishes',
-            'description' => 'Do dishes every night.',
-            'frequency_id' => FrequencyType::daily,
-        ]);
+    $response->assertForbidden();
+});
 
-        $component = Livewire::test(Save::class, ['chore' => $chore]);
+test('existing chore screen shows its information', function () {
+    $user = $this->testUser()['user'];
+    $chore = Chore::create([
+        'user_id' => $user->id,
+        'title' => 'Do dishes',
+        'description' => 'Do dishes every night.',
+        'frequency_id' => FrequencyType::daily,
+    ]);
 
-        $component
-            ->assertSet('form.title', 'Do dishes')
-            ->assertSet('form.description', 'Do dishes every night.')
-            ->assertSet('form.frequency_id', FrequencyType::daily);
-    }
+    $component = livewire(Save::class, ['chore' => $chore]);
 
-    /** @test */
-    public function a_chore_can_be_updated_after_it_is_created(): void
-    {
-        $user = $this->testUser()['user'];
-        $chore = Chore::factory()->for($user)->create();
+    $component
+        ->assertSet('form.title', 'Do dishes')
+        ->assertSet('form.description', 'Do dishes every night.')
+        ->assertSet('form.frequency_id', FrequencyType::daily);
+});
 
-        Livewire::test(Save::class, ['chore' => $chore])
-            ->set('form.title', 'Do dishes')
-            ->set('form.description', 'Do the dishes every night.')
-            ->set('form.frequency_id', FrequencyType::daily->value)
-            ->call('save');
+test('a chore can be updated after it is created', function () {
+    $user = $this->testUser()['user'];
+    $chore = Chore::factory()->for($user)->create();
 
-        $this->assertDatabaseHas((new Chore)->getTable(), [
-            'title' => 'Do dishes',
-            'description' => 'Do the dishes every night.',
-            'frequency_id' => FrequencyType::daily,
-            'user_id' => $user->id,
-        ]);
-    }
-}
+    livewire(Save::class, ['chore' => $chore])
+        ->set('form.title', 'Do dishes')
+        ->set('form.description', 'Do the dishes every night.')
+        ->set('form.frequency_id', FrequencyType::daily->value)
+        ->call('save');
+
+    assertDatabaseHas((new Chore)->getTable(), [
+        'title' => 'Do dishes',
+        'description' => 'Do the dishes every night.',
+        'frequency_id' => FrequencyType::daily,
+        'user_id' => $user->id,
+    ]);
+});

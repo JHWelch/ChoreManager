@@ -1,33 +1,27 @@
 <?php
 
-namespace Tests\Feature\Jetstream;
-
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\UpdateProfileInformationForm;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class ProfileInformationTest extends TestCase
-{
-    public function test_current_profile_information_is_available(): void
-    {
-        $this->actingAs($user = User::factory()->create());
+use function Pest\Laravel\actingAs;
+use function Pest\Livewire\livewire;
 
-        $component = Livewire::test(UpdateProfileInformationForm::class);
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    actingAs($this->user);
+});
 
-        $this->assertEquals($user->name, $component->state['name']);
-        $this->assertEquals($user->email, $component->state['email']);
-    }
+test('current profile information is available', function () {
+    livewire(UpdateProfileInformationForm::class)
+        ->assertSet('state.name', $this->user->name)
+        ->assertSet('state.email', $this->user->email);
+});
 
-    public function test_profile_information_can_be_updated(): void
-    {
-        $this->actingAs($user = User::factory()->create());
-
-        Livewire::test(UpdateProfileInformationForm::class)
-            ->set('state', ['name' => 'Test Name', 'email' => 'test@example.com'])
-            ->call('updateProfileInformation');
-
-        $this->assertEquals('Test Name', $user->fresh()->name);
-        $this->assertEquals('test@example.com', $user->fresh()->email);
-    }
-}
+test('profile information can be updated', function () {
+    livewire(UpdateProfileInformationForm::class)
+        ->set('state', ['name' => 'Test Name', 'email' => 'test@example.com'])
+        ->call('updateProfileInformation');
+    expect($this->user->fresh())
+        ->name->toEqual('Test Name')
+        ->email->toEqual('test@example.com');
+});

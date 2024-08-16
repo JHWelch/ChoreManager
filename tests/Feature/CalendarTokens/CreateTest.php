@@ -1,100 +1,85 @@
 <?php
 
-namespace Tests\Feature\CalendarTokens;
-
 use App\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class CreateTest extends TestCase
-{
-    /** @test */
-    public function can_create_a_calendar_token_to_display_only_their_chores(): void
-    {
-        $user = $this->testUser()['user'];
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Livewire\livewire;
 
-        Livewire::test(Index::class)
-            ->set('form.type', 'user')
-            ->call('addCalendarLink');
+it('can create a calendar token to display only their chores', function () {
+    $user = $this->testUser()['user'];
 
-        $this->assertDatabaseHas((new CalendarToken)->getTable(), [
-            'user_id' => $user->id,
-            'team_id' => null,
-        ]);
-    }
+    livewire(Index::class)
+        ->set('form.type', 'user')
+        ->call('addCalendarLink');
 
-    /** @test */
-    public function calendar_token_has_generated_uuid(): void
-    {
-        $this->testUser();
+    assertDatabaseHas((new CalendarToken)->getTable(), [
+        'user_id' => $user->id,
+        'team_id' => null,
+    ]);
+});
 
-        Livewire::test(Index::class)
-            ->set('form.type', 'user')
-            ->call('addCalendarLink');
+test('calendar token has generated uuid', function () {
+    $this->testUser();
 
-        $this->assertEquals(36, strlen(CalendarToken::first()->token));
-    }
+    livewire(Index::class)
+        ->set('form.type', 'user')
+        ->call('addCalendarLink');
 
-    /** @test */
-    public function can_create_a_calendar_token_to_display_their_teams_chores(): void
-    {
-        $userAndTeam = $this->testUser();
+    expect(strlen(CalendarToken::first()->token))->toEqual(36);
+});
 
-        Livewire::test(Index::class)
-            ->set('form.type', 'team')
-            ->set('form.team_id', $userAndTeam['team']->id)
-            ->call('addCalendarLink');
+it('can create a calendar token to display their teams chores', function () {
+    $userAndTeam = $this->testUser();
 
-        $this->assertDatabaseHas((new CalendarToken)->getTable(), [
-            'user_id' => $userAndTeam['user']->id,
-            'team_id' => $userAndTeam['team']->id,
-        ]);
-    }
+    livewire(Index::class)
+        ->set('form.type', 'team')
+        ->set('form.team_id', $userAndTeam['team']->id)
+        ->call('addCalendarLink');
 
-    /** @test */
-    public function when_team_calendar_is_selected_user_must_pick_team(): void
-    {
-        $this->testUser();
+    assertDatabaseHas((new CalendarToken)->getTable(), [
+        'user_id' => $userAndTeam['user']->id,
+        'team_id' => $userAndTeam['team']->id,
+    ]);
+});
 
-        $component = Livewire::test(Index::class)
-            ->set('form.type', 'team')
-            ->call('addCalendarLink');
+test('when team calendar is selected user must pick team', function () {
+    $this->testUser();
 
-        $component->assertHasErrors(['form.team_id' => 'required_if']);
-        $this->assertDatabaseCount((new CalendarToken)->getTable(), 0);
-    }
+    $component = livewire(Index::class)
+        ->set('form.type', 'team')
+        ->call('addCalendarLink');
 
-    /** @test */
-    public function if_user_calendar_selected_will_not_have_team_even_if_specified(): void
-    {
-        $userAndTeam = $this->testUser();
+    $component->assertHasErrors(['form.team_id' => 'required_if']);
+    assertDatabaseCount((new CalendarToken)->getTable(), 0);
+});
 
-        Livewire::test(Index::class)
-            ->set('form.type', 'user')
-            ->set('form.team_id', $userAndTeam['team']->id)
-            ->call('addCalendarLink');
+test('if user calendar selected will not have team even if specified', function () {
+    $userAndTeam = $this->testUser();
 
-        $this->assertDatabaseHas((new CalendarToken)->getTable(), [
-            'user_id' => $userAndTeam['user']->id,
-            'team_id' => null,
-        ]);
-    }
+    livewire(Index::class)
+        ->set('form.type', 'user')
+        ->set('form.team_id', $userAndTeam['team']->id)
+        ->call('addCalendarLink');
 
-    /** @test */
-    public function calendars_can_be_created_with_names(): void
-    {
-        $user = $this->testUser()['user'];
+    assertDatabaseHas((new CalendarToken)->getTable(), [
+        'user_id' => $userAndTeam['user']->id,
+        'team_id' => null,
+    ]);
+});
 
-        Livewire::test(Index::class)
-            ->set('form.type', 'user')
-            ->set('form.name', 'Chore Calendar')
-            ->call('addCalendarLink');
+test('calendars can be created with names', function () {
+    $user = $this->testUser()['user'];
 
-        $this->assertDatabaseHas((new CalendarToken)->getTable(), [
-            'name' => 'Chore Calendar',
-            'user_id' => $user->id,
-            'team_id' => null,
-        ]);
-    }
-}
+    livewire(Index::class)
+        ->set('form.type', 'user')
+        ->set('form.name', 'Chore Calendar')
+        ->call('addCalendarLink');
+
+    assertDatabaseHas((new CalendarToken)->getTable(), [
+        'name' => 'Chore Calendar',
+        'user_id' => $user->id,
+        'team_id' => null,
+    ]);
+});

@@ -1,77 +1,64 @@
 <?php
 
-namespace Tests\Unit;
-
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
-class ChoreCompleteTest extends TestCase
-{
-    use RefreshDatabase;
+use function Pest\Laravel\assertDatabaseCount;
 
-    /** @test */
-    public function when_there_is_a_next_instance_completes_instance(): void
-    {
-        $this->testUser();
-        $chore = Chore::factory()->withFirstInstance()->daily()->create();
-        $firstInstance = $chore->nextInstance;
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-        $chore->complete();
+test('when there is a next instance completes instance', function () {
+    $this->testUser();
+    $chore = Chore::factory()->withFirstInstance()->daily()->create();
+    $firstInstance = $chore->nextInstance;
 
-        $firstInstance->refresh();
-        $this->assertTrue($firstInstance->is_completed);
-        $this->assertDatabaseCount((new ChoreInstance)->getTable(), 2);
-    }
+    $chore->complete();
 
-    /** @test */
-    public function can_complete_a_chore_without_a_chore_instance(): void
-    {
-        $this->testUser();
-        $chore = Chore::factory()->for($this->user)->daily()->create();
+    $firstInstance->refresh();
+    expect($firstInstance->is_completed)->toBeTrue();
+    assertDatabaseCount((new ChoreInstance)->getTable(), 2);
+});
 
-        $chore->complete();
+it('can complete a chore without a chore instance', function () {
+    $this->testUser();
+    $chore = Chore::factory()->for($this->user)->daily()->create();
 
-        $now = now()->toDateString();
-        $choreInstance = ChoreInstance::first();
-        $this->assertNotNull($choreInstance);
-        $this->assertEquals($chore->id, $choreInstance->chore_id);
-        $this->assertTrue($choreInstance->is_completed);
-        $this->assertEquals($now, $choreInstance->due_date->toDateString());
-        $this->assertEquals($now, $choreInstance->completed_date->toDateString());
-        $this->assertEquals($this->user->id, $choreInstance->user_id);
-        $this->assertEquals($this->user->id, $choreInstance->completed_by_id);
-    }
+    $chore->complete();
 
-    /** @test */
-    public function chore_can_be_completed_at_another_time(): void
-    {
-        $this->testUser();
-        $chore = Chore::factory()->for($this->user)->daily()->create();
-        $date = now()->subDays(3);
+    $now = now()->toDateString();
+    $choreInstance = ChoreInstance::first();
+    expect($choreInstance)->not->toBeNull();
+    expect($choreInstance->chore_id)->toEqual($chore->id);
+    expect($choreInstance->is_completed)->toBeTrue();
+    expect($choreInstance->due_date->toDateString())->toEqual($now);
+    expect($choreInstance->completed_date->toDateString())->toEqual($now);
+    expect($choreInstance->user_id)->toEqual($this->user->id);
+    expect($choreInstance->completed_by_id)->toEqual($this->user->id);
+});
 
-        $chore->complete(on: $date);
+test('chore can be completed at another time', function () {
+    $this->testUser();
+    $chore = Chore::factory()->for($this->user)->daily()->create();
+    $date = now()->subDays(3);
 
-        $choreInstance = ChoreInstance::first();
-        $this->assertNotNull($choreInstance);
-        $this->assertEquals($date->toDateString(), $choreInstance->due_date->toDateString());
-        $this->assertEquals($date->toDateString(), $choreInstance->completed_date->toDateString());
-    }
+    $chore->complete(on: $date);
 
-    /** @test */
-    public function chore_can_be_completed_for_another_user(): void
-    {
-        $this->testUser();
-        $user = User::factory()->hasAttached($this->team)->create();
-        $chore = Chore::factory()->for($this->user)->daily()->create();
+    $choreInstance = ChoreInstance::first();
+    expect($choreInstance)->not->toBeNull();
+    expect($choreInstance->due_date->toDateString())->toEqual($date->toDateString());
+    expect($choreInstance->completed_date->toDateString())->toEqual($date->toDateString());
+});
 
-        $chore->complete(for: $user->id);
+test('chore can be completed for another user', function () {
+    $this->testUser();
+    $user = User::factory()->hasAttached($this->team)->create();
+    $chore = Chore::factory()->for($this->user)->daily()->create();
 
-        $choreInstance = ChoreInstance::first();
-        $this->assertNotNull($choreInstance);
-        $this->assertEquals($user->id, $choreInstance->user_id);
-        $this->assertEquals($user->id, $choreInstance->completed_by_id);
-    }
-}
+    $chore->complete(for: $user->id);
+
+    $choreInstance = ChoreInstance::first();
+    expect($choreInstance)->not->toBeNull();
+    expect($choreInstance->user_id)->toEqual($user->id);
+    expect($choreInstance->completed_by_id)->toEqual($user->id);
+});

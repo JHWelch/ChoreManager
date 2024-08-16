@@ -1,25 +1,19 @@
 <?php
 
-namespace Tests\Feature\CalendarTokens;
-
 use App\Livewire\CalendarTokens\Index;
 use App\Models\CalendarToken;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class DeleteTest extends TestCase
-{
-    /** @test */
-    public function can_delete_existing_calendar_tokens(): void
-    {
-        $user = $this->testUser()['user'];
-        $token = CalendarToken::factory()
-            ->for($user)
-            ->create();
+use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Livewire\livewire;
 
-        Livewire::test(Index::class)
-            ->call('deleteToken', ['token' => $token->id]);
+it('can delete existing calendar tokens', function () {
+    $user = $this->testUser()['user'];
+    $token = CalendarToken::factory()
+        ->for($user)
+        ->create();
 
-        $this->assertDatabaseCount((new CalendarToken)->getTable(), 0);
-    }
-}
+    livewire(Index::class)
+        ->call('deleteToken', ['token' => $token->id]);
+
+    assertDatabaseCount((new CalendarToken)->getTable(), 0);
+});

@@ -1,23 +1,17 @@
 <?php
 
-namespace Tests\Feature\Jetstream;
-
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\CreateTeamForm;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class CreateTeamTest extends TestCase
-{
-    public function test_teams_can_be_created(): void
-    {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+use function Pest\Livewire\livewire;
 
-        Livewire::test(CreateTeamForm::class)
-            ->set(['state' => ['name' => 'Test Team']])
-            ->call('createTeam');
+test('teams can be created', function () {
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-        $this->assertCount(2, $user->fresh()->ownedTeams);
-        $this->assertEquals('Test Team', $user->fresh()->ownedTeams()->latest('id')->first()->name);
-    }
-}
+    livewire(CreateTeamForm::class)
+        ->set(['state' => ['name' => 'Test Team']])
+        ->call('createTeam');
+
+    expect($user->fresh()->ownedTeams)->toHaveCount(2);
+    expect($user->fresh()->ownedTeams()->latest('id')->first()->name)->toEqual('Test Team');
+});

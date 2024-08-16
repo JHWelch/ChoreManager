@@ -1,45 +1,34 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources\UserResource\Pages;
-
 use App\Filament\Resources\UserResource;
 use App\Filament\Resources\UserResource\Pages\ListUsers;
 use App\Models\User;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class ListUsersTest extends TestCase
-{
-    /** @test */
-    public function admin_can_see_index_page(): void
-    {
-        $this->adminTestUser();
+use function Pest\Livewire\livewire;
 
-        $response = $this->get(UserResource::getUrl('index'));
+test('admin can see index page', function () {
+    $this->adminTestUser();
 
-        $response->assertSuccessful();
-    }
+    $response = $this->get(UserResource::getUrl('index'));
 
-    /** @test */
-    public function standard_user_cannot_see_index_page(): void
-    {
-        $this->testUser();
+    $response->assertSuccessful();
+});
 
-        $response = $this->get(UserResource::getUrl('index'));
+test('standard user cannot see index page', function () {
+    $this->testUser();
 
-        $response->assertForbidden();
-    }
+    $response = $this->get(UserResource::getUrl('index'));
 
-    /** @test */
-    public function can_see_user_fields(): void
-    {
-        $this->adminTestUser();
-        $user = User::factory()->create();
+    $response->assertForbidden();
+});
 
-        Livewire::test(ListUsers::class)
-            ->assertSee($user->name)
-            ->assertSee($user->created_at->format('M j, Y H:i:s'))
-            ->assertSee($user->updated_at->format('M j, Y H:i:s'))
-            ->assertSee($user->email);
-    }
-}
+it('can see user fields', function () {
+    $this->adminTestUser();
+    $user = User::factory()->create();
+
+    livewire(ListUsers::class)
+        ->assertSee($user->name)
+        ->assertSee($user->created_at->format('M j, Y H:i:s'))
+        ->assertSee($user->updated_at->format('M j, Y H:i:s'))
+        ->assertSee($user->email);
+});

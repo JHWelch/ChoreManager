@@ -1,54 +1,47 @@
 <?php
 
-namespace Tests\Feature\Jetstream;
-
 use App\Models\User;
 use Laravel\Jetstream\Http\Livewire\TeamMemberManager;
-use Livewire\Livewire;
-use Tests\TestCase;
 
-class UpdateTeamMemberRoleTest extends TestCase
-{
-    public function test_team_member_roles_can_be_updated(): void
-    {
-        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+use function Pest\Livewire\livewire;
 
-        $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(),
-            ['role' => 'admin']
-        );
+test('team member roles can be updated', function () {
+    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-            ->set('managingRoleFor', $otherUser)
-            ->set('currentRole', 'editor')
-            ->call('updateRole');
+    $user->currentTeam->users()->attach(
+        $otherUser = User::factory()->create(),
+        ['role' => 'admin']
+    );
 
-        $this->assertTrue($otherUser->fresh()->hasTeamRole(
-            $user->currentTeam->fresh(),
-            'editor'
-        ));
-    }
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
+        ->set('managingRoleFor', $otherUser)
+        ->set('currentRole', 'editor')
+        ->call('updateRole');
 
-    public function test_only_team_owner_can_update_team_member_roles(): void
-    {
-        $user = User::factory()->withPersonalTeam()->create();
+    expect($otherUser->fresh()->hasTeamRole(
+        $user->currentTeam->fresh(),
+        'editor'
+    ))->toBeTrue();
+});
 
-        $user->currentTeam->users()->attach(
-            $otherUser = User::factory()->create(),
-            ['role' => 'admin']
-        );
+test('only team owner can update team member roles', function () {
+    $user = User::factory()->withPersonalTeam()->create();
 
-        $this->actingAs($otherUser);
+    $user->currentTeam->users()->attach(
+        $otherUser = User::factory()->create(),
+        ['role' => 'admin']
+    );
 
-        $component = Livewire::test(TeamMemberManager::class, ['team' => $user->currentTeam])
-            ->set('managingRoleFor', $otherUser)
-            ->set('currentRole', 'editor')
-            ->call('updateRole')
-            ->assertForbidden();
+    $this->actingAs($otherUser);
 
-        $this->assertTrue($otherUser->fresh()->hasTeamRole(
-            $user->currentTeam->fresh(),
-            'admin'
-        ));
-    }
-}
+    livewire(TeamMemberManager::class, ['team' => $user->currentTeam])
+        ->set('managingRoleFor', $otherUser)
+        ->set('currentRole', 'editor')
+        ->call('updateRole')
+        ->assertForbidden();
+
+    expect($otherUser->fresh()->hasTeamRole(
+        $user->currentTeam->fresh(),
+        'admin'
+    ))->toBeTrue();
+});

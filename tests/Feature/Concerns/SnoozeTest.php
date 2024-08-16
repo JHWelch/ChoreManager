@@ -1,121 +1,105 @@
 <?php
 
-namespace Tests\Feature\Concerns;
-
-use App\Livewire\Concerns\SnoozesChores;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use Carbon\Carbon;
-use Tests\TestCase;
 
-class SnoozeTest extends TestCase
-{
-    private function arrange(int $count = 1)
+use function Pest\Laravel\assertDatabaseHas;
+
+beforeEach(function () {
+    $this->user = $this->testUser()['user'];
+    $this->snoozeClass = new class
     {
-        // Create chore for user. Get a carbon instance for today.
-        return [
-            'today' => $today = today(),
-            'user' => $user = $this->testUser()['user'],
-            'chores' => Chore::factory()
-                ->count($count)
-                ->for($user)
-                ->withFirstInstance($today)
-                ->create(),
-        ];
-    }
+        use \App\Livewire\Concerns\SnoozesChores;
+    };
+});
 
-    /** @test */
-    public function can_snooze_a_chore_until_tomorrow(): void
-    {
-        $values = $this->arrange();
+describe('one chore', function () {
+    beforeEach(function () {
+        $this->chore = Chore::factory()
+            ->for($this->user)
+            ->withFirstInstance()
+            ->create();
+    });
 
-        (new SnoozeClass)
+    it('can snooze a chore until tomorrow', function () {
+        $this->snoozeClass
             ->snoozeUntilTomorrow(
-                $values['chores']->first()->nextChoreInstance
+                $this->chore->nextChoreInstance
             );
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'chore_id' => $values['chores']->first()->id,
-            'due_date' => $values['today']->addDay()->startOfDay(),
+        assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'chore_id' => $this->chore->id,
+            'due_date' => today()->addDay()->startOfDay(),
         ]);
-    }
+    });
 
-    /** @test */
-    public function can_snooze_a_chore_until_the_weekend(): void
-    {
+    it('can snooze a chore until the weekend', function () {
         $this->travelToKnownMonday();
-        $values = $this->arrange();
 
-        (new SnoozeClass)
+        $this->snoozeClass
             ->snoozeUntilWeekend(
-                $values['chores']->first()->nextChoreInstance
+                $this->chore->nextChoreInstance
             );
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'chore_id' => $values['chores']->first()->id,
+        assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'chore_id' => $this->chore->id,
             'due_date' => $this->knownSaturday(),
         ]);
-    }
+    });
 
-    /** @test */
-    public function snoozing_until_weekend_on_a_weekend_pushes_to_next_weekend(): void
-    {
+    test('snoozing until weekend on a weekend pushes to next weekend', function () {
         $this->travelTo(Carbon::parse('2021-02-28'));
-        $values = $this->arrange();
 
-        (new SnoozeClass)
+        $this->snoozeClass
             ->snoozeUntilWeekend(
-                $values['chores']->first()->nextChoreInstance
+                $this->chore->nextChoreInstance
             );
 
-        $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
-            'chore_id' => $values['chores']->first()->id,
+        assertDatabaseHas((new ChoreInstance)->getTable(), [
+            'chore_id' => $this->chore->id,
             'due_date' => Carbon::parse('2021-03-06'),
         ]);
-    }
+    });
+});
 
-    /** @test */
-    public function user_can_snooze_a_group_of_chores_until_tomorrow_at_the_same_time(): void
-    {
-        $values = $this->arrange(3);
+describe('several chores', function () {
+    beforeEach(function () {
+        // Set current date to a known monday
+        $this->travelToKnownMonday();
 
-        $later_date = $values['today']->copy()->addDays(3);
+        $this->chores = Chore::factory()
+            ->for($this->user)
+            ->count(3)
+            ->withFirstInstance(today())
+            ->create();
+    });
 
-        (new SnoozeClass)->snoozeUntilTomorrow(
-            ChoreInstance::where('due_date', $values['today']),
+    test('user can snooze a group of chores until tomorrow at the same time', function () {
+        $this->snoozeClass->snoozeUntilTomorrow(
+            ChoreInstance::where('due_date', today()),
         );
 
-        $tomorrow = $values['today']->addDay()->startOfDay();
+        $tomorrow = today()->addDay()->startOfDay();
 
-        $values['chores']->each(function ($chore) use ($tomorrow) {
-            $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+        $this->chores->each(function ($chore) use ($tomorrow) {
+            assertDatabaseHas((new ChoreInstance)->getTable(), [
                 'chore_id' => $chore->id,
                 'due_date' => $tomorrow,
             ]);
         });
-    }
+    });
 
-    /** @test */
-    public function user_can_snooze_a_group_of_chores_until_the_weekend(): void
-    {
-        // Set current date to a known monday
-        $this->travelToKnownMonday();
-        $values = $this->arrange(3);
-
-        (new SnoozeClass)->snoozeUntilWeekend(
-            ChoreInstance::where('due_date', $values['today']),
+    test('user can snooze a group of chores until the weekend', function () {
+        $this->snoozeClass->snoozeUntilWeekend(
+            ChoreInstance::where('due_date', today()),
         );
 
-        $values['chores']->each(function ($chore) {
-            $this->assertDatabaseHas((new ChoreInstance)->getTable(), [
+        $this->chores->each(function ($chore) {
+            assertDatabaseHas((new ChoreInstance)->getTable(), [
                 'chore_id' => $chore->id,
                 'due_date' => $this->knownSaturday(),
             ]);
         });
-    }
-}
-
-class SnoozeClass
-{
-    use SnoozesChores;
-}
+    });
+});

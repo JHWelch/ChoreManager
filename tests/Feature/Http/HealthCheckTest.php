@@ -1,16 +1,7 @@
 <?php
 
-namespace Tests\Feature\Http;
+test('health check returns an ok', function () {
+    $response = $this->get(route('health-check'));
 
-use Tests\TestCase;
-
-class HealthCheckTest extends TestCase
-{
-    /** @test */
-    public function health_check_returns_an_ok(): void
-    {
-        $response = $this->get(route('health-check'));
-
-        $response->assertStatus(200);
-    }
-}
+    $response->assertStatus(200);
+});
