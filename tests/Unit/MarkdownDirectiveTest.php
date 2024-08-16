@@ -1,17 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+use Tests\Concerns\TestsBlade;
 
-use Tests\BladeTestCase;
+uses(TestsBlade::class);
 
-class MarkdownDirectiveTest extends BladeTestCase
-{
-    /** @test */
-    public function markdown_directive_converts_markdown_to_html(): void
-    {
-        $this->markTestSkipped();
-
-        $markdown = <<<'EOD'
+test('markdown directive converts markdown to html', function () {
+    $markdown = <<<'EOD'
         # This is a markdown string
         It is rather important
         ## It can have lists
@@ -20,7 +14,7 @@ class MarkdownDirectiveTest extends BladeTestCase
         * Items
         EOD;
 
-        $expected = <<<'EOD'
+    $expected = <<<'EOD'
         <h1>This is a markdown string</h1>
         <p>It is rather important</p>
         <h2>It can have lists</h2>
@@ -31,24 +25,21 @@ class MarkdownDirectiveTest extends BladeTestCase
         </ul>
         EOD;
 
-        $this->assertDirectiveOutputEquals(
-            $expected,
-            '@markdown($markdown)',
-            ['markdown' => $markdown],
-            'Expected Markdown to be converted to HTML'
-        );
-    }
+    $this->assertDirectiveOutputEquals(
+        $expected,
+        '@markdown($markdown)',
+        ['markdown' => $markdown],
+        'Expected Markdown to be converted to HTML'
+    );
+});
 
-    /** @test */
-    public function markdown_directive_parses_dangerous_input(): void
-    {
-        $markdown = '<script>alert(\'Gotcha!\')</script>';
+test('markdown directive parses dangerous input', function () {
+    $markdown = '<script>alert(\'Gotcha!\')</script>';
 
-        $this->assertDirectiveOutputNotEquals(
-            $markdown,
-            '@markdown($markdown)',
-            ['markdown' => $markdown],
-            'Expected dangerous script to be removed.'
-        );
-    }
-}
+    $this->assertDirectiveOutputNotEquals(
+        $markdown,
+        '@markdown($markdown)',
+        ['markdown' => $markdown],
+        'Expected dangerous script to be removed.'
+    );
+});

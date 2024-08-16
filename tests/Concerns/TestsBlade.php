@@ -1,20 +1,13 @@
 <?php
 
-namespace Tests;
+namespace Tests\Concerns;
 
-/**
- * Tests for custom Blade directives, defined in AppServiceProvider.php.
- *
- * @group Templates
- */
-class BladeTestCase extends TestCase
+trait TestsBlade
 {
     private $blade;
 
-    protected function setUp(): void
+    protected function setUpTestsBlade(): void
     {
-        parent::setUp();
-
         $this->blade = resolve('blade.compiler');
     }
 

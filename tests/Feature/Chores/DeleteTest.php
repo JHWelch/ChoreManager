@@ -1,23 +1,14 @@
 <?php
 
-namespace Tests\Feature\Chores;
-
 use App\Livewire\Chores\Show;
 use App\Models\Chore;
-use Livewire;
-use Tests\TestCase;
 
-class DeleteTest extends TestCase
-{
-    /** @test */
-    public function user_can_delete_chore_from_show(): void
-    {
-        $chore = Chore::factory()->for($this->testUser()['user'])->create();
+test('user can delete chore from show', function () {
+    $chore = Chore::factory()->for($this->testUser()['user'])->create();
 
-        $component = Livewire::test(Show::class, ['chore' => $chore])
-            ->call('delete');
+    $component = Livewire::test(Show::class, ['chore' => $chore])
+        ->call('delete');
 
-        $this->assertDatabaseCount((new Chore)->getTable(), 0);
-        $component->assertRedirect('/');
-    }
-}
+    $this->assertDatabaseCount((new Chore)->getTable(), 0);
+    $component->assertRedirect('/');
+});

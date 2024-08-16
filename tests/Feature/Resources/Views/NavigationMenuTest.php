@@ -1,40 +1,27 @@
 <?php
 
-namespace Tests\Feature\Resources\Views;
+test('user can see account management links', function () {
+    $this->testUser();
 
-use Tests\TestCase;
+    $this->view('navigation-menu')
+        ->assertSee('Manage Account')
+        ->assertSee('Profile')
+        ->assertSee('API Tokens')
+        ->assertSee('iCalendar Links');
+});
 
-class NavigationMenuTest extends TestCase
-{
-    /** @test */
-    public function user_can_see_account_management_links(): void
-    {
-        $this->testUser();
+test('admin users can see admin actions', function () {
+    $this->adminTestUser();
 
-        $this->view('navigation-menu')
-            ->assertSee('Manage Account')
-            ->assertSee('Profile')
-            ->assertSee('API Tokens')
-            ->assertSee('iCalendar Links');
-    }
+    $this->view('navigation-menu')
+        ->assertSee('Admin Features')
+        ->assertSee('Admin Dashboard');
+});
 
-    /** @test */
-    public function admin_users_can_see_admin_actions(): void
-    {
-        $this->adminTestUser();
+test('non admin users cannot see admin actions', function () {
+    $this->testUser();
 
-        $this->view('navigation-menu')
-            ->assertSee('Admin Features')
-            ->assertSee('Admin Dashboard');
-    }
-
-    /** @test */
-    public function non_admin_users_cannot_see_admin_actions(): void
-    {
-        $this->testUser();
-
-        $this->view('navigation-menu')
-            ->assertDontSee('Admin Features')
-            ->assertDontSee('Admin Dashboard');
-    }
-}
+    $this->view('navigation-menu')
+        ->assertDontSee('Admin Features')
+        ->assertDontSee('Admin Dashboard');
+});

@@ -1,44 +1,32 @@
 <?php
 
-namespace Tests\Feature\Models;
-
 use App\Models\Team;
 use Database\Seeders\AdminTeamSeeder;
-use Tests\TestCase;
 
-class TeamTest extends TestCase
-{
-    /** @test */
-    public function adminTeam_returns_null_if_team_not_seeded(): void
-    {
-        $admin_team = Team::adminTeam();
+test('admin team returns null if team not seeded', function () {
+    $admin_team = Team::adminTeam();
 
-        $this->assertNull($admin_team);
-    }
+    expect($admin_team)->toBeNull();
+});
 
-    /** @test */
-    public function adminTeam_returns_team_named_Admins(): void
-    {
-        $this->seed(AdminTeamSeeder::class);
+test('admin team returns team named admins', function () {
+    $this->seed(AdminTeamSeeder::class);
 
-        $admin_team = Team::adminTeam();
+    $admin_team = Team::adminTeam();
 
-        $this->assertEquals('Admins', $admin_team->name);
-    }
+    expect($admin_team->name)->toEqual('Admins');
+});
 
-    /** @test */
-    public function adminTeam_cached_for_subsequent_calls(): void
-    {
-        $this->seed(AdminTeamSeeder::class);
+test('admin team cached for subsequent calls', function () {
+    $this->seed(AdminTeamSeeder::class);
 
-        $admin_team = Team::adminTeam();
+    $admin_team = Team::adminTeam();
 
-        $this->assertNotNull($admin_team);
+    expect($admin_team)->not->toBeNull();
 
-        Team::where('name', 'Admins')->delete();
+    Team::where('name', 'Admins')->delete();
 
-        $admin_team = Team::adminTeam();
+    $admin_team = Team::adminTeam();
 
-        $this->assertNotNull($admin_team);
-    }
-}
+    expect($admin_team)->not->toBeNull();
+});

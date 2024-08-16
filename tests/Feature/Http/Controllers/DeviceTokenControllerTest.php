@@ -1,79 +1,65 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
-
 use App\Models\DeviceToken;
-use Tests\TestCase;
 
-class DeviceTokenControllerTest extends TestCase
-{
-    /** @test */
-    public function user_can_register_a_device_token(): void
-    {
-        $this->testUser();
-        $payload = ['token' => 'test-device-token'];
+test('user can register a device token', function () {
+    $this->testUser();
+    $payload = ['token' => 'test-device-token'];
 
-        $response = $this->postJson(route('api.device_tokens.store'), $payload);
+    $response = $this->postJson(route('api.device_tokens.store'), $payload);
 
-        $response->assertCreated();
-        $this->assertDatabaseHas('device_tokens', $payload);
-    }
+    $response->assertCreated();
+    $this->assertDatabaseHas('device_tokens', $payload);
+});
 
-    /** @test */
-    public function user_can_update_an_existing_token(): void
-    {
-        $this->testUser();
-        $token = DeviceToken::factory([
-            'updated_at' => '2021-01-01 00:00:00',
-        ])->for($this->user)->create();
+test('user can update an existing token', function () {
+    $this->testUser();
+    $token = DeviceToken::factory([
+        'updated_at' => '2021-01-01 00:00:00',
+    ])->for($this->user)->create();
 
-        $response = $this->postJson(route('api.device_tokens.store'), [
-            'token' => $token->token,
-        ]);
+    $response = $this->postJson(route('api.device_tokens.store'), [
+        'token' => $token->token,
+    ]);
 
-        $response->assertOk();
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $token->token,
-            'user_id' => $this->user->id,
-            'updated_at' => now(),
-        ]);
-    }
+    $response->assertOk();
+    $this->assertDatabaseHas('device_tokens', [
+        'token' => $token->token,
+        'user_id' => $this->user->id,
+        'updated_at' => now(),
+    ]);
+});
 
-    /** @test */
-    public function user_can_reassign_existing_token(): void
-    {
-        $this->testUser();
-        $token = DeviceToken::factory()->create();
+test('user can reassign existing token', function () {
+    $this->testUser();
+    $token = DeviceToken::factory()->create();
 
-        $response = $this->postJson(route('api.device_tokens.store'), [
-            'token' => $token->token,
-        ]);
+    $response = $this->postJson(route('api.device_tokens.store'), [
+        'token' => $token->token,
+    ]);
 
-        $response->assertOk();
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $token->token,
-            'user_id' => $this->user->id,
-        ]);
-    }
+    $response->assertOk();
+    $this->assertDatabaseHas('device_tokens', [
+        'token' => $token->token,
+        'user_id' => $this->user->id,
+    ]);
+});
 
-    /** @test */
-    public function user_can_save_two_tokens(): void
-    {
-        $this->testUser();
-        $token = DeviceToken::factory()->for($this->user)->create();
+test('user can save two tokens', function () {
+    $this->testUser();
+    $token = DeviceToken::factory()->for($this->user)->create();
 
-        $response = $this->postJson(route('api.device_tokens.store'), [
-            'token' => $secondToken = 'second_token',
-        ]);
+    $response = $this->postJson(route('api.device_tokens.store'), [
+        'token' => $secondToken = 'second_token',
+    ]);
 
-        $response->assertCreated();
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $token->token,
-            'user_id' => $this->user->id,
-        ]);
-        $this->assertDatabaseHas('device_tokens', [
-            'token' => $secondToken,
-            'user_id' => $this->user->id,
-        ]);
-    }
-}
+    $response->assertCreated();
+    $this->assertDatabaseHas('device_tokens', [
+        'token' => $token->token,
+        'user_id' => $this->user->id,
+    ]);
+    $this->assertDatabaseHas('device_tokens', [
+        'token' => $secondToken,
+        'user_id' => $this->user->id,
+    ]);
+});

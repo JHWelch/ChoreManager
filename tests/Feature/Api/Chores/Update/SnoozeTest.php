@@ -1,37 +1,25 @@
 <?php
 
-namespace Tests\Feature\Api\Chores\Update;
-
 use App\Models\Chore;
 use Illuminate\Support\Carbon;
-use Tests\TestCase;
 
-class SnoozeTest extends TestCase
-{
-    protected function snoozeEndpoint(Chore $chore, Carbon $nextDueDate)
-    {
-        return $this->patch(
-            route('api.chores.update', ['chore' => $chore]),
-            ['next_due_date' => $nextDueDate->toDateString()],
-        );
-    }
+beforeEach(function () {
+    $this->snoozeEndpoint = fn (Chore $chore, Carbon $nextDueDate) => $this->patch(
+        route('api.chores.update', ['chore' => $chore]),
+        ['next_due_date' => $nextDueDate->toDateString()],
+    );
+});
 
-    /** @test */
-    public function user_can_snooze_chore(): void
-    {
-        $this->testUser();
-        $chore = Chore::factory()
-            ->for($this->user)
-            ->withFirstInstance()
-            ->create();
-        $date = Carbon::now()->addDays(3);
+test('user can snooze chore', function () {
+    $this->testUser();
+    $chore = Chore::factory()
+        ->for($this->user)
+        ->withFirstInstance()
+        ->create();
+    $date = Carbon::now()->addDays(3);
 
-        $response = $this->snoozeEndpoint($chore, $date);
+    $response = ($this->snoozeEndpoint)($chore, $date);
 
-        $response->assertOk();
-        $this->assertEquals(
-            $date->toDateString(),
-            $chore->refresh()->next_due_date->toDateString()
-        );
-    }
-}
+    $response->assertOk();
+    expect($chore->refresh()->next_due_date->toDateString())->toEqual($date->toDateString());
+});
