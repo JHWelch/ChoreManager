@@ -17,69 +17,57 @@ class SnoozeGroup extends ModalComponent
 
     public function snoozeGroupUntilTomorrow(): void
     {
-        switch ($this->group) {
-            case 'today':
-                $this->snoozeUntilTomorrow(
-                    $this->choreQueryByTeamOrUser(false)
-                        ->withNextInstance()
-                        ->whereDate(
-                            'chore_instances.due_date',
-                            today()
-                        )
-                );
-                break;
-            case 'past_due':
-                $this->snoozeUntilTomorrow(
-                    $this->choreQueryByTeamOrUser(false)
-                        ->withNextInstance()
-                        ->whereDate(
-                            'chore_instances.due_date',
-                            '<',
-                            today()
-                        )
-                );
-        }
+        $this->snoozeUntilTomorrow($this->query());
 
         $this->dispatch('chore_instance.updated');
     }
 
     public function snoozeGroupUntilWeekend(): void
     {
-        switch ($this->group) {
-            case 'today':
-                $this->snoozeUntilWeekend(
-                    $this->choreQueryByTeamOrUser(false)
-                        ->withNextInstance()
-                        ->whereDate(
-                            'chore_instances.due_date',
-                            today()
-                        )
-                );
-                break;
-            case 'past_due':
-                $this->snoozeUntilWeekend(
-                    $this->choreQueryByTeamOrUser(false)
-                        ->withNextInstance()
-                        ->whereDate(
-                            'chore_instances.due_date',
-                            '<',
-                            today()
-                        )
-                );
-                break;
-        }
+        $this->snoozeUntilWeekend($this->query());
 
         $this->dispatch('chore_instance.updated');
     }
 
     public function snoozeGroup(): void
     {
-        if ($this->until === 'tomorrow') {
-            $this->snoozeGroupUntilTomorrow();
-        } elseif ($this->until === 'the weekend') {
-            $this->snoozeGroupUntilWeekend();
-        }
+        match ($this->until) {
+            'tomorrow' => $this->snoozeGroupUntilTomorrow(),
+            'the weekend' => $this->snoozeGroupUntilWeekend(),
+        };
 
         $this->closeModal();
+    }
+
+    protected function query(): mixed
+    {
+        return match ($this->group) {
+            'today' => $this->todayQuery(),
+            'past_due' => $this->pastDueQuery(),
+        };
+    }
+
+    protected function todayQuery(): mixed
+    {
+        return $this->baseQuery()
+            ->whereDate(
+                'chore_instances.due_date',
+                today()
+            );
+    }
+
+    protected function pastDueQuery(): mixed
+    {
+        return $this->baseQuery()
+            ->whereDate(
+                'chore_instances.due_date',
+                '<',
+                today()
+            );
+    }
+
+    protected function baseQuery(): mixed
+    {
+        return $this->choreQueryByTeamOrUser(false)->withNextInstance();
     }
 }
