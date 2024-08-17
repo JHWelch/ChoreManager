@@ -28,7 +28,6 @@ class Index extends Component
     public function mount(): void
     {
         $this->showFutureChores = session('show_future_chores', false);
-        $this->setupFiltersByTeamOrUser();
         $this->updateChoreInstanceList();
     }
 
