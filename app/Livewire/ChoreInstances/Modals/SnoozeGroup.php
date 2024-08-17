@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Livewire\ChoreInstances\Concerns;
+namespace App\Livewire\ChoreInstances\Modals;
 
+use App\Livewire\Concerns\FiltersByTeamOrUser;
 use App\Livewire\Concerns\SnoozesChores;
+use LivewireUI\Modal\ModalComponent;
 
-trait SnoozesGroups
+class SnoozeGroup extends ModalComponent
 {
+    use FiltersByTeamOrUser;
     use SnoozesChores;
 
-    public bool $showSnoozeConfirmation = false;
+    public string $group;
 
-    public string $snoozeGroup;
+    public string $until;
 
-    public string $snoozeUntil;
-
-    public function snoozeGroupUntilTomorrow(string $group): void
+    public function snoozeGroupUntilTomorrow(): void
     {
-        switch ($group) {
+        switch ($this->group) {
             case 'today':
                 $this->snoozeUntilTomorrow(
                     $this->choreQueryByTeamOrUser(false)
@@ -42,9 +43,9 @@ trait SnoozesGroups
         $this->dispatch('chore_instance.updated');
     }
 
-    public function snoozeGroupUntilWeekend(string $group): void
+    public function snoozeGroupUntilWeekend(): void
     {
-        switch ($group) {
+        switch ($this->group) {
             case 'today':
                 $this->snoozeUntilWeekend(
                     $this->choreQueryByTeamOrUser(false)
@@ -69,23 +70,16 @@ trait SnoozesGroups
         }
 
         $this->dispatch('chore_instance.updated');
-    }
-
-    public function showSnoozeConfirmation(string $group, string $until): void
-    {
-        $this->snoozeGroup = $group;
-        $this->snoozeUntil = $until;
-        $this->showSnoozeConfirmation = true;
     }
 
     public function snoozeGroup(): void
     {
-        if ($this->snoozeUntil === 'tomorrow') {
-            $this->snoozeGroupUntilTomorrow($this->snoozeGroup);
-        } elseif ($this->snoozeUntil === 'the weekend') {
-            $this->snoozeGroupUntilWeekend($this->snoozeGroup);
+        if ($this->until === 'tomorrow') {
+            $this->snoozeGroupUntilTomorrow();
+        } elseif ($this->until === 'the weekend') {
+            $this->snoozeGroupUntilWeekend();
         }
 
-        $this->showSnoozeConfirmation = false;
+        $this->closeModal();
     }
 }
