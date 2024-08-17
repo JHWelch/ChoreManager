@@ -19,20 +19,21 @@
     </div>
   </div>
 
-  <div class="px-6 py-4 text-right bg-gray-100">
-    <x-secondary-button
-      wire:click="$dispatch('closeModal')"
-      wire:loading.attr="disabled"
-    >
-      Nevermind
-    </x-secondary-button>
-
+  <div class="px-6 py-4 space-y-2 text-right bg-gray-100 sm:flex sm:space-y-0 sm:space-x-2 sm:space-x-reverse">
     <x-button
-      class="ml-2"
       wire:click="snoozeGroup"
       wire:loading.attr="disabled"
+      class="sm:order-2"
     >
       Snooze
     </x-button>
+
+    <x-secondary-button
+      wire:click="$dispatch('closeModal')"
+      wire:loading.attr="disabled"
+      class="sm:order-1"
+    >
+      Nevermind
+    </x-secondary-button>
   </div>
 </div>
