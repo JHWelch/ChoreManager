@@ -34,6 +34,7 @@ class SnoozeGroup extends ModalComponent
         match ($this->until) {
             'tomorrow' => $this->snoozeGroupUntilTomorrow(),
             'the weekend' => $this->snoozeGroupUntilWeekend(),
+            default => throw new \Exception('Invalid snooze duration'),
         };
 
         $this->closeModal();
@@ -44,6 +45,7 @@ class SnoozeGroup extends ModalComponent
         return match ($this->group) {
             'today' => $this->todayQuery(),
             'past_due' => $this->pastDueQuery(),
+            default => throw new \Exception('Invalid group'),
         };
     }
 
