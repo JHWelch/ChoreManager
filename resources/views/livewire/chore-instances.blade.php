@@ -36,34 +36,4 @@
       {{ $showFutureChores ? __('Hide future chores') : __('Show future chores')}}
     </button>
   </div>
-
-  <x-confirmation-modal
-    wire:model.live="showSnoozeConfirmation"
-    style="info"
-  >
-    <x-slot name="title">
-      Snooze all chores due {{ Str::snakeToLabel($snoozeGroup) }}
-    </x-slot>
-
-    <x-slot name="content">
-      Are you sure you want to snooze all chores due {{ Str::snakeToLabel($snoozeGroup) }} until {{ $snoozeUntil }}?
-    </x-slot>
-
-    <x-slot name="footer">
-        <x-secondary-button
-          wire:click="$toggle('showSnoozeConfirmation')"
-          wire:loading.attr="disabled"
-        >
-            Nevermind
-        </x-secondary-button>
-
-        <x-button
-          class="ml-2"
-          wire:click="snoozeGroup"
-          wire:loading.attr="disabled"
-        >
-            Snooze
-        </x-button>
-    </x-slot>
-  </x-confirmation-modal>
 </div>

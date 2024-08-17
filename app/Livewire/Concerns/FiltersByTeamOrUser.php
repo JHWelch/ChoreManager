@@ -18,7 +18,7 @@ trait FiltersByTeamOrUser
         $this->dispatch('filterUpdated')->self();
     }
 
-    public function setupFiltersByTeamOrUser(): void
+    public function bootFiltersByTeamOrUser(): void
     {
         $this->team_or_user = session('filter_team_or_user', 'user');
     }

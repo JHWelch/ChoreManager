@@ -35,7 +35,6 @@ class Index extends Component
 
     public function mount(): void
     {
-        $this->setupFiltersByTeamOrUser();
         $this->loadChores();
     }
 

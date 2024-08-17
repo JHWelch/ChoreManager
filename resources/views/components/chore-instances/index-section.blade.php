@@ -24,8 +24,20 @@
           size="medium"
           right="-right-4"
           top="-top-12"
-          snoozeUntilTomorrow="showSnoozeConfirmation('{{ $group }}', 'tomorrow')"
-          snoozeUntilWeekend="showSnoozeConfirmation('{{ $group }}', 'the weekend')"
+          snoozeUntilTomorrow="$dispatch('openModal', {
+            component: 'chore-instances.modals.snooze-group',
+            arguments: {
+              group: '{{ $group }}',
+              until: 'tomorrow',
+            }
+          })"
+          snoozeUntilWeekend="$dispatch('openModal', {
+            component: 'chore-instances.modals.snooze-group',
+            arguments: {
+              group: '{{ $group }}',
+              until: 'the weekend',
+            }
+          })"
         />
       @endif
     </div>

@@ -54,7 +54,8 @@
         "league/commonmark": "^2.2",
         "livewire/livewire": "^3.3",
         "spatie/icalendar-generator": "^2.3",
-        "spatie/laravel-ray": "^1.35"
+        "spatie/laravel-ray": "^1.35",
+        "wire-elements/modal": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.10",
