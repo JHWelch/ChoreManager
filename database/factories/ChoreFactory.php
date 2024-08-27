@@ -6,14 +6,15 @@ use App\Enums\FrequencyType;
 use App\Models\Chore;
 use App\Models\ChoreInstance;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 
+/**
+ * @extends Factory<Chore>
+ */
 class ChoreFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     */
     public function definition(): array
     {
         return [
@@ -24,7 +25,7 @@ class ChoreFactory extends Factory
         ];
     }
 
-    public function repeatable(): Factory
+    public function repeatable(): static
     {
         return $this->state(['frequency_id' => Arr::random(array_filter(
             FrequencyType::cases(),
@@ -32,31 +33,25 @@ class ChoreFactory extends Factory
         ))]);
     }
 
-    /**
-     * Indicate that the user should have a personal team.
-     */
-    public function withFirstInstance($due_date = null, $user_id = null): static
-    {
+    public function withFirstInstance(
+        ?Carbon $due_date = null,
+        int|User|null $user_id = null,
+    ): static {
         return $this->has(
             ChoreInstance::factory()
-                ->state(function (array $_, Chore $chore) use ($due_date, $user_id) {
-                    return array_merge(
-                        ['user_id' => $user_id ?? $chore->user->id],
-                        $due_date ? ['due_date' => $due_date] : []
-                    );
-                })
+                ->state(fn (array $_, Chore $chore) => array_filter([ // @phpstan-ignore-line
+                    'user_id' => $user_id ?? $chore->user->id,
+                    'due_date' => $due_date,
+                ]))
         );
     }
 
-    /**
-     * Creates a chore that is assigned to the team, not an individual user.
-     */
-    public function assignedToTeam(): Factory
+    public function assignedToTeam(): static
     {
         return $this->state(['user_id' => null]);
     }
 
-    public function daily()
+    public function daily(): static
     {
         return $this->state(['frequency_id' => FrequencyType::daily]);
     }

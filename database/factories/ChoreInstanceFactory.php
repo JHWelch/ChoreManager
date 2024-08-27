@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\ChoreInstance;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<ChoreInstance>
+ */
 class ChoreInstanceFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     */
     public function definition(): array
     {
         return [
@@ -18,28 +19,19 @@ class ChoreInstanceFactory extends Factory
         ];
     }
 
-    /**
-     * Creates a chore instance due today.
-     */
-    public function dueToday(): Factory
+    public function dueToday(): static
     {
         return $this->state(['due_date' => today()]);
     }
 
-    /**
-     * Creates a chore instance due today.
-     */
-    public function pastDue(): Factory
+    public function pastDue(): static
     {
         return $this->state([
             'due_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),
         ]);
     }
 
-    /**
-     * Creates a chore instance already completed.
-     */
-    public function completed(): Factory
+    public function completed(): static
     {
         return $this->state([
             'completed_date' => $this->faker->dateTimeBetween('-1 year', '+0 days'),

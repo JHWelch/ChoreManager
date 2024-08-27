@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()
             ->has(
                 Team::factory()
-                    ->state(function (array $attributes, User $user) {
+                    ->state(function (array $_, User $user) { // @phpstan-ignore-line
                         return ['user_id' => $user->id];
                     })
                     ->hasAttached(User::factory()->count(10), ['role' => 'editor']),

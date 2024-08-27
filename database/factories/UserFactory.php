@@ -7,11 +7,11 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+/**
+ * @extends Factory<User>
+ */
 class UserFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     */
     public function definition(): array
     {
         return [
@@ -30,9 +30,11 @@ class UserFactory extends Factory
     {
         return $this->has(
             Team::factory()
-                ->state(function (array $attributes, User $user) {
-                    return ['name' => $user->name . '\'s Team', 'user_id' => $user->id, 'personal_team' => true];
-                }),
+                ->state(fn (array $_, User $user) => [ // @phpstan-ignore-line
+                    'name' => $user->name . '\'s Team',
+                    'user_id' => $user->id,
+                    'personal_team' => true,
+                ]),
             'ownedTeams'
         );
     }
