@@ -32,9 +32,9 @@ abstract class TestCase extends BaseTestCase
     /**
      * Create a new user and act as them for the tests.
      *
-     * @return array
+     * @return array{user: User, team: Team}
      */
-    protected function testUser($attributes = [])
+    protected function testUser(array $attributes = []): array
     {
         $this->actingAs($user = User::factory($attributes)->withPersonalTeam()->create());
         $user->switchTeam($team = Team::first());
@@ -57,20 +57,16 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Travel to 2021-03-01, a known monday.
-     *
-     * @return void
      */
-    protected function travelToKnownMonday()
+    protected function travelToKnownMonday(): void
     {
         $this->travelTo(Carbon::parse('2021-03-01'));
     }
 
     /**
      * Known Saturday (2021-03-06) after the known monday.
-     *
-     * @return Carbon
      */
-    protected function knownSaturday()
+    protected function knownSaturday(): Carbon
     {
         return Carbon::parse('2021-03-06');
     }

@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Concerns;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\URL;
 
 trait GoesBack
@@ -23,10 +25,8 @@ trait GoesBack
 
     /**
      * Return redirect to the previous page.
-     *
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function back()
+    public function back(): Redirector|RedirectResponse
     {
         return $this->currentUrl === $this->previousUrl
             ? redirect($this->defaultBackUrl)
