@@ -14,7 +14,10 @@ use Illuminate\Support\Str;
 
 class DemoSeeder extends Seeder
 {
-    private function chores()
+    /**
+     * @return array<array<string, mixed>>
+     */
+    protected function chores(): array
     {
         return [
             [
@@ -64,7 +67,10 @@ class DemoSeeder extends Seeder
         ];
     }
 
-    private function other_chores()
+    /**
+     * @return array<array<string, mixed>>
+     */
+    protected function otherChores(): array
     {
         return [
             [
@@ -127,11 +133,11 @@ class DemoSeeder extends Seeder
             ],
             [
                 'user' => $second_user,
-                'chores' => $this->other_chores(),
+                'chores' => $this->otherChores(),
             ],
         ])->each(function ($item) use ($team) {
-            $user = Arr::get($item, 'user');
-            collect(Arr::get($item, 'chores'))->each(function ($chore) use ($user, $team) {
+            $user = $item['user'];
+            collect($item['chores'])->each(function ($chore) use ($user, $team) {
                 $due_date = Arr::pull($chore, 'due_date');
 
                 $chore = Chore::create(array_merge($chore, [

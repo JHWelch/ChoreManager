@@ -10,19 +10,10 @@ use Illuminate\Queue\SerializesModels;
 
 class DailyDigest extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-    protected User $user;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct(protected User $user) {}
 
     public function build(): self
     {
