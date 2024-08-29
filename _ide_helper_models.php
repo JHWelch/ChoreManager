@@ -30,8 +30,8 @@ namespace App\Models{
  * @property-read string $full_type_name
  * @property-read bool $is_team_calendar
  * @property-read bool $is_user_calendar
- * @property-read string $u_r_l
  * @property-read \App\Models\Team|null $team
+ * @property-read string $url
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\CalendarTokenFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newModelQuery()
@@ -72,8 +72,8 @@ namespace App\Models{
  * @property-read bool $is_weekly
  * @property-read bool $is_yearly
  * @property-read int $next_assigned_id
- * @property-read \Illuminate\Support\Carbon|null $next_due_date
  * @property-read \App\Models\ChoreInstance|null $nextChoreInstance
+ * @property-read \Illuminate\Support\Carbon|null $next_due_date
  * @property-read \App\Models\ChoreInstance|null $nextInstance
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ChoreInstance> $pastChoreInstances
  * @property-read int|null $past_chore_instances_count
