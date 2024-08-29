@@ -37,7 +37,7 @@ jobs:
         uses: ramsey/composer-install@v3
 
       - name: Migrate MySQL DB
-        run: php artisan migrate:fresh
+        run: php artisan migrate:fresh --force
 
       - name: Run IDE Helper Generate
         run: composer run ide-helper
