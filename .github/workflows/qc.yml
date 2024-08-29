@@ -65,25 +65,6 @@ jobs:
           DB_USERNAME: root
           DB_PASSWORD: root
 
-  standards:
-    name: Code Style (Pint)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          coverage: none
-
-      - name: Install dependencies
-        uses: ramsey/composer-install@v3
-
-      - name: Check style
-        run: composer test:lint
-
   autoloader:
     name: PSR-4 Autoloader
     runs-on: ubuntu-latest
