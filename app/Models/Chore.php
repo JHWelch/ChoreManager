@@ -46,6 +46,7 @@ class Chore extends Model
             'frequency_id' => FrequencyType::class,
         ];
     }
+
     /** @return BelongsTo<User, self> */
     public function user(): BelongsTo
     {
