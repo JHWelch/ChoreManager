@@ -1,0 +1,64 @@
+name: Fix Code Style
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  lintingSuite:
+    runs-on: ubuntu-latest
+    env:
+      APP_KEY: base64:UmeUVSBI8wMTAzYlIWXQOf/SoBR116L3jozOtnnUAyY=
+      DB_CONNECTION: mysql
+      DB_DATABASE: choremanager
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: choremanager
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Migrate MySQL DB
+        run: php artisan migrate:fresh --force
+
+      - name: Run IDE Helper Generate
+        run: composer run ide-helper
+
+      - name: Lint & Fix
+        run: composer fix
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          base: ${{ github.head_ref }}
+          branch: "formatting-updates-pr-${{ github.run_number }}"
+          commit-message: Automated coding standard style updates
+          reviewers: ${{ github.event.pull_request.user.login }}
+          title: "Formatting Updates: ${{ github.event.pull_request.title }} (#${{ github.event.number }})"
+          body: |
+            This is an auto-generated PR with code style fixes for the following PR: ${{ github.event.pull_request.html_url }}
+
+      - name: Fail workflow if Pull Request created
+        if: steps.cpr.outputs.pull-request-number
+        run: |
+          echo "The following PR was opened with formatting changes: ${{ steps.cpr.outputs.pull-request-url }}"
+          exit 1

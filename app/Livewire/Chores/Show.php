@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
+/**
+ * @property-read array<string, mixed> $userOptions
+ */
 class Show extends Component
 {
     use AuthorizesRequests;
@@ -76,11 +80,12 @@ class Show extends Component
     }
 
     /** @return array<string, mixed> */
-    public function getUserOptionsProperty(): array
+    #[Computed()]
+    public function userOptions(): array
     {
         $user = Auth::user();
 
-        return $user
+        return Auth::user()
             ->currentTeam
             ->allUsers()
             ->filter(fn ($teamMember) => $teamMember->id !== $user->id)

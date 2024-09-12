@@ -9,9 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class StreakCountFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     */
     public function definition(): array
     {
         return [

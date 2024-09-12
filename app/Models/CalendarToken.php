@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Database\Factories\CalendarTokenFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -106,34 +107,41 @@ class CalendarToken extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function getIsTeamCalendarAttribute(): bool
+    /** @return Attribute<bool, never> */
+    public function isTeamCalendar(): Attribute
     {
-        return $this->team_id !== null;
+        return Attribute::get(fn (): bool => $this->team_id !== null);
     }
 
-    public function getIsUserCalendarAttribute(): bool
+    /** @return Attribute<bool, never> */
+    public function isUserCalendar(): Attribute
     {
-        return ! $this->is_team_calendar;
+        return Attribute::get(fn (): bool => ! $this->is_team_calendar);
     }
 
-    public function getDisplayNameAttribute(): string
+    /** @return Attribute<string, never> */
+    public function displayName(): Attribute
     {
-        return $this->name ?? (
+        return Attribute::get(fn (): string => $this->name ?? (
             $this->is_team_calendar
                 ? "{$this->team->name} Chores"
                 : "{$this->user->name}'s Chores"
-        );
+        ));
     }
 
-    public function getFullTypeNameAttribute(): string
+    /** @return Attribute<string, never> */
+    public function fullTypeName(): Attribute
     {
-        return $this->is_team_calendar
+        return Attribute::get(fn (): string => $this->is_team_calendar
             ? "Team: {$this->team->name}"
-            : "User: {$this->user->name}";
+            : "User: {$this->user->name}");
     }
 
-    public function getURLAttribute(): string
+    /** @return Attribute<string, never> */
+    public function url(): Attribute
     {
-        return route('icalendar.show', ['token' => $this->token]);
+        return Attribute::get(
+            fn (): string => route('icalendar.show', ['token' => $this->token])
+        );
     }
 }

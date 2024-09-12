@@ -6,6 +6,7 @@ use App\Enums\Frequency;
 use App\Enums\FrequencyType;
 use Database\Factories\ChoreFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -78,13 +79,14 @@ class Chore extends Model
         return $this->nextChoreInstance();
     }
 
-    public function getFrequencyAttribute(): Frequency
+    /** @return Attribute<Frequency, never> */
+    public function frequency(): Attribute
     {
-        return new Frequency(
+        return Attribute::get(fn (): Frequency => new Frequency(
             $this->frequency_id,
             $this->frequency_interval,
             $this->frequency_day_of
-        );
+        ));
     }
 
     /** @return HasMany<ChoreInstance> */
@@ -153,39 +155,51 @@ class Chore extends Model
     /**
      * Get the id of the next user who should be assigned to an instance of this chore.
      * Either the owner of the chore, or a member of the team if no owner is specified.
+     *
+     * @return Attribute<int, never>
      */
-    public function getNextAssignedIdAttribute(): int
+    public function nextAssignedId(): Attribute
     {
-        $last_assigned = $this->choreInstances()
-            ->orderByDesc('created_at')
-            ->first();
+        return Attribute::get(function (): int {
+            $last_assigned = $this->choreInstances()
+                ->orderByDesc('created_at')
+                ->first();
 
-        return $this->user_id ?? (
-            $last_assigned
-            ? $this
-                ->team
-                ->allUsers()
-                ->sortBy('name')
-                ->map
-                ->id
-                ->nextAfter($last_assigned->user_id, false, true)
-            : $this
-                ->team
-                ->allUsers()
-                ->sortBy('name')
-                ->first()
-                ->id
+            if ($this->user_id) {
+                return $this->user_id;
+            }
+
+            return $last_assigned
+                ? $this
+                    ->team
+                    ->allUsers()
+                    ->sortBy('name')
+                    ->map
+                    ->id
+                    ->nextAfter($last_assigned->user_id, false, true)
+                : $this
+                    ->team
+                    ->allUsers()
+                    ->sortBy('name')
+                    ->first()
+                    ->id;
+        });
+    }
+
+    /** @return Attribute<Carbon|null, never> */
+    public function nextDueDate(): Attribute
+    {
+        return Attribute::get(
+            fn (): ?Carbon => $this->nextChoreInstance?->due_date
         );
     }
 
-    public function getNextDueDateAttribute(): ?Carbon
+    /** @return Attribute<Carbon|null, never> */
+    public function dueDateUpdatedAt(): Attribute
     {
-        return $this->nextChoreInstance?->due_date;
-    }
-
-    public function getDueDateUpdatedAtAttribute(): ?Carbon
-    {
-        return $this->nextChoreInstance?->updated_at;
+        return Attribute::get(
+            fn (): ?Carbon => $this->nextChoreInstance?->updated_at
+        );
     }
 
     /**
@@ -215,18 +229,27 @@ class Chore extends Model
         $this->nextChoreInstance?->snooze($until);
     }
 
-    public function getIsWeeklyAttribute(): bool
+    /** @return Attribute<bool, never> */
+    public function isWeekly(): Attribute
     {
-        return $this->frequency_id === FrequencyType::weekly;
+        return Attribute::get(
+            fn (): bool => $this->frequency_id === FrequencyType::weekly
+        );
     }
 
-    public function getIsYearlyAttribute(): bool
+    /** @return Attribute<bool, never> */
+    public function isYearly(): Attribute
     {
-        return $this->frequency_id === FrequencyType::yearly;
+        return Attribute::get(
+            fn (): bool => $this->frequency_id === FrequencyType::yearly
+        );
     }
 
-    public function getIsDoesNotRepeatAttribute(): bool
+    /** @return Attribute<bool, never> */
+    public function isDoesNotRepeat(): Attribute
     {
-        return $this->frequency_id === FrequencyType::doesNotRepeat;
+        return Attribute::get(
+            fn (): bool => $this->frequency_id === FrequencyType::doesNotRepeat
+        );
     }
 }

@@ -4,6 +4,7 @@ includes:
 parameters:
     paths:
         - app
+        - database
 
     scanFiles:
         - _ide_helper_models.php

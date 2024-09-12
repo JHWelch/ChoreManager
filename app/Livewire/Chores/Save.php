@@ -10,8 +10,14 @@ use App\Livewire\Forms\Chore as FormsChore;
 use App\Models\Chore;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
+/**
+ * @property-read array<int, array<string, mixed>> $frequencies
+ * @property-read array<array<string, mixed>> $weeklyDayOf
+ * @property-read string $maxDayOf
+ */
 class Save extends Component
 {
     use AuthorizesRequests;
@@ -70,20 +76,6 @@ class Save extends Component
         );
     }
 
-    /** @return array<int, array<string, mixed>> */
-    public function getFrequenciesProperty(): array
-    {
-        return $this->form->frequency_id == FrequencyType::doesNotRepeat
-            ? FrequencyType::adjectivesAsSelectOptions()
-            : FrequencyType::nounsAsSelectOptions();
-    }
-
-    /** @return array<array<string, mixed>> */
-    public function getWeeklyDayOfProperty(): array
-    {
-        return Frequency::DAYS_OF_THE_WEEK_AS_SELECT_OPTIONS;
-    }
-
     public function isShowOnButton(): bool
     {
         return (! $this->show_on) &&
@@ -104,7 +96,24 @@ class Save extends Component
         $this->show_on = false;
     }
 
-    public function getMaxDayOfProperty(): string
+    /** @return array<int, array<string, mixed>> */
+    #[Computed]
+    public function frequencies(): array
+    {
+        return $this->form->frequency_id == FrequencyType::doesNotRepeat
+            ? FrequencyType::adjectivesAsSelectOptions()
+            : FrequencyType::nounsAsSelectOptions();
+    }
+
+    /** @return array<array<string, mixed>> */
+    #[Computed]
+    public function weeklyDayOf(): array
+    {
+        return Frequency::DAYS_OF_THE_WEEK_AS_SELECT_OPTIONS;
+    }
+
+    #[Computed]
+    public function maxDayOf(): string
     {
         return match ($this->form->frequency_id) {
             FrequencyType::monthly => '31',
