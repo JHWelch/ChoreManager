@@ -16,7 +16,7 @@
 
 <div x-data="{ show: false }" class="flex flex-col justify-center">
   <button x-on:click.prevent="show = true">
-    <x-icons.clock class="text-purple-400 {{ $size_class }}" />
+    <x-icons.clock class="text-purple-400 dark:text-purple-600 {{ $size_class }}" />
   </button>
 
   <div

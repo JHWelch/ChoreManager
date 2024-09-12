@@ -1,7 +1,7 @@
 <div class="max-h-full">
   <div class="flex justify-between px-2 pb-4 align-middle sm:px-0">
     <div>
-      <h1 class="text-xl">Upcoming Chores</h1>
+      <h1 class="text-xl dark:text-gray-200">Upcoming Chores</h1>
     </div>
 
     <div class="h-5">
