@@ -1,7 +1,7 @@
 <div class="flex justify-center">
-  <div class="w-full p-8 bg-white rounded-lg shadow-md xl:w-10/12">
+  <div class="w-full p-8 bg-white rounded-lg shadow-md xl:w-10/12 dark:bg-gray-800">
     <form wire:submit="save" class="space-y-4">
-      <h2 class="text-lg font-medium">Chore</h2>
+      <h2 class="text-lg font-medium dark:text-gray-200">Chore</h2>
 
       <div class="space-y-4 lg:flex lg:space-x-4 lg:space-y-0">
         <div class="w-full space-y-4 lg:w-1/2">
@@ -161,7 +161,7 @@
             <x-form.bare.textarea
               prefix="form"
               name="description"
-              class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y lg:h-96 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+              class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 lg:h-96 sm:text-sm"
             />
 
             <a
