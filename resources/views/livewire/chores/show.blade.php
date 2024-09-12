@@ -126,7 +126,7 @@
                         <div class="relative flex items-start space-x-3">
                           <div>
                             <div class="relative px-1">
-                              <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full ring-8 dark:bg-gray-900 dark:ring-gray-900">
+                              <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full ring-8 ring-gray-100 dark:bg-gray-900 dark:ring-gray-900">
                                 <x-icons.pencil-paper class="w-5 h-5 text-gray-500 dark:text-gray-300" />
                               </div>
                             </div>
