@@ -1,7 +1,7 @@
 <div class="max-h-full">
   <div class="flex justify-between px-2 pb-4 align-middle sm:px-0">
     <div>
-      <h1 class="text-xl">Upcoming Chores</h1>
+      <h1 class="text-xl dark:text-gray-200">Upcoming Chores</h1>
     </div>
 
     <div class="h-5">
@@ -30,7 +30,7 @@
 
   <div class="flex justify-center w-full align-middle">
     <button
-      class="p-1 text-sm text-purple-600 rounded-md focus:outline-none focus:ring focus:ring-purple-300 hover:underline"
+      class="p-1 text-sm rounded-md text-violet-600 focus:outline-none focus:ring focus:ring-violet-300 hover:underline dark:text-violet-300"
       wire:click="toggleShowFutureChores"
     >
       {{ $showFutureChores ? __('Hide future chores') : __('Show future chores')}}

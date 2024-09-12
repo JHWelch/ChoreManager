@@ -8,11 +8,11 @@ use Laravel\Jetstream\Http\Livewire\ApiTokenManager;
 use function Pest\Livewire\livewire;
 
 test('api token permissions can be updated', function () {
-    if (! Features::hasApiFeatures()) {
-        $this->markTestSkipped('API support is not enabled.');
+    if (Features::hasTeamFeatures()) {
+        $this->actingAs($user = User::factory()->withPersonalTeam()->create());
+    } else {
+        $this->actingAs($user = User::factory()->create());
     }
-
-    $this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
     $token = $user->tokens()->create([
         'name' => 'Test Token',
@@ -34,4 +34,6 @@ test('api token permissions can be updated', function () {
         ->can('delete')->toBeTrue()
         ->can('read')->toBeFalse()
         ->can('missing-permission')->toBeFalse();
-});
+})->skip(function () {
+    return ! Features::hasApiFeatures();
+}, 'API support is not enabled.');

@@ -1,7 +1,7 @@
 <div>
   <div class="flex justify-between px-2 pb-4 align-middle sm:px-0">
     <div>
-      <h1 class="text-xl">Chores</h1>
+      <h1 class="text-xl dark:text-gray-200">Chores</h1>
     </div>
 
     <div class="h-5">
@@ -16,9 +16,9 @@
   <div class="flex flex-col">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
+        <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg dark:border-gray-800">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
+            <thead class="bg-gray-50 dark:bg-gray-700">
               <tr>
                 <x-sortable-table-header
                   table="chores"
@@ -55,10 +55,13 @@
 
             <tbody>
               @foreach ($chores as $chore)
-                <tr class="{{ ! ($loop->index % 2) ? 'bg-white' : 'bg-gray-50'}}">
+                <tr @class([
+                  'bg-white dark:bg-gray-800' => ($loop->index % 2) === 0,
+                  'bg-gray-50 dark:bg-gray-700' => ($loop->index % 2) !== 0
+                ])>
                   <x-chores.index-table-cell
                     :chore="$chore"
-                    class="font-medium text-gray-900"
+                    class="font-medium text-gray-900 dark:text-gray-50"
                   >
                     {{ $chore->title }}
                   </x-chores.index-table-cell>
@@ -69,7 +72,7 @@
                     class="hidden max-w-md truncate lg:block"
                   >
                     <button
-                      class="text-sm text-gray-500 underline"
+                      class="text-sm text-gray-500 underline dark:text-gray-400"
                       wire:click.prevent="setShowDescriptionModal({{ $chore->id }})"
                     >
                       {{ $chore->description }}
@@ -105,7 +108,7 @@
     </x-slot>
 
     <x-slot name="content">
-      <div class="prose min-h-64">
+      <div class="prose dark:prose-invert min-h-64">
         @markdown($showDescriptionModalChore?->description)
       </div>
     </x-slot>

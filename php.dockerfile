@@ -34,7 +34,7 @@ COPY --chown=webuser:webgroup stubs /var/www/html/stubs
 COPY --chown=webuser:webgroup tailwind.config.js /var/www/html/tailwind.config.js
 COPY --chown=webuser:webgroup tests /var/www/html/tests
 COPY --chown=webuser:webgroup vite.config.js /var/www/html/vite.config.js
-COPY --chown=webuser:webgroup yarn.lock /var/www/html/yarn.lock
+COPY --chown=webuser:webgroup package-lock.json /var/www/html/package-lock.json
 
 COPY --chmod=0755 ./docker/composer.sh /etc/composer.sh
 USER webuser
@@ -52,8 +52,8 @@ FROM node:18.13.0 AS build-node
 
 COPY --from=build-php /var/www/html /var/www/html
 WORKDIR /var/www/html
-COPY --chmod=0755 ./docker/yarn.sh /etc/yarn.sh
-RUN /etc/yarn.sh
+COPY --chmod=0755 ./docker/npm.sh /etc/npm.sh
+RUN /etc/npm.sh
 
 FROM build-php AS server
 

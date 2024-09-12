@@ -1,7 +1,7 @@
 <div class="flex justify-center">
-  <div class="w-full p-8 bg-white rounded-lg shadow-md xl:w-10/12">
+  <div class="w-full p-8 bg-white rounded-lg shadow-md xl:w-10/12 dark:bg-gray-800">
     <form wire:submit="save" class="space-y-4">
-      <h2 class="text-lg font-medium">Chore</h2>
+      <h2 class="text-lg font-medium dark:text-gray-200">Chore</h2>
 
       <div class="space-y-4 lg:flex lg:space-x-4 lg:space-y-0">
         <div class="w-full space-y-4 lg:w-1/2">
@@ -26,7 +26,7 @@
 
             <div class="flex items-center space-x-3">
               @if (! $form->isDoesNotRepeat())
-                <div class="text-sm font-medium">
+                <div class="text-sm font-medium dark:text-gray-300">
                   Every
                 </div>
 
@@ -48,7 +48,7 @@
               @if ($this->isShowOnButton())
                 <button
                   wire:click.prevent="showDayOfSection()"
-                  class="text-purple-500 font-semi-bold hover:text-purple-700"
+                  class="text-violet-500 font-semi-bold hover:text-violet-700"
                 >
                   On
                 </button>
@@ -161,7 +161,7 @@
             <x-form.bare.textarea
               prefix="form"
               name="description"
-              class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y lg:h-96 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+              class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-violet-500 dark:focus:border-violet-600 focus:ring-violet-500 dark:focus:ring-violet-600 lg:h-96 sm:text-sm"
             />
 
             <a

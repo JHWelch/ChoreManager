@@ -2,6 +2,8 @@
 
 namespace App\Actions\Jetstream;
 
+use App\Models\Team;
+use App\Models\User;
 use Closure;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
@@ -15,11 +17,8 @@ class AddTeamMember implements AddsTeamMembers
 {
     /**
      * Add a new team member to the given team.
-     *
-     * @param  mixed  $user
-     * @param  mixed  $team
      */
-    public function add($user, $team, string $email, ?string $role = null): void
+    public function add(User $user, Team $team, string $email, ?string $role = null): void
     {
         Gate::forUser($user)->authorize('addTeamMember', $team);
 
@@ -39,10 +38,8 @@ class AddTeamMember implements AddsTeamMembers
 
     /**
      * Validate the add member operation.
-     *
-     * @param  mixed  $team
      */
-    protected function validate($team, string $email, ?string $role): void
+    protected function validate(Team $team, string $email, ?string $role): void
     {
         Validator::make([
             'email' => $email,
@@ -57,7 +54,7 @@ class AddTeamMember implements AddsTeamMembers
     /**
      * Get the validation rules for adding a team member.
      *
-     * @return array<string, array<mixed>>
+     * @return array<string, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
      */
     protected function rules(): array
     {
@@ -71,10 +68,8 @@ class AddTeamMember implements AddsTeamMembers
 
     /**
      * Ensure that the user is not already on the team.
-     *
-     * @param  mixed  $team
      */
-    protected function ensureUserIsNotAlreadyOnTeam($team, string $email): Closure
+    protected function ensureUserIsNotAlreadyOnTeam(Team $team, string $email): Closure
     {
         return function ($validator) use ($team, $email) {
             $validator->errors()->addIf(

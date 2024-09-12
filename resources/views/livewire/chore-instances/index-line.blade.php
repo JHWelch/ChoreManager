@@ -9,11 +9,11 @@
     show=false;
     setTimeout($wire.complete, 500);
   "
-  class="bg-white"
+  class="bg-white dark:bg-gray-800"
 >
   <a
     href="{{ route('chores.show', ['chore' => $chore]) }}"
-    class="relative flex items-center px-6 py-5 space-x-3 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-purple-500"
+    class="relative flex items-center px-6 py-5 space-x-3 hover:bg-gray-50 dark:hover:bg-gray-900 focus-within:ring-2 focus-within:ring-inset focus-within:ring-violet-500"
   >
     <div class="flex-1 min-w-0">
       <div class="flex w-full">
@@ -26,11 +26,11 @@
             {{-- <x-users.avatar :user="$chore->user" size="medium" /> --}}
 
             <div class="flex flex-col">
-              <p class="text-sm font-medium text-gray-900">
+              <p class="text-sm font-medium text-gray-900 dark:text-gray-300">
                 {{ $chore->title }}
               </p>
 
-              <p class="text-sm text-gray-500 truncate">
+              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                 {{ $chore->frequency }}
               </p>
             </div>

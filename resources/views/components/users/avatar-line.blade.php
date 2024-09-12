@@ -9,7 +9,7 @@
         <x-users.avatar :user="$user" />
       </div>
 
-      <div class="text-sm font-medium text-gray-900">
+      <div class="text-sm font-medium text-gray-900 dark:text-gray-300">
         {{ $user->name }}
       </div>
     </a>
