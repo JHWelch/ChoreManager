@@ -48,7 +48,7 @@
               @if ($this->isShowOnButton())
                 <button
                   wire:click.prevent="showDayOfSection()"
-                  class="text-purple-500 font-semi-bold hover:text-purple-700"
+                  class="text-violet-500 font-semi-bold hover:text-violet-700"
                 >
                   On
                 </button>
@@ -161,7 +161,7 @@
             <x-form.bare.textarea
               prefix="form"
               name="description"
-              class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 lg:h-96 sm:text-sm"
+              class="flex-grow block w-full h-48 border-gray-300 rounded-md shadow-sm resize-y dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-violet-500 dark:focus:border-violet-600 focus:ring-violet-500 dark:focus:ring-violet-600 lg:h-96 sm:text-sm"
             />
 
             <a

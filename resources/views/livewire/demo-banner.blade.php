@@ -2,14 +2,14 @@
   @if (config('demo.enabled'))
     <div
       x-data="{'show': @entangle('show').live}"
-      class="bg-purple-500"
+      class="bg-violet-500"
       x-show="show"
       x-cloak
     >
       <div class="max-w-screen-xl px-3 py-2 mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-wrap items-center justify-between">
           <div class="flex items-center flex-1 w-0 min-w-0 text-white">
-            <span class="flex p-2 rounded-lg" class="bg-purple-600">
+            <span class="flex p-2 rounded-lg" class="bg-violet-600">
               <x-icons.beaker />
 
             </span>
@@ -32,7 +32,7 @@
             <button
               type="button"
               class="flex p-2 -mr-1 transition duration-150 ease-in-out rounded-md focus:outline-none sm:-mr-2"
-              class="hover:bg-purple-600 focus:bg-purple-600"
+              class="hover:bg-violet-600 focus:bg-violet-600"
               aria-label="Dismiss"
               x-on:click="show = false"
             >

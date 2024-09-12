@@ -7,8 +7,8 @@
 @php
   switch ($style) {
     case 'info':
-      $icon_color      = 'text-purple-600 dark:text-purple-400';
-      $icon_background = 'bg-purple-100';
+      $icon_color      = 'text-violet-600 dark:text-violet-400';
+      $icon_background = 'bg-violet-100';
       break;
     case 'warning':
       $icon_color      = 'text-yellow-600 dark:text-yellow-400';

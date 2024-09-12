@@ -6,7 +6,7 @@
 @php
   $outer_class = match($group) {
     'past_due' => 'border border-red-300 bg-red-100 dark:bg-red-950 dark:border-red-900',
-    'today' => 'border border-purple-300 bg-purple-100 dark:bg-purple-950 dark:border-purple-900',
+    'today' => 'border border-violet-300 bg-violet-100 dark:bg-violet-950 dark:border-violet-900',
     default => 'bg-white dark:bg-gray-800'
   }
 @endphp
