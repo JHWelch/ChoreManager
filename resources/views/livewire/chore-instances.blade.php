@@ -30,7 +30,7 @@
 
   <div class="flex justify-center w-full align-middle">
     <button
-      class="p-1 text-sm text-violet-600 rounded-md focus:outline-none focus:ring focus:ring-violet-300 hover:underline"
+      class="p-1 text-sm rounded-md text-violet-600 focus:outline-none focus:ring focus:ring-violet-300 hover:underline dark:text-violet-300"
       wire:click="toggleShowFutureChores"
     >
       {{ $showFutureChores ? __('Hide future chores') : __('Show future chores')}}

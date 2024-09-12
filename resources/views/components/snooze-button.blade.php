@@ -30,9 +30,16 @@
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
-    class="{{ implode(' ', [$top, $right]) }} absolute z-50 flex flex-col items-center justify-between w-36 space-y-2.5 p-2.5 bg-violet-400 border border-violet-500 rounded-xl"
+    @class([
+      'absolute z-50 flex flex-col items-center justify-between w-36 space-y-2.5 p-2.5 bg-violet-400 border border-violet-500 rounded-xl',
+      'dark:bg-violet-900 dark:border-violet-800',
+      $top,
+      $right,
+    ])
   >
-    <span class="font-semibold">Snooze Until</span>
+    <span class="font-semibold dark:text-gray-200">
+      Snooze Until
+    </span>
 
     <x-popover-button click="{!! $snoozeUntilTomorrow !!}">
       <span class="text-4xl font-bold">+1</span>
