@@ -26,7 +26,7 @@
 
             <div class="flex items-center space-x-3">
               @if (! $form->isDoesNotRepeat())
-                <div class="text-sm font-medium">
+                <div class="text-sm font-medium dark:text-gray-300">
                   Every
                 </div>
 

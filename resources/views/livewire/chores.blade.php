@@ -108,7 +108,7 @@
     </x-slot>
 
     <x-slot name="content">
-      <div class="prose min-h-64">
+      <div class="prose dark:prose-invert min-h-64">
         @markdown($showDescriptionModalChore?->description)
       </div>
     </x-slot>
