@@ -25,8 +25,8 @@ php artisan migrate
 echo "----------------------------------------------------"
 echo "Installing JavaScript packages and compiling assets."
 echo "----------------------------------------------------"
-yarn install
-yarn run dev
+npm install
+npm run dev
 
 echo "--------------------------------------"
 echo "Linking Precommit script to git hooks."
