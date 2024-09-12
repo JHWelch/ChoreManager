@@ -4,10 +4,6 @@ namespace App\Models;
 
 use Laravel\Jetstream\Membership as JetstreamMembership;
 
-/**
- * @mixin \Eloquent
- * @mixin IdeHelperMembership
- */
 class Membership extends JetstreamMembership
 {
     /**

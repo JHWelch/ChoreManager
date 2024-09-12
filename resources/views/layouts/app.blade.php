@@ -10,30 +10,30 @@
     <link rel="icon" href="https://fav.farm/🧹" />
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-    <!-- Styles -->
-    @vite('resources/css/app.css')
-    @livewireStyles
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    @vite('resources/js/app.js')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Styles -->
+    @livewireStyles
 
     <!-- Page specific head -->
     @stack('head')
   </head>
 
-  <body class="font-sans antialiased bg-gray-100">
+  <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
     @livewire('demo-banner')
 
     <x-banner />
 
-    <div class="h-full min-h-screen">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
       @livewire('navigation-menu')
 
       <!-- Page Heading -->
       @if (isset($header))
-        <header class="bg-white shadow">
+        <header class="bg-white shadow dark:bg-gray-800">
           <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
             {{ $header }}
           </div>

@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\Providers\AppServiceProvider;
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
@@ -18,10 +17,10 @@ test('users can authenticate using the login screen', function () {
     ]);
 
     $this->assertAuthenticated();
-    $response->assertRedirect(AppServiceProvider::HOME);
+    $response->assertRedirect(route('dashboard', absolute: false));
 });
 
-test('users can not authenticate with invalid password', function () {
+test('users cannot authenticate with invalid password', function () {
     $user = User::factory()->create();
 
     $this->post('/login', [
