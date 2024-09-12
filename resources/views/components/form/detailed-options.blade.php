@@ -9,7 +9,7 @@
     {{ __($title) }}
   </legend>
 
-  <div class="-space-y-px bg-white rounded-md">
+  <div class="-space-y-px bg-white rounded-md dark:bg-gray-900">
     @foreach (array_values($options) as $index => $option)
       <x-form.detailed-options-option
         :label="$option['label']"

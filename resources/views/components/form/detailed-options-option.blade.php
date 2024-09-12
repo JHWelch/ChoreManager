@@ -18,12 +18,12 @@
 
 <label
   x-radio-group-option=""
-  class="{{ $position_classes }} relative z-10 flex p-4 border border-purple-200 cursor-pointer bg-purple-50"
+  class="{{ $position_classes }} relative z-10 flex p-4 border cursor-pointer"
   x-state:on="Checked"
   x-state:off="Not Checked"
   :class="{
-    'bg-purple-50 border-purple-200 z-10': selectedOption === '{{ $value }}',
-    'border-gray-200': !(selectedOption === '{{ $value }}')
+    'bg-purple-50 border-purple-200 z-10 dark:bg-purple-950 dark:border-purple-700': selectedOption === '{{ $value }}',
+    'border-gray-200 dark:border-gray-700': !(selectedOption === '{{ $value }}')
   }"
 >
   <input
@@ -39,12 +39,12 @@
   <div class="flex flex-col ml-3">
     <span
       id="{{ $id_prefix }}-label"
-      class="block text-sm font-medium text-purple-900"
+      class="block text-sm font-medium"
       x-state:on="Checked"
       x-state:off="Not Checked"
       :class="{
-        'text-purple-900': selectedOption === '{{ $value }}',
-        'text-gray-900': !(selectedOption === '{{ $value }}')
+        'text-purple-900 dark:text-purple-300': selectedOption === '{{ $value }}',
+        'text-gray-900 dark:text-gray-300': !(selectedOption === '{{ $value }}')
       }"
     >
       {{ __($label) }}
@@ -56,8 +56,8 @@
       x-state:on="Checked"
       x-state:off="Not Checked"
       :class="{
-        'text-purple-700': selectedOption === '{{ $value }}',
-        'text-gray-500': !(selectedOption === '{{ $value }}')
+        'text-purple-700 dark:text-purple-300': selectedOption === '{{ $value }}',
+        'text-gray-500 dark:text-gray-400': !(selectedOption === '{{ $value }}')
       }"
     >
       {{ __($description) }}
