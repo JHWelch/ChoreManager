@@ -8,6 +8,7 @@ Chore manager is a simple chore management application for taking care of househ
 - [Set Up Local Environment](#set-up-local-environment)
 - [Testing](#testing)
 - [Linting/Static Analysis](#lintingstatic-analysis)
+- [Generate PWA Assets](#generate-pwa-assets)
 - [Related Projects](#related-projects)
 - [Technologies](#technologies)
 
@@ -52,6 +53,14 @@ composer test:fix
 To run static analysis
 ```sh
 composer test:types
+```
+
+## Generate PWA Assets
+
+This will generate all proper asset icons for the PWA. The source icon is located at `public/icon.svg`.
+
+```bash
+npm run generate-pwa-assets
 ```
 
 ## Related Projects
