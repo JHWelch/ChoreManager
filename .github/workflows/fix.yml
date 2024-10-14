@@ -1,7 +1,7 @@
 name: Fix Code Style
-on:
-  pull_request:
-    types: [ opened, synchronize, reopened, ready_for_review ]
+# on:
+#   pull_request:
+#     types: [ opened, synchronize, reopened, ready_for_review ]
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true

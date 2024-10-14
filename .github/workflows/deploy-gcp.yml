@@ -51,12 +51,12 @@ jobs:
         path: application.zip
 
     - name: Place SSH Key
-      run: echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+      run: echo "${{ secrets.SERVER_SSH_KEY }}" > ./id_rsa && chmod 600 ./id_rsa
 
     - name: Transfer Zip to Server
       run: |
         TIMESTAMP=$(date +'%Y%m%d%H%M%S')
         SERVER="${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}"
-        scp application.zip $SERVER:/tmp/application.zip
-        ssh $SERVER "unzip /tmp/application.zip -d /var/www/choremanager/releases/$TIMESTAMP"
-        ssh $SERVER "ln -sf /var/www/choremanager/releases/$TIMESTAMP /var/www/choremanager/current"
+        scp -i ./id_rsa application.zip $SERVER:/tmp/application.zip
+        ssh -i ./id_rsa $SERVER "unzip /tmp/application.zip -d /var/www/choremanager/releases/$TIMESTAMP"
+        ssh -i ./id_rsa $SERVER "ln -sf /var/www/choremanager/releases/$TIMESTAMP /var/www/choremanager/current"

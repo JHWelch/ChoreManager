@@ -1,11 +1,11 @@
 name: QC
 run-name: 'QC (PR #${{ github.event.pull_request.number }})'
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-  workflow_call:
-  workflow_dispatch:
+# on:
+#   pull_request:
+#     types: [opened, synchronize, reopened]
+#   workflow_call:
+#   workflow_dispatch:
 
 concurrency:
   group: qc-${{ github.event.pull_request.number }}
