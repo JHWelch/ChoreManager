@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="manifest" href="build/manifest.webmanifest" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <link rel="icon" href="https://fav.farm/🧹" />
+    <meta name="description" content="Manage tasks and chores">
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/logo.svg" sizes="any" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+    <meta name="theme-color" content="#171717" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
