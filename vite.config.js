@@ -12,6 +12,9 @@ export default defineConfig({
             refresh: true,
         }),
         VitePWA({
+          buildBase: '/build/',
+          base: '/',
+          scope: '/',
           includeAssets: [
             'favicon.ico',
             'robots.txt',
@@ -21,26 +24,29 @@ export default defineConfig({
           ],
           registerType: 'autoUpdate',
           manifest: {
+            id: '/',
+            scope: '/',
+            start_url: '/',
             name: 'Chore Manager',
             theme_color: '#171717',
             icons: [
               {
-                src: 'pwa-64x64.png',
+                src: '/pwa-64x64.png',
                 sizes: '64x64',
                 type: 'image/png',
               },
               {
-                src: 'pwa-192x192.png',
+                src: '/pwa-192x192.png',
                 sizes: '192x192',
                 type: 'image/png',
               },
               {
-                src: 'pwa-512x512.png',
+                src: '/pwa-512x512.png',
                 sizes: '512x512',
                 type: 'image/png',
               },
               {
-                src: 'maskable-icon-512x512.png',
+                src: '/maskable-icon-512x512.png',
                 sizes: '512x512',
                 type: 'image/png',
                 purpose: 'maskable',
