@@ -36,10 +36,10 @@ jobs:
         cache: 'npm'
 
     - name: Install npm dependencies
-      run: yarn install
+      run: npm ci
 
     - name: Build assets
-      run: yarn run build
+      run: npm run build
 
     - name: Zip up the application
       run: zip -r application.zip . -x "*.git*" -x "*.github*"
