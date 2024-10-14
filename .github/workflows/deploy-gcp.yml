@@ -1,0 +1,62 @@
+name: Build and Deploy
+# on:
+#   push:
+#     branches:
+#       - main
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        coverage: none
+
+    - name: Install dependencies
+      uses: ramsey/composer-install@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.13.0'
+        cache: 'yarn'
+
+    - name: Install npm dependencies
+      run: yarn install
+
+    - name: Build assets
+      run: yarn run build
+
+    - name: Zip up the application
+      run: zip -r application.zip . -x "*.git*" -x "*.github*"
+
+    - name: Upload Application Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: application
+        path: application.zip
+
+    - name: Place SSH Key
+      run: echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+
+    - name: Transfer Zip to Server
+      run: |
+        TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+        SERVER="${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}"
+        scp application.zip $SERVER:/tmp/application.zip
+        ssh $SERVER "unzip /tmp/application.zip -d /var/www/choremanager/releases/$TIMESTAMP"
+        ssh $SERVER "ln -sf /var/www/choremanager/releases/$TIMESTAMP /var/www/choremanager/current"
