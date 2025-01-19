@@ -8,7 +8,7 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
 
 it('can create a calendar token to display only their chores', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
 
     livewire(Index::class)
         ->set('form.type', 'user')
@@ -21,7 +21,7 @@ it('can create a calendar token to display only their chores', function () {
 });
 
 test('calendar token has generated uuid', function () {
-    $this->testUser();
+    $this->user();
 
     livewire(Index::class)
         ->set('form.type', 'user')
@@ -31,7 +31,7 @@ test('calendar token has generated uuid', function () {
 });
 
 it('can create a calendar token to display their teams chores', function () {
-    $userAndTeam = $this->testUser();
+    $userAndTeam = $this->user();
 
     livewire(Index::class)
         ->set('form.type', 'team')
@@ -45,7 +45,7 @@ it('can create a calendar token to display their teams chores', function () {
 });
 
 test('when team calendar is selected user must pick team', function () {
-    $this->testUser();
+    $this->user();
 
     $component = livewire(Index::class)
         ->set('form.type', 'team')
@@ -56,7 +56,7 @@ test('when team calendar is selected user must pick team', function () {
 });
 
 test('if user calendar selected will not have team even if specified', function () {
-    $userAndTeam = $this->testUser();
+    $userAndTeam = $this->user();
 
     livewire(Index::class)
         ->set('form.type', 'user')
@@ -70,7 +70,7 @@ test('if user calendar selected will not have team even if specified', function 
 });
 
 test('calendars can be created with names', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
 
     livewire(Index::class)
         ->set('form.type', 'user')

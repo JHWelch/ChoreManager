@@ -9,7 +9,7 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
 
 it('can reach show page', function () {
-    $chore = Chore::factory()->for($this->testUser()['user'])->create();
+    $chore = Chore::factory()->for($this->user()['user'])->create();
 
     $response = $this->get(route('chores.show', $chore));
 
@@ -17,7 +17,7 @@ it('can reach show page', function () {
 });
 
 test('user cannot view chores for another user', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->forUser()->create();
 
     $response = $this->get(route('chores.show', ['chore' => $chore]));
@@ -31,7 +31,7 @@ it('can see chore info on chores show', function () {
         'description' => 'Do not forget the poop bags.',
         'frequency_id' => 1,
         'frequency_interval' => 2,
-        'user_id' => $this->testUser()['user']->id,
+        'user_id' => $this->user()['user']->id,
     ])->create();
 
     $component = livewire(Show::class, ['chore' => $chore]);
@@ -42,7 +42,7 @@ it('can see chore info on chores show', function () {
 });
 
 it('can complete chore from chore page', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->for($this->user)->withFirstInstance()->create();
     $instance = $chore->nextChoreInstance;
 
@@ -55,7 +55,7 @@ it('can complete chore from chore page', function () {
 });
 
 it('can complete chore without first instance', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->for($this->user)->create();
 
     $component = livewire(Show::class, ['chore' => $chore])
@@ -74,7 +74,7 @@ it('can complete chore without first instance', function () {
 });
 
 it('can see chore history', function () {
-    $user1 = $this->testUser()['user'];
+    $user1 = $this->user()['user'];
     $user2 = User::factory()->create();
     $chore = Chore::factory()
         ->for($this->user)
@@ -115,7 +115,7 @@ it('can see chore history', function () {
 });
 
 it('can see tooltip of exact date', function () {
-    $user1 = $this->testUser()['user'];
+    $user1 = $this->user()['user'];
     $user2 = User::factory()->create();
     $chore = Chore::factory()
         ->for($this->user)
@@ -150,7 +150,7 @@ it('can see tooltip of exact date', function () {
 });
 
 test('chores assigned to team display team as owner', function () {
-    $team = $this->testUser()['team'];
+    $team = $this->user()['team'];
     $chore = Chore::factory([
         'title' => 'Walk the dog',
     ])
@@ -167,7 +167,7 @@ test('chores assigned to team display team as owner', function () {
 });
 
 it('can complete chore for another another team user', function () {
-    $this->testUser();
+    $this->user();
     $other_user = User::factory()->hasAttached($this->team)->create();
     $chore = Chore::factory()
         ->for($this->team)
@@ -189,7 +189,7 @@ it('can complete chore for another another team user', function () {
 });
 
 it('can complete chore on a past date', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $date = today()->subDays(2);
     $chore = Chore::factory()
         ->for($user)
@@ -211,7 +211,7 @@ it('can complete chore on a past date', function () {
 });
 
 test('completing coming from complete endpoint does not redirect', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()
         ->for($user)
         ->withFirstInstance()
@@ -229,7 +229,7 @@ test('completing coming from complete endpoint does not redirect', function () {
 });
 
 test('when complete session flag is present show modal', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->create();
     session()->flash('complete', true);
 
@@ -239,7 +239,7 @@ test('when complete session flag is present show modal', function () {
 });
 
 test('when complete session flag is not present dont show modal', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->create();
 
     $component = livewire(Show::class, ['chore' => $chore]);

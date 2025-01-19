@@ -79,7 +79,7 @@ test('completing a chore instance creates a new instance with same owner', funct
 });
 
 test('when a chore is completed the completed by id is set to the user completing it', function () {
-    $acting_as_user = $this->testUser()['user'];
+    $acting_as_user = $this->user()['user'];
     $assigned_user = User::factory()->create();
     $chore = Chore::factory()->for($assigned_user)->withFirstInstance()->create();
 
@@ -93,7 +93,7 @@ test('when a chore is completed the completed by id is set to the user completin
 });
 
 test('when a chore assigned to a team is completed the next instance is assigned to the next person alphabetically', function () {
-    $user_and_team = $this->testUser(['name' => 'Albert Albany']);
+    $user_and_team = $this->user(['name' => 'Albert Albany']);
     $team = $user_and_team['team'];
     $users = User::factory()
         ->hasAttached($team)
@@ -121,7 +121,7 @@ test('when a chore assigned to a team is completed the next instance is assigned
 });
 
 test('when an instance is assigned to the last person alphabetically it will wrap around', function () {
-    $user_and_team = $this->testUser(['name' => 'Albert Albany']);
+    $user_and_team = $this->user(['name' => 'Albert Albany']);
     $user1 = $user_and_team['user'];
     $team = $user_and_team['team'];
     $users = User::factory()

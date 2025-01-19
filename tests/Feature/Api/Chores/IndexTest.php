@@ -5,7 +5,7 @@ use App\Models\ChoreInstance;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 beforeEach(function () {
-    $this->testUser();
+    $this->user();
 });
 
 test('api user can get chore list', function () {

@@ -1,7 +1,7 @@
 <?php
 
 test('user can see account management links', function () {
-    $this->testUser();
+    $this->user();
 
     $this->view('navigation-menu')
         ->assertSee('Manage Account')
@@ -11,7 +11,7 @@ test('user can see account management links', function () {
 });
 
 test('admin users can see admin actions', function () {
-    $this->adminTestUser();
+    $this->adminUser();
 
     $this->view('navigation-menu')
         ->assertSee('Admin Features')
@@ -19,7 +19,7 @@ test('admin users can see admin actions', function () {
 });
 
 test('non admin users cannot see admin actions', function () {
-    $this->testUser();
+    $this->user();
 
     $this->view('navigation-menu')
         ->assertDontSee('Admin Features')

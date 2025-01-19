@@ -3,7 +3,7 @@
 use App\Models\Chore;
 
 it('can get upcoming chores with their due dates', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chores = Chore::factory()
         ->count(3)
         ->for($user)

@@ -6,7 +6,7 @@ use App\Models\Chore;
 use function Pest\Livewire\livewire;
 
 test('chore instance index page can be reached', function () {
-    $this->testUser()['user'];
+    $this->user()['user'];
 
     $response = $this->get(route('chore_instances.index'));
 
@@ -14,7 +14,7 @@ test('chore instance index page can be reached', function () {
 });
 
 test('chores with chore instances show on index', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->withFirstInstance(today())->create();
 
     $component = livewire(ChoreInstancesIndex::class);
@@ -23,7 +23,7 @@ test('chores with chore instances show on index', function () {
 });
 
 test('chores without chore instances do not show on index', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->create();
 
     $component = livewire(ChoreInstancesIndex::class);
@@ -32,7 +32,7 @@ test('chores without chore instances do not show on index', function () {
 });
 
 test('when there are no chore instances see empty state', function () {
-    $this->testUser();
+    $this->user();
 
     $component = livewire(ChoreInstancesIndex::class);
 
@@ -40,7 +40,7 @@ test('when there are no chore instances see empty state', function () {
 });
 
 test('future chores do not show by default', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore1 = Chore::factory()
         ->for($user)
         ->withFirstInstance(today())
@@ -57,7 +57,7 @@ test('future chores do not show by default', function () {
 });
 
 test('user can show future chores', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()
         ->for($user)
         ->withFirstInstance(today()
@@ -70,7 +70,7 @@ test('user can show future chores', function () {
 });
 
 test('show future chores is remembered when revisiting page', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()
         ->for($user)
         ->withFirstInstance(today()
@@ -84,7 +84,7 @@ test('show future chores is remembered when revisiting page', function () {
 });
 
 test('chore instances are split into groups based on date', function () {
-    $this->testUser();
+    $this->user();
     Chore::factory(['title' => 'walk dog'])
         ->for($this->user)
         ->withFirstInstance(today()->addDay(), $this->user)

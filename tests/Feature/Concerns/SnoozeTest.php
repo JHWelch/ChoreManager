@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use function Pest\Laravel\assertDatabaseHas;
 
 beforeEach(function () {
-    $this->user = $this->testUser()['user'];
+    $this->user = $this->user()['user'];
     $this->snoozeClass = new class
     {
         use \App\Livewire\Concerns\SnoozesChores;

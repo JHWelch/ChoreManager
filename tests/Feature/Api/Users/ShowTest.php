@@ -5,7 +5,7 @@ use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 
 test('a user can view their own info', function () {
-    $this->testUser();
+    $this->user();
 
     $response = $this->get(route(
         'api.users.show',
@@ -23,7 +23,7 @@ test('a user can view their own info', function () {
 });
 
 test('a user can view users from their team', function () {
-    $this->testUser();
+    $this->user();
     $user = User::factory()
         ->hasAttached($this->team)
         ->create();
@@ -47,7 +47,7 @@ test('a user can view users from their team', function () {
 });
 
 test('a user cannot view users not in their teams', function () {
-    $this->testUser();
+    $this->user();
     $user = User::factory()
         ->hasAttached(Team::factory())
         ->create();

@@ -9,7 +9,7 @@ use function Pest\Laravel\assertDatabaseCount;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('when there is a next instance completes instance', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->withFirstInstance()->daily()->create();
     $firstInstance = $chore->nextInstance;
 
@@ -21,7 +21,7 @@ test('when there is a next instance completes instance', function () {
 });
 
 it('can complete a chore without a chore instance', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->for($this->user)->daily()->create();
 
     $chore->complete();
@@ -38,7 +38,7 @@ it('can complete a chore without a chore instance', function () {
 });
 
 test('chore can be completed at another time', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->for($this->user)->daily()->create();
     $date = now()->subDays(3);
 
@@ -51,7 +51,7 @@ test('chore can be completed at another time', function () {
 });
 
 test('chore can be completed for another user', function () {
-    $this->testUser();
+    $this->user();
     $user = User::factory()->hasAttached($this->team)->create();
     $chore = Chore::factory()->for($this->user)->daily()->create();
 

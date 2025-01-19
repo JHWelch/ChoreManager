@@ -7,7 +7,7 @@ use App\Models\User;
 use function Pest\Livewire\livewire;
 
 test('admin can see index page', function () {
-    $this->adminTestUser();
+    $this->adminUser();
 
     $response = $this->get(UserResource::getUrl('index'));
 
@@ -15,7 +15,7 @@ test('admin can see index page', function () {
 });
 
 test('standard user cannot see index page', function () {
-    $this->testUser();
+    $this->user();
 
     $response = $this->get(UserResource::getUrl('index'));
 
@@ -23,7 +23,7 @@ test('standard user cannot see index page', function () {
 });
 
 it('can see user fields', function () {
-    $this->adminTestUser();
+    $this->adminUser();
     $user = User::factory()->create();
 
     livewire(ListUsers::class)

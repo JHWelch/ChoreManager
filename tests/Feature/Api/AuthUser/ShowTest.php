@@ -1,7 +1,7 @@
 <?php
 
 test('a user can view their own info', function () {
-    $this->testUser();
+    $this->user();
 
     $response = $this->get(route('api.auth_user.show'));
 

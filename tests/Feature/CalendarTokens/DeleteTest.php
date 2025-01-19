@@ -7,7 +7,7 @@ use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Livewire\livewire;
 
 it('can delete existing calendar tokens', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $token = CalendarToken::factory()
         ->for($user)
         ->create();

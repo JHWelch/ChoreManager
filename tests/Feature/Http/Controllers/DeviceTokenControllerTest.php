@@ -5,7 +5,7 @@ use App\Models\DeviceToken;
 use function Pest\Laravel\assertDatabaseHas;
 
 test('user can register a device token', function () {
-    $this->testUser();
+    $this->user();
     $payload = ['token' => 'test-device-token'];
 
     $response = $this->postJson(route('api.device_tokens.store'), $payload);
@@ -15,7 +15,7 @@ test('user can register a device token', function () {
 });
 
 test('user can update an existing token', function () {
-    $this->testUser();
+    $this->user();
     $token = DeviceToken::factory([
         'updated_at' => '2021-01-01 00:00:00',
     ])->for($this->user)->create();
@@ -33,7 +33,7 @@ test('user can update an existing token', function () {
 });
 
 test('user can reassign existing token', function () {
-    $this->testUser();
+    $this->user();
     $token = DeviceToken::factory()->create();
 
     $response = $this->postJson(route('api.device_tokens.store'), [
@@ -48,7 +48,7 @@ test('user can reassign existing token', function () {
 });
 
 test('user can save two tokens', function () {
-    $this->testUser();
+    $this->user();
     $token = DeviceToken::factory()->for($this->user)->create();
 
     $response = $this->postJson(route('api.device_tokens.store'), [
