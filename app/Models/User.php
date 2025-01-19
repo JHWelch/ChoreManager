@@ -82,7 +82,7 @@ class User extends Authenticatable implements FilamentUser
     /**
      * Get all users with a specific setting.
      *
-     * @return Collection<int, User>
+     * @return Collection<int, $this>
      */
     public static function withSetting(
         string $setting,
@@ -106,31 +106,31 @@ class User extends Authenticatable implements FilamentUser
         return $this->deviceTokens->pluck('token')->toArray();
     }
 
-    /** @return HasMany<Chore> */
+    /** @return HasMany<Chore, $this> */
     public function chores(): HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
-    /** @return HasMany<ChoreInstance> */
+    /** @return HasMany<ChoreInstance, $this> */
     public function choreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class);
     }
 
-    /** @return HasMany<CalendarToken> */
+    /** @return HasMany<CalendarToken, $this> */
     public function calendarTokens(): HasMany
     {
         return $this->hasMany(CalendarToken::class);
     }
 
-    /** @return HasOne<UserSetting> */
+    /** @return HasOne<UserSetting, $this> */
     public function settings(): HasOne
     {
         return $this->hasOne(UserSetting::class);
     }
 
-    /** @return HasMany<DeviceToken> */
+    /** @return HasMany<DeviceToken, $this> */
     public function deviceTokens(): HasMany
     {
         return $this->hasMany(DeviceToken::class);
