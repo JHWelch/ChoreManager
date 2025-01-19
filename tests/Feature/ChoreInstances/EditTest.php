@@ -13,7 +13,7 @@ use function Pest\Livewire\livewire;
 uses(\Illuminate\Foundation\Testing\WithFaker::class);
 
 test('when updating chore instance with null date create chore instance', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()
         ->for($user)
         ->create();
@@ -30,7 +30,7 @@ test('when updating chore instance with null date create chore instance', functi
 });
 
 test('when removing the due date from a chore it will delete the chore instance', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->withFirstInstance()->create();
 
     livewire(Save::class, ['chore' => $chore])
@@ -42,7 +42,7 @@ test('when removing the due date from a chore it will delete the chore instance'
 });
 
 test('when opening chore edit due date is populated', function () {
-    $this->testUser();
+    $this->user();
     $date = today()->addDays(5);
     $chore = Chore::factory()->for($this->user)->withFirstInstance($date)->create();
 
@@ -52,7 +52,7 @@ test('when opening chore edit due date is populated', function () {
 });
 
 test('after completing a chore you can see next chore instance date', function () {
-    $this->testUser();
+    $this->user();
     $date = Carbon::now();
     $chore = Chore::factory()
         ->withFirstInstance($date)
@@ -68,7 +68,7 @@ test('after completing a chore you can see next chore instance date', function (
 });
 
 test('a chore instance can be assigned to a new user', function () {
-    $this->testUser();
+    $this->user();
     $user = User::factory()->hasAttached($this->team)->create();
     $chore = Chore::factory()
         ->for($user)

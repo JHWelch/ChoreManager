@@ -8,7 +8,7 @@ use App\Models\Chore;
 use function Pest\Livewire\livewire;
 
 it('can complete a chore instance', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->withFirstInstance()->create();
     $chore_instance = $chore->nextChoreInstance;
 
@@ -22,7 +22,7 @@ it('can complete a chore instance', function () {
 
 test('when a chore instance is completed a new one is created daily', function () {
     $now = today();
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()
         ->daily()
         ->for($user)
@@ -57,7 +57,7 @@ test('index line shows chore information', function () {
 
 test('index line has assigned user image', function () {
     $this->markTestSkipped('Feature disabled.');
-    $user = $this->testUser([
+    $user = $this->user([
         'profile_photo_path' => 'test_photo_url.jpg',
     ])['user'];
     $chore = Chore::factory()
@@ -73,7 +73,7 @@ test('index line has assigned user image', function () {
 });
 
 test('snooze until tomorrow emits event', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()
         ->withFirstInstance()
         ->for($this->user)
@@ -87,7 +87,7 @@ test('snooze until tomorrow emits event', function () {
 });
 
 test('snooze until weekend emits event', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()
         ->withFirstInstance()
         ->for($this->user)

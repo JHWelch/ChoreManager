@@ -4,7 +4,7 @@ use App\Models\StreakCount;
 use App\Models\Team;
 
 test('user can get current streak for their team', function () {
-    $this->testUser();
+    $this->user();
     $streak = StreakCount::factory()->for($this->team)->create();
 
     $response = $this->get(
@@ -25,7 +25,7 @@ test('user can get current streak for their team', function () {
 });
 
 test('user cannot get streak for another team', function () {
-    $this->testUser();
+    $this->user();
     $other_team = Team::factory()->create();
     StreakCount::factory()->for($other_team)->create();
 

@@ -40,19 +40,19 @@ class ChoreInstance extends Model
         $this->chore->createNewInstance($this->completed_date);
     }
 
-    /** @return BelongsTo<Chore, self> */
+    /** @return BelongsTo<Chore, $this> */
     public function chore(): BelongsTo
     {
         return $this->belongsTo(Chore::class);
     }
 
-    /** @return BelongsTo<User, self> */
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /** @return BelongsTo<User, self> */
+    /** @return BelongsTo<User, $this> */
     public function completedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'completed_by_id');

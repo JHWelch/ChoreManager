@@ -8,7 +8,7 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
 
 test('chore edit page can be reached', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->create();
 
     $response = $this->get(route('chores.edit', ['chore' => $chore->id]));
@@ -17,7 +17,7 @@ test('chore edit page can be reached', function () {
 });
 
 test('user cannot edit chores for another user', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->forUser()->create();
 
     $response = $this->get(route('chores.edit', ['chore' => $chore]));
@@ -26,7 +26,7 @@ test('user cannot edit chores for another user', function () {
 });
 
 test('existing chore screen shows its information', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::create([
         'user_id' => $user->id,
         'title' => 'Do dishes',
@@ -43,7 +43,7 @@ test('existing chore screen shows its information', function () {
 });
 
 test('a chore can be updated after it is created', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chore = Chore::factory()->for($user)->create();
 
     livewire(Save::class, ['chore' => $chore])

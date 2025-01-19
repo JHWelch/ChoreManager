@@ -55,13 +55,13 @@ class Team extends JetstreamTeam
         return self::$admin_team;
     }
 
-    /** @return HasMany<Chore> */
+    /** @return HasMany<Chore, $this> */
     public function chores(): HasMany
     {
         return $this->hasMany(Chore::class);
     }
 
-    /** @return HasManyThrough<ChoreInstance> */
+    /** @return HasManyThrough<ChoreInstance, Chore, $this> */
     public function choreInstances(): HasManyThrough
     {
         return $this->hasManyThrough(ChoreInstance::class, Chore::class);

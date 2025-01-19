@@ -19,7 +19,7 @@ it('displays copy correctly', function () {
 });
 
 it('can snooze chores due today for a user until tomorrow', function () {
-    $this->testUser();
+    $this->user();
     $chores = Chore::factory()
         ->count(3)
         ->withFirstInstance(today())
@@ -48,7 +48,7 @@ it('can snooze chores due today for a user until tomorrow', function () {
 });
 
 it('can snooze chores due today for a user until the weekend', function () {
-    $this->testUser();
+    $this->user();
     $chores = Chore::factory()
         ->count(3)
         ->withFirstInstance(today())
@@ -77,7 +77,7 @@ it('can snooze chores due today for a user until the weekend', function () {
 });
 
 it('can snooze chores due in the past for a user until tomorrow', function () {
-    $this->testUser();
+    $this->user();
     $chores = Chore::factory()
         ->count(3)
         ->withFirstInstance(today()->subDays(2))
@@ -107,7 +107,7 @@ it('can snooze chores due in the past for a user until tomorrow', function () {
 
 it('can snooze chores due in the past for a user until the weekend', function () {
     $this->travelToKnownMonday();
-    $this->testUser();
+    $this->user();
     $chores = Chore::factory()
         ->count(3)
         ->withFirstInstance(today()->subDay())
@@ -136,7 +136,7 @@ it('can snooze chores due in the past for a user until the weekend', function ()
 
 it('wont snooze chores due today for a team until the weekend if filter is user', function () {
     $this->travelToKnownMonday();
-    $this->testUser();
+    $this->user();
 
     $chore = Chore::factory()
         ->withFirstInstance(today())
@@ -154,7 +154,7 @@ it('wont snooze chores due today for a team until the weekend if filter is user'
 
 it('wont snooze chores due in the past for a team until the weekend if filter is user', function () {
     $this->travelToKnownMonday();
-    $this->testUser();
+    $this->user();
 
     $chore = Chore::factory()
         ->withFirstInstance(today()->subDay())
@@ -171,7 +171,7 @@ it('wont snooze chores due in the past for a team until the weekend if filter is
 });
 
 it('snoozes chores owned by team but assigned to user', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()
         ->withFirstInstance(today()->subDays(2), $this->user->id)
         ->for($this->team)

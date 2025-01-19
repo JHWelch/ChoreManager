@@ -11,7 +11,7 @@ beforeEach(function () {
 });
 
 test('calling update with complete flag completes current instance', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->for($this->user)->create();
     $chore_instance = ChoreInstance::factory()
         ->for($chore)
@@ -24,7 +24,7 @@ test('calling update with complete flag completes current instance', function ()
 });
 
 test('user can complete chore for their team', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->for($this->team)->create();
     $chore_instance = ChoreInstance::factory()
         ->for($chore)
@@ -37,7 +37,7 @@ test('user can complete chore for their team', function () {
 });
 
 test('user cannot complete chores they do not own', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()->create();
     $chore_instance = ChoreInstance::factory()
         ->for($chore)
@@ -50,7 +50,7 @@ test('user cannot complete chores they do not own', function () {
 });
 
 test('chore is returned with new information', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()
         ->for($this->user)
         ->daily()

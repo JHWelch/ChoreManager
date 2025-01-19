@@ -47,25 +47,25 @@ class Chore extends Model
         ];
     }
 
-    /** @return BelongsTo<User, self> */
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /** @return BelongsTo<Team, self> */
+    /** @return BelongsTo<Team, $this> */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
 
-    /** @return HasMany<ChoreInstance> */
+    /** @return HasMany<ChoreInstance, $this> */
     public function choreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class);
     }
 
-    /** @return HasOne<ChoreInstance> */
+    /** @return HasOne<ChoreInstance, $this> */
     public function nextChoreInstance(): HasOne
     {
         return $this
@@ -73,7 +73,7 @@ class Chore extends Model
             ->whereNull('completed_date');
     }
 
-    /** @return HasOne<ChoreInstance> */
+    /** @return HasOne<ChoreInstance, $this> */
     public function nextInstance(): HasOne
     {
         return $this->nextChoreInstance();
@@ -89,7 +89,7 @@ class Chore extends Model
         ));
     }
 
-    /** @return HasMany<ChoreInstance> */
+    /** @return HasMany<ChoreInstance, $this> */
     public function pastChoreInstances(): HasMany
     {
         return $this->hasMany(ChoreInstance::class)

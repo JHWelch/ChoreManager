@@ -51,7 +51,7 @@ class CalendarToken extends Model
         return self::firstWhere('token', $token);
     }
 
-    /** @return HasManyThrough<Chore> */
+    /** @return HasManyThrough<Chore, User, $this> | HasManyThrough<Chore, Team, $this> */
     public function chores(): HasManyThrough
     {
         return $this->is_user_calendar
@@ -73,7 +73,7 @@ class CalendarToken extends Model
             );
     }
 
-    /** @return Builder<ChoreInstance>|HasManyThrough<ChoreInstance> */
+    /** @return Builder<ChoreInstance>|HasManyThrough<ChoreInstance, User, $this> */
     public function choreInstances(): Builder|HasManyThrough
     {
         return $this->is_user_calendar
@@ -95,13 +95,13 @@ class CalendarToken extends Model
                 ->orderBy('chore_instances.due_date');
     }
 
-    /** @return BelongsTo<User, self> */
+    /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /** @return BelongsTo<Team, self> */
+    /** @return BelongsTo<Team, $this> */
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);

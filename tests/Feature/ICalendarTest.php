@@ -5,7 +5,7 @@ use App\Models\Chore;
 use App\Models\User;
 
 test('user calendar tokens return users next chore instances', function () {
-    $this->testUser();
+    $this->user();
     CalendarToken::create([
         'user_id' => $this->user->id,
         'token' => 'fake_uuid',
@@ -30,7 +30,7 @@ test('user calendar tokens return users next chore instances', function () {
 });
 
 test('team calendar tokens return team next chore instances', function () {
-    $this->testUser();
+    $this->user();
     CalendarToken::create([
         'user_id' => $this->user->id,
         'team_id' => $this->team->id,
@@ -61,7 +61,7 @@ test('team calendar tokens return team next chore instances', function () {
 });
 
 test('chore calendar shows chores assigned to team but instance assigned to user', function () {
-    $this->testUser();
+    $this->user();
     CalendarToken::create([
         'user_id' => $this->user->id,
         'token' => 'fake_uuid',

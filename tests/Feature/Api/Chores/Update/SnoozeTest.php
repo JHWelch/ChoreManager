@@ -11,7 +11,7 @@ beforeEach(function () {
 });
 
 test('user can snooze chore', function () {
-    $this->testUser();
+    $this->user();
     $chore = Chore::factory()
         ->for($this->user)
         ->withFirstInstance()

@@ -34,7 +34,7 @@ abstract class TestCase extends BaseTestCase
      *
      * @return array{user: User, team: Team}
      */
-    protected function testUser(array $attributes = []): array
+    protected function user(array $attributes = []): array
     {
         $this->actingAs($user = User::factory($attributes)->withPersonalTeam()->create());
         $user->switchTeam($team = Team::first());
@@ -48,9 +48,9 @@ abstract class TestCase extends BaseTestCase
         ];
     }
 
-    protected function adminTestUser($attributes = [])
+    protected function adminUser($attributes = [])
     {
-        $this->testUser($attributes);
+        $this->user($attributes);
         $this->seed(AdminTeamSeeder::class);
         Team::adminTeam()->users()->attach($this->user);
     }

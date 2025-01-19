@@ -45,7 +45,7 @@ test('is admin caches value', function () {
 });
 
 test('route notification for fcm returns array of device tokens', function () {
-    $this->testUser();
+    $this->user();
     DeviceToken::factory()
         ->for($this->user)
         ->count(3)

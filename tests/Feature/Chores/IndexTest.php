@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Sequence;
 use function Pest\Livewire\livewire;
 
 test('a user can navigate to chores index', function () {
-    $this->testUser();
+    $this->user();
 
     $response = $this->get(route('chores.index'));
 
@@ -17,7 +17,7 @@ test('a user can navigate to chores index', function () {
 });
 
 test('chores display on index page', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     Chore::factory()
         ->count(3)
         ->state(new Sequence(
@@ -38,7 +38,7 @@ test('chores display on index page', function () {
 });
 
 test('chores can be sorted by title', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     Chore::factory()
         ->count(3)
         ->sequence(
@@ -56,7 +56,7 @@ test('chores can be sorted by title', function () {
 });
 
 test('chores can be sorted by frequency', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     Chore::factory()
         ->count(3)
         ->sequence(
@@ -77,7 +77,7 @@ test('chores can be sorted by next due date', function () {
     $date1 = today()->addDays(1);
     $date2 = today()->addDays(2);
     $date3 = today()->addDays(3);
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     $chores = Chore::factory()
         ->count(3)
         ->sequence(
@@ -99,7 +99,7 @@ test('chores can be sorted by next due date', function () {
 });
 
 test('chores can be sorted by descending title', function () {
-    $user = $this->testUser()['user'];
+    $user = $this->user()['user'];
     Chore::factory()
         ->count(3)
         ->sequence(

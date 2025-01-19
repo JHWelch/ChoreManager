@@ -34,16 +34,16 @@ namespace App\Models{
  * @property-read string $url
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\CalendarTokenFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken query()
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CalendarToken whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|CalendarToken whereUserId($value)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -80,23 +80,23 @@ namespace App\Models{
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\ChoreFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Chore newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore nullDueDatesAtEnd()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore onlyWithDueNextInstance()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore onlyWithNextInstance()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore query()
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereFrequencyDayOf($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereFrequencyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereFrequencyInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Chore withNextInstance()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore nullDueDatesAtEnd()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore onlyWithDueNextInstance()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore onlyWithNextInstance()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereFrequencyDayOf($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereFrequencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereFrequencyInterval($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Chore withNextInstance()
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -119,22 +119,22 @@ namespace App\Models{
  * @property-read \App\Models\User|null $completedBy
  * @property-read bool $is_completed
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance completed()
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance dueToday()
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance dueTodayOrPast()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance completed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance dueToday()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance dueTodayOrPast()
  * @method static \Database\Factories\ChoreInstanceFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance notCompleted()
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance query()
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereChoreId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereCompletedById($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereCompletedDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereDueDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ChoreInstance whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance notCompleted()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereChoreId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereCompletedById($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereCompletedDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereDueDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ChoreInstance whereUserId($value)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -152,14 +152,14 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\DeviceTokenFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken query()
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken whereToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DeviceToken whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken whereToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|DeviceToken whereUserId($value)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -176,15 +176,15 @@ namespace App\Models{
  * @property string|null $role
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|Membership newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Membership newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Membership query()
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Membership whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Membership whereUserId($value)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -204,18 +204,18 @@ namespace App\Models{
  * @property int|null $team_id
  * @property-read \App\Models\Team|null $team
  * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount current()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount current()
  * @method static \Database\Factories\StreakCountFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount query()
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereCount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereEndedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|StreakCount whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount whereCount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount whereEndedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StreakCount whereUserId($value)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -240,21 +240,21 @@ namespace App\Models{
  * @property-read \App\Models\User|null $owner
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\TeamInvitation> $teamInvitations
  * @property-read int|null $team_invitations_count
- * @property-read \App\Models\Membership $membership
+ * @property-read \App\Models\Membership|null $membership
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Database\Factories\TeamFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Team newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Team newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Team query()
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team wherePersonalTeam($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Team withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Team withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team wherePersonalTeam($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Team withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -272,15 +272,15 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Team $team
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation query()
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|TeamInvitation whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|TeamInvitation whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -320,30 +320,30 @@ namespace App\Models{
  * @property-read int|null $owned_teams_count
  * @property-read string $profile_photo_url
  * @property-read \App\Models\UserSetting|null $settings
- * @property-read \App\Models\Membership $membership
+ * @property-read \App\Models\Membership|null $membership
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Team> $teams
  * @property-read int|null $teams_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorConfirmedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
- * @method static \Illuminate\Database\Eloquent\Builder|User withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCurrentTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProfilePhotoPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorConfirmedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorRecoveryCodes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutUnfinishedChores(?\Illuminate\Support\Carbon $on_or_before = null)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
@@ -359,14 +359,14 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $user_id
  * @property bool $has_daily_digest
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting query()
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereHasDailyDigest($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|UserSetting whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting whereHasDailyDigest($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserSetting whereUserId($value)
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]

@@ -71,7 +71,7 @@ test('when filter is set to team see all users in that teams chores', function (
 });
 
 test('chores with instances assigned to others do not show on chore owners filter', function () {
-    $this->testUser();
+    $this->user();
     $other_user = User::factory()->hasAttached($this->team)->create();
     Chore::factory([
         'title' => 'Walk the dog.',
@@ -97,7 +97,7 @@ test('chores with instances assigned to others do not show on chore owners filte
 });
 
 test('chores assigned to team show on team page but not user page', function () {
-    $this->testUser();
+    $this->user();
     Chore::factory([
         'title' => 'Walk the dog',
     ])
@@ -118,7 +118,7 @@ test('chores assigned to team show on team page but not user page', function () 
 });
 
 test('filter persists between component loads', function () {
-    $this->testUser();
+    $this->user();
 
     livewire(ChoreInstanceIndex::class)
         ->call('setTeamFilter', 'team');

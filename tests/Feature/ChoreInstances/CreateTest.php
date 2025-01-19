@@ -12,7 +12,7 @@ use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Livewire\livewire;
 
 test('when a user specifies a date while creating a chore a chore instance is created', function () {
-    $this->testUser();
+    $this->user();
     $date = Carbon::now()->addDays(6);
 
     livewire(Save::class)
@@ -30,7 +30,7 @@ test('when a user specifies a date while creating a chore a chore instance is cr
 });
 
 test('a chore can be created without a date and chore instance', function () {
-    $this->testUser();
+    $this->user();
 
     livewire(Save::class)
         ->set('form.title', 'Do dishes')
@@ -43,7 +43,7 @@ test('a chore can be created without a date and chore instance', function () {
 });
 
 test('when creating a chore with an owner the chore instance has the same owner', function () {
-    $this->testUser();
+    $this->user();
     $date = Carbon::now()->addDays(6);
     $user = User::factory()->create();
 

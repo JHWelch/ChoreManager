@@ -12,7 +12,7 @@ class IndexText extends TestCase
     /** @test */
     public function returns_chores_grouped_by_today_and_past_due_for_team(): void
     {
-        $this->testUser();
+        $this->user();
         $chores = ChoreInstance::factory()
             ->for(Chore::factory()->for($this->team))
             ->sequence(
@@ -57,7 +57,7 @@ class IndexText extends TestCase
     /** @test */
     public function user_cannot_get_chores_from_another_team(): void
     {
-        $this->testUser();
+        $this->user();
         $other_team = Team::factory()->create();
         ChoreInstance::factory()
             ->for(Chore::factory()->for($other_team))
