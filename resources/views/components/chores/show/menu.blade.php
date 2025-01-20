@@ -4,7 +4,7 @@
 ])
 
 <x-dropdown-menu :class="$class">
-  <x-dropdown-option click="$toggle('showCompleteForUserDialog')">
+  <x-dropdown-option wire:click="$dispatch('openModal', { component: 'chores.modals.custom-complete', arguments: { chore: {{ $chore_id }} }})">
     Custom Complete
   </x-dropdown-option>
 

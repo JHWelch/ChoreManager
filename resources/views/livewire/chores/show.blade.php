@@ -196,7 +196,5 @@
     </x-slot>
   </x-confirmation-modal>
 
-  <x-chores.show.complete-modal />
-
   <x-utils.tooltip />
 </main>
